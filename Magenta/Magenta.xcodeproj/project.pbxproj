@@ -67,6 +67,7 @@
 				26559B682C62577F008E9E75 /* MagentaTests */,
 				26559B722C62577F008E9E75 /* MagentaUITests */,
 				26559B532C62577D008E9E75 /* Products */,
+				26559B852C62745A008E9E75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +79,13 @@
 				26559B6F2C62577F008E9E75 /* MagentaUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		26559B852C62745A008E9E75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
