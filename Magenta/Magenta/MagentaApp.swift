@@ -5,8 +5,9 @@
 //  Created by Sarah Clark on 8/6/24.
 //
 
-import SwiftUI
+import GoogleSignIn
 import SwiftData
+import SwiftUI
 
 @main
 struct MagentaApp: App {
@@ -26,6 +27,9 @@ struct MagentaApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
         .modelContainer(sharedModelContainer)
     }

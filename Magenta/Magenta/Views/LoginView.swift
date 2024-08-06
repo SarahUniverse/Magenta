@@ -6,6 +6,8 @@
 //
 
 import AuthenticationServices
+import GoogleSignIn
+import GoogleSignInSwift
 import SwiftData
 import SwiftUI
 
@@ -50,6 +52,7 @@ struct LoginView: View {
 
                 Button(action: {
                     print("Google Sign-In tapped")
+
                 }) {
                     Image(systemName: "g.circle.fill")
                         .resizable()
@@ -68,6 +71,12 @@ struct LoginView: View {
                 }
             }
             .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
+
+            GoogleSignInButton {
+                GIDSignIn.sharedInstance().signIn(withPresenting: Overview) { signInResult, error
+
+                }
+            }
         }
 
         .padding()
