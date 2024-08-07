@@ -4,5 +4,14 @@
 <dict>
 	<key>GIDClientID</key>
 	<string>988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>

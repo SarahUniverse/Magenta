@@ -17,6 +17,7 @@ struct LoginView: View {
     @Query private var items: [Item]
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var userInfo = ""
 
     var body: some View {
         VStack {
@@ -50,15 +51,15 @@ struct LoginView: View {
             Text("Or sign in with")
                 .foregroundStyle(.secondary)
 
-                Button(action: {
-                    print("Google Sign-In tapped")
+            Button(action: {
+                print("Google Sign-In tapped")
 
-                }) {
-                    Image(systemName: "g.circle.fill")
-                        .resizable()
-                        .frame(width: 44, height: 44)
-                        .foregroundStyle(.red)
-                }
+            }) {
+                Image(systemName: "g.circle.fill")
+                    .resizable()
+                    .frame(width: 44, height: 44)
+                    .foregroundStyle(.red)
+            }
 
             SignInWithAppleButton(.continue) { request in
                 request.requestedScopes = [.fullName, .email]
@@ -72,9 +73,20 @@ struct LoginView: View {
             }
             .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
 
-            GoogleSignInButton {
-                GIDSignIn.sharedInstance().signIn(withPresenting: Overview) { signInResult, error
+            GoogleSignInButton(style: .wide) {
+                self.userInfo = ""
+                guard let rootViewController = self.rootViewController else {
+                    print("Root view controller not found")
+                    return
+                }
 
+                GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+                    guard let result else {
+                        print("Error signing in: \(String(describing: error))")
+                        return
+                    }
+                    print("Successfully signed in user")
+                    self.userInfo = result.user.profile?.json ?? ""
                 }
             }
         }
@@ -95,6 +107,30 @@ struct LoginView: View {
                 modelContext.delete(items[index])
             }
         }
+    }
+}
+
+private extension LoginView {
+    var rootViewController: UIViewController? {
+        return UIApplication.shared.connectedScenes
+            .filter({ $0.activationState == .foregroundActive })
+            .compactMap { $0 as? UIWindowScene }
+            .compactMap { $0.keyWindow }
+            .first?.rootViewController
+    }
+}
+
+private extension GIDProfileData {
+    var json: String {
+    """
+    success: {
+      Given Name: \(self.givenName ?? "None")
+      Family Name: \(self.familyName ?? "None")
+      Name: \(self.name)
+      Email: \(self.email)
+      Profile Photo: \(self.imageURL(withDimension: 1)?.absoluteString ?? "None");
+    }
+    """
     }
 }
 

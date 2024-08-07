@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		26559B882C627A2E008E9E75 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 26559B872C627A2E008E9E75 /* GoogleSignIn */; };
 		26559B8A2C627A2E008E9E75 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26559B892C627A2E008E9E75 /* GoogleSignInSwift */; };
-		26559B8C2C627D55008E9E75 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26559B8B2C627D55008E9E75 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,11 +32,20 @@
 		26559B522C62577D008E9E75 /* Magenta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magenta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26559B652C62577F008E9E75 /* MagentaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagentaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26559B6F2C62577F008E9E75 /* MagentaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagentaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		26559B8B2C627D55008E9E75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		269ED7302C63A0AA0053D1CC /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 26559B512C62577D008E9E75 /* Magenta */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		26559B542C62577D008E9E75 /* Magenta */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Magenta; sourceTree = "<group>"; };
+		26559B542C62577D008E9E75 /* Magenta */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (269ED7302C63A0AA0053D1CC /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Magenta; sourceTree = "<group>"; };
 		26559B682C62577F008E9E75 /* MagentaTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MagentaTests; sourceTree = "<group>"; };
 		26559B722C62577F008E9E75 /* MagentaUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MagentaUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -72,7 +80,6 @@
 		26559B492C62577D008E9E75 = {
 			isa = PBXGroup;
 			children = (
-				26559B8B2C627D55008E9E75 /* Info.plist */,
 				26559B542C62577D008E9E75 /* Magenta */,
 				26559B682C62577F008E9E75 /* MagentaTests */,
 				26559B722C62577F008E9E75 /* MagentaUITests */,
@@ -222,7 +229,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26559B8C2C627D55008E9E75 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +413,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Magenta/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -446,6 +454,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Magenta/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
