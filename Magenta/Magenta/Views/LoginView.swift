@@ -51,29 +51,7 @@ struct LoginView: View {
             Text("Or sign in with")
                 .foregroundStyle(.secondary)
 
-            Button(action: {
-                print("Google Sign-In tapped")
-
-            }) {
-                Image(systemName: "g.circle.fill")
-                    .resizable()
-                    .frame(width: 44, height: 44)
-                    .foregroundStyle(.red)
-            }
-
-            SignInWithAppleButton(.continue) { request in
-                request.requestedScopes = [.fullName, .email]
-            } onCompletion: { result in
-                switch result {
-                    case .success(_):
-                        print("Authorization successful")
-                    case .failure(let error):
-                        print("Authorization failed: \(error.localizedDescription)")
-                }
-            }
-            .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
-
-            GoogleSignInButton(style: .wide) {
+            GoogleSignInButton(style: .icon) {
                 self.userInfo = ""
                 guard let rootViewController = self.rootViewController else {
                     print("Root view controller not found")
@@ -89,6 +67,19 @@ struct LoginView: View {
                     self.userInfo = result.user.profile?.json ?? ""
                 }
             }
+
+            SignInWithAppleButton(.signIn) { request in
+                request.requestedScopes = [.fullName, .email]
+            } onCompletion: { result in
+                switch result {
+                    case .success(_):
+                        print("Authorization successful")
+                    case .failure(let error):
+                        print("Authorization failed: \(error.localizedDescription)")
+                }
+            }
+            .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
+
         }
 
         .padding()
