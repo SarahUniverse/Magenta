@@ -79,9 +79,7 @@ struct LoginView: View {
                 }
             }
             .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
-
         }
-
         .padding()
     }
 
