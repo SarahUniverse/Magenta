@@ -14,7 +14,7 @@ struct CustomGoogleSignInButton: UIViewRepresentable {
 
     func makeUIView(context: Context) -> GIDSignInButton {
         let button = GIDSignInButton()
-        button.style = .standard
+        button.style = .wide
         button.addTarget(context.coordinator, action: #selector(Coordinator.buttonTapped), for: .touchUpInside)
         return button
     }

@@ -47,6 +47,7 @@ struct LoginView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
             }
+            .padding()
 
             Text("Or sign in with")
                 .foregroundStyle(.secondary)
@@ -54,7 +55,8 @@ struct LoginView: View {
             CustomGoogleSignInButton(action: {
                 self.signInWithGoogle()
             })
-            .frame(width: 60, height: 40)
+            .frame(height: 40)
+            .padding()
 
             SignInWithAppleButton(.signIn) { request in
                 request.requestedScopes = [.fullName, .email]
@@ -66,10 +68,10 @@ struct LoginView: View {
                         print("Authorization failed: \(error.localizedDescription)")
                 }
             }
-            .frame(width: 60, height: 40)
+            .frame(height: 40)
+            .padding()
             .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
         }
-        .padding()
     }
 
     func signInWithGoogle() {
