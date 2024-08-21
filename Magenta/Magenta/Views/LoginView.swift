@@ -18,59 +18,67 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var userInfo = ""
+    @State private var isNavigating = false
 
     var body: some View {
-        VStack {
-            Text("Welcome to Magenta")
-                .font(.largeTitle)
-                .bold()
+        NavigationStack {
+            VStack {
+                Text("Welcome to Magenta")
+                    .font(.largeTitle)
+                    .bold()
 
-            TextField("Email", text: $email)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-
-            SecureField("Password", text: $password)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-
-            Button(action: {
-                print("Login button tapped")
-            }, label: {
-                Text("Login")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
+                TextField("Email", text: $email)
                     .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            })
-            .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
 
-            Text("Or sign in with")
-                .foregroundStyle(.secondary)
+                SecureField("Password", text: $password)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
 
-            CustomGoogleSignInButton(action: {
-                self.signInWithGoogle()
-            })
-            .frame(height: 40)
-            .padding()
+                Button(action: {
+                    isNavigating = true
+                }, label: {
+                    Text("Login")
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                })
+                .padding()
 
-            SignInWithAppleButton(.signIn) { request in
-                request.requestedScopes = [.fullName, .email]
-            } onCompletion: { result in
-                switch result {
-                case .success:
-                    print("Authorization successful")
-                case .failure(let error):
-                    print("Authorization failed: \(error.localizedDescription)")
+                .navigationDestination(isPresented: $isNavigating) {
+                    Overview()
                 }
+
+                Text("Or sign in with")
+                    .foregroundStyle(.secondary)
+
+                CustomGoogleSignInButton(action: {
+                    self.signInWithGoogle()
+                })
+                .frame(height: 40)
+                .padding()
+
+                SignInWithAppleButton(.signIn) { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    switch result {
+                    case .success:
+                        isNavigating = true
+                        print("Authorization successful")
+                    case .failure(let error):
+                        print("Authorization failed: \(error.localizedDescription)")
+                    }
+                }
+                .frame(height: 40)
+                .padding()
+                .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
             }
-            .frame(height: 40)
-            .padding()
-            .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
         }
     }
 
@@ -87,6 +95,7 @@ struct LoginView: View {
             }
             print("Successfully signed in user")
             self.userInfo = result.user.profile?.json ?? ""
+            isNavigating = true
         }
     }
 
