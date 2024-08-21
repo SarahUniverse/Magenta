@@ -39,14 +39,14 @@ struct LoginView: View {
 
             Button(action: {
                 print("Login button tapped")
-            }) {
+            }, label: {
                 Text("Login")
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(10)
-            }
+            })
             .padding()
 
             Text("Or sign in with")
@@ -62,10 +62,10 @@ struct LoginView: View {
                 request.requestedScopes = [.fullName, .email]
             } onCompletion: { result in
                 switch result {
-                    case .success(_):
-                        print("Authorization successful")
-                    case .failure(let error):
-                        print("Authorization failed: \(error.localizedDescription)")
+                case .success:
+                    print("Authorization successful")
+                case .failure(let error):
+                    print("Authorization failed: \(error.localizedDescription)")
                 }
             }
             .frame(height: 40)
