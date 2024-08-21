@@ -51,22 +51,10 @@ struct LoginView: View {
             Text("Or sign in with")
                 .foregroundStyle(.secondary)
 
-            GoogleSignInButton(style: .icon) {
-                self.userInfo = ""
-                guard let rootViewController = self.rootViewController else {
-                    print("Root view controller not found")
-                    return
-                }
-
-                GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
-                    guard let result else {
-                        print("Error signing in: \(String(describing: error))")
-                        return
-                    }
-                    print("Successfully signed in user")
-                    self.userInfo = result.user.profile?.json ?? ""
-                }
-            }
+            CustomGoogleSignInButton(action: {
+                self.signInWithGoogle()
+            })
+            .frame(width: 60, height: 40)
 
             SignInWithAppleButton(.signIn) { request in
                 request.requestedScopes = [.fullName, .email]
@@ -78,9 +66,26 @@ struct LoginView: View {
                         print("Authorization failed: \(error.localizedDescription)")
                 }
             }
+            .frame(width: 60, height: 40)
             .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
         }
         .padding()
+    }
+
+    func signInWithGoogle() {
+        guard let rootViewController = self.rootViewController else {
+            print("Root view controller not found")
+            return
+        }
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+            guard let result else {
+                print("Error signing in: \(String(describing: error))")
+                return
+            }
+            print("Successfully signed in user")
+            self.userInfo = result.user.profile?.json ?? ""
+        }
     }
 
     private func addItem() {
