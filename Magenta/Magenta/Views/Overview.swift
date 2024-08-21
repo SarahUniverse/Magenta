@@ -16,40 +16,60 @@ struct Overview: View {
                     EmptyView()
                 }
 
-                Tab("Mood", systemImage: "face.smiling.inverse") {
+                Tab("Meditate", systemImage: "figure.mind.and.body") {
                     EmptyView()
                 }
 
-                Tab("Mood", systemImage: "face.smiling.inverse") {
+                Tab("Exercise", systemImage: "figure.run") {
                     EmptyView()
                 }
 
+                Tab("Nutrition", systemImage: "fork.knife") {
+                    EmptyView()
+                }
+
+                Tab("Cycle", systemImage: "circle.dotted") {
+                    EmptyView()
+                }
             }
+            .navigationBarBackButtonHidden(true)
         } else {
             // TODO: Remove when iOS 17 is no longer supported.
             TabView {
-                Text("Home Tab Content")
+                Text("Mood")
                     .tabItem {
                         Image(systemName: "house.fill")
-                        Text("Home")
+                        Text("Mood")
                     }
 
-                Text("Favorites Tab Content")
+                Text("Meditate")
                     .tabItem {
-                        Image(systemName: "star.fill")
-                        Text("Favorites")
+                        Image(systemName: "figure.mind.and.body")
+                        Text("Meditate")
                     }
 
-                Text("Settings Tab Content")
+                Text("Exercise")
                     .tabItem {
-                        Image(systemName: "gear")
-                        Text("Settings")
+                        Image(systemName: "figure.run")
+                        Text("Exercise")
+                    }
+
+                Text("Nutrition")
+                    .tabItem {
+                        Image(systemName: "fork.knife")
+                        Text("Nutrition")
+                    }
+
+                Text("Cycle")
+                    .tabItem {
+                        Image(systemName: "circle.dotted")
+                        Text("Cycle")
                     }
             }
+            .navigationBarBackButtonHidden(true)
         }
-            //.navigationTitle("Overview")
-            //.navigationBarBackButtonHidden(true)
     }
+
 }
 
 #Preview {
