@@ -11,9 +11,11 @@ import SwiftUI
 
 @main
 struct MagentaApp: App {
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self
+            Item.self,
+            User.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -26,7 +28,7 @@ struct MagentaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            InitialView()
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

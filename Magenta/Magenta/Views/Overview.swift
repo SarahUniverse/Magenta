@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Overview: View {
+    let user: User
+
     var body: some View {
 
         if #available(iOS 18.0, *) {
@@ -39,5 +41,5 @@ struct Overview: View {
 }
 
 #Preview {
-    Overview()
+    Overview(user: User(id: "12345678", name: "Sarah", isLoggedIn: false))
 }

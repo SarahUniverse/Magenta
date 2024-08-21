@@ -15,7 +15,7 @@ struct LoginView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) private var colorScheme
     @Query private var items: [Item]
-    @State private var email: String = ""
+    @State private var username: String = ""
     @State private var password: String = ""
     @State private var userInfo = ""
     @State private var isNavigating = false
@@ -27,7 +27,7 @@ struct LoginView: View {
                     .font(.largeTitle)
                     .bold()
 
-                TextField("Email", text: $email)
+                TextField("Username", text: $username)
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
@@ -40,6 +40,7 @@ struct LoginView: View {
                     .disableAutocorrection(true)
 
                 Button(action: {
+                    loginUser()
                     isNavigating = true
                 }, label: {
                     Text("Login")
@@ -52,7 +53,7 @@ struct LoginView: View {
                 .padding()
 
                 .navigationDestination(isPresented: $isNavigating) {
-                    Overview()
+                    Overview(user: User(id: <#T##String#>, name: <#T##String#>, isLoggedIn: <#T##Bool#>))
                 }
 
                 Text("Or sign in with")
@@ -80,6 +81,11 @@ struct LoginView: View {
                 .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
             }
         }
+    }
+
+    func loginUser() {
+        let newUser = User(id: UUID().uuidString, name: username, isLoggedIn: true)
+        modelContext.insert(newUser)
     }
 
     func signInWithGoogle() {
