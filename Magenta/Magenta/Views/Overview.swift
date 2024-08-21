@@ -12,11 +12,11 @@ struct Overview: View {
 
         if #available(iOS 18.0, *) {
             TabView {
-                Tab("Mood", systemImage: "face.smiling.inverse") { EmptyView() }
-                Tab("Meditate", systemImage: "figure.mind.and.body") { EmptyView() }
-                Tab("Exercise", systemImage: "figure.run") { EmptyView() }
-                Tab("Nutrition", systemImage: "fork.knife") { EmptyView() }
-                Tab("Cycle", systemImage: "circle.dotted") { EmptyView() }
+                Tab("Mood", systemImage: "face.smiling.inverse") { MoodView() }
+                Tab("Meditate", systemImage: "figure.mind.and.body") { MeditateView() }
+                Tab("Exercise", systemImage: "figure.run") { ExerciseView() }
+                Tab("Nutrition", systemImage: "fork.knife") { NutritionView() }
+                Tab("More", systemImage: "line.3.horizontal") { MoreView() }
             }
             .navigationBarBackButtonHidden(true)
         } else {
