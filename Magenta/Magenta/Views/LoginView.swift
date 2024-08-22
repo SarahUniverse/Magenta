@@ -53,7 +53,7 @@ struct LoginView: View {
                 .padding()
 
                 .navigationDestination(isPresented: $isNavigating) {
-                    Overview(user: User(id: <#T##String#>, name: <#T##String#>, isLoggedIn: <#T##Bool#>))
+                    Overview(user: User(id: "", name: "", isLoggedIn: true))
                 }
 
                 Text("Or sign in with")

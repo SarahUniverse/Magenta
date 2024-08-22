@@ -12,7 +12,12 @@ struct MoreView: View {
         ("circle.dotted", "Cycle"),
         ("moon.zzz", "Sleep"),
         ("gearshape", "Settings"),
-        ("magnifyingglass", "Find a Therapist")
+        ("magnifyingglass", "Find a Therapist"),
+        ("pencil.and.scribble", "Journal"),
+        ("music.note", "Mental Health Playlists"),
+        ("book", "Self Help Books"),
+        ("quote.bubble", "Helpful Quotes")
+
     ]
 
     let columns = [

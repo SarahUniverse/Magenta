@@ -8,11 +8,11 @@
 import SwiftData
 import SwiftUI
 
-struct InitialView: View {
+public struct InitialView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var users: [User]
+    @State var users: [User]
 
-    var body: some View {
+    public var body: some View {
         if let currentUser = users.first(where: { $0.isLoggedIn }) {
             Overview(user: currentUser)
         } else {
@@ -24,4 +24,3 @@ struct InitialView: View {
         users.contains(where: { $0.isLoggedIn })
     }
 }
-

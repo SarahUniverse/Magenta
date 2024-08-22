@@ -27,8 +27,9 @@ struct MagentaApp: App {
     }()
 
     var body: some Scene {
+        let users: [User] = []
         WindowGroup {
-            InitialView()
+            InitialView(users: users)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }
