@@ -1,5 +1,5 @@
 //
-//  Overview.swift
+//  MainView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 8/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Overview: View {
+struct MainView: View {
     let user: User
 
     var body: some View {
@@ -41,5 +41,5 @@ struct Overview: View {
 }
 
 #Preview {
-    Overview(user: User(id: "12345678", name: "Sarah", isLoggedIn: false))
+    MainView(user: User(id: "12345678", name: "Sarah", isLoggedIn: false))
 }

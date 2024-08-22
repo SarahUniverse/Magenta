@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MoreView: View {
+
     let items = [
         ("circle.dotted", "Cycle"),
         ("moon.zzz", "Sleep"),
@@ -28,6 +29,7 @@ struct MoreView: View {
 
     var body: some View {
         NavigationStack {
+            Divider()
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(0..<items.count, id: \.self) { index in
@@ -52,6 +54,13 @@ struct MoreView: View {
                 .padding()
             }
             .navigationBarTitle("More")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Sign Out") {
+
+                    }
+                }
+            }
         }
 
     }

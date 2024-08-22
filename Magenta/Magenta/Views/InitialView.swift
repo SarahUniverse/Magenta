@@ -14,7 +14,7 @@ public struct InitialView: View {
 
     public var body: some View {
         if let currentUser = users.first(where: { $0.isLoggedIn }) {
-            Overview(user: currentUser)
+            MainView(user: currentUser)
         } else {
             LoginView()
         }
