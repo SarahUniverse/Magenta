@@ -11,7 +11,7 @@ struct MeditateView: View {
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .purple
+        appearance.backgroundColor = .accent
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
