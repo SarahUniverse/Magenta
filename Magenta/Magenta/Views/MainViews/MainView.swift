@@ -14,9 +14,9 @@ struct MainView: View {
 
         if #available(iOS 18.0, *) {
             TabView {
+                Tab("Summary", systemImage: "heart.fill") { SummaryView() }
                 Tab("Mood", systemImage: "face.smiling.inverse") { MoodView() }
                 Tab("Meditate", systemImage: "figure.mind.and.body") { MeditateView() }
-                Tab("Exercise", systemImage: "figure.run") { ExerciseView() }
                 Tab("Nutrition", systemImage: "fork.knife") { NutritionView() }
                 Tab("More", systemImage: "line.3.horizontal") { MoreView() }
             }
