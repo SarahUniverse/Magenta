@@ -16,8 +16,8 @@ struct MoreView: View {
         ("pencil.and.scribble", "Journal"),
         ("music.note", "Mental Health Playlists"),
         ("book", "Self Help Books"),
-        ("quote.bubble", "Helpful Quotes")
-
+        ("quote.bubble", "Helpful Quotes"),
+        ("paintpalette", "Art Therapy")
     ]
 
     let columns = [
