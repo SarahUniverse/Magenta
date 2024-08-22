@@ -10,7 +10,7 @@ import SwiftUI
 struct MoreView: View {
 
     let items = [
-        ("figure.run", "Exercise"),
+        ("fork.knife", "Nutrition"),
         ("circle.dotted", "Cycle"),
         ("moon.zzz", "Sleep"),
         ("gearshape", "Settings"),

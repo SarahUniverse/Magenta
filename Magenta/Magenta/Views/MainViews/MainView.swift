@@ -17,7 +17,7 @@ struct MainView: View {
                 Tab("Summary", systemImage: "heart.fill") { SummaryView() }
                 Tab("Mood", systemImage: "face.smiling.inverse") { MoodView() }
                 Tab("Meditate", systemImage: "figure.mind.and.body") { MeditateView() }
-                Tab("Nutrition", systemImage: "fork.knife") { NutritionView() }
+                Tab("Exercise", systemImage: "figure.run") { ExerciseView() }
                 Tab("More", systemImage: "line.3.horizontal") { MoreView() }
             }
             .navigationBarBackButtonHidden(true)
