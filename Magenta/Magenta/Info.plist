@@ -2,17 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIImageName</key>
-		<string>launchScreenImage</string>
-	</dict>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Explain why the app requested permission to read samples from the HealthKit store.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Explain why the app requested permission to save samples to the HealthKit store.</string>
-	<key>GIDClientID</key>
-	<string>988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -22,5 +11,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+	<string>988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl.apps.googleusercontent.com</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>launchScreenImage</string>
+	</dict>
 </dict>
 </plist>
