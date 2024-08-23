@@ -12,7 +12,21 @@ struct SummaryView: View {
     var body: some View {
         NavigationView {
             List {
-                Text("Hello, World!")
+                Section(header: Text("Notifications")) {
+
+                }
+
+                Section {
+                    Text("Blah blah blah")
+                } header: {
+                    HStack {
+                        Text("Pinned")
+                        Spacer()
+                        NavigationLink(destination: EditPinnedView()) {
+                            Text("Edit")
+                        }
+                    }
+                }
             }
 
             .navigationTitle("Summary")
@@ -24,7 +38,6 @@ struct SummaryView: View {
                 }
             }
         }
-
     }
 }
 
