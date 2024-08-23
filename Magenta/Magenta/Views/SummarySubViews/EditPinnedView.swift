@@ -14,6 +14,7 @@ struct EditPinnedView: View {
     @State private var newItem = ""
     @State private var pinnedItems = ["Mood", "Meditate", "Exercise", "Nutrition", "Sleep"]
     @State private var moodItems = ["Happy", "Sad", "Angry", "Tired", "Excited"]
+    @StateObject private var speechRecognizer = SpeechRecognizer()
 
     var filteredItems: [String] {
         if searchText.isEmpty {
@@ -30,6 +31,24 @@ struct EditPinnedView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
                     TextField("Search", text: $searchText)
+
+                    Button(action: {
+                        if speechRecognizer.audioEngine.isRunning {
+                            speechRecognizer.stopRecording()
+                        } else {
+                            do {
+                                try speechRecognizer.startRecording()
+                            } catch {
+                                print("Failed to start recording: \(error.localizedDescription)")
+                            }
+                        }
+                    }) {
+                        Image(systemName: speechRecognizer.audioEngine.isRunning ? "mic.fill" : "mic")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .onReceive(speechRecognizer.$transcribedText) { transcribedText in
+                    self.searchText = transcribedText
                 }
 
                 Section(header: Text("Pinned")) {
