@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .purpleBlue
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     var body: some View {
         NavigationView {
@@ -22,8 +15,9 @@ struct SettingsView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Mood")
-            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.purpleBlue, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")

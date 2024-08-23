@@ -20,6 +20,7 @@ struct ExerciseView: View {
             .navigationTitle("Exercise")
             .toolbarBackground(.purpleBlue, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
