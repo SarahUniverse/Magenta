@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct SummaryView: View {
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .accent
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     var body: some View {
         NavigationView {
@@ -22,12 +15,14 @@ struct SummaryView: View {
                 Text("Hello, World!")
             }
 
+            .navigationTitle("Summary")
+            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
                 }
             }
-            .navigationTitle("Summary")
         }
 
     }

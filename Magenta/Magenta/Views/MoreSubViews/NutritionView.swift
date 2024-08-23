@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct NutritionView: View {
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .accent
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     var body: some View {
         NavigationView {
@@ -22,6 +15,8 @@ struct NutritionView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Nutrition")
+            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")

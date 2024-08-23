@@ -30,6 +30,7 @@ struct MoreView: View {
 
     var body: some View {
         NavigationStack {
+
             Divider()
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
@@ -54,7 +55,8 @@ struct MoreView: View {
                 }
                 .padding()
             }
-
+            // .toolbarBackground(Color.accentColor, for: .navigationBar)
+            // .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
@@ -63,6 +65,7 @@ struct MoreView: View {
                 }
             }
             .navigationBarTitle("More")
+
         }
 
     }

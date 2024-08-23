@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct ExerciseView: View {
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .accent
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     @StateObject private var healthKitManager = HealthKitManager()
     @State private var stepCount: Int = 0
@@ -25,6 +18,8 @@ struct ExerciseView: View {
                 Text("Step Count: \(stepCount)")
             }
             .navigationTitle("Exercise")
+            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")

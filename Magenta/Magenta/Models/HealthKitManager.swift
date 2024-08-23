@@ -41,7 +41,9 @@ class HealthKitManager: ObservableObject {
         let startOfDay = Calendar.current.startOfDay(for: now)
         let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: .strictStartDate)
 
-        let query = HKStatisticsQuery(quantityType: stepCountType, quantitySamplePredicate: predicate, options: .cumulativeSum) { (_, result, error) in
+        let query = HKStatisticsQuery(quantityType: stepCountType,
+                                      quantitySamplePredicate: predicate,
+                                      options: .cumulativeSum) { (_, result, error) in
             guard let result = result, let sum = result.sumQuantity() else {
                 print("Failed to fetch step count: \(error?.localizedDescription ?? "Unknown error")")
                 return

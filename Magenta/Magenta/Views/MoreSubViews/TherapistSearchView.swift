@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct TherapistSearchView: View {
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .accent
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
 
     var body: some View {
         NavigationView {
@@ -22,6 +15,8 @@ struct TherapistSearchView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Mood")
+            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")

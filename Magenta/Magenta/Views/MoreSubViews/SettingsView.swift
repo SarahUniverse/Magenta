@@ -22,6 +22,8 @@ struct SettingsView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Mood")
+            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
