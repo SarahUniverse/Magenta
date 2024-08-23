@@ -24,18 +24,38 @@ struct MainView: View {
         } else {
             // TODO: Remove when iOS 17 is no longer supported.
             TabView {
-                tabContent(for: "Mood", systemImage: "house.fill")
-                tabContent(for: "Meditate", systemImage: "figure.mind.and.body")
-                tabContent(for: "Exercise", systemImage: "figure.run")
-                tabContent(for: "Nutrition", systemImage: "fork.knife")
-                tabContent(for: "Cycle", systemImage: "circle.dotted")
+                SummaryView()
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                    Text("Summary")
+                }
+
+                MoodView()
+                .tabItem {
+                        Image(systemName: "face.smiling.inverse")
+                        Text("Mood")
+                    }
+
+                MeditateView()
+                    .tabItem {
+                        Image(systemName: "figure.mind.and.body")
+                        Text("Meditate")
+                    }
+
+                ExerciseView()
+                    .tabItem {
+                        Image(systemName: "figure.run")
+                        Text("Exercise")
+                    }
+                MoreView()
+                    .tabItem {
+                        Image(systemName: "line.3.horizontal")
+                        Text("More")
+                    }
             }
+            .tabViewStyle(DefaultTabViewStyle())
             .navigationBarBackButtonHidden(true)
         }
-    }
-
-    private func tabContent(for text: String, systemImage: String) -> some View {
-        Text(text)
     }
 
 }
