@@ -20,7 +20,7 @@ struct ExerciseView: View {
     @State private var stepCount: Int = 0
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Text("Step Count: \(stepCount)")
             }

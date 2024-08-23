@@ -17,7 +17,7 @@ struct ArtTherapyView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Text("Hello, World!")
             }

@@ -17,7 +17,7 @@ struct TherapistSearchView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Text("Hello, World!")
             }

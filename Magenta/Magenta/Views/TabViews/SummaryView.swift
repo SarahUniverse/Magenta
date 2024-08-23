@@ -17,17 +17,19 @@ struct SummaryView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Summary")
+
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
                 }
             }
+            .navigationTitle("Summary")
         }
+
     }
 }
 

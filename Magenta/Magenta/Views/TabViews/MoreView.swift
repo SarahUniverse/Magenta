@@ -54,7 +54,7 @@ struct MoreView: View {
                 }
                 .padding()
             }
-            .navigationBarTitle("More")
+
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
@@ -62,6 +62,7 @@ struct MoreView: View {
                     }
                 }
             }
+            .navigationBarTitle("More")
         }
 
     }
