@@ -15,7 +15,7 @@ struct MeditateView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Meditate")
-            .toolbarBackground(Color.accentColor, for: .navigationBar)
+            .toolbarBackground(.purpleBlue, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
