@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone access to enable voice-to-text functionality in the search field, allowing you to search using your voice.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>This app uses speech recognition to convert your spoken words into text for searching, enhancing your search experience by allowing voice input.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
