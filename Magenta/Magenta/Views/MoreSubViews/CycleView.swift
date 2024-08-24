@@ -14,8 +14,8 @@ struct CycleView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Mood")
-            .toolbarBackground(.purpleBlue, for: .navigationBar)
+            .navigationTitle("Cycle")
+            .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {

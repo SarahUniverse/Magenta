@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SummaryView: View {
+    @State private var showingModal = false
 
     var body: some View {
         NavigationView {
@@ -22,15 +23,18 @@ struct SummaryView: View {
                     HStack {
                         Text("Pinned")
                         Spacer()
-                        NavigationLink(destination: EditPinnedView()) {
-                            Text("Edit")
+                        Button("Edit") {
+                            showingModal.toggle()
+                        }
+                        .sheet(isPresented: $showingModal) {
+                            EditPinnedView()
                         }
                     }
                 }
             }
 
             .navigationTitle("Summary")
-            .toolbarBackground(.purpleBlue, for: .navigationBar)
+            .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {

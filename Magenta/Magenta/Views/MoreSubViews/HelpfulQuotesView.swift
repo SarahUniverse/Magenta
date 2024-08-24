@@ -14,8 +14,8 @@ struct HelpfulQuotesView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Mood")
-            .toolbarBackground(.purpleBlue, for: .navigationBar)
+            .navigationTitle("Helpful Quotes")
+            .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {

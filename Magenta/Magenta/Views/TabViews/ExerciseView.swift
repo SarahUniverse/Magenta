@@ -18,7 +18,7 @@ struct ExerciseView: View {
                 Text("Step Count: \(stepCount)")
             }
             .navigationTitle("Exercise")
-            .toolbarBackground(.purpleBlue, for: .navigationBar)
+            .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {

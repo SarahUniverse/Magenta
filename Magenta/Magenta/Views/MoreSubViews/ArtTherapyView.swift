@@ -15,7 +15,7 @@ struct ArtTherapyView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Art Therapy")
-            .toolbarBackground(.purpleBlue, for: .navigationBar)
+            .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
