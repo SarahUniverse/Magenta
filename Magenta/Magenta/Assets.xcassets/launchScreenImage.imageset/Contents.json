@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Magenta.png",
+      "filename" : "launchScreenImage.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Magenta 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Magenta 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
