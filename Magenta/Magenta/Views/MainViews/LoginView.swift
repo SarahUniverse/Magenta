@@ -24,6 +24,7 @@ struct LoginView: View {
         NavigationStack {
             VStack {
                 Text("Welcome to Magenta")
+                    .foregroundStyle(.white)
                     .font(.largeTitle)
                     .bold()
 
@@ -57,7 +58,8 @@ struct LoginView: View {
                 }
 
                 Text("Or sign in with")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white)
+                    .bold()
 
                 CustomGoogleSignInButton(action: {
                     self.signInWithGoogle()
@@ -79,6 +81,11 @@ struct LoginView: View {
                 .frame(height: 40)
                 .padding()
                 .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
+            }
+            .background {
+                Image("Background")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
             }
         }
     }
