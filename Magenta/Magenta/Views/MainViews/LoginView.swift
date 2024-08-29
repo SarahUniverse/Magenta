@@ -86,6 +86,7 @@ struct LoginView: View {
                 Image("Background")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
+                    .opacity(0.8)
             }
         }
     }
