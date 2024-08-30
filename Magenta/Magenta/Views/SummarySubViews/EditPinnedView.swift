@@ -52,16 +52,15 @@ struct EditPinnedView: View {
                 }
 
                 Section(header: Text("Pinned")) {
-                    ForEach(pinnedItems, id: \.self) { item in
-                        HStack {
-                            Image(systemName: "pin.slash.fill")
-                                .foregroundStyle(.red)
-                            Text(item)
+                        ForEach(pinnedItems, id: \.self) { item in
+                            HStack {
+                                Image(systemName: "pin.slash.fill")
+                                    .foregroundStyle(.red)
+                                Text(item)
+                            }
                         }
-
-                    }
-                    .onDelete(perform: deleteItem)
-                    .onMove(perform: moveItem)
+                        .onDelete(perform: deleteItem)
+                        .onMove(perform: moveItem)
                 }
 
                 Section(header: Text("Mood")) {
