@@ -51,17 +51,22 @@ struct EditPinnedView: View {
                     self.searchText = transcribedText
                 }
 
-                Section(header: Text("Pinned")) {
-                        ForEach(pinnedItems, id: \.self) { item in
-                            HStack {
-                                Image(systemName: "pin.slash.fill")
-                                    .foregroundStyle(.red)
-                                Text(item)
-                            }
+               Section(header: Text("Pinned")) {
+                    ForEach(pinnedItems, id: \.self) { item in
+                        HStack {
+                            Image(systemName: "pin.slash.fill")
+                                .foregroundStyle(.red)
+                            Text(item)
+                                .onDrag { NSItemProvider(object: item as NSString) }
+                            Spacer()
+                            Image(systemName: "line.3.horizontal")
+                                .foregroundStyle(.gray)
                         }
-                        .onDelete(perform: deleteItem)
-                        .onMove(perform: moveItem)
-                }
+                    }
+                    .onDelete(perform: deleteItem)
+                    .onMove(perform: movePinnedItems)
+                    .onInsert(of: ["public.txt"], perform: dropList1)
+               }
 
                 Section(header: Text("Mood")) {
                     ForEach(moodItems, id: \.self) { item in
@@ -69,8 +74,11 @@ struct EditPinnedView: View {
                             Image(systemName: "pin.fill")
                                 .foregroundStyle(.yellow)
                             Text(item)
+                                .onDrag { NSItemProvider(object: item as NSString) }
                         }
                     }
+                    .onMove(perform: moveMoodItems)
+                    .onInsert(of: ["public.txt"], perform: dropList2)
                 }
 
             }
@@ -85,12 +93,42 @@ struct EditPinnedView: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    func deleteItem(at offsets: IndexSet) {
-        items.remove(atOffsets: offsets)
+    func dropList1(at index: Int, _ items: [NSItemProvider]) {
+        for item in items {
+            _ = item.loadObject(ofClass: String.self) { droppedString, _ in
+                if let theString = droppedString {
+                    DispatchQueue.main.async {
+                        self.pinnedItems.insert(theString, at: index)
+                        self.moodItems.removeAll { $0 == theString }
+                    }
+                }
+            }
+        }
     }
 
-    func moveItem(from source: IndexSet, to destination: Int) {
-        items.move(fromOffsets: source, toOffset: destination)
+    func dropList2(at index: Int, _ items: [NSItemProvider]) {
+        for item in items {
+            _ = item.loadObject(ofClass: String.self) { droppedString, _ in
+                if let theString = droppedString {
+                    DispatchQueue.main.async {
+                        self.moodItems.insert(theString, at: index)
+                        self.pinnedItems.removeAll { $0 == theString }
+                    }
+                }
+            }
+        }
+    }
+
+    func movePinnedItems(from source: IndexSet, to destination: Int) {
+        pinnedItems.move(fromOffsets: source, toOffset: destination)
+    }
+
+    func moveMoodItems(from source: IndexSet, to destination: Int) {
+        moodItems.move(fromOffsets: source, toOffset: destination)
+    }
+
+    func deleteItem(at offsets: IndexSet) {
+        items.remove(atOffsets: offsets)
     }
 
     func addItem() {
