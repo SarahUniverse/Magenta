@@ -10,6 +10,7 @@ import SwiftUI
 struct SignUpView: View {
     @StateObject private var signUpViewModel = SignUpViewModel()
     @Environment(\.modelContext) private var modelContext
+    @State private var showMainView = false
 
     var body: some View {
         NavigationStack {
@@ -73,11 +74,20 @@ struct SignUpView: View {
             .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
                 Alert(
                     title: Text("Success"),
-                    message: Text("Your account has been created. Please log in."),
+                    message: Text("Your account has been created."),
                     dismissButton: .default(Text("OK")) {
-                        // Here you might want to pop back to the login view or reset the form
+                        showMainView = true
                     }
                 )
+            }
+            .background(
+                NavigationLink(destination: MainView(user: UserModel(id: UUID().uuidString, name: signUpViewModel.username)), isActive: $showMainView) {
+                    EmptyView()
+                }
+                    .hidden()
+            )
+            .onAppear {
+                signUpViewModel.setModelContext(modelContext)
             }
             .background {
                 Image("Background")
@@ -85,6 +95,7 @@ struct SignUpView: View {
                     .aspectRatio(contentMode: .fill)
                     .opacity(0.8)
             }
+
         }
     }
 }
