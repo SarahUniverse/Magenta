@@ -8,14 +8,12 @@
 import SwiftData
 
 @Model
-class User {
+class UserModel {
     var id: String
     var name: String
-    var isLoggedIn: Bool
 
-    init(id: String, name: String, isLoggedIn: Bool) {
+    init(id: String, name: String) {
         self.id = id
         self.name = name
-        self.isLoggedIn = isLoggedIn
     }
 }

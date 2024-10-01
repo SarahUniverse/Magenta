@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    let user: User
+    let user: UserModel
 
     var body: some View {
 
@@ -61,5 +61,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(user: User(id: "12345678", name: "Sarah", isLoggedIn: false))
+    MainView(user: UserModel(id: "12345678", name: "Sarah"))
 }

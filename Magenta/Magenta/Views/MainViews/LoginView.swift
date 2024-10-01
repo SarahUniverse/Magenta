@@ -59,7 +59,7 @@ struct LoginView: View {
                 Text(error)
                     .foregroundStyle(.red)
                 .navigationDestination(isPresented: $isNavigating) {
-                    MainView(user: User(id: "", name: "", isLoggedIn: true))
+                    MainView(user: UserModel(id: "", name: ""))
                 }
 
                 Text("Or sign in with")

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @StateObject private var signUpViewModel = SignUpViewModel()
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -45,10 +46,10 @@ struct SignUpView: View {
                 .padding()
 
                 Button(action: {
-                    if self.signUpViewModel.validateFields() {
-                        // Here you would typically call an API or save data locally
-                        self.signUpViewModel.isSignUpSuccessful = true
-                        self.signUpViewModel.errorMessage = ""
+                    if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
+                        signUpViewModel.errorMessage = "User already exists. Please log in or use a different username."
+                    } else if signUpViewModel.validateFields() {
+                        signUpViewModel.signUp()
                     }
                 }, label: {
                     Text("Sign Up")
@@ -66,12 +67,15 @@ struct SignUpView: View {
 
                 Spacer()
             }
+            .onAppear {
+                signUpViewModel.setModelContext(modelContext)
+            }
             .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
                 Alert(
                     title: Text("Success"),
                     message: Text("Your account has been created. Please log in."),
                     dismissButton: .default(Text("OK")) {
-                        // Optionally, navigate back or reset the form
+                        // Here you might want to pop back to the login view or reset the form
                     }
                 )
             }
@@ -84,7 +88,6 @@ struct SignUpView: View {
         }
     }
 }
-
 #Preview {
     SignUpView()
         .environmentObject(SignUpViewModel()) // Provide a preview environment object if needed

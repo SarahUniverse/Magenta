@@ -15,7 +15,7 @@ struct MagentaApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
-            User.self
+            UserModel.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -27,9 +27,9 @@ struct MagentaApp: App {
     }()
 
     var body: some Scene {
-        let users: [User] = []
+        let users: [UserModel] = []
         WindowGroup {
-            InitialView(users: users)
+            InitialView()
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

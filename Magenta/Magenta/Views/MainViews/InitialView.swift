@@ -10,17 +10,23 @@ import SwiftUI
 
 public struct InitialView: View {
     @Environment(\.modelContext) private var modelContext
-    @State var users: [User]
+    @StateObject private var initialViewModel = InitialViewModel()
+    @StateObject private var signUpViewModel = SignUpViewModel()
 
     public var body: some View {
-        if let currentUser = users.first(where: { $0.isLoggedIn }) {
-            MainView(user: currentUser)
-        } else {
-            LoginView()
+        Group {
+            if let currentUser = initialViewModel.getCurrentUser() {
+                if initialViewModel.isUserLoggedIn() {
+                    MainView(user: currentUser)
+                } else {
+                    LoginView()
+                }
+            } else {
+                SignUpView()
+            }
         }
-    }
-
-    func isUserLoggedIn() -> Bool {
-        users.contains(where: { $0.isLoggedIn })
+        .onAppear {
+            initialViewModel.setModelContext(modelContext)
+        }
     }
 }

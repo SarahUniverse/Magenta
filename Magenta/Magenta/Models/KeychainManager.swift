@@ -64,6 +64,31 @@ class KeychainManager {
         return password
     }
 
+    func retrieveAccountNameFromKeychain(for userName: String) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: userName,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnAttributes as String: kCFBooleanTrue as Any
+        ]
+
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        guard status == noErr else {
+                print("\(status)")
+                return nil
+            }
+
+        guard let existingItem = item as? [String: Any],
+              let accountNameData = existingItem[kSecAttrAccount as String] as? String else {
+            print("Failed to retrieve or cast account name")
+            return nil
+        }
+
+        return accountNameData
+    }
+
     func deletePasswordFromKeychain(for account: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -76,4 +101,5 @@ class KeychainManager {
             throw KeychainError.unexpectedStatus(status)
         }
     }
+
 }
