@@ -80,7 +80,6 @@ class SignUpViewModel: ObservableObject {
 
     func doesUserExist(for account: String) -> Bool {
         do {
-            // Assuming this method throws if the item is not found or on other errors
             _ = try keychainManager.retrievePasswordFromKeychain(for: account)
             return true
         } catch KeychainManager.KeychainError.itemNotFound {

@@ -5,7 +5,6 @@
 //  Created by Sarah Clark on 8/6/24.
 //
 
-import AuthenticationServices
 import SwiftData
 import SwiftUI
 
@@ -61,21 +60,10 @@ struct LoginView: View {
                     .frame(height: 40)
                     .padding()
 
-                SignInWithAppleButton(.signIn) { request in
-                    request.requestedScopes = [.fullName, .email]
-                    loginViewModel.signInWithApple(request: request)
-                } onCompletion: { result in
-                    switch result {
-                    case .success:
-                        loginViewModel.isNavigating = true
-                        print("Authorization successful")
-                    case .failure(let error):
-                        print("Authorization failed: \(error.localizedDescription)")
-                    }
-                }
-                .frame(height: 40)
-                .padding()
-                .signInWithAppleButtonStyle(.white)
+                loginViewModel.setupAppleSignInButton()
+                    .frame(height: 40)
+                    .padding()
+                    .signInWithAppleButtonStyle(.white)
             }
             .background(
                 Image("Background")

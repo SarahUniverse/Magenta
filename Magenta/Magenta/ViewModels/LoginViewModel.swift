@@ -75,8 +75,25 @@ class LoginViewModel: ObservableObject {
         }
     }
 
+    func setupAppleSignInButton() -> SignInWithAppleButton {
+        return SignInWithAppleButton(.signIn) { [weak self] request in
+            request.requestedScopes = [.fullName, .email]
+            self?.signInWithApple(request: request)
+        } onCompletion: { [weak self] result in
+            switch result {
+            case .success:
+                self?.isNavigating = true
+                print("Authorization successful")
+            case .failure(let error):
+                print("Authorization failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
     func signInWithApple(request: ASAuthorizationAppleIDRequest) {
-        // Implement Apple sign in logic here or call it directly from the view if more appropriate
+        // Here you would implement the logic for Apple Sign-In
+        // This could involve calling Apple's authentication services
+        // After successful authentication, you might set `currentUser` or handle navigation internally
     }
 }
 
