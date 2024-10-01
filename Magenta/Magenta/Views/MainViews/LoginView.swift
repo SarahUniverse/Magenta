@@ -19,6 +19,8 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var userInfo = ""
     @State private var isNavigating = false
+    @State private var error: String = ""
+    @State private var isLoggedIn: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -41,8 +43,10 @@ struct LoginView: View {
                     .disableAutocorrection(true)
 
                 Button(action: {
-                    loginUser()
-                    isNavigating = true
+                    checkPassword()
+                    if isLoggedIn {
+                        isNavigating = true
+                    }
                 }, label: {
                     Text("Login")
                         .foregroundStyle(.white)
@@ -52,7 +56,8 @@ struct LoginView: View {
                         .cornerRadius(10)
                 })
                 .padding()
-
+                Text(error)
+                    .foregroundStyle(.red)
                 .navigationDestination(isPresented: $isNavigating) {
                     MainView(user: User(id: "", name: "", isLoggedIn: true))
                 }
@@ -92,8 +97,29 @@ struct LoginView: View {
     }
 
     func loginUser() {
-        let newUser = User(id: UUID().uuidString, name: username, isLoggedIn: true)
-        modelContext.insert(newUser)
+        do {
+            print("The password is: \(password)")
+            try KeychainManager.shared.savePassword(password: password, for: username)
+        } catch {
+            self.error = "Failed to save password: \(error.localizedDescription)"
+        }
+    }
+
+    func checkPassword() {
+        do {
+            let storedPassword = try KeychainManager.shared.retrievePassword(for: username)
+
+            if password == storedPassword {
+                self.isLoggedIn = true
+                self.error = ""
+            } else {
+                self.error = "Incorrect password."
+            }
+        } catch KeychainManager.KeychainError.itemNotFound {
+            self.error = "User not found. Please check credentials."
+        } catch {
+            self.error = "An error occurred: \(error.localizedDescription)"
+        }
     }
 
     func signInWithGoogle() {
