@@ -19,7 +19,7 @@ public struct InitialView: View {
                 if initialViewModel.isUserLoggedIn() {
                     MainView(user: currentUser)
                 } else {
-                    LoginView()
+                    LoginView(modelContext: modelContext)
                 }
             } else {
                 SignUpView()

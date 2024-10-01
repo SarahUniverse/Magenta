@@ -84,7 +84,7 @@ struct SignUpView: View {
                 NavigationLink(destination: MainView(user: UserModel(id: UUID().uuidString, name: signUpViewModel.username)), isActive: $showMainView) {
                     EmptyView()
                 }
-                    .hidden()
+                .hidden()
             )
             .onAppear {
                 signUpViewModel.setModelContext(modelContext)
@@ -95,10 +95,10 @@ struct SignUpView: View {
                     .aspectRatio(contentMode: .fill)
                     .opacity(0.8)
             }
-
         }
     }
 }
+
 #Preview {
     SignUpView()
         .environmentObject(SignUpViewModel()) // Provide a preview environment object if needed

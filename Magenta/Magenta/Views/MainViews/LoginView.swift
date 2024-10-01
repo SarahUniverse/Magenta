@@ -6,21 +6,15 @@
 //
 
 import AuthenticationServices
-import GoogleSignIn
-import GoogleSignInSwift
 import SwiftData
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.colorScheme) private var colorScheme
-    @Query private var items: [Item]
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var userInfo = ""
-    @State private var isNavigating = false
-    @State private var error: String = ""
-    @State private var isLoggedIn: Bool = false
+    @StateObject private var loginViewModel: LoginViewModel
+
+    init(modelContext: ModelContext) {
+        _loginViewModel = StateObject(wrappedValue: LoginViewModel(modelContext: modelContext))
+    }
 
     var body: some View {
         NavigationStack {
@@ -30,54 +24,50 @@ struct LoginView: View {
                     .font(.largeTitle)
                     .bold()
 
-                TextField("Username", text: $username)
+                TextField("Username", text: $loginViewModel.username)
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
 
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $loginViewModel.password)
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
 
                 Button(action: {
-                    checkPassword()
-                    if isLoggedIn {
-                        isNavigating = true
+                    loginViewModel.checkPassword()
+                    if loginViewModel.isLoggedIn {
+                        loginViewModel.isNavigating = true
                     }
                 }, label: {
                     Text("Login")
-                        .foregroundStyle(.white)
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(10)
                 })
                 .padding()
-                Text(error)
-                    .foregroundStyle(.red)
-                .navigationDestination(isPresented: $isNavigating) {
-                    MainView(user: UserModel(id: "", name: ""))
-                }
+
+                Text(loginViewModel.error)
+                    .foregroundColor(.red)
+                    .navigationDestination(isPresented: $loginViewModel.isNavigating) {
+                        MainView(user: UserModel(id: "", name: ""))
+                    }
 
                 Text("Or sign in with")
-                    .foregroundStyle(.white)
+                    .foregroundColor(.white)
                     .bold()
 
-                CustomGoogleSignInButton(action: {
-                    self.signInWithGoogle()
-                })
-                .frame(height: 40)
-                .padding()
+                CustomGoogleSignInButton(action: loginViewModel.signInWithGoogle)
+                    .frame(height: 40)
+                    .padding()
 
                 SignInWithAppleButton(.signIn) { request in
                     request.requestedScopes = [.fullName, .email]
+                    loginViewModel.signInWithApple(request: request)
                 } onCompletion: { result in
                     switch result {
                     case .success:
-                        isNavigating = true
+                        loginViewModel.isNavigating = true
                         print("Authorization successful")
                     case .failure(let error):
                         print("Authorization failed: \(error.localizedDescription)")
@@ -85,101 +75,27 @@ struct LoginView: View {
                 }
                 .frame(height: 40)
                 .padding()
-                .signInWithAppleButtonStyle(colorScheme == .light ? .white : .black)
+                .signInWithAppleButtonStyle(.white)
             }
-            .background {
+            .background(
                 Image("Background")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .opacity(0.8)
-            }
+            )
         }
-    }
-
-    func loginUser() {
-        do {
-            print("The password is: \(password)")
-            try KeychainManager.shared.savePasswordToKeychain(password: password, for: username)
-        } catch {
-            self.error = "Failed to save password: \(error.localizedDescription)"
-        }
-    }
-
-    func checkPassword() {
-        do {
-            let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
-
-            if password == storedPassword {
-                self.isLoggedIn = true
-                self.error = ""
-            } else {
-                self.error = "Incorrect password."
-            }
-        } catch KeychainManager.KeychainError.itemNotFound {
-            self.error = "User not found. Please check credentials."
-        } catch {
-            self.error = "An error occurred: \(error.localizedDescription)"
-        }
-    }
-
-    func signInWithGoogle() {
-        guard let rootViewController = self.rootViewController else {
-            print("Root view controller not found")
-            return
-        }
-
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
-            guard let result else {
-                print("Error signing in: \(String(describing: error))")
-                return
-            }
-            print("Successfully signed in user")
-            self.userInfo = result.user.profile?.json ?? ""
-            isNavigating = true
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
-}
-
-private extension LoginView {
-    var rootViewController: UIViewController? {
-        return UIApplication.shared.connectedScenes
-            .filter({ $0.activationState == .foregroundActive })
-            .compactMap { $0 as? UIWindowScene }
-            .compactMap { $0.keyWindow }
-            .first?.rootViewController
-    }
-}
-
-private extension GIDProfileData {
-    var json: String {
-    """
-    success: {
-      Given Name: \(self.givenName ?? "None")
-      Family Name: \(self.familyName ?? "None")
-      Name: \(self.name)
-      Email: \(self.email)
-      Profile Photo: \(self.imageURL(withDimension: 1)?.absoluteString ?? "None");
-    }
-    """
     }
 }
 
 #Preview {
-    LoginView()
-        .modelContainer(for: Item.self, inMemory: true)
+    do {
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: DummyItem.self, configurations: configuration)
+        let context = container.mainContext
+
+        return LoginView(modelContext: context)
+    } catch {
+        print("Failed to create ModelContainer for preview: \(error)")
+        return Text("Preview Setup Failed")
+    }
 }
