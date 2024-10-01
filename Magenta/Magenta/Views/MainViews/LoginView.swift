@@ -99,7 +99,7 @@ struct LoginView: View {
     func loginUser() {
         do {
             print("The password is: \(password)")
-            try KeychainManager.shared.savePassword(password: password, for: username)
+            try KeychainManager.shared.savePasswordToKeychain(password: password, for: username)
         } catch {
             self.error = "Failed to save password: \(error.localizedDescription)"
         }
@@ -107,7 +107,7 @@ struct LoginView: View {
 
     func checkPassword() {
         do {
-            let storedPassword = try KeychainManager.shared.retrievePassword(for: username)
+            let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
 
             if password == storedPassword {
                 self.isLoggedIn = true

@@ -21,8 +21,7 @@ class KeychainManager {
 
     private init() {}
 
-    // Saves a password to the Keychain for a given account.
-    func savePassword(password: String, for account: String) throws {
+    func savePasswordToKeychain(password: String, for account: String) throws {
         let passwordData = password.data(using: String.Encoding.utf8)!
 
         let query: [String: Any] = [
@@ -38,8 +37,7 @@ class KeychainManager {
         }
     }
 
-    // Retrieves password from the Keychain for a given account.
-    func retrievePassword(for account: String) throws -> String {
+    func retrievePasswordFromKeychain(for account: String) throws -> String {
 
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -66,8 +64,7 @@ class KeychainManager {
         return password
     }
 
-    // Deletes a password from the Keychain for a given account.
-    func deletePassword(for account: String) throws {
+    func deletePasswordFromKeychain(for account: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: account
