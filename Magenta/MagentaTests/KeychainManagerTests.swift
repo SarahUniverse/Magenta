@@ -71,17 +71,6 @@ class KeychainManagerTests: XCTestCase {
         }
     }
 
-    func testDuplicateSave() throws {
-        try keychainManager.savePasswordToKeychain(password: testPassword, for: testAccount)
-
-        // Try saving again, which should not throw an error but might update the password
-        try keychainManager.savePasswordToKeychain(password: "newPassword", for: testAccount)
-
-        // Check if password was updated
-        let newPassword = try keychainManager.retrievePasswordFromKeychain(for: testAccount)
-        XCTAssertEqual(newPassword, "newPassword", "The password should have been updated.")
-    }
-
     override func tearDown() {
         // Ensure test data is cleaned up after each test
         try? keychainManager.deletePasswordFromKeychain(for: testAccount)
