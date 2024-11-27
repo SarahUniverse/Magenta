@@ -8,7 +8,6 @@
 import Testing
 @testable import Magenta
 
-
 // TODO: Fix tests (or actual code) so they consistently pass.
 final class KeychainManagerTests {
 
