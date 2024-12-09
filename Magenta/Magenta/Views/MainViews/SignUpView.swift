@@ -19,32 +19,35 @@ struct SignUpView: View {
                     .padding(.top, 30)
                     .foregroundStyle(.white)
                     .font(.largeTitle)
-                    .bold()
 
                 VStack(alignment: .leading) {
                     Text("Username")
                         .font(.headline)
+                        .foregroundStyle(.white.opacity(0.7))
                     TextField("Enter username", text: $signUpViewModel.username)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .autocapitalization(.none)
 
                     Text("Email")
                         .font(.headline)
+                        .foregroundStyle(.white.opacity(0.7))
                     TextField("Enter email", text: $signUpViewModel.email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .autocapitalization(.none)
 
                     Text("Password")
                         .font(.headline)
+                        .foregroundStyle(.white.opacity(0.7))
                     SecureField("Enter password", text: $signUpViewModel.password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
 
                     Text("Confirm Password")
                         .font(.headline)
+                        .foregroundStyle(.white.opacity(0.7))
                     SecureField("Confirm password", text: $signUpViewModel.confirmPassword)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
-                .padding()
+                .padding(20)
 
                 Button(action: {
                     if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
@@ -54,13 +57,14 @@ struct SignUpView: View {
                     }
                 }, label: {
                     Text("Sign Up")
+                        .bold()
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.mediumBlue)
                         .cornerRadius(10)
                 })
-                .padding()
+                .padding(20)
 
                 Text(signUpViewModel.errorMessage)
                     .foregroundColor(.red)
@@ -90,10 +94,17 @@ struct SignUpView: View {
                 signUpViewModel.setModelContext(modelContext)
             }
             .background {
-                Image("Background")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .opacity(0.8)
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.lightPurple,
+                        Color.darkPurple,
+                        Color.darkBlue,
+                        Color.black
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomLeading
+                )
+                .ignoresSafeArea()
             }
         }
     }
