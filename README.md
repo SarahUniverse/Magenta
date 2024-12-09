@@ -9,7 +9,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 **Magenta** is a user-friendly mental health app developed to provide support and resources for individuals seeking to improve their mental well-being. With a combination of self-help tools, mindfulness exercises, and access to professional resources, Magenta aims to be your companion in achieving better mental health.
 
 ## Project Management
-Link to Jira project: https://sarahireneclark.atlassian.net/jira/software/projects/SCRUM/boards/1
+To be added.
 
 ## Features
 
