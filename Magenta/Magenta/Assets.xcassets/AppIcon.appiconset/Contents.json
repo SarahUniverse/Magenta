@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "magenta6.png",
+      "filename" : "AnyIcon.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "magenta6dark.png",
+      "filename" : "AnyIcon 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "magenta6tinted.png",
+      "filename" : "TintedIcon.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -76,13 +76,13 @@
       "size" : "512x512"
     },
     {
-      "filename" : "magenta6 1.png",
+      "filename" : "AnyIcon 2.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
     },
     {
-      "filename" : "magenta6dark 1.png",
+      "filename" : "AnyIcon 3.png",
       "idiom" : "universal",
       "platform" : "watchos",
       "size" : "1024x1024"
