@@ -72,9 +72,10 @@ struct LoginView: View {
                     .padding(20)
 
                 loginViewModel.setupAppleSignInButton()
-                    .frame(height: 40)
+                    .containerRelativeFrame(.vertical, count:8, spacing: 60)
                     .padding(20)
-                    .signInWithAppleButtonStyle(.white)
+                    .signInWithAppleButtonStyle(.whiteOutline)
+                Spacer()
             }
             .padding()
             .background(backgroundGradient)
