@@ -15,20 +15,31 @@ struct LoginView: View {
         _loginViewModel = StateObject(wrappedValue: LoginViewModel(modelContext: modelContext))
     }
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.lightPurple,
+            Color.darkPurple,
+            Color.darkBlue,
+            Color.black
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     var body: some View {
         NavigationStack {
             VStack {
                 Text("Welcome to Magenta")
+                    .padding(.top, 30)
                     .foregroundStyle(.white)
                     .font(.largeTitle)
-                    .bold()
 
                 TextField("Username", text: $loginViewModel.username)
-                    .padding()
+                    .padding(20)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
                 SecureField("Password", text: $loginViewModel.password)
-                    .padding()
+                    .padding(20)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
                 Button(action: {
@@ -44,7 +55,7 @@ struct LoginView: View {
                         .background(Color.blue)
                         .cornerRadius(10)
                 })
-                .padding()
+                .padding(20)
 
                 Text(loginViewModel.error)
                     .foregroundColor(.red)
@@ -58,19 +69,15 @@ struct LoginView: View {
 
                 CustomGoogleSignInButton(action: loginViewModel.signInWithGoogle)
                     .frame(height: 40)
-                    .padding()
+                    .padding(20)
 
                 loginViewModel.setupAppleSignInButton()
                     .frame(height: 40)
-                    .padding()
+                    .padding(20)
                     .signInWithAppleButtonStyle(.white)
             }
-            .background(
-                Image("Background")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .opacity(0.8)
-            )
+            .padding()
+            .background(backgroundGradient)
         }
     }
 }

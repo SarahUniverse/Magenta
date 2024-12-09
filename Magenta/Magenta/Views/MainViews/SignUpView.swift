@@ -12,6 +12,17 @@ struct SignUpView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showMainView = false
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.lightPurple,
+            Color.darkPurple,
+            Color.darkBlue,
+            Color.black
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -97,19 +108,7 @@ struct SignUpView: View {
             .onAppear {
                 signUpViewModel.setModelContext(modelContext)
             }
-            .background {
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color.lightPurple,
-                        Color.darkPurple,
-                        Color.darkBlue,
-                        Color.black
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomLeading
-                )
-                .ignoresSafeArea()
-            }
+            .background(backgroundGradient)
         }
     }
 }
