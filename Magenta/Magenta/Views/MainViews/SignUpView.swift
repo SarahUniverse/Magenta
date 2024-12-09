@@ -37,26 +37,28 @@ struct SignUpView: View {
                         .foregroundStyle(.white.opacity(0.7))
                     TextField("Enter username", text: $signUpViewModel.username)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
 
                     Text("Email")
                         .font(.headline)
                         .foregroundStyle(.white.opacity(0.7))
                     TextField("Enter email", text: $signUpViewModel.email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
 
                     Text("Password")
                         .font(.headline)
                         .foregroundStyle(.white.opacity(0.7))
                     SecureField("Enter password", text: $signUpViewModel.password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textInputAutocapitalization(.never)
 
                     Text("Confirm Password")
                         .font(.headline)
                         .foregroundStyle(.white.opacity(0.7))
                     SecureField("Confirm password", text: $signUpViewModel.confirmPassword)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textInputAutocapitalization(.never)
                 }
                 .padding(20)
 

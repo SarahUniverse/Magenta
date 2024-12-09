@@ -37,10 +37,12 @@ struct LoginView: View {
                 TextField("Username", text: $loginViewModel.username)
                     .padding(20)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
 
                 SecureField("Password", text: $loginViewModel.password)
                     .padding(20)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textInputAutocapitalization(.never)
 
                 Button(action: {
                     loginViewModel.checkPassword()
@@ -49,10 +51,11 @@ struct LoginView: View {
                     }
                 }, label: {
                     Text("Login")
-                        .foregroundColor(.white)
+                        .bold()
+                        .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.mediumBlue)
                         .cornerRadius(10)
                 })
                 .padding(20)
@@ -72,7 +75,7 @@ struct LoginView: View {
                     .padding(20)
 
                 loginViewModel.setupAppleSignInButton()
-                    .containerRelativeFrame(.vertical, count:8, spacing: 60)
+                    .containerRelativeFrame(.vertical, count: 8, spacing: 60)
                     .padding(20)
                     .signInWithAppleButtonStyle(.whiteOutline)
                 Spacer()
