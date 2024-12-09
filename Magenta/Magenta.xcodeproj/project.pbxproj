@@ -441,7 +441,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Magenta/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Explain why the app requested permission to read samples from the HealthKit store.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Explain why the app requested permission to save samples to the HealthKit store.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to enable voice-to-text functionality in the search field, allowing you to search using your voice.";
@@ -489,7 +489,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Magenta/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Explain why the app requested permission to read samples from the HealthKit store.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Explain why the app requested permission to save samples to the HealthKit store.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires microphone access to enable voice-to-text functionality in the search field, allowing you to search using your voice.";
