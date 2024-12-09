@@ -28,10 +28,17 @@ struct MoreView: View {
         GridItem(.flexible())
     ]
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.darkPurple,
+            Color.darkBlue
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     var body: some View {
         NavigationStack {
-
-            Divider()
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(0..<items.count, id: \.self) { index in
@@ -43,9 +50,11 @@ struct MoreView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
+                                    .foregroundStyle(.mediumBlue)
                                 Text(items[index].1)
+                                    .bold()
                                     .font(.caption)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.white)
                             }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .padding()
@@ -55,22 +64,21 @@ struct MoreView: View {
                 }
                 .padding()
             }
-            // .toolbarBackground(.purpleBlue, for: .navigationBar)
-            // .toolbarBackground(.visible, for: .navigationBar)
-            // .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbarBackground(.black, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
-
                     }
+                    .bold()
+                    .foregroundStyle(.mediumBlue)
                 }
             }
             .navigationBarTitle("More")
-
+            .background(backgroundGradient)
         }
-
     }
-
 }
 
 #Preview {

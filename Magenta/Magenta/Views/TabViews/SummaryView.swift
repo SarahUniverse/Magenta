@@ -34,7 +34,7 @@ struct SummaryView: View {
             }
 
             .navigationTitle("Summary")
-            .toolbarBackground(.purple2, for: .navigationBar)
+            .toolbarBackground(.mediumPurple, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
