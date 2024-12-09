@@ -84,9 +84,7 @@ struct SignUpView: View {
                     .padding()
                 Spacer()
 
-                Text("© \(String(Calendar.current.component(.year, from: Date()))) SarahUniverse")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.8))
+                CopyrightView()
                 Spacer()
             }
             .onAppear {
