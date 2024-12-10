@@ -18,6 +18,7 @@ struct MainView: View {
             Tab("Exercise", systemImage: "figure.run") { ExerciseView() }
             Tab("More", systemImage: "line.3.horizontal") { MoreView() }
         }
+        .tint(.mediumBlue)
         .navigationBarBackButtonHidden(true)
     }
 }
