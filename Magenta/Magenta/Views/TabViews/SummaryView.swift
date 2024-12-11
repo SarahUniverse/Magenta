@@ -10,38 +10,55 @@ import SwiftUI
 struct SummaryView: View {
     @State private var showingModal = false
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.lightPurple,
+            Color.darkPurple,
+            Color.darkBlue,
+            Color.black,
+            Color.black,
+            Color.black,
+            Color.black,
+            Color.black
+
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     var body: some View {
         NavigationView {
-            List {
-                Section(header: Text("Notifications")) {
+            ZStack {
+                backgroundGradient
+                    .frame(height: UIScreen.main.bounds.height)
+                    .edgesIgnoringSafeArea(.all)
 
-                }
+                VStack {
+                    Section(header: Text("Notifications")) {
 
-                Section {
-                    Text("Blah blah blah")
-                } header: {
-                    HStack {
-                        Text("Pinned")
-                        Spacer()
-                        Button("Edit") {
-                            showingModal.toggle()
-                        }
-                        .sheet(isPresented: $showingModal) {
-                            EditPinnedView()
-                        }
+                     }
+                    .background(.almostBlack)
+                    .padding()
+                     Section {
+                         Text("Blah blah blah")
+                         } header: {
+
+                         HStack {
+                             Text("Pinned")
+                             Spacer()
+
+                             Button("Edit") {
+                             showingModal.toggle()
+                             }
+                         }
                     }
+                    .background(.almostBlack)
                 }
+                .navigationBarTitle("Summary")
+                .foregroundStyle(Color.white)
             }
 
-            .navigationTitle("Summary")
-            .toolbarBackground(.mediumPurple, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
-                }
-            }
+
         }
     }
 }
