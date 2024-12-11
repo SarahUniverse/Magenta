@@ -1,5 +1,5 @@
 //
-//  ExerciseSummary.swift
+//  NutritionSummaryView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 12/11/24.
@@ -7,30 +7,27 @@
 
 import SwiftUI
 
-struct ExerciseSummary: View {
+struct NutritionSummaryView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("EXERCISE")
+            Text("NUTRITION")
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
+
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "figure.run")
+                Image(systemName: "fork.knife")
                     .foregroundColor(.darkBlue)
                     .font(.largeTitle)
-
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Mental Health Questionnaire")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                    Divider()
-                    Text("Along with regular reflection, assessing your current risk for common conditions can be an important part of caring for your mental health.")
+                    Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
+
                     Button(action: {
-                        // Action for "Take Questionnaire"
+                        // Action for "Review"
                     }) {
-                        Text("Take Questionnaire")
+                        Text("Review")
                             .foregroundColor(.blue)
                     }
                 }
@@ -42,6 +39,6 @@ struct ExerciseSummary: View {
     }
 }
 
-    #Preview {
-        ExerciseSummary()
-    }
+#Preview {
+    NutritionSummaryView()
+}

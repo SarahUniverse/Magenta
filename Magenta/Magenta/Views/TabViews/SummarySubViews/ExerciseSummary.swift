@@ -1,5 +1,5 @@
 //
-//  NutritionSummaryView.swift
+//  ExerciseSummary.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 12/11/24.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct NutritionSummaryView: View {
+struct ExerciseSummary: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("NUTRITION")
+            Text("EXERCISE")
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
 
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "fork.knife")
+                Image(systemName: "figure.run")
                     .foregroundColor(.darkBlue)
                     .font(.largeTitle)
 
@@ -40,6 +40,6 @@ struct NutritionSummaryView: View {
     }
 }
 
-#Preview {
-    NutritionSummaryView()
-}
+    #Preview {
+        ExerciseSummary()
+    }

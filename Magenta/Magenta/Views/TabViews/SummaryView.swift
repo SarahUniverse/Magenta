@@ -28,22 +28,24 @@ struct SummaryView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                backgroundGradient
-                    .edgesIgnoringSafeArea(.all)
-
-                VStack(alignment: .leading, spacing: 20) {
-                    ExerciseSummary()
-                    SleepSummaryView()
-                    NutritionSummaryView()
-                    MeditationSummaryView()
+                ZStack {
+                    backgroundGradient
+                        .edgesIgnoringSafeArea(.all)
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            ExerciseSummary()
+                            SleepSummaryView()
+                            NutritionSummaryView()
+                            MeditationSummaryView()
+                        }
+                        .padding()
+                    }
+                    .navigationBarTitle("Summary")
+                    .navigationBarItems(trailing: Image(systemName: "person.circle"))
+                    .foregroundStyle(Color.white)
                 }
-                .navigationBarTitle("Summary")
-                .navigationBarItems(trailing: Image(systemName: "person.circle"))
-                .foregroundStyle(Color.white)
             }
         }
-    }
 }
 
 #Preview {
