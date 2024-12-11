@@ -34,14 +34,14 @@ struct SummaryView: View {
 
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("MENTAL WELLBEING")
+                        Text("EXERCISE")
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.gray)
 
                         HStack(alignment: .top, spacing: 10) {
-                            Image(systemName: "person.crop.circle.badge.exclamationmark")
-                                .foregroundColor(.green)
+                            Image(systemName: "figure.run")
+                                .foregroundColor(.darkBlue)
                                 .font(.largeTitle)
 
                             VStack(alignment: .leading, spacing: 5) {
@@ -62,19 +62,19 @@ struct SummaryView: View {
                             }
                         }
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color.almostBlack)
                         .cornerRadius(10)
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("HEALTH CHECKLIST")
+                        Text("SLEEP")
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.gray)
 
                         HStack(alignment: .top, spacing: 10) {
-                            Image(systemName: "checkmark.shield")
-                                .foregroundColor(.pink)
+                            Image(systemName: "moon.zzz")
+                                .foregroundColor(.darkBlue)
                                 .font(.largeTitle)
 
                             VStack(alignment: .leading, spacing: 5) {
@@ -91,55 +91,72 @@ struct SummaryView: View {
                             }
                         }
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color.almostBlack)
                         .cornerRadius(10)
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text("Pinned")
-                                .font(.title)
-                                .foregroundColor(.white)
-
-                            Spacer()
-
-                            Button(action: {
-                                // Action for "Edit"
-                            }) {
-                                Text("Edit")
-                                    .foregroundColor(.blue)
-                            }
-                        }
+                        Text("NUTRITION")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
 
                         HStack(alignment: .top, spacing: 10) {
-                            Image(systemName: "flame.fill")
-                                .foregroundColor(.orange)
+                            Image(systemName: "fork.knife")
+                                .foregroundColor(.darkBlue)
                                 .font(.largeTitle)
 
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Steps")
-                                    .font(.headline)
+                                Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
+                                    .font(.subheadline)
                                     .foregroundColor(.white)
 
-                                Text("9 steps")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-
-                                Text("12:38 AM")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
+                                Button(action: {
+                                    // Action for "Review"
+                                }) {
+                                    Text("Review")
+                                        .foregroundColor(.blue)
+                                }
                             }
                         }
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color.almostBlack)
+                        .cornerRadius(10)
+                    }
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("MEDITATION")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
+
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "figure.mind.and.body")
+                                .foregroundColor(.darkBlue)
+                                .font(.largeTitle)
+
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+
+                                Button(action: {
+                                    // Action for "Review"
+                                }) {
+                                    Text("Review")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color.almostBlack)
                         .cornerRadius(10)
                     }
                 }
+                .navigationBarTitle("Summary")
+                .navigationBarItems(trailing: Image(systemName: "person.circle"))
+                .foregroundStyle(Color.white)
             }
-
-            .navigationBarTitle("Summary")
-            .navigationBarItems(trailing: Image(systemName: "person.circle"))
-            //.foregroundStyle(Color.white)
         }
     }
 }
