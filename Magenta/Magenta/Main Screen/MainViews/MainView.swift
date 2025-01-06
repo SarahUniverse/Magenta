@@ -13,31 +13,53 @@ struct MainView: View {
 
     var body: some View {
         TabView {
-            Tab("Summary", systemImage: "heart.fill") { SummaryView() }
-            Tab("Mood", systemImage: "face.smiling.inverse") { MoodView() }
-            Tab("Meditate", systemImage: "figure.mind.and.body") { MeditateView() }
-            Tab("Exercise", systemImage: "figure.run") { ExerciseView() }
-            Tab("More", systemImage: "line.3.horizontal") { MoreView() }
+            SummaryView()
+                .tabItem {
+                    Label("Summary", systemImage: "heart.fill")
+                }
+
+            MoodView()
+                .tabItem {
+                    Label("Mood", systemImage: "face.smiling.inverse")
+                }
+
+            MeditateView()
+                .tabItem {
+                    Label("Meditate", systemImage: "figure.mind.and.body")
+                }
+
+            ExerciseView()
+                .tabItem {
+                    Label("Exercise", systemImage: "figure.run")
+                }
+
+            MoreView()
+                .tabItem {
+                    Label("More", systemImage: "line.3.horizontal")
+                }
         }
         .tint(.mediumBlue)
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    // Create a temporary Core Data container for preview
-    let previewContainer = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+    let previewContainer = NSPersistentContainer(name: "Model")
+    previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
     previewContainer.loadPersistentStores { _, error in
         if let error = error {
             fatalError("Failed to load Core Data stack: \(error)")
         }
     }
 
-    // Create a sample UserEntity for preview
     let context = previewContainer.viewContext
     let sampleUser = UserEntity(context: context)
     sampleUser.id = UUID()
     sampleUser.username = "Sarah"
+    sampleUser.email = "sarah@example.com"
 
-    return MainView(userEntity: sampleUser)
+    return NavigationStack {
+        MainView(userEntity: sampleUser)
+    }
 }
