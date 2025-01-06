@@ -5,7 +5,7 @@
 //  Created by Sarah Clark on 10/1/24.
 //
 
-import SwiftData
+import CoreData
 import SwiftUI
 
 class SignUpViewModel: ObservableObject {
@@ -15,17 +15,13 @@ class SignUpViewModel: ObservableObject {
     @Published var confirmPassword: String = ""
     @Published var errorMessage: String = ""
     @Published var isSignUpSuccessful: Bool = false
+    @Published var createdUserEntity: UserEntity?
 
-    private var modelContext: ModelContext?
-
+    private var viewContext: NSManagedObjectContext
     private let keychainManager = KeychainManager.shared
 
-    init(modelContext: ModelContext? = nil) {
-        self.modelContext = modelContext
-    }
-
-    func setModelContext(_ context: ModelContext) {
-        self.modelContext = context
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
     }
 
     func validateFields() -> Bool {
@@ -51,22 +47,33 @@ class SignUpViewModel: ObservableObject {
     }
 
     func signUp() {
-        guard let modelContext = modelContext else {
-            errorMessage = "Model context is not set."
-            return
-        }
-
         if validateFields() {
             do {
-                try keychainManager.savePasswordToKeychain(password: password, for: username)
-                guard let accountName = keychainManager.retrieveAccountNameFromKeychain(for: username) else {
-                    throw KeychainManager.KeychainError.itemNotFound
+                // Check if user already exists
+                let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "username == %@ OR email == %@", username, email)
+
+                let existingUsers = try viewContext.fetch(fetchRequest)
+
+                guard existingUsers.isEmpty else {
+                    errorMessage = "Username or email already exists"
+                    return
                 }
 
-                let newUser = UserModel(id: UUID().uuidString, name: accountName)
-                modelContext.insert(newUser)
+                // Save password to keychain
+                try keychainManager.savePasswordToKeychain(password: password, for: username)
 
-                try modelContext.save()
+                // Create new user entity
+                let newUserEntity = UserEntity(context: viewContext)
+                newUserEntity.id = UUID()
+                newUserEntity.username = username
+                newUserEntity.email = email
+
+                // Save to Core Data
+                try viewContext.save()
+
+                // Create UserModel from entity
+                let _ = UserModel(entity: newUserEntity)
 
                 isSignUpSuccessful = true
                 errorMessage = ""
@@ -79,15 +86,17 @@ class SignUpViewModel: ObservableObject {
     }
 
     func doesUserExist(for account: String) -> Bool {
+        let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "username == %@", account)
+
         do {
-            _ = try keychainManager.retrievePasswordFromKeychain(for: account)
-            return true
-        } catch KeychainManager.KeychainError.itemNotFound {
-            return false
+            let results = try viewContext.fetch(fetchRequest)
+            return !results.isEmpty
         } catch {
             print("Error checking user existence: \(error.localizedDescription)")
-            return false // Assuming any other error means the user doesn't exist or we can't tell
+            return false
         }
     }
-
 }
+
+

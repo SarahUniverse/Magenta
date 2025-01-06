@@ -5,12 +5,16 @@
 //  Created by Sarah Clark on 10/1/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct SignUpView: View {
-    @StateObject private var signUpViewModel = SignUpViewModel()
-    @Environment(\.modelContext) private var modelContext
+    @StateObject private var signUpViewModel: SignUpViewModel
     @State private var showMainView = false
+
+    init(viewContext: NSManagedObjectContext) {
+        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext))
+    }
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
@@ -65,7 +69,7 @@ struct SignUpView: View {
                 Button(action: {
                     if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
                         signUpViewModel.errorMessage = "User already exists. Please log in or use a different username."
-                    } else if signUpViewModel.validateFields() {
+                    } else {
                         signUpViewModel.signUp()
                     }
                 }, label: {
@@ -87,9 +91,6 @@ struct SignUpView: View {
                 CopyrightView()
                 Spacer()
             }
-            .onAppear {
-                signUpViewModel.setModelContext(modelContext)
-            }
             .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
                 Alert(
                     title: Text("Success"),
@@ -99,14 +100,10 @@ struct SignUpView: View {
                     }
                 )
             }
-            .background(
-                NavigationLink(destination: MainView(user: UserModel(id: UUID().uuidString, name: signUpViewModel.username)), isActive: $showMainView) {
-                    EmptyView()
+            .navigationDestination(isPresented: $showMainView) {
+                if let userEntity = signUpViewModel.createdUserEntity {
+                    MainView(userEntity: userEntity)
                 }
-                .hidden()
-            )
-            .onAppear {
-                signUpViewModel.setModelContext(modelContext)
             }
             .background(backgroundGradient)
         }
@@ -114,6 +111,14 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
-        .environmentObject(SignUpViewModel()) // Provide a preview environment object if needed
+    let container = NSPersistentContainer(name: "Model")
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+    container.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load Core Data stack: \(error)")
+        }
+    }
+
+    return SignUpView(viewContext: container.viewContext)
 }
