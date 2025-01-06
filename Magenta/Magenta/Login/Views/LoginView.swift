@@ -63,7 +63,11 @@ struct LoginView: View {
                 Text(loginViewModel.error)
                     .foregroundColor(.red)
                     .navigationDestination(isPresented: $loginViewModel.isNavigating) {
-                        MainView(user: UserModel(id: "", name: ""))
+                        if let currentUser = loginViewModel.currentUser {
+                            MainView(userEntity: currentUser)
+                        } else {
+                            Text("Error loading user")
+                        }
                     }
 
                 Text("Or sign in with")
@@ -90,11 +94,8 @@ struct LoginView: View {
 }
 
 #Preview {
-
-    // TODO: There must be a more efficient way to do this
-    // Setup a CoreData stack for preview
     let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "YourModelName")
+        let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Failed to load CoreData stack: \(error)")

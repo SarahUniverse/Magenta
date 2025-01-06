@@ -12,14 +12,14 @@ import GoogleSignIn
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
+    private let viewContext: NSManagedObjectContext
+    @Published var currentUser: UserEntity?
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var error: String = ""
     @Published var isNavigating = false
     @Published var isLoggedIn = false
     @Published var userInfo = ""
-
-    private var viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -35,6 +35,10 @@ class LoginViewModel: ObservableObject {
 
     func checkPassword() {
         do {
+            // Update your Core Data fetch request to use UserEntity
+            let fetchRequest = UserEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "username == %@", username)
+
             let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
             if password == storedPassword {
                 self.isLoggedIn = true

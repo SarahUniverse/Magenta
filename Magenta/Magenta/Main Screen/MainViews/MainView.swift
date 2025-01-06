@@ -5,10 +5,11 @@
 //  Created by Sarah Clark on 8/6/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct MainView: View {
-    let user: UserModel
+    let userEntity: UserEntity
 
     var body: some View {
         TabView {
@@ -24,5 +25,19 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(user: UserModel(id: "12345678", name: "Sarah"))
+    // Create a temporary Core Data container for preview
+    let previewContainer = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+    previewContainer.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load Core Data stack: \(error)")
+        }
+    }
+
+    // Create a sample UserEntity for preview
+    let context = previewContainer.viewContext
+    let sampleUser = UserEntity(context: context)
+    sampleUser.id = UUID()
+    sampleUser.username = "Sarah"
+
+    return MainView(userEntity: sampleUser)
 }
