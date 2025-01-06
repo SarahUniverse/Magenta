@@ -13,7 +13,7 @@ struct UserModel: Identifiable {
     let username: String
     let email: String
 
-    init(entity: Magenta.UserEntity) {
+    init(entity: UserEntity) {
         self.id = entity.id ?? UUID()
         username = entity.username ?? ""
         email = entity.email ?? ""

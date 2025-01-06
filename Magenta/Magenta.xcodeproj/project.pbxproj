@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		26559B882C627A2E008E9E75 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 26559B872C627A2E008E9E75 /* GoogleSignIn */; };
 		26559B8A2C627A2E008E9E75 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26559B892C627A2E008E9E75 /* GoogleSignInSwift */; };
-		2674328B2D2C7BD10076EBC5 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674328A2D2C7BD10076EBC5 /* UserEntity+CoreDataProperties.swift */; };
-		2674328D2D2C7C2E0076EBC5 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674328C2D2C7C2E0076EBC5 /* UserEntity+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +32,6 @@
 		26559B522C62577D008E9E75 /* Magenta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magenta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26559B652C62577F008E9E75 /* MagentaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagentaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26559B6F2C62577F008E9E75 /* MagentaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagentaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2674328A2D2C7BD10076EBC5 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2674328C2D2C7C2E0076EBC5 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -84,8 +80,6 @@
 		26559B492C62577D008E9E75 = {
 			isa = PBXGroup;
 			children = (
-				2674328C2D2C7C2E0076EBC5 /* UserEntity+CoreDataClass.swift */,
-				2674328A2D2C7BD10076EBC5 /* UserEntity+CoreDataProperties.swift */,
 				26559B542C62577D008E9E75 /* Magenta */,
 				26559B682C62577F008E9E75 /* MagentaTests */,
 				26559B722C62577F008E9E75 /* MagentaUITests */,
@@ -282,8 +276,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2674328D2D2C7C2E0076EBC5 /* UserEntity+CoreDataClass.swift in Sources */,
-				2674328B2D2C7BD10076EBC5 /* UserEntity+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
