@@ -9,26 +9,41 @@ import CoreData
 import SwiftUI
 
 public struct ContentView: View {
-    // Get a reference to the management object context from the environment.
     @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var contentViewModel: ContentViewModel
 
-    @StateObject private var contentViewModel = ContentViewModel()
-    @StateObject private var signUpViewModel = SignUpViewModel()
+    public init(viewContext: NSManagedObjectContext) {
+        // Initialize ContentViewModel with viewContext
+        _contentViewModel = StateObject(wrappedValue: ContentViewModel(viewContext: viewContext))
+    }
 
     public var body: some View {
         Group {
             if let currentUser = contentViewModel.getCurrentUser() {
                 if contentViewModel.isUserLoggedIn() {
-                    MainView(user: currentUser)
+                    MainView(userEntity: currentUser)
                 } else {
                     LoginView(viewContext: viewContext)
                 }
             } else {
-                SignUpView()
+                SignUpView(viewContext: viewContext)
             }
-        }
-        .onAppear {
-            contentViewModel.setViewContext(viewContext)
         }
     }
 }
+
+#Preview {
+    // Create a preview container
+    let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+    container.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load Core Data stack: \(error)")
+        }
+    }
+
+    return ContentView(viewContext: container.viewContext)
+        .environment(\.managedObjectContext, container.viewContext)
+}
+

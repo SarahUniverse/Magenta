@@ -17,7 +17,7 @@ struct MagentaApp: App {
     var body: some Scene {
         let users: [UserModel] = []
         WindowGroup {
-            ContentView()
+            ContentView(viewContext: coreDataStack.persistentContainer.viewContext)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }
