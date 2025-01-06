@@ -5,14 +5,14 @@
 //  Created by Sarah Clark on 8/6/24.
 //
 
-import SwiftData
+import CoreData
 import SwiftUI
 
 struct LoginView: View {
     @StateObject private var loginViewModel: LoginViewModel
 
-    init(modelContext: ModelContext) {
-        _loginViewModel = StateObject(wrappedValue: LoginViewModel(modelContext: modelContext))
+    init(viewContext: NSManagedObjectContext) {
+        _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
@@ -90,14 +90,18 @@ struct LoginView: View {
 }
 
 #Preview {
-    do {
-        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: DummyItem.self, configurations: configuration)
-        let context = container.mainContext
 
-        return LoginView(modelContext: context)
-    } catch {
-        print("Failed to create ModelContainer for preview: \(error)")
-        return Text("Preview Setup Failed")
-    }
+    // TODO: There must be a more efficient way to do this
+    // Setup a CoreData stack for preview
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "YourModelName")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load CoreData stack: \(error)")
+            }
+        }
+        return container
+    }()
+
+    return LoginView(viewContext: persistentContainer.viewContext)
 }

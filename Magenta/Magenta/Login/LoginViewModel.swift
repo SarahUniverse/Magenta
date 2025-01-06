@@ -5,11 +5,11 @@
 //  Created by Sarah Clark on 10/1/24.
 //
 
-import Foundation
-import SwiftUI
-import SwiftData
-import GoogleSignIn
 import AuthenticationServices
+import CoreData
+import Foundation
+import GoogleSignIn
+import SwiftUI
 
 class LoginViewModel: ObservableObject {
     @Published var username: String = ""
@@ -19,10 +19,10 @@ class LoginViewModel: ObservableObject {
     @Published var isLoggedIn = false
     @Published var userInfo = ""
 
-    private var modelContext: ModelContext?
+    private var viewContext: NSManagedObjectContext
 
-    init(modelContext: ModelContext? = nil) {
-        self.modelContext = modelContext
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
     }
 
     func loginUser() {
@@ -81,28 +81,16 @@ class LoginViewModel: ObservableObject {
             self?.signInWithApple(request: request)
         } onCompletion: { [weak self] result in
             switch result {
-            case .success:
-                self?.isNavigating = true
-                print("Authorization successful")
-            case .failure(let error):
-                print("Authorization failed: \(error.localizedDescription)")
+                case .success:
+                    self?.isNavigating = true
+                    print("Authorization successful")
+                case .failure(let error):
+                    print("Authorization failed: \(error.localizedDescription)")
             }
         }
     }
 
     func signInWithApple(request: ASAuthorizationAppleIDRequest) {
-        // Here you would implement the logic for Apple Sign-In
-        // This could involve calling Apple's authentication services
-        // After successful authentication, you might set `currentUser` or handle navigation internally
-    }
-}
-
-// Dummy Item for Preview
-@Model
-class DummyItem {
-    var timestamp: Date
-
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+        // Implement Apple Sign-In logic here
     }
 }

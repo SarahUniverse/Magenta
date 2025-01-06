@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-class InitialViewModel: ObservableObject {
+class ContentViewModel: ObservableObject {
     @Published var username: String = ""
     private let keychainManager = KeychainManager.shared
     private var modelContext: ModelContext?
