@@ -50,7 +50,7 @@ struct MainView: View {
 }
 
 #Preview ("Light Mode") {
-    let previewContainer = NSPersistentContainer(name: "Model")
+    let previewContainer = NSPersistentContainer(name: "DataModel")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
     previewContainer.loadPersistentStores { _, error in
@@ -69,7 +69,7 @@ struct MainView: View {
 }
 
 #Preview ("Dark Mode") {
-    let previewContainer = NSPersistentContainer(name: "Model")
+    let previewContainer = NSPersistentContainer(name: "DataModel")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
     previewContainer.loadPersistentStores { _, error in
