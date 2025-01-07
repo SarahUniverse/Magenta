@@ -64,7 +64,7 @@ struct LoginView: View {
                     .foregroundColor(.red)
                     .navigationDestination(isPresented: $loginViewModel.isNavigating) {
                         if let currentUser = loginViewModel.currentUser {
-                            MainView(userEntity: currentUser)
+                            MainView(userModel: currentUser)
                         } else {
                             Text("Error loading user")
                         }

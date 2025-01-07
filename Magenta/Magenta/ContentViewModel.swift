@@ -60,6 +60,7 @@ class ContentViewModel: ObservableObject {
             // Retrieve user from CoreData
             let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "username == %@", username)
+            print("The username is: \(username)")
 
             let results = try viewContext.fetch(fetchRequest)
             if let existingUser = results.first {

@@ -9,7 +9,13 @@ import CoreData
 import SwiftUI
 
 struct MainView: View {
-    let userEntity: UserEntity
+    @StateObject private var mainViewModel: MainViewModel
+    let userModel: UserModel
+
+    init(viewContext: NSManagedObjectContext, userModel: UserModel) {
+        self.userModel = userModel
+        _mainViewModel = StateObject(wrappedValue: MainViewModel(viewContext: viewContext, userModel: userModel))
+    }
 
     var body: some View {
         TabView {
@@ -54,12 +60,15 @@ struct MainView: View {
     }
 
     let context = previewContainer.viewContext
-    let sampleUser = UserEntity(context: context)
-    sampleUser.id = UUID()
-    sampleUser.username = "Sarah"
-    sampleUser.email = "sarah@example.com"
+    let sampleUserEntity = UserEntity(context: context)
+    sampleUserEntity.id = UUID()
+    sampleUserEntity.username = "Sarah"
+    sampleUserEntity.email = "sarah@example.com"
+
+    // Create a UserModel from the sample UserEntity
+    let sampleUserModel = UserModel(entity: sampleUserEntity)
 
     return NavigationStack {
-        MainView(userEntity: sampleUser)
+        MainView(viewContext: context, userModel: sampleUserModel) // Pass view context and UserModel
     }
 }

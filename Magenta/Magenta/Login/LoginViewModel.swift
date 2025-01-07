@@ -12,14 +12,15 @@ import GoogleSignIn
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
-    private let viewContext: NSManagedObjectContext
-    @Published var currentUser: UserEntity?
+    @Published var currentUser: UserModel?
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var error: String = ""
     @Published var isNavigating = false
     @Published var isLoggedIn = false
     @Published var userInfo = ""
+
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -35,16 +36,22 @@ class LoginViewModel: ObservableObject {
 
     func checkPassword() {
         do {
-            // Update your Core Data fetch request to use UserEntity
-            let fetchRequest = UserEntity.fetchRequest()
+            let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "username == %@", username)
 
-            let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
-            if password == storedPassword {
-                self.isLoggedIn = true
-                self.error = ""
+            if let userEntity = try viewContext.fetch(fetchRequest).first {
+                let userModel = UserModel(entity: userEntity)
+                let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
+
+                if password == storedPassword {
+                    self.isLoggedIn = true
+                    self.error = ""
+                    self.currentUser = userModel
+                } else {
+                    self.error = "Incorrect password."
+                }
             } else {
-                self.error = "Incorrect password."
+                self.error = "User not found. Please check credentials."
             }
         } catch KeychainManager.KeychainError.itemNotFound {
             self.error = "User not found. Please check credentials."
