@@ -53,7 +53,7 @@ class ContentViewModel: ObservableObject {
         }
     }
 
-    func getCurrentUser() -> UserEntity? {
+    func getCurrentUser() -> UserModel? {
         guard isUserLoggedIn() else { return nil }
 
         do {
@@ -64,23 +64,21 @@ class ContentViewModel: ObservableObject {
 
             let results = try viewContext.fetch(fetchRequest)
             if let existingUser = results.first {
-                return existingUser
+                return UserModel(entity: existingUser)
             }
 
-            // If user doesn't exist in CoreData but exists in Keychain, create new CoreData entry
             guard let userName = keychainManager.retrieveAccountNameFromKeychain(for: username) else {
                 throw KeychainManager.KeychainError.itemNotFound
             }
 
-            // Create and save a new user
             let newUser = UserEntity(context: viewContext)
             newUser.id = UUID()
             newUser.username = userName
-            newUser.email = "" // Set email if available
+            newUser.email = ""
 
             try viewContext.save()
 
-            return newUser
+            return UserModel(entity: newUser)
 
         } catch KeychainManager.KeychainError.itemNotFound {
             print("No user data found in Keychain.")
@@ -91,12 +89,15 @@ class ContentViewModel: ObservableObject {
         }
     }
 
-    private func fetchUser(username: String) -> UserEntity? {
+    private func fetchUser(username: String) -> UserModel? {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "username == %@", username)
 
         do {
-            return try viewContext.fetch(fetchRequest).first
+            if let userEntity = try viewContext.fetch(fetchRequest).first {
+                return UserModel(entity: userEntity)
+            }
+            return nil
         } catch {
             print("Error fetching user by username: \(error)")
             return nil

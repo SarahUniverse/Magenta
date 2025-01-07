@@ -15,7 +15,7 @@ class SignUpViewModel: ObservableObject {
     @Published var confirmPassword: String = ""
     @Published var errorMessage: String = ""
     @Published var isSignUpSuccessful: Bool = false
-    @Published var createdUserEntity: UserEntity?
+    @Published var createdUserModel: UserModel?
 
     private var viewContext: NSManagedObjectContext
     private let keychainManager = KeychainManager.shared
@@ -72,8 +72,8 @@ class SignUpViewModel: ObservableObject {
                 // Save to Core Data
                 try viewContext.save()
 
-                // Create UserModel from entity
-                _ = UserModel(entity: newUserEntity)
+                // Create UserModel from entity and assign it to createdUserModel
+                createdUserModel = UserModel(entity: newUserEntity)
 
                 isSignUpSuccessful = true
                 errorMessage = ""
@@ -98,5 +98,3 @@ class SignUpViewModel: ObservableObject {
         }
     }
 }
-
-

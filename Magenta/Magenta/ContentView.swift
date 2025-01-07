@@ -21,7 +21,7 @@ public struct ContentView: View {
         Group {
             if let currentUser = contentViewModel.getCurrentUser() {
                 if contentViewModel.isUserLoggedIn() {
-                    MainView(userEntity: currentUser)
+                    MainView(viewContext: viewContext, userModel: currentUser)
                 } else {
                     LoginView(viewContext: viewContext)
                 }

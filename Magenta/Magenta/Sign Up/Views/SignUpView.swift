@@ -11,9 +11,11 @@ import SwiftUI
 struct SignUpView: View {
     @StateObject private var signUpViewModel: SignUpViewModel
     @State private var showMainView = false
+    let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext))
+        self.viewContext = viewContext
     }
 
     let backgroundGradient = LinearGradient(
@@ -101,8 +103,8 @@ struct SignUpView: View {
                 )
             }
             .navigationDestination(isPresented: $showMainView) {
-                if let userEntity = signUpViewModel.createdUserEntity {
-                    MainView(userEntity: userEntity)
+                if let userEntity = signUpViewModel.createdUserModel {
+                    MainView(viewContext: viewContext, userModel: userEntity)
                 }
             }
             .background(backgroundGradient)

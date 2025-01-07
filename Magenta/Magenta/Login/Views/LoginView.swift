@@ -14,6 +14,7 @@ struct LoginView: View {
 
     init(viewContext: NSManagedObjectContext) {
         _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
+        self.viewContext = viewContext
     }
 
     let backgroundGradient = LinearGradient(
