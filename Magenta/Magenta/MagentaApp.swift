@@ -15,7 +15,6 @@ struct MagentaApp: App {
     @StateObject private var coreDataStack = CoreDataStack.shared
 
     var body: some Scene {
-        let users: [UserModel] = []
         WindowGroup {
             ContentView(viewContext: coreDataStack.persistentContainer.viewContext)
                 .onOpenURL { url in

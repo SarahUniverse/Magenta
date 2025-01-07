@@ -46,4 +46,3 @@ public struct ContentView: View {
     return ContentView(viewContext: container.viewContext)
         .environment(\.managedObjectContext, container.viewContext)
 }
-

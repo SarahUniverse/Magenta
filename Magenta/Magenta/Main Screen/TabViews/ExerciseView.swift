@@ -27,7 +27,7 @@ struct ExerciseView: View {
                 }
             }
             .onAppear {
-                healthKitManager.fetchStepCount { steps in
+                healthKitManager.fetchStepCount { _ in
                     fetchSteps()
                 }
             }

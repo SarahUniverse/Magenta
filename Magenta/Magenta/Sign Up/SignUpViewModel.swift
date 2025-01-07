@@ -73,7 +73,7 @@ class SignUpViewModel: ObservableObject {
                 try viewContext.save()
 
                 // Create UserModel from entity
-                let _ = UserModel(entity: newUserEntity)
+                _ = UserModel(entity: newUserEntity)
 
                 isSignUpSuccessful = true
                 errorMessage = ""
