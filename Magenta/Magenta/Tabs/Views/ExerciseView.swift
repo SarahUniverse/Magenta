@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct ExerciseView: View {
-
-    @StateObject private var healthKitManager = HealthKitManager()
-    @State private var stepCount: Int = 0
+    @StateObject private var exerciseViewModel = ExerciseViewModel()
 
     var body: some View {
         NavigationView {
             List {
-                Text("Step Count: \(stepCount)")
+                Text("Step Count: \(exerciseViewModel.stepCount)")
             }
             .navigationTitle("Exercise")
             .toolbarBackground(.purple2, for: .navigationBar)
@@ -27,24 +25,19 @@ struct ExerciseView: View {
                 }
             }
             .onAppear {
-                healthKitManager.fetchStepCount { _ in
-                    fetchSteps()
-                }
-            }
-        }
-    }
-
-    func fetchSteps() {
-        healthKitManager.fetchStepCount { steps in
-            // Update the step count on the main thread since we're modifying SwiftUI state
-            DispatchQueue.main.async {
-                self.stepCount = Int(steps)
+                exerciseViewModel.fetchSteps()
             }
         }
     }
 
 }
 
-#Preview {
+#Preview ("Light Mode") {
     ExerciseView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    ExerciseView()
+        .preferredColorScheme(.dark)
 }
