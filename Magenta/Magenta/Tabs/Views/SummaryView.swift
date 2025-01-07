@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SummaryView: View {
-    @State private var showingModal = false
+    @StateObject private var viewModel = SummaryViewModel()
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
@@ -20,7 +20,6 @@ struct SummaryView: View {
             Color.black,
             Color.black,
             Color.black
-
         ]),
         startPoint: .topLeading,
         endPoint: .bottomLeading
