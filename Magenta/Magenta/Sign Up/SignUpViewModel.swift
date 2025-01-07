@@ -35,7 +35,6 @@ class SignUpViewModel: ObservableObject {
             return false
         }
 
-        // Basic email validation
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         if !emailPred.evaluate(with: email) {
@@ -49,7 +48,6 @@ class SignUpViewModel: ObservableObject {
     func signUp() {
         if validateFields() {
             do {
-                // Check if user already exists
                 let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "username == %@ OR email == %@", username, email)
 
@@ -60,19 +58,15 @@ class SignUpViewModel: ObservableObject {
                     return
                 }
 
-                // Save password to keychain
                 try keychainManager.savePasswordToKeychain(password: password, for: username)
 
-                // Create new user entity
                 let newUserEntity = UserEntity(context: viewContext)
                 newUserEntity.id = UUID()
                 newUserEntity.username = username
                 newUserEntity.email = email
 
-                // Save to Core Data
                 try viewContext.save()
 
-                // Create UserModel from entity and assign it to createdUserModel
                 createdUserModel = UserModel(entity: newUserEntity)
 
                 isSignUpSuccessful = true

@@ -26,3 +26,13 @@ struct UserModel: Identifiable {
     }
 
 }
+
+extension UserModel {
+    static func userModelDataSample(viewContext: NSManagedObjectContext) -> UserModel {
+        let sampleUserEntity = UserEntity(context: viewContext)
+        sampleUserEntity.username = "Sarah"
+        sampleUserEntity.email = "sarah@example.com"
+
+        return UserModel(entity: sampleUserEntity)
+    }
+}

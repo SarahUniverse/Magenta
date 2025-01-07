@@ -49,7 +49,7 @@ struct MainView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     let previewContainer = NSPersistentContainer(name: "Model")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
@@ -60,15 +60,29 @@ struct MainView: View {
     }
 
     let context = previewContainer.viewContext
-    let sampleUserEntity = UserEntity(context: context)
-    sampleUserEntity.id = UUID()
-    sampleUserEntity.username = "Sarah"
-    sampleUserEntity.email = "sarah@example.com"
-
-    // Create a UserModel from the sample UserEntity
-    let sampleUserModel = UserModel(entity: sampleUserEntity)
+    let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
     return NavigationStack {
-        MainView(viewContext: context, userModel: sampleUserModel) // Pass view context and UserModel
+        MainView(viewContext: context, userModel: sampleUserModel)
     }
+    .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    let previewContainer = NSPersistentContainer(name: "Model")
+    previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+    previewContainer.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load Core Data stack: \(error)")
+        }
+    }
+
+    let context = previewContainer.viewContext
+    let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
+
+    return NavigationStack {
+        MainView(viewContext: context, userModel: sampleUserModel)
+    }
+    .preferredColorScheme(.dark)
 }
