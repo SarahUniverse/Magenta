@@ -48,6 +48,12 @@ struct SummaryView: View {
         }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     SummaryView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    SummaryView()
+        .preferredColorScheme(.dark)
 }
