@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MeditateView: View {
+    @StateObject private var viewModel = MeditateViewModel()
 
     var body: some View {
         NavigationView {
-            List {
-                Text("Hello, World!")
+            List(viewModel.meditationSessions, id: \.self) { session in
+                Text(session)
             }
             .navigationTitle("Meditate")
             .toolbarBackground(.purple2, for: .navigationBar)
@@ -27,6 +28,12 @@ struct MeditateView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     MeditateView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    MeditateView()
+        .preferredColorScheme(.dark)
 }
