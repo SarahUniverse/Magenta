@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var loginViewModel: LoginViewModel
+    let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
@@ -64,7 +65,7 @@ struct LoginView: View {
                     .foregroundColor(.red)
                     .navigationDestination(isPresented: $loginViewModel.isNavigating) {
                         if let currentUser = loginViewModel.currentUser {
-                            MainView(userModel: currentUser)
+                            MainView(viewContext: viewContext, userModel: currentUser)
                         } else {
                             Text("Error loading user")
                         }
