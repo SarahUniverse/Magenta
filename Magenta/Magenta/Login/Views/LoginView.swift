@@ -28,64 +28,108 @@ struct LoginView: View {
         endPoint: .bottomLeading
     )
 
+    // MARK: - Computed Variables for Views
+    private var headerView: some View {
+        Text("Welcome to Magenta")
+            .padding(.top, 30)
+            .foregroundStyle(.white)
+            .font(.largeTitle)
+    }
+
+    private var loginFields: some View {
+        VStack {
+            usernameField
+            passwordField
+        }
+    }
+
+    private var usernameField: some View {
+        TextField("Username", text: $loginViewModel.username)
+            .padding(20)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textInputAutocapitalization(.never)
+    }
+
+    private var passwordField: some View {
+        SecureField("Password", text: $loginViewModel.password)
+            .padding(20)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textInputAutocapitalization(.never)
+    }
+
+    private var loginButton: some View {
+        Button {
+            loginViewModel.checkPassword()
+            if loginViewModel.isLoggedIn {
+                loginViewModel.isNavigating = true
+            }
+        } label: {
+            Text("Login")
+                .bold()
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.mediumBlue)
+                .cornerRadius(10)
+        }
+        .padding(20)
+    }
+
+    private var errorView: some View {
+        Text(loginViewModel.error)
+            .foregroundColor(.red)
+            .navigationDestination(isPresented: $loginViewModel.isNavigating) {
+                destinationView
+            }
+    }
+
+    private var destinationView: some View {
+        Group {
+            if let currentUser = loginViewModel.currentUser {
+                MainView(viewContext: viewContext, userModel: currentUser)
+            } else {
+                Text("Error loading user")
+            }
+        }
+    }
+
+    private var divider: some View {
+        Text("Or sign in with")
+            .foregroundColor(.white)
+            .bold()
+    }
+
+    private var socialLoginButtons: some View {
+        VStack {
+            googleSignInButton
+            appleSignInButton
+        }
+    }
+
+    private var googleSignInButton: some View {
+        CustomGoogleSignInButton(action: loginViewModel.signInWithGoogle)
+            .frame(height: 40)
+            .padding(20)
+    }
+
+    private var appleSignInButton: some View {
+        loginViewModel.setupAppleSignInButton()
+            .containerRelativeFrame(.vertical, count: 8, spacing: 60)
+            .padding(20)
+            .signInWithAppleButtonStyle(.whiteOutline)
+    }
+
+    // MARK: - Main View Code
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Welcome to Magenta")
-                    .padding(.top, 30)
-                    .foregroundStyle(.white)
-                    .font(.largeTitle)
-
-                TextField("Username", text: $loginViewModel.username)
-                    .padding(20)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .textInputAutocapitalization(.never)
-
-                SecureField("Password", text: $loginViewModel.password)
-                    .padding(20)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .textInputAutocapitalization(.never)
-
-                Button(action: {
-                    loginViewModel.checkPassword()
-                    if loginViewModel.isLoggedIn {
-                        loginViewModel.isNavigating = true
-                    }
-                }, label: {
-                    Text("Login")
-                        .bold()
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.mediumBlue)
-                        .cornerRadius(10)
-                })
-                .padding(20)
-
-                Text(loginViewModel.error)
-                    .foregroundColor(.red)
-                    .navigationDestination(isPresented: $loginViewModel.isNavigating) {
-                        if let currentUser = loginViewModel.currentUser {
-                            MainView(viewContext: viewContext, userModel: currentUser)
-                        } else {
-                            Text("Error loading user")
-                        }
-                    }
-
-                Text("Or sign in with")
-                    .foregroundColor(.white)
-                    .bold()
-
-                CustomGoogleSignInButton(action: loginViewModel.signInWithGoogle)
-                    .frame(height: 40)
-                    .padding(20)
-
-                loginViewModel.setupAppleSignInButton()
-                    .containerRelativeFrame(.vertical, count: 8, spacing: 60)
-                    .padding(20)
-                    .signInWithAppleButtonStyle(.whiteOutline)
+                headerView
+                loginFields
+                loginButton
+                errorView
+                divider
+                socialLoginButtons
                 Spacer()
-
                 CopyrightView()
                 Spacer()
             }
@@ -93,11 +137,13 @@ struct LoginView: View {
             .background(backgroundGradient)
         }
     }
+
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+        let container = NSPersistentContainer(name: "DataModel")
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Failed to load CoreData stack: \(error)")
@@ -112,7 +158,7 @@ struct LoginView: View {
 
 #Preview ("Dark Mode") {
     let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+        let container = NSPersistentContainer(name: "DataModel")
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Failed to load CoreData stack: \(error)")
