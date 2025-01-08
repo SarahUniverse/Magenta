@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MoodView: View {
+    @StateObject private var moodViewModel = MoodViewModel()
 
     var body: some View {
         NavigationView {
-            List {
-                Text("Hello, World!")
+            List(moodViewModel.items, id: \.self) { item in
+                Text(item)
             }
             .navigationTitle("Mood")
             .toolbarBackground(.purple2, for: .navigationBar)
@@ -27,6 +28,12 @@ struct MoodView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     MoodView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    MoodView()
+        .preferredColorScheme(.dark)
 }
