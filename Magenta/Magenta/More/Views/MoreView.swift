@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MoreView: View {
     @StateObject private var moreViewModel = MoreViewModel()
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         NavigationStack {
@@ -34,12 +35,18 @@ struct MoreView: View {
                         moreViewModel.handleSignOut()
                     }
                     .bold()
-                    .foregroundStyle(.darkPurple)
+                    .foregroundStyle(signOutButtonColor())
                 }
             }
             .navigationBarTitle(moreViewModel.navigationTitle)
         }
     }
+
+    // MARK: - Private functions
+    private func signOutButtonColor() -> Color {
+        colorScheme == .dark ? .white : .black
+    }
+
 }
 
 // MARK: - Previews

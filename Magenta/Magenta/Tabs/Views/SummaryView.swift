@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SummaryView: View {
     @StateObject private var viewModel = SummaryViewModel()
+    @Environment(\.colorScheme) var colorScheme
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
@@ -25,6 +26,7 @@ struct SummaryView: View {
         endPoint: .bottomLeading
     )
 
+    // MARK: - Main View Code
     var body: some View {
         NavigationView {
                 ZStack {
@@ -41,12 +43,18 @@ struct SummaryView: View {
                     }
                     .navigationBarTitle("Summary")
                     .navigationBarItems(trailing: Image(systemName: "person.circle"))
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(iconColor())
                 }
             }
         }
+
+    // MARK: - Private functions
+    private func iconColor() -> Color {
+        colorScheme == .dark ? .white : .black
+    }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     SummaryView()
         .preferredColorScheme(.light)
