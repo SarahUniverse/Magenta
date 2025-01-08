@@ -95,7 +95,7 @@ struct LoginView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
         container.loadPersistentStores { _, error in
@@ -107,4 +107,20 @@ struct LoginView: View {
     }()
 
     return LoginView(viewContext: persistentContainer.viewContext)
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model") // Make sure this matches your .xcdatamodeld file name
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load CoreData stack: \(error)")
+            }
+        }
+        return container
+    }()
+
+    return LoginView(viewContext: persistentContainer.viewContext)
+        .preferredColorScheme(.dark)
 }
