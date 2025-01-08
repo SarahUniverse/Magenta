@@ -10,6 +10,7 @@ import SwiftUI
 struct GridItemView: View {
     let icon: String
     let title: String
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         VStack {
@@ -17,18 +18,24 @@ struct GridItemView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
-                .foregroundStyle(.mediumBlue)
+                .foregroundStyle(.darkPurple)
             Text(title)
                 .bold()
                 .font(.caption)
-                .foregroundColor(.white)
+                .foregroundColor(textColor())
         }
         .frame(minWidth: 0, maxWidth: .infinity)
         .padding()
         .cornerRadius(10)
     }
+
+    // MARK: - Private functions
+    private func textColor() -> Color {
+        colorScheme == .dark ? .white : .black
+    }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     GridItemView(icon: "figure.run", title: "Exercise")
         .preferredColorScheme(.light)

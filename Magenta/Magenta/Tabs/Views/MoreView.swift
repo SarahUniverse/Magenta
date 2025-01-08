@@ -8,43 +8,41 @@
 import SwiftUI
 
 struct MoreView: View {
-    @StateObject private var viewModel = MoreViewModel()
+    @StateObject private var moreViewModel = MoreViewModel()
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: viewModel.columns, spacing: 20) {
-                    ForEach(0..<viewModel.items.count, id: \.self) { index in
+                LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
+                    ForEach(0..<moreViewModel.items.count, id: \.self) { index in
                         Button {
-                            viewModel.handleItemTap(at: index)
+                            moreViewModel.handleItemTap(at: index)
                         } label: {
                             GridItemView(
-                                icon: viewModel.items[index].icon,
-                                title: viewModel.items[index].title
+                                icon: moreViewModel.items[index].icon,
+                                title: moreViewModel.items[index].title
                             )
                         }
                     }
                 }
                 .padding()
             }
-            .toolbarBackground(.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
-                        viewModel.handleSignOut()
+                        moreViewModel.handleSignOut()
                     }
                     .bold()
-                    .foregroundStyle(.mediumBlue)
+                    .foregroundStyle(.darkPurple)
                 }
             }
-            .navigationBarTitle(viewModel.navigationTitle)
-            .background(viewModel.backgroundGradient)
+            .navigationBarTitle(moreViewModel.navigationTitle)
         }
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     MoreView()
         .preferredColorScheme(.light)

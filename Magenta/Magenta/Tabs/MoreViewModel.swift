@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class MoreViewModel: ObservableObject {
-    // MARK: - Published Properties
+    @Published var navigationTitle = "More"
     @Published var items: [(icon: String, title: String)] = [
         ("fork.knife", "Nutrition"),
         ("circle.dotted", "Cycle"),
@@ -22,23 +22,11 @@ final class MoreViewModel: ObservableObject {
         ("paintpalette", "Art Therapy")
     ]
 
-    @Published var navigationTitle = "More"
-
-    // MARK: - Layout Properties
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.darkPurple,
-            Color.darkBlue
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
 
     // MARK: - Methods
     func handleItemTap(at index: Int) {
