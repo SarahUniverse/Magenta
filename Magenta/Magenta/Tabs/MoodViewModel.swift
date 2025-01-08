@@ -23,7 +23,7 @@ final class MoodViewModel: ObservableObject {
             "Relaxed",
             "Happy",
             "Sad",
-            "Angry",
+            "Angry"
         ]
     }
 

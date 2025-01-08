@@ -60,4 +60,3 @@ public struct ContentView: View {
         .environment(\.managedObjectContext, container.viewContext)
         .preferredColorScheme(.dark)
 }
-

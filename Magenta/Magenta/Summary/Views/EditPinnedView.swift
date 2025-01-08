@@ -32,7 +32,7 @@ struct EditPinnedView: View {
                         .foregroundColor(.gray)
                     TextField("Search", text: $searchText)
 
-                    Button(action: {
+                    Button {
                         if speechRecognizer.audioEngine.isRunning {
                             speechRecognizer.stopRecording()
                         } else {
@@ -42,7 +42,7 @@ struct EditPinnedView: View {
                                 print("Failed to start recording: \(error.localizedDescription)")
                             }
                         }
-                    }) {
+                    } label: {
                         Image(systemName: speechRecognizer.audioEngine.isRunning ? "mic.fill" : "mic")
                             .foregroundColor(.blue)
                     }

@@ -7,7 +7,6 @@
 
 import Combine
 
-
 final class MeditateViewModel: ObservableObject {
     @Published var meditationSessions: [String] = []
 

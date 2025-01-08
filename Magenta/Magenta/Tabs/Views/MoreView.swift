@@ -15,9 +15,9 @@ struct MoreView: View {
             ScrollView {
                 LazyVGrid(columns: viewModel.columns, spacing: 20) {
                     ForEach(0..<viewModel.items.count, id: \.self) { index in
-                        Button(action: {
+                        Button {
                             viewModel.handleItemTap(at: index)
-                        }) {
+                        } label: {
                             GridItemView(
                                 icon: viewModel.items[index].icon,
                                 title: viewModel.items[index].title

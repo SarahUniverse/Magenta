@@ -25,12 +25,8 @@ struct MeditationSummaryView: View {
                         .font(.subheadline)
                         .foregroundColor(.white)
 
-                    Button(action: {
-                        // Action for "Review"
-                    }) {
-                        Text("Review")
-                            .foregroundColor(.blue)
-                    }
+                    Button("Review") { }
+                        .foregroundColor(.blue)
                 }
             }
             .padding()
