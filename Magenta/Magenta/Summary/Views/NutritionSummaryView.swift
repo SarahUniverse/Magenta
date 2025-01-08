@@ -35,6 +35,12 @@ struct NutritionSummaryView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     NutritionSummaryView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    NutritionSummaryView()
+        .preferredColorScheme(.dark)
 }

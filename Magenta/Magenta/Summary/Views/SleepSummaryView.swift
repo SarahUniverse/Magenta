@@ -36,6 +36,12 @@ struct SleepSummaryView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     SleepSummaryView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    SleepSummaryView()
+        .preferredColorScheme(.dark)
 }

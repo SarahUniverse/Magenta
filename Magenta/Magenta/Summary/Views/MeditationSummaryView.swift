@@ -36,6 +36,12 @@ struct MeditationSummaryView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     MeditationSummaryView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    MeditationSummaryView()
+        .preferredColorScheme(.dark)
 }

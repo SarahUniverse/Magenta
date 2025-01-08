@@ -140,6 +140,12 @@ struct EditPinnedView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     EditPinnedView()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    EditPinnedView()
+        .preferredColorScheme(.dark)
 }

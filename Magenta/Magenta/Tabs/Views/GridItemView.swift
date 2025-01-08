@@ -28,3 +28,13 @@ struct GridItemView: View {
         .cornerRadius(10)
     }
 }
+
+#Preview ("Light Mode") {
+    GridItemView(icon: "figure.run", title: "Exercise")
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    GridItemView(icon: "figure.run", title: "Exercise")
+        .preferredColorScheme(.dark)
+}

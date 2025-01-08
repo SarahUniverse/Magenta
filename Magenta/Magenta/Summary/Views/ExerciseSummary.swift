@@ -36,6 +36,12 @@ struct ExerciseSummary: View {
     }
 }
 
-    #Preview {
-        ExerciseSummary()
-    }
+#Preview ("Light Mode") {
+    ExerciseSummary()
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    ExerciseSummary()
+        .preferredColorScheme(.dark)
+}
