@@ -31,6 +31,7 @@ public struct ContentView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     let container = NSPersistentContainer(name: "DataModel")
     container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")

@@ -44,7 +44,7 @@ struct MainView: View {
                     Label("More", systemImage: "line.3.horizontal")
                 }
         }
-        .tint(.mediumBlue)
+        .tint(.darkPurple)
         .navigationBarBackButtonHidden()
     }
 }
