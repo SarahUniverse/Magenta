@@ -112,7 +112,7 @@ struct SignUpView: View {
     }
 }
 
-#Preview {
+#Preview ("Light Mode") {
     let container = NSPersistentContainer(name: "Model")
     container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
@@ -123,4 +123,19 @@ struct SignUpView: View {
     }
 
     return SignUpView(viewContext: container.viewContext)
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    let container = NSPersistentContainer(name: "Model")
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+    container.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load Core Data stack: \(error)")
+        }
+    }
+
+    return SignUpView(viewContext: container.viewContext)
+        .preferredColorScheme(.dark)
 }
