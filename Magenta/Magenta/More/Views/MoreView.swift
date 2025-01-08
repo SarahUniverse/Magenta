@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct MoreView: View {
-    @StateObject private var moreViewModel = MoreViewModel()
+    @StateObject var moreViewModel: MoreViewModel
     @Environment(\.colorScheme) var colorScheme
+    @Binding var navigationPath: NavigationPath
 
     var body: some View {
         NavigationStack {
@@ -32,13 +33,17 @@ struct MoreView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
-                        moreViewModel.handleSignOut()
+                        moreViewModel.signOut()
+                        navigationPath = NavigationPath()
                     }
                     .bold()
                     .foregroundStyle(signOutButtonColor())
                 }
             }
             .navigationBarTitle(moreViewModel.navigationTitle)
+        }
+        .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
+            LoginView(viewContext: moreViewModel.viewContext)
         }
     }
 
@@ -49,13 +54,15 @@ struct MoreView: View {
 
 }
 
+/*
 // MARK: - Previews
-#Preview ("Light Mode") {
-    MoreView()
+#Preview("Light Mode") {
+    MoreView(moreViewModel: MoreViewModel.createPreviewViewModel(), navigationPath: $navigationPath)
         .preferredColorScheme(.light)
 }
 
-#Preview ("Dark Mode") {
-    MoreView()
+#Preview("Dark Mode") {
+    MoreView(moreViewModel: MoreViewModel.createPreviewViewModel())
         .preferredColorScheme(.dark)
 }
+*/

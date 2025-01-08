@@ -5,10 +5,22 @@
 //  Created by Sarah Clark on 1/8/25.
 //
 
+import CoreData
 import SwiftUI
 
 final class MoreViewModel: ObservableObject {
+    @Published var shouldShowLoginView = false
     @Published var navigationTitle = "More"
+    @Published var currentUser: UserModel?
+    @Published var error: String = ""
+
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext, currentUser: UserModel? = nil) {
+        self.viewContext = viewContext
+        self.currentUser = currentUser
+    }
+
     @Published var items: [(icon: String, title: String)] = [
         ("fork.knife", "Nutrition"),
         ("circle.dotted", "Cycle"),
@@ -34,9 +46,44 @@ final class MoreViewModel: ObservableObject {
         // Add navigation or action logic here
     }
 
-    func handleSignOut() {
-        // Implement sign out logic here
-        print("Sign out tapped")
+    func signOut() {
+        do {
+            if let username = currentUser?.username {
+                try KeychainManager.shared.deletePasswordFromKeychain(for: username)
+            }
+
+            if let username = currentUser?.username {
+                let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "username == %@", username)
+
+                if let userEntity = try viewContext.fetch(fetchRequest).first {
+                    // Clear any sensitive data from the user entity
+                    userEntity.setValue(nil, forKey: "password")
+
+                    try viewContext.save()
+                }
+            }
+
+            self.currentUser = nil
+
+            self.shouldShowLoginView = true
+
+        } catch {
+            print("Error during sign out: \(error.localizedDescription)")
+        }
     }
 
+}
+
+extension MoreViewModel {
+    static func createPreviewViewModel() -> MoreViewModel {
+        let container = NSPersistentContainer(name: "Model")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load CoreData stack: \(error)")
+            }
+        }
+        return MoreViewModel(viewContext: container.viewContext)
+    }
 }

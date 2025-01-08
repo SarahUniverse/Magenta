@@ -12,6 +12,7 @@ class KeychainManager {
 
     enum KeychainError: Error {
         case itemNotFound
+        case deletionError
         case duplicateItem
         case invalidItemFormat
         case unexpectedStatus(OSStatus)
