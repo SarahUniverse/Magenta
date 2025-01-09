@@ -52,7 +52,6 @@ struct MoreView: View {
 
 }
 
-
 // MARK: - Previews
 #Preview("Light Mode") {
     MoreView(moreViewModel: MoreViewModel.createPreviewViewModel())
