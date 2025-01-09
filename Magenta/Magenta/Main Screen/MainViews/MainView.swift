@@ -11,14 +11,12 @@ import SwiftUI
 struct MainView: View {
     @StateObject private var mainViewModel: MainViewModel
     @StateObject private var moreViewModel: MoreViewModel
-    @Binding var navigationPath: NavigationPath
     let userModel: UserModel
 
-    init(viewContext: NSManagedObjectContext, userModel: UserModel, navigationPath: Binding<NavigationPath>) {
+    init(viewContext: NSManagedObjectContext, userModel: UserModel) {
         self.userModel = userModel
         _mainViewModel = StateObject(wrappedValue: MainViewModel(viewContext: viewContext, userModel: userModel))
         _moreViewModel = StateObject(wrappedValue: MoreViewModel(viewContext: viewContext, currentUser: userModel))
-        _navigationPath = navigationPath
     }
 
     var body: some View {
@@ -43,7 +41,7 @@ struct MainView: View {
                     Label("Exercise", systemImage: "figure.run")
                 }
 
-            MoreView(moreViewModel: moreViewModel, navigationPath: $navigationPath)
+            MoreView(moreViewModel: moreViewModel)
                 .tabItem {
                     Label("More", systemImage: "line.3.horizontal")
                 }
@@ -67,7 +65,7 @@ struct MainView: View {
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
     return NavigationStack {
-        MainView(viewContext: context, userModel: sampleUserModel, navigationPath: .constant(NavigationPath()))
+        MainView(viewContext: context, userModel: sampleUserModel)
     }
     .preferredColorScheme(.light)
 }
@@ -86,7 +84,7 @@ struct MainView: View {
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
     return NavigationStack {
-        MainView(viewContext: context, userModel: sampleUserModel, navigationPath: .constant(NavigationPath()))
+        MainView(viewContext: context, userModel: sampleUserModel)
     }
     .preferredColorScheme(.dark)
 }

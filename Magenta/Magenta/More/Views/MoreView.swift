@@ -10,7 +10,6 @@ import SwiftUI
 struct MoreView: View {
     @StateObject var moreViewModel: MoreViewModel
     @Environment(\.colorScheme) var colorScheme
-    @Binding var navigationPath: NavigationPath
 
     var body: some View {
         NavigationStack {
@@ -34,7 +33,6 @@ struct MoreView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
                         moreViewModel.signOut()
-                        navigationPath = NavigationPath()
                     }
                     .bold()
                     .foregroundStyle(signOutButtonColor())
@@ -54,10 +52,10 @@ struct MoreView: View {
 
 }
 
-/*
+
 // MARK: - Previews
 #Preview("Light Mode") {
-    MoreView(moreViewModel: MoreViewModel.createPreviewViewModel(), navigationPath: $navigationPath)
+    MoreView(moreViewModel: MoreViewModel.createPreviewViewModel())
         .preferredColorScheme(.light)
 }
 
@@ -65,4 +63,3 @@ struct MoreView: View {
     MoreView(moreViewModel: MoreViewModel.createPreviewViewModel())
         .preferredColorScheme(.dark)
 }
-*/
