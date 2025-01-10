@@ -82,8 +82,8 @@ class SignUpViewModel: ObservableObject {
                 // Create a new UserEntity
                 let newUserEntity = UserEntity(context: viewContext)
                 newUserEntity.id = UUID()
-                newUserEntity.username = username // Ensure username is non-optional
-                newUserEntity.email = email // Ensure email is non-optional
+                newUserEntity.username = username
+                newUserEntity.email = email
                 print("New user created with username: \(newUserEntity.username ?? "nil"), email: \(newUserEntity.email ?? "nil")") // Debugging line
 
                 // Save the context

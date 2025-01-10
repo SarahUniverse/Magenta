@@ -20,13 +20,9 @@ class ContentViewModel: ObservableObject {
     }
 
     private func loadCurrentUser() {
-        print("Loading current user...") // Debugging line
         if let currentUser = getCurrentUser() {
             self.userModel = currentUser
             self.username = currentUser.username
-            print("Loaded current user: \(currentUser.username)") // Debugging line
-        } else {
-            print("No current user found.") // Debugging line
         }
     }
 
