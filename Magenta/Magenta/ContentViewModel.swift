@@ -20,6 +20,7 @@ class ContentViewModel: ObservableObject {
     }
 
     private func loadCurrentUser() {
+        print("Loading current user...") // Debugging line
         if let currentUser = getCurrentUser() {
             self.userModel = currentUser
             self.username = currentUser.username

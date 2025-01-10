@@ -46,7 +46,7 @@ class SignUpViewModel: ObservableObject {
     }
 
     func signUp() {
-        print("Attempting to sign up with username: \(username), email: \(email)")
+        print("Attempting to sign up with username: \(username), email: \(email)") // Debugging line
 
         if validateFields() {
             do {
@@ -54,11 +54,11 @@ class SignUpViewModel: ObservableObject {
                 fetchRequest.predicate = NSPredicate(format: "username == %@ OR email == %@", username, email)
 
                 let existingUsers = try viewContext.fetch(fetchRequest)
-                print("Existing users found: \(existingUsers.count)")
+                print("Existing users found: \(existingUsers.count)") // Debugging line
 
                 guard existingUsers.isEmpty else {
                     errorMessage = "Username or email already exists"
-                    print("Error: \(errorMessage)")
+                    print("Error: \(errorMessage)") // Debugging line
                     return
                 }
 
@@ -69,13 +69,13 @@ class SignUpViewModel: ObservableObject {
                 // Create a new UserEntity
                 let newUserEntity = UserEntity(context: viewContext)
                 newUserEntity.id = UUID()
-                newUserEntity.username = username
-                newUserEntity.email = email
-                print("New user created with username: \(String(describing: newUserEntity.username)), email: \(String(describing: newUserEntity.email))")
+                newUserEntity.username = username // Ensure username is non-optional
+                newUserEntity.email = email // Ensure email is non-optional
+                print("New user created with username: \(newUserEntity.username ?? "nil"), email: \(newUserEntity.email ?? "nil")") // Debugging line
 
                 // Save the context
                 try viewContext.save()
-                print("User saved to Core Data successfully.")
+                print("User saved to Core Data successfully.") // Debugging line
 
                 // Initialize the UserModel with the new UserEntity
                 createdUserModel = UserModel(entity: newUserEntity)
@@ -83,10 +83,17 @@ class SignUpViewModel: ObservableObject {
                 // Indicate success
                 isSignUpSuccessful = true
                 errorMessage = ""
-                print("Sign up successful for username: \(username)")
+                print("Sign up successful for username: \(username)") // Debugging line
+                let fetchRequestTwo: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+                do {
+                    let allUsers = try viewContext.fetch(fetchRequestTwo)
+                    print("All users in Core Data: \(allUsers.map { $0.username ?? "nil" })") // Debugging line
+                } catch {
+                    print("Error fetching all users: \(error.localizedDescription)")
+                }
             } catch let error as KeychainManager.KeychainError {
                 errorMessage = "Keychain error: \(error)"
-                print("Keychain error: \(error)")
+                print("Keychain error: \(error)") // Debugging line
             } catch {
                 errorMessage = "Failed to save data: \(error.localizedDescription)"
                 print("Error saving data: \(error.localizedDescription)") // Debugging line
