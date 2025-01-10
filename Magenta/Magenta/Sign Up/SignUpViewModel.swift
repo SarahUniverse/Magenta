@@ -58,17 +58,22 @@ class SignUpViewModel: ObservableObject {
                     return
                 }
 
+                // Save password to Keychain
                 try keychainManager.savePasswordToKeychain(password: password, for: username)
 
+                // Create a new UserEntity
                 let newUserEntity = UserEntity(context: viewContext)
                 newUserEntity.id = UUID()
                 newUserEntity.username = username
                 newUserEntity.email = email
 
+                // Save the context
                 try viewContext.save()
 
+                // Initialize the UserModel with the new UserEntity
                 createdUserModel = UserModel(entity: newUserEntity)
 
+                // Indicate success
                 isSignUpSuccessful = true
                 errorMessage = ""
             } catch let error as KeychainManager.KeychainError {

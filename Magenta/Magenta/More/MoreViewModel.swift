@@ -55,13 +55,6 @@ final class MoreViewModel: ObservableObject {
             if let username = currentUser?.username {
                 let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "username == %@", username)
-
-                if let userEntity = try viewContext.fetch(fetchRequest).first {
-                    // Clear any sensitive data from the user entity
-                    userEntity.setValue(nil, forKey: "password")
-
-                    try viewContext.save()
-                }
             }
 
             self.currentUser = nil

@@ -12,21 +12,17 @@ class ContentViewModel: ObservableObject {
     @Published var username: String = ""
     private let keychainManager = KeychainManager.shared
     private var viewContext: NSManagedObjectContext
+    @Published var userModel: UserModel
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        self.loadUsernameFromCoreData()
+        self.userModel = UserModel()
+        self.loadCurrentUser()
     }
 
-    private func loadUsernameFromCoreData() {
-        let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            let users = try viewContext.fetch(fetchRequest)
-            if let firstUser = users.first {
-                self.username = firstUser.username ?? ""
-            }
-        } catch {
-            print("Failed to load username from CoreData: \(error.localizedDescription)")
+    private func loadCurrentUser() {
+        if let userModel = getCurrentUser() {
+            self.username = userModel.username
         }
     }
 
@@ -34,7 +30,7 @@ class ContentViewModel: ObservableObject {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         do {
             let users = try viewContext.fetch(fetchRequest)
-            return !users.isEmpty && verifyUserInKeychain(userId: username)
+            return !users.isEmpty && verifyUserInKeychain(userId: userModel.username)
         } catch {
             print("Error fetching users from CoreData: \(error.localizedDescription)")
             return false
