@@ -46,29 +46,36 @@ class SignUpViewModel: ObservableObject {
     }
 
     func signUp() {
+        print("Attempting to sign up with username: \(username), email: \(email)")
+
         if validateFields() {
             do {
                 let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "username == %@ OR email == %@", username, email)
 
                 let existingUsers = try viewContext.fetch(fetchRequest)
+                print("Existing users found: \(existingUsers.count)")
 
                 guard existingUsers.isEmpty else {
                     errorMessage = "Username or email already exists"
+                    print("Error: \(errorMessage)")
                     return
                 }
 
                 // Save password to Keychain
                 try keychainManager.savePasswordToKeychain(password: password, for: username)
+                print("Password saved to Keychain for username: \(username)") // Debugging line
 
                 // Create a new UserEntity
                 let newUserEntity = UserEntity(context: viewContext)
                 newUserEntity.id = UUID()
                 newUserEntity.username = username
                 newUserEntity.email = email
+                print("New user created with username: \(String(describing: newUserEntity.username)), email: \(String(describing: newUserEntity.email))")
 
                 // Save the context
                 try viewContext.save()
+                print("User saved to Core Data successfully.")
 
                 // Initialize the UserModel with the new UserEntity
                 createdUserModel = UserModel(entity: newUserEntity)
@@ -76,11 +83,16 @@ class SignUpViewModel: ObservableObject {
                 // Indicate success
                 isSignUpSuccessful = true
                 errorMessage = ""
+                print("Sign up successful for username: \(username)")
             } catch let error as KeychainManager.KeychainError {
                 errorMessage = "Keychain error: \(error)"
+                print("Keychain error: \(error)")
             } catch {
                 errorMessage = "Failed to save data: \(error.localizedDescription)"
+                print("Error saving data: \(error.localizedDescription)") // Debugging line
             }
+        } else {
+            print("Validation failed with error: \(errorMessage)") // Debugging line
         }
     }
 
@@ -90,6 +102,7 @@ class SignUpViewModel: ObservableObject {
 
         do {
             let results = try viewContext.fetch(fetchRequest)
+            print("Checking existence for account: \(account), found: \(results.count) users") // Debugging line
             return !results.isEmpty
         } catch {
             print("Error checking user existence: \(error.localizedDescription)")
