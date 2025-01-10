@@ -19,9 +19,11 @@ class SignUpViewModel: ObservableObject {
 
     private var viewContext: NSManagedObjectContext
     private let keychainManager = KeychainManager.shared
+    private var contentViewModel: ContentViewModel
 
-    init(viewContext: NSManagedObjectContext) {
+    init(viewContext: NSManagedObjectContext, contentViewModel: ContentViewModel) {
         self.viewContext = viewContext
+        self.contentViewModel = contentViewModel // Store the reference
     }
 
     func validateFields() -> Bool {
@@ -97,6 +99,10 @@ class SignUpViewModel: ObservableObject {
                 isSignUpSuccessful = true
                 errorMessage = ""
                 print("Sign up successful for username: \(username)") // Debugging line
+                if isSignUpSuccessful {
+                    contentViewModel.username = username // Set the username in ContentViewModel
+                    print("Username set in ContentViewModel: \(username)") // Debugging line
+                }
                 let fetchRequestTwo: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
                 do {
                     let allUsers = try viewContext.fetch(fetchRequestTwo)

@@ -18,8 +18,8 @@ public struct ContentView: View {
 
     public var body: some View {
         Group {
-            if let currentUser = contentViewModel.getCurrentUser() {
-                if contentViewModel.isUserLoggedIn() {
+            if contentViewModel.isUserLoggedIn() {
+                if let currentUser = contentViewModel.getCurrentUser() {
                     MainView(viewContext: viewContext, userModel: currentUser)
                 } else {
                     LoginView(viewContext: viewContext)

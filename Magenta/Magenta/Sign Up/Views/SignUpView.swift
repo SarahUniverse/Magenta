@@ -10,12 +10,14 @@ import SwiftUI
 
 struct SignUpView: View {
     @StateObject private var signUpViewModel: SignUpViewModel
+    @StateObject private var contentViewModel: ContentViewModel
     @State private var showMainView = false
     let viewContext: NSManagedObjectContext
 
-    init(viewContext: NSManagedObjectContext) {
-        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext))
+    init(viewContext: NSManagedObjectContext, contentViewModel: ContentViewModel) {
+        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext, contentViewModel: contentViewModel))
         self.viewContext = viewContext
+        _contentViewModel = StateObject(wrappedValue: contentViewModel)
     }
 
     let backgroundGradient = LinearGradient(
@@ -147,6 +149,7 @@ struct SignUpView: View {
 
 }
 
+/*
 // MARK: - Previews
 #Preview ("Light Mode") {
     let container = NSPersistentContainer(name: "Model")
@@ -175,3 +178,4 @@ struct SignUpView: View {
     return SignUpView(viewContext: container.viewContext)
         .preferredColorScheme(.dark)
 }
+*/
