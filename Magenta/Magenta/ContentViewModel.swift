@@ -34,8 +34,8 @@ class ContentViewModel: ObservableObject {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         do {
             let users = try viewContext.fetch(fetchRequest)
-            print("Current username: \(username)") // Debugging line
-            return !users.isEmpty && verifyUserInKeychain(userId: username)
+            print("Current username: \(String(describing: userModel?.username))") // Debugging line
+            return !users.isEmpty && verifyUserInKeychain(userId: userModel?.username ?? "nothing")
         } catch {
             print("Error fetching users from CoreData: \(error.localizedDescription)")
             return false
@@ -65,7 +65,9 @@ class ContentViewModel: ObservableObject {
 
             let results = try viewContext.fetch(fetchRequest)
             if let existingUser = results.first {
-                return UserModel(entity: existingUser)
+                let userModel = UserModel(entity: existingUser)
+                print("UserModel created with username: \(userModel.username), email: \(userModel.email)") // Debugging line
+                return userModel
             }
 
             // If user not found in Core Data, check Keychain
