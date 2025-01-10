@@ -10,14 +10,12 @@ import SwiftUI
 
 struct SignUpView: View {
     @StateObject private var signUpViewModel: SignUpViewModel
-    @StateObject private var contentViewModel: ContentViewModel
     @State private var showMainView = false
     let viewContext: NSManagedObjectContext
 
-    init(viewContext: NSManagedObjectContext, contentViewModel: ContentViewModel) {
-        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext, contentViewModel: contentViewModel))
+    init(viewContext: NSManagedObjectContext) {
+        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext))
         self.viewContext = viewContext
-        _contentViewModel = StateObject(wrappedValue: contentViewModel)
     }
 
     let backgroundGradient = LinearGradient(
