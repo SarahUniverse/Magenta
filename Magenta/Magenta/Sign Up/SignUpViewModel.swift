@@ -45,6 +45,19 @@ class SignUpViewModel: ObservableObject {
         return true
     }
 
+    func deleteAllUsers(viewContext: NSManagedObjectContext) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = UserEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try viewContext.execute(deleteRequest)
+            try viewContext.save() // Save the context after deletion
+            print("All users deleted successfully.")
+        } catch {
+            print("Error deleting users: \(error.localizedDescription)")
+        }
+    }
+
     func signUp() {
         print("Attempting to sign up with username: \(username), email: \(email)") // Debugging line
 

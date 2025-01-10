@@ -13,12 +13,6 @@ struct UserModel: Identifiable {
     let username: String
     let email: String
 
-    init() {
-        self.id = UUID()
-        self.username = ""
-        self.email = ""
-    }
-
     init(entity: UserEntity) {
         self.id = entity.id ?? UUID()
         username = entity.username ?? ""
