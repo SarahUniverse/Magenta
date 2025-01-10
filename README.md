@@ -1,4 +1,5 @@
-# Magenta
+# Magenta: Mental Health Mentor
+Or possible coping since I reserved the bundle id: com.Coping
 Currently WIP
 
 Welcome to **Magenta**, a comprehensive mental health app designed to support your mental well-being. Magenta offers a range of tools and resources to help you manage stress, anxiety, and other mental health challenges.
@@ -32,7 +33,7 @@ To be added.
 To install **Magenta**, follow these steps:
 
 1. **Download the app**:
-   - For iOS: Visit the [App Store](https://www.apple.com/app-store/) and search for "Magenta".
+   - For iOS: Visit the [App Store](https://www.apple.com/app-store/) and search for "Magenta: Mental Health Mentor".
 
 2. **Install the app**: Follow the on-screen instructions to install the app on your device.
 
