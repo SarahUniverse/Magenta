@@ -12,17 +12,20 @@ class ContentViewModel: ObservableObject {
     @Published var username: String = ""
     private let keychainManager = KeychainManager.shared
     private var viewContext: NSManagedObjectContext
-    @Published var userModel: UserModel
+    @Published var userModel: UserModel?
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        self.userModel = UserModel()
         self.loadCurrentUser()
     }
 
     private func loadCurrentUser() {
-        if let userModel = getCurrentUser() {
-            self.username = userModel.username
+        if let currentUser = getCurrentUser() {
+            self.userModel = currentUser
+            self.username = currentUser.username
+            print("Loaded current user: \(currentUser.username)") // Debugging line
+        } else {
+            print("No current user found.") // Debugging line
         }
     }
 
@@ -30,7 +33,8 @@ class ContentViewModel: ObservableObject {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         do {
             let users = try viewContext.fetch(fetchRequest)
-            return !users.isEmpty && verifyUserInKeychain(userId: userModel.username)
+            print("Current username: \(username)") // Debugging line
+            return !users.isEmpty && verifyUserInKeychain(userId: username)
         } catch {
             print("Error fetching users from CoreData: \(error.localizedDescription)")
             return false
@@ -56,17 +60,19 @@ class ContentViewModel: ObservableObject {
             // Retrieve user from CoreData
             let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "username == %@", username)
-            print("The username is: \(username)")
+            print("The username is: \(username)") // Debugging line
 
             let results = try viewContext.fetch(fetchRequest)
             if let existingUser = results.first {
                 return UserModel(entity: existingUser)
             }
 
+            // If user not found in Core Data, check Keychain
             guard let userName = keychainManager.retrieveAccountNameFromKeychain(for: username) else {
                 throw KeychainManager.KeychainError.itemNotFound
             }
 
+            // Create a new UserEntity if not found
             let newUser = UserEntity(context: viewContext)
             newUser.id = UUID()
             newUser.username = userName
