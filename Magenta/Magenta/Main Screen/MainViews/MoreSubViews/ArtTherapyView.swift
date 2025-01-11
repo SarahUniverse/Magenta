@@ -10,17 +10,15 @@ import SwiftUI
 struct ArtTherapyView: View {
 
     var body: some View {
-        NavigationView {
-            List {
-                Text("Hello, World!")
+        VStack {
+            HStack {
+                Text("Art Therapy")
+                    .font(.title)
+                    .fontWeight(.bold)
             }
-            .navigationTitle("Art Therapy")
-            .toolbarBackground(.darkBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
-                }
+            .padding()
+            List {
+                Text("hello world")
             }
         }
     }

@@ -13,6 +13,8 @@ final class MoreViewModel: ObservableObject {
     @Published var navigationTitle = "More"
     @Published var currentUser: UserModel?
     @Published var error: String = ""
+    @Published var isPresenting = false
+    @Published var selectedView: AnyView?
 
     let viewContext: NSManagedObjectContext
 
@@ -43,7 +45,12 @@ final class MoreViewModel: ObservableObject {
     // MARK: - Methods
     func handleItemTap(at index: Int) {
         print("\(items[index].title) button tapped")
-        // Add navigation or action logic here
+
+        if items[index].title == "Art Therapy" {
+            selectedView = AnyView(ArtTherapyView())
+            isPresenting = true
+        }
+
     }
 
     func signOut() {

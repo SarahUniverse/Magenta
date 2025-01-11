@@ -11,6 +11,7 @@ struct MoreView: View {
     @StateObject var moreViewModel: MoreViewModel
     @Environment(\.colorScheme) var colorScheme
 
+    // MARK: Main View
     var body: some View {
         VStack {
             HStack {
@@ -44,6 +45,9 @@ struct MoreView: View {
         }
         .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
             LoginView(viewContext: moreViewModel.viewContext)
+        }
+        .sheet(isPresented: $moreViewModel.isPresenting) {
+            moreViewModel.selectedView
         }
     }
 
