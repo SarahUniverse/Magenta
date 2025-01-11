@@ -45,12 +45,34 @@ final class MoreViewModel: ObservableObject {
     // MARK: - Methods
     func handleItemTap(at index: Int) {
         print("\(items[index].title) button tapped")
+        isPresenting = true
 
-        if items[index].title == "Art Therapy" {
+        switch items[index].title {
+        case "Art Therapy":
             selectedView = AnyView(ArtTherapyView())
+        case "Nutrition":
+            selectedView = AnyView(NutritionView())
+        case "Cycle":
+            selectedView = AnyView(CycleView())
             isPresenting = true
+        case "Sleep":
+            selectedView = AnyView(SleepView())
+        case "Settings":
+            selectedView = AnyView(SettingsView())
+        case "Find a Therapist":
+            selectedView = AnyView(TherapistSearchView())
+        case "Journal":
+            selectedView = AnyView(JournalView())
+        case "Mental Health Playlists":
+            selectedView = AnyView(MentalHealthPlaylists())
+        case "Self Help Books":
+            selectedView = AnyView(SelfHelpBooksView())
+        case "Helpful Quotes":
+            selectedView = AnyView(HelpfulQuotesView())
+        default:
+            isPresenting = false
+            print("You messed up if you're here.")
         }
-
     }
 
     func signOut() {
