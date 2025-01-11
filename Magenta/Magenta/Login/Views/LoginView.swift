@@ -78,7 +78,7 @@ struct LoginView: View {
     private var errorView: some View {
         Text(loginViewModel.error)
             .foregroundColor(.red)
-            .navigationDestination(isPresented: $loginViewModel.isNavigating) {
+            .fullScreenCover(isPresented: $loginViewModel.isNavigating) {
                 destinationView
             }
     }
@@ -121,22 +121,20 @@ struct LoginView: View {
 
     // MARK: - Main View Code
     var body: some View {
-        NavigationStack {
-            VStack {
-                headerView
-                loginFields
-                loginButton
-                errorView
-                divider
-                socialLoginButtons
-                Spacer()
-                CopyrightView()
-                Spacer()
-            }
-            .padding()
-            .background(backgroundGradient)
-            .navigationBarBackButtonHidden(true)
+        VStack {
+            headerView
+            loginFields
+            loginButton
+            errorView
+            divider
+            socialLoginButtons
+            Spacer()
+            CopyrightView()
+            Spacer()
         }
+        .padding()
+        .background(backgroundGradient)
+        .navigationBarBackButtonHidden(true)
     }
 
 }
