@@ -13,7 +13,6 @@ struct ArtTherapyView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                // Rainbow Reveal
                 RainbowBackgroundView(revealProgress: $viewModel.revealProgress)
                     .frame(height: 100)
 
@@ -26,7 +25,6 @@ struct ArtTherapyView: View {
                 }
                 .padding(.top, 20)
 
-                // Paintbrush animation
                 Image(systemName: "paintbrush.pointed.fill")
                     .resizable()
                     .frame(width: 50, height: 50)
@@ -37,7 +35,7 @@ struct ArtTherapyView: View {
                             endPoint: .trailing
                         )
                     )
-                    .offset(x: CGFloat(viewModel.revealProgress * UIScreen.main.bounds.width) - 25, y: 50)
+                    .offset(x: CGFloat(viewModel.revealProgress * UIScreen.main.bounds.width - 220) - 25)
             }
             .onAppear {
                 viewModel.startPainting()
