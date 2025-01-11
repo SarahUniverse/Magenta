@@ -14,7 +14,7 @@ struct SettingsView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Mood")
+            .navigationTitle("Settings")
             .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
@@ -27,6 +27,13 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     SettingsView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SettingsView()
+        .preferredColorScheme(.dark)
 }

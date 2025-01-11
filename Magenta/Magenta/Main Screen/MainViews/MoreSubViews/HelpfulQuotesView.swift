@@ -27,6 +27,13 @@ struct HelpfulQuotesView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     HelpfulQuotesView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    HelpfulQuotesView()
+        .preferredColorScheme(.dark)
 }

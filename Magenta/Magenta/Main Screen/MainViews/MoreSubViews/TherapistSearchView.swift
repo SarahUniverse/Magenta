@@ -27,6 +27,13 @@ struct TherapistSearchView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     TherapistSearchView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    TherapistSearchView()
+        .preferredColorScheme(.dark)
 }

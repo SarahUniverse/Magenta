@@ -27,6 +27,13 @@ struct ArtTherapyView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     ArtTherapyView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    ArtTherapyView()
+        .preferredColorScheme(.dark)
 }

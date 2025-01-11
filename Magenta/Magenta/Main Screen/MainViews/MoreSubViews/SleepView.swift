@@ -13,7 +13,7 @@ struct SleepView: View {
         List {
             Text("Hello, World!")
         }
-        .navigationTitle("Mood")
+        .navigationTitle("Sleep")
         .toolbarBackground(.purple2, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
@@ -25,6 +25,13 @@ struct SleepView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     SleepView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SleepView()
+        .preferredColorScheme(.dark)
 }

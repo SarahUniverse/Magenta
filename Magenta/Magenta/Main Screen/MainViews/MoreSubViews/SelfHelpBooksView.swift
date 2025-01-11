@@ -14,7 +14,7 @@ struct SelfHelpBooksView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Mood")
+            .navigationTitle("Self Help Books")
             .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
@@ -27,6 +27,13 @@ struct SelfHelpBooksView: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     SelfHelpBooksView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SelfHelpBooksView()
+        .preferredColorScheme(.dark)
 }

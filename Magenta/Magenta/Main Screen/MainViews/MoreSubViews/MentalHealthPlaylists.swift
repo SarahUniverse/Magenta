@@ -14,7 +14,7 @@ struct MentalHealthPlaylists: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Mood")
+            .navigationTitle("Mental Health Playlists")
             .toolbarBackground(.purple2, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
@@ -27,6 +27,13 @@ struct MentalHealthPlaylists: View {
     }
 }
 
-#Preview {
+// MARK: Previews
+#Preview("Light Mode") {
     MentalHealthPlaylists()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    MentalHealthPlaylists()
+        .preferredColorScheme(.dark)
 }
