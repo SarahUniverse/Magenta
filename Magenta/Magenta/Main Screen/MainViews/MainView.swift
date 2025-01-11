@@ -64,10 +64,8 @@ struct MainView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return NavigationStack {
-        MainView(viewContext: context, userModel: sampleUserModel)
-    }
-    .preferredColorScheme(.light)
+    return MainView(viewContext: context, userModel: sampleUserModel)
+        .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
@@ -83,8 +81,6 @@ struct MainView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return NavigationStack {
-        MainView(viewContext: context, userModel: sampleUserModel)
-    }
-    .preferredColorScheme(.dark)
+    return MainView(viewContext: context, userModel: sampleUserModel)
+        .preferredColorScheme(.dark)
 }

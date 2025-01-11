@@ -10,18 +10,16 @@ import SwiftUI
 struct SleepView: View {
 
     var body: some View {
-        NavigationStack {
-            List {
-                Text("Hello, World!")
-            }
-            .navigationTitle("Mood")
-            .toolbarBackground(.purple2, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
-                }
+        List {
+            Text("Hello, World!")
+        }
+        .navigationTitle("Mood")
+        .toolbarBackground(.purple2, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Image(systemName: "person.circle")
             }
         }
     }
