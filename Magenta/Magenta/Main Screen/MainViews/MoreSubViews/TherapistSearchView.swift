@@ -15,9 +15,8 @@ struct TherapistSearchView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Mood")
-            .toolbarBackground(.purple2, for: .navigationBar)
+            .toolbarBackground(.darkBlue, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
