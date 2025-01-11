@@ -15,7 +15,7 @@ struct MoreView: View {
             ScrollView {
                 Button(action: {
                     moreViewModel.signOut()
-                }) {
+                }, label: {
                     HStack {
                         Image(systemName: "rectangle.portrait.and.arrow.right")
                         Text("Sign Out")
@@ -24,7 +24,7 @@ struct MoreView: View {
                     .background(colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.1))
                     .foregroundStyle(signOutButtonColor())
                     .cornerRadius(10)
-                }
+                })
                 LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
                     ForEach(0..<moreViewModel.items.count, id: \.self) { index in
                         Button {
