@@ -18,10 +18,15 @@ struct ArtTherapyView: View {
 
                 HStack {
                     Text("Art Therapy")
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
                         .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
+                        .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
+                        .padding(.horizontal, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.black.opacity(0.3))
+                        )
                 }
                 .padding(.top, 20)
 
@@ -36,6 +41,8 @@ struct ArtTherapyView: View {
                         )
                     )
                     .offset(x: CGFloat(viewModel.revealProgress * UIScreen.main.bounds.width - 220) - 25)
+                    .opacity(viewModel.revealProgress < 1.0 ? 1.0 : 0.0)
+                    .animation(.easeInOut, value: viewModel.revealProgress)
             }
             .onAppear {
                 viewModel.startPainting()
