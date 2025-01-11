@@ -94,32 +94,30 @@ struct SignUpView: View {
 
     // MARK: - Main View Code
     var body: some View {
-        NavigationStack {
-            VStack {
-                headerView
-                formFields
-                signUpButton
-                errorMessage
-                Spacer()
-                CopyrightView()
-                Spacer()
-            }
-            .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
-                Alert(
-                    title: Text("Success"),
-                    message: Text("Your account has been created."),
-                    dismissButton: .default(Text("OK")) {
-                        showMainView = true
-                    }
-                )
-            }
-            .navigationDestination(isPresented: $showMainView) {
-                if let userEntity = signUpViewModel.createdUserModel {
-                    MainView(viewContext: viewContext, userModel: userEntity)
-                }
-            }
-            .background(backgroundGradient)
+        VStack {
+            headerView
+            formFields
+            signUpButton
+            errorMessage
+            Spacer()
+            CopyrightView()
+            Spacer()
         }
+        .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
+            Alert(
+                title: Text("Success"),
+                message: Text("Your account has been created."),
+                dismissButton: .default(Text("OK")) {
+                    showMainView = true
+                }
+            )
+        }
+        .fullScreenCover(isPresented: $showMainView) {
+            if let userEntity = signUpViewModel.createdUserModel {
+                MainView(viewContext: viewContext, userModel: userEntity)
+            }
+        }
+        .background(backgroundGradient)
     }
 
     // MARK: - Private Functions for Views

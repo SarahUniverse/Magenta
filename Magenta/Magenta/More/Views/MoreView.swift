@@ -12,7 +12,6 @@ struct MoreView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        NavigationStack {
             ScrollView {
                 LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
                     ForEach(0..<moreViewModel.items.count, id: \.self) { index in
@@ -39,10 +38,9 @@ struct MoreView: View {
                 }
             }
             .navigationBarTitle(moreViewModel.navigationTitle)
-            .navigationDestination(isPresented: $moreViewModel.shouldShowLoginView) {
+            .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
                 LoginView(viewContext: moreViewModel.viewContext)
             }
-        }
     }
 
     // MARK: - Private functions
