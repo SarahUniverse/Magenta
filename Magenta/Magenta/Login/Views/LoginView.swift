@@ -48,6 +48,7 @@ struct LoginView: View {
             .padding(20)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .textInputAutocapitalization(.never)
+            .autocorrectionDisabled(true)
     }
 
     private var passwordField: some View {
@@ -55,6 +56,7 @@ struct LoginView: View {
             .padding(20)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .textInputAutocapitalization(.never)
+            .autocorrectionDisabled(true)
     }
 
     private var loginButton: some View {

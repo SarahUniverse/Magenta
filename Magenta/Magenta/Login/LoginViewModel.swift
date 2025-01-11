@@ -24,8 +24,10 @@ class LoginViewModel: ObservableObject {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        loadSavedUser()
     }
 
+    // MARK: - Functions
     func loginUser() {
         do {
             try KeychainManager.shared.savePasswordToKeychain(password: password, for: username)
@@ -103,5 +105,20 @@ class LoginViewModel: ObservableObject {
 
     func signInWithApple(request: ASAuthorizationAppleIDRequest) {
         // Implement Apple Sign-In logic here
+    }
+
+    // MARK: Private functions
+    private func loadSavedUser() {
+        do {
+            let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+
+            if let userEntity = try viewContext.fetch(fetchRequest).first {
+                let userModel = UserModel(entity: userEntity)
+                self.username = userModel.username
+                self.currentUser = userModel
+            }
+        } catch {
+            print("Error loading saved user: \(error.localizedDescription)")
+        }
     }
 }
