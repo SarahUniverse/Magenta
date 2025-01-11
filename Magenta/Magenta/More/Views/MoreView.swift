@@ -12,35 +12,36 @@ struct MoreView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        HStack() {
-            Spacer()
-            Button(action: {
-                moreViewModel.signOut()
-            }, label: {
-                HStack {
-                    Text("Sign Out")
-                        .font(.title)
-                }
-                .padding(.trailing, 30)
-                .foregroundStyle(signOutButtonColor())
-            })
-        }
-        .frame(maxWidth: .infinity, alignment: .trailing)
-        LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
-            ForEach(0..<moreViewModel.items.count, id: \.self) { index in
-                Button {
-                    moreViewModel.handleItemTap(at: index)
-                } label: {
-                    GridItemView(
-                        icon: moreViewModel.items[index].icon,
-                        title: moreViewModel.items[index].title
-                    )
+        VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    moreViewModel.signOut()
+                }, label: {
+                    HStack {
+                        Text("Sign Out")
+                            .font(.title)
+                    }
+                    .padding(.trailing, 30)
+                    .foregroundStyle(signOutButtonColor())
+                })
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
+                ForEach(0..<moreViewModel.items.count, id: \.self) { index in
+                    Button {
+                        moreViewModel.handleItemTap(at: index)
+                    } label: {
+                        GridItemView(
+                            icon: moreViewModel.items[index].icon,
+                            title: moreViewModel.items[index].title
+                        )
+                    }
                 }
             }
+            .padding()
+            Spacer()
         }
-        .padding()
-        Spacer()
-
         .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
             LoginView(viewContext: moreViewModel.viewContext)
         }
