@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ArtTherapyView: View {
 
+    // TODO: Update UI and add ArtTherapyViewModel
     var body: some View {
         VStack {
             HStack {
