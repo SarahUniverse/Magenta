@@ -8,78 +8,42 @@
 import SwiftUI
 
 struct ArtTherapyView: View {
-    @ObservedObject var viewModel = ArtTherapyViewModel()
-    @State private var isBackgroundRevealed = false
-    @State private var isPainting = false
-
-    // Gradient matching the paintbrush
-    private var backgroundGradient: LinearGradient {
-        LinearGradient(
-            gradient: Gradient(colors: [.pink, .purple, .blue]),
-            startPoint: .bottom,
-            endPoint: .top
-        )
-    }
+    @StateObject private var viewModel = ArtTherapyViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                // Painting Reveal Background
-                backgroundGradient
-                    .mask(
-                        Rectangle()
-                            .modifier(PaintRevealModifier(isRevealed: isBackgroundRevealed))
-                    )
-                    .onAppear {
-                        // Start revealing background
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                isBackgroundRevealed = true
-                            }
-                        }
+                // Rainbow Reveal
+                RainbowBackgroundView(revealProgress: $viewModel.revealProgress)
+                    .frame(height: 100)
 
-                        // Start painting after background is revealed
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            isPainting = true
-                            viewModel.startPaintingOnce()
-                        }
-                    }
                 HStack {
                     Text("Art Therapy")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                        .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
                 }
-                .padding()
+                .padding(.top, 20)
 
-                // Painting Animation
-                if isPainting {
-                    Canvas { context, size in
-                        for (index, point) in viewModel.points.enumerated() {
-                            let hue = Double(index) / Double(viewModel.points.count)
-                            let color = Color(hue: hue, saturation: 1, brightness: 1)
-
-                            context.stroke(
-                                Path { colorPath in
-                                    colorPath.move(to: point)
-                                    colorPath.addLine(to: point)
-                                },
-                                with: .color(color),
-                                lineWidth: 10
-                            )
-                        }
-                    }
-
-                    Image(systemName: "paintbrush.pointed.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundStyle(.black)
-                        .position(viewModel.points.last ?? .zero)
-                }
+                // Paintbrush animation
+                Image(systemName: "paintbrush.pointed.fill")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .offset(x: CGFloat(viewModel.revealProgress * UIScreen.main.bounds.width) - 25, y: 50)
+            }
+            .onAppear {
+                viewModel.startPainting()
             }
             .frame(height: 100)
 
-            // List Content
             List {
                 Text("Art Project idea one")
                 Text("Art Project idea two")

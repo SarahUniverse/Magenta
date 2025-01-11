@@ -8,38 +8,24 @@
 import SwiftUI
 
 final class ArtTherapyViewModel: ObservableObject {
-    @Published var points = [CGPoint]()
-    private var timer: Timer?
-    private var isPaintingComplete = false
+    @Published var revealProgress: CGFloat = 0.0
+    private var animationTimer: Timer?
 
-    func startPaintingOnce() {
-        guard !isPaintingComplete else { return }
+    func startPainting() {
+        // Reset progress
+        revealProgress = 0.0
 
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+        // Animate rainbow reveal
+        animationTimer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { [weak self] timer in
             guard let self = self else { return }
-            self.updatePath()
 
-            // Stop painting after reaching a certain point
-            if self.points.count >= 100 {
-                self.timer?.invalidate()
-                self.isPaintingComplete = true
+            // Gradually increase reveal progress
+            self.revealProgress += 0.01
+
+            // Stop animation when fully revealed
+            if self.revealProgress >= 1.0 {
+                timer.invalidate()
             }
-        }
-    }
-
-    func updatePath() {
-        let screenWidth = UIScreen.main.bounds.width
-
-        let time = Date().timeIntervalSinceReferenceDate
-        let xAxis = screenWidth / 2 + sin(time) * screenWidth / 4
-        let yAxis = 50 + (cos(time) * 20)
-
-        points.append(CGPoint(x: xAxis, y: yAxis))
-
-        // Limit the number of points
-        if points.count > 100 {
-            points.removeFirst()
         }
     }
 }
