@@ -135,6 +135,7 @@ struct LoginView: View {
             }
             .padding()
             .background(backgroundGradient)
+            .navigationBarBackButtonHidden(true)
         }
     }
 

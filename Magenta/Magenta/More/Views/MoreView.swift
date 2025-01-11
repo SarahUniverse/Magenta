@@ -39,9 +39,9 @@ struct MoreView: View {
                 }
             }
             .navigationBarTitle(moreViewModel.navigationTitle)
-        }
-        .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
-            LoginView(viewContext: moreViewModel.viewContext)
+            .navigationDestination(isPresented: $moreViewModel.shouldShowLoginView) {
+                LoginView(viewContext: moreViewModel.viewContext)
+            }
         }
     }
 
@@ -49,7 +49,6 @@ struct MoreView: View {
     private func signOutButtonColor() -> Color {
         colorScheme == .dark ? .white : .black
     }
-
 }
 
 // MARK: - Previews
