@@ -47,23 +47,7 @@ final class MoreViewModel: ObservableObject {
     }
 
     func signOut() {
-        do {
-            if let username = currentUser?.username {
-                try KeychainManager.shared.deletePasswordFromKeychain(for: username)
-            }
-
-            if let username = currentUser?.username {
-                let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "username == %@", username)
-            }
-
-            self.currentUser = nil
-
-            self.shouldShowLoginView = true
-
-        } catch {
-            print("Error during sign out: \(error.localizedDescription)")
-        }
+        self.shouldShowLoginView = true
     }
 
 }

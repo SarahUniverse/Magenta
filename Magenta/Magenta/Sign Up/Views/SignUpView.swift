@@ -52,8 +52,6 @@ struct SignUpView: View {
             if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
                 signUpViewModel.errorMessage = "User already exists. Please log in or use a different username."
             } else {
-                // TODO: remove later
-                signUpViewModel.deleteAllUsers(viewContext: viewContext)
                 signUpViewModel.signUp()
             }
         } label: {

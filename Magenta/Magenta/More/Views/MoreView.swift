@@ -13,6 +13,18 @@ struct MoreView: View {
 
     var body: some View {
             ScrollView {
+                Button(action: {
+                    moreViewModel.signOut()
+                }) {
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                        Text("Sign Out")
+                    }
+                    .padding()
+                    .background(colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.1))
+                    .foregroundStyle(signOutButtonColor())
+                    .cornerRadius(10)
+                }
                 LazyVGrid(columns: moreViewModel.columns, spacing: 20) {
                     ForEach(0..<moreViewModel.items.count, id: \.self) { index in
                         Button {
@@ -27,20 +39,10 @@ struct MoreView: View {
                 }
                 .padding()
             }
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Sign Out") {
-                        moreViewModel.signOut()
-                    }
-                    .bold()
-                    .foregroundStyle(signOutButtonColor())
-                }
-            }
-            .navigationBarTitle(moreViewModel.navigationTitle)
-            .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
-                LoginView(viewContext: moreViewModel.viewContext)
-            }
+
+        .fullScreenCover(isPresented: $moreViewModel.shouldShowLoginView) {
+            LoginView(viewContext: moreViewModel.viewContext)
+        }
     }
 
     // MARK: - Private functions
