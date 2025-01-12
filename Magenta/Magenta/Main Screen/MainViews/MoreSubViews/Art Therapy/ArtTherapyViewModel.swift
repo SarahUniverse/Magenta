@@ -15,7 +15,7 @@ final class ArtTherapyViewModel: ObservableObject {
         // Reset progress
         revealProgress = 0.0
 
-        // Animate rainbow reveal
+        // Animate gradient reveal
         animationTimer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { [weak self] timer in
             guard let self = self else { return }
 

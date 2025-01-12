@@ -13,7 +13,7 @@ struct ArtTherapyView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                RainbowBackgroundView(revealProgress: $viewModel.revealProgress)
+                AnimatedGradientBackgroundView(revealProgress: $viewModel.revealProgress)
                     .frame(height: 100)
 
                 HStack {
