@@ -5,49 +5,61 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct ArtTherapyView: View {
-    @StateObject private var viewModel = ArtTherapyViewModel()
+    @StateObject private var artTherapyViewModel: ArtTherapyViewModel
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        _artTherapyViewModel = StateObject(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
+        self.viewContext = viewContext
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                AnimatedGradientBackgroundView(revealProgress: $viewModel.revealProgress)
+                AnimatedGradientBackgroundView(revealProgress: $artTherapyViewModel.revealProgress)
                     .frame(height: 100)
 
                 HStack {
                     Text("Art Therapy")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
+                        .font(.title)
+                        .fontWeight(.bold)
                         .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
-                        .padding(.horizontal, 10)
+                        .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
                 }
                 .padding(.top, 20)
 
-                Image(systemName: "paintbrush.pointed.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.blue1, .darkBlue, .black],
-                            startPoint: .leading,
-                            endPoint: .trailing
+                if artTherapyViewModel.revealProgress < 1.0 {
+                    Image(systemName: "paintbrush.pointed.fill")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .offset(x: CGFloat(viewModel.revealProgress * UIScreen.main.bounds.width - 220) - 25)
-                    .opacity(viewModel.revealProgress < 1.0 ? 1.0 : 0.0)
-                    .animation(.easeInOut, value: viewModel.revealProgress)
+                        .offset(x: CGFloat(artTherapyViewModel.revealProgress * UIScreen.main.bounds.width), y: -15)
+                }
             }
             .onAppear {
-                viewModel.startPainting()
+                artTherapyViewModel.startPaintingAnimation()
             }
             .frame(height: 100)
 
             List {
-                Text("Art Project idea one")
-                Text("Art Project idea two")
+                ForEach(artTherapyViewModel.artTherapyActivities) { activity in
+                    VStack(alignment: .leading) {
+                        Text(activity.activityName)
+                            .font(.headline)
+                        Text(activity.activityDescription)
+                            .font(.subheadline)
+                    }
+                }
             }
         }
     }
@@ -55,11 +67,65 @@ struct ArtTherapyView: View {
 
 // MARK: Previews
 #Preview("Light Mode") {
-    ArtTherapyView()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+
+        // Populate with sample data
+        let viewContext = container.viewContext
+        let sampleActivity = ArtTherapyEntity(context: viewContext)
+        sampleActivity.id = UUID()
+        sampleActivity.activityName = "Watercolor Painting"
+        sampleActivity.activityDescription = "Explore emotions through watercolor techniques"
+        sampleActivity.therapeuticValue = "Stress relief and emotional expression"
+
+        do {
+            try viewContext.save()
+        } catch {
+            print("Failed to create preview data: \(error)")
+        }
+
+        return container
+    }()
+
+    return ArtTherapyView(viewContext: persistentContainer.viewContext)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    ArtTherapyView()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+
+        // Populate with sample data
+        let viewContext = container.viewContext
+        let sampleActivity = ArtTherapyEntity(context: viewContext)
+        sampleActivity.id = UUID()
+        sampleActivity.activityName = "Mandala Drawing"
+        sampleActivity.activityDescription = "Create intricate mandala designs for mindfulness"
+        sampleActivity.therapeuticValue = "Meditation and focus"
+
+        do {
+            try viewContext.save()
+        } catch {
+            print("Failed to create preview data: \(error)")
+        }
+
+        return container
+    }()
+
+    return ArtTherapyView(viewContext: persistentContainer.viewContext)
         .preferredColorScheme(.dark)
 }

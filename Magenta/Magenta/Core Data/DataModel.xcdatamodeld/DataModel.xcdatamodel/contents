@@ -3,6 +3,7 @@
     <entity name="ArtTherapyEntity" representedClassName="ArtTherapyEntity" syncable="YES" codeGenerationType="class">
         <attribute name="activityDescription" optional="YES" attributeType="String"/>
         <attribute name="activityName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="therapeuticValue" optional="YES" attributeType="String"/>
     </entity>
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">

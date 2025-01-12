@@ -49,7 +49,7 @@ final class MoreViewModel: ObservableObject {
 
         switch items[index].title {
         case "Art Therapy":
-            selectedView = AnyView(ArtTherapyView())
+            selectedView = AnyView(ArtTherapyView(viewContext: viewContext))
         case "Nutrition":
             selectedView = AnyView(NutritionView())
         case "Cycle":
