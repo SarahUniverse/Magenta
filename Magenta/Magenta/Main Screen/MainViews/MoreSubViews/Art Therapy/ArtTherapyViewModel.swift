@@ -17,8 +17,68 @@ final class ArtTherapyViewModel: ObservableObject {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        fetchArtTherapyActivities()
+
+        // Check if activities exist, if not, create them
+        let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
+
+        do {
+            let entities = try viewContext.fetch(request)
+
+            // if entities.isEmpty {
+                createInitialArtTherapyActivities()
+            // }
+
+            fetchArtTherapyActivities()
+        } catch {
+            print("Error checking Art Therapy Activities: \(error.localizedDescription)")
+        }
     }
+
+    // swiftlint:disable line_length
+    private func createInitialArtTherapyActivities() {
+        let activities = [
+            (
+                name: "Emotion Painting",
+                description: "Choose colors that represent different emotions you're feeling or have felt recently. Use these colors to create a painting or abstract art piece where each color represents a specific emotion. You could layer colors, mix them, or keep them separate to symbolize how these emotions interact or coexist within you.",
+                therapeuticValue: "Helps in identifying, expressing, and processing emotions through visual representation."
+            ),
+            (
+                name: "Memory Collage",
+                description: "Gather old magazines, photographs, or print images from online sources. Create a collage that represents memories, either positive or negative, from your life. You can also include words or phrases that resonate with these memories.",
+                therapeuticValue: "Assists in storytelling, processing past events, and can be a way to honor or release memories."
+            ),
+            (
+                name: "Sculpting with Clay",
+                description: "Use clay to sculpt something that represents an obstacle or challenge in your life. Alternatively, sculpt something that symbolizes freedom, peace, or a goal you're working towards.",
+                therapeuticValue: "The tactile nature of clay can be soothing, and the act of shaping can symbolize taking control over one's life circumstances or exploring new forms of expression."
+            ),
+            (
+                name: "Mandala Drawing",
+                description: "Draw or color in a mandala, which is a circular design that represents the universe in Hindu and Buddhist symbolism. You can start with a pre-printed mandala or create your own. Choose your patterns and colors intuitively as you work.",
+                therapeuticValue: "Promotes relaxation, focus, and can symbolize the journey towards balance and wholeness."
+            ),
+            (
+                name: "Self-Portrait Exploration",
+                description: "Create a self-portrait, but with a twist—depict how you feel inside rather than how you look outside. You could use abstract forms, symbols, or even collage elements to represent different aspects of your personality, emotions, or life stages.",
+                therapeuticValue: "Encourages self-reflection, self-acceptance, and can be a profound way to explore identity and self-perception."
+            )
+        ]
+
+        activities.forEach { activity in
+            let newActivity = ArtTherapyEntity(context: viewContext)
+            newActivity.id = UUID()
+            newActivity.activityName = activity.name
+            newActivity.activityDescription = activity.description
+            newActivity.therapeuticValue = activity.therapeuticValue
+        }
+
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving initial Art Therapy Activities: \(error.localizedDescription)")
+        }
+    }
+    // swiftlint:enable line_length
 
     func startPaintingAnimation() {
         revealProgress = 0.0

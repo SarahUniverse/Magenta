@@ -77,20 +77,6 @@ struct ArtTherapyView: View {
             }
         }
 
-        // Populate with sample data
-        let viewContext = container.viewContext
-        let sampleActivity = ArtTherapyEntity(context: viewContext)
-        sampleActivity.id = UUID()
-        sampleActivity.activityName = "Watercolor Painting"
-        sampleActivity.activityDescription = "Explore emotions through watercolor techniques"
-        sampleActivity.therapeuticValue = "Stress relief and emotional expression"
-
-        do {
-            try viewContext.save()
-        } catch {
-            print("Failed to create preview data: \(error)")
-        }
-
         return container
     }()
 
@@ -107,20 +93,6 @@ struct ArtTherapyView: View {
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        }
-
-        // Populate with sample data
-        let viewContext = container.viewContext
-        let sampleActivity = ArtTherapyEntity(context: viewContext)
-        sampleActivity.id = UUID()
-        sampleActivity.activityName = "Mandala Drawing"
-        sampleActivity.activityDescription = "Create intricate mandala designs for mindfulness"
-        sampleActivity.therapeuticValue = "Meditation and focus"
-
-        do {
-            try viewContext.save()
-        } catch {
-            print("Failed to create preview data: \(error)")
         }
 
         return container
