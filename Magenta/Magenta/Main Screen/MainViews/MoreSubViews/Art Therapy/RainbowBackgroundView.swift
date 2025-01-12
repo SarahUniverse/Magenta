@@ -19,12 +19,12 @@ struct RainbowBackgroundView: UIViewRepresentable {
         let rainbowLayer = CAGradientLayer()
         rainbowLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
         rainbowLayer.colors = [
-            UIColor.red.cgColor,
-            UIColor.orange.cgColor,
-            UIColor.yellow.cgColor,
-            UIColor.green.cgColor,
-            UIColor.blue.cgColor,
-            UIColor.purple.cgColor
+            UIColor.blue1.cgColor,
+            UIColor.lightPurple.cgColor,
+            UIColor.mediumPurple.cgColor,
+            UIColor.purple4.cgColor,
+            UIColor.darkPurple.cgColor,
+            UIColor.darkBlue.cgColor
         ]
         rainbowLayer.startPoint = CGPoint(x: 0, y: 0.5)
         rainbowLayer.endPoint = CGPoint(x: 1, y: 0.5)

@@ -23,10 +23,6 @@ struct ArtTherapyView: View {
                         .foregroundColor(.white)
                         .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
                         .padding(.horizontal, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.black.opacity(0.3))
-                        )
                 }
                 .padding(.top, 20)
 
@@ -36,6 +32,7 @@ struct ArtTherapyView: View {
                     .foregroundStyle(
                         LinearGradient(
                             colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                            //
                             startPoint: .leading,
                             endPoint: .trailing
                         )
