@@ -31,8 +31,7 @@ struct ArtTherapyView: View {
                     .frame(width: 50, height: 50)
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [.red, .orange, .yellow, .green, .blue, .purple],
-                            //
+                            colors: [.blue1, .darkBlue, .black],
                             startPoint: .leading,
                             endPoint: .trailing
                         )
