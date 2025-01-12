@@ -24,9 +24,7 @@ final class ArtTherapyViewModel: ObservableObject {
         do {
             let entities = try viewContext.fetch(request)
 
-            // if entities.isEmpty {
-                createInitialArtTherapyActivities()
-            // }
+            createInitialArtTherapyActivities()
 
             fetchArtTherapyActivities()
         } catch {

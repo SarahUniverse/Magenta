@@ -58,6 +58,8 @@ struct ArtTherapyView: View {
                             .font(.headline)
                         Text(activity.activityDescription)
                             .font(.subheadline)
+                        Text(activity.therapeuticValue)
+                            .font(.caption)
                     }
                 }
             }
