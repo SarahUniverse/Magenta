@@ -21,6 +21,8 @@ final class ArtTherapyViewModel: ObservableObject {
     }
 
     private func setupInitialActivities() {
+
+        // TODO: Do I need this code for initial activities?
         let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
 
         do {
