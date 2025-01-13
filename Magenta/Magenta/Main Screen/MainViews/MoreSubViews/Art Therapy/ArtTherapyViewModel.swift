@@ -11,6 +11,7 @@ import SwiftUI
 final class ArtTherapyViewModel: ObservableObject {
     @Published var revealProgress: CGFloat = 0.0
     @Published var artTherapyActivities: [ArtTherapyModel] = []
+    @Published var showAddActivitySheet = false
 
     private var animationTimer: Timer?
     private let viewContext: NSManagedObjectContext

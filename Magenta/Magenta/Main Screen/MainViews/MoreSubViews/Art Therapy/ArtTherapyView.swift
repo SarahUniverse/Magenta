@@ -88,10 +88,20 @@ struct ArtTherapyView: View {
         }
     }
 
+    private var addActivityButton: some View {
+        Button(action: {
+            artTherapyViewModel.showAddActivitySheet = true
+        }) {
+            Text("Add Activity")
+        }
+        .padding(.top, 20)
+    }
+
     // MARK: - Main View Code
     var body: some View {
         VStack(spacing: 0) {
             animationHeader
+            addActivityButton
             ideaHeader
             activityList
         }
