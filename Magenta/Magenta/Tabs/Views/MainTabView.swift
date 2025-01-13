@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct TabView: View {
+struct MainTabView: View {
     @StateObject private var mainViewModel: TabViewModel
     @StateObject private var moreViewModel: MoreViewModel
     let userModel: UserModel
@@ -64,7 +64,7 @@ struct TabView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return TabView(viewContext: context, userModel: sampleUserModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.light)
 }
 
@@ -81,6 +81,6 @@ struct TabView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return TabView(viewContext: context, userModel: sampleUserModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.dark)
 }

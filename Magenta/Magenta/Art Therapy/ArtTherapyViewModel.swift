@@ -24,7 +24,7 @@ final class ArtTherapyViewModel: ObservableObject {
         let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
 
         do {
-            let entities = try viewContext.fetch(request)
+            _ = try viewContext.fetch(request)
             createInitialArtTherapyActivities()
             fetchArtTherapyActivities()
         } catch {

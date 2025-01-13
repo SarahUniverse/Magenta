@@ -85,7 +85,7 @@ struct SignUpView: View {
     private var mainViewDestination: some View {
         Group {
             if let userEntity = signUpViewModel.createdUserModel {
-                MainView(viewContext: viewContext, userModel: userEntity)
+                MainTabView(viewContext: viewContext, userModel: userEntity)
             }
         }
     }
@@ -112,7 +112,7 @@ struct SignUpView: View {
         }
         .fullScreenCover(isPresented: $showMainView) {
             if let userEntity = signUpViewModel.createdUserModel {
-                MainView(viewContext: viewContext, userModel: userEntity)
+                MainTabView(viewContext: viewContext, userModel: userEntity)
             }
         }
         .background(backgroundGradient)

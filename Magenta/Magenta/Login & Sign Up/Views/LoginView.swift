@@ -88,7 +88,7 @@ struct LoginView: View {
     private var destinationView: some View {
         Group {
             if let currentUser = loginViewModel.currentUser {
-                MainView(viewContext: viewContext, userModel: currentUser)
+                MainTabView(viewContext: viewContext, userModel: currentUser)
             } else {
                 Text("Error loading user")
             }
