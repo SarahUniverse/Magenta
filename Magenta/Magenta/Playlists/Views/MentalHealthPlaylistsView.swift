@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MentalHealthPlaylists: View {
+struct MentalHealthPlaylistsView: View {
 
     var body: some View {
         NavigationView {
@@ -28,11 +28,11 @@ struct MentalHealthPlaylists: View {
 
 // MARK: Previews
 #Preview("Light Mode") {
-    MentalHealthPlaylists()
+    MentalHealthPlaylistsView()
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    MentalHealthPlaylists()
+    MentalHealthPlaylistsView()
         .preferredColorScheme(.dark)
 }

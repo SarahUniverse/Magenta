@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-final class MainViewModel: ObservableObject {
+final class TabViewModel: ObservableObject {
     private let viewContext: NSManagedObjectContext
     @Published var currentUser: UserModel?
 

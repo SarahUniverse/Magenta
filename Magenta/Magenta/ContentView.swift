@@ -20,7 +20,7 @@ public struct ContentView: View {
         Group {
             if contentViewModel.isUserLoggedIn() {
                 if let currentUser = contentViewModel.getCurrentUser() {
-                    MainView(viewContext: viewContext, userModel: currentUser)
+                    TabView(viewContext: viewContext, userModel: currentUser)
                 } else {
                     LoginView(viewContext: viewContext)
                 }

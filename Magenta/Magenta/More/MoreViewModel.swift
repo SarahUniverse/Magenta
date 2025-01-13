@@ -64,7 +64,7 @@ final class MoreViewModel: ObservableObject {
         case "Journal":
             selectedView = AnyView(JournalView())
         case "Mental Health Playlists":
-            selectedView = AnyView(MentalHealthPlaylists())
+            selectedView = AnyView(MentalHealthPlaylistsView())
         case "Self Help Books":
             selectedView = AnyView(SelfHelpBooksView())
         case "Helpful Quotes":

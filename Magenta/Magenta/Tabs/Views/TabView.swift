@@ -8,14 +8,14 @@
 import CoreData
 import SwiftUI
 
-struct MainView: View {
-    @StateObject private var mainViewModel: MainViewModel
+struct TabView: View {
+    @StateObject private var mainViewModel: TabViewModel
     @StateObject private var moreViewModel: MoreViewModel
     let userModel: UserModel
 
     init(viewContext: NSManagedObjectContext, userModel: UserModel) {
         self.userModel = userModel
-        _mainViewModel = StateObject(wrappedValue: MainViewModel(viewContext: viewContext, userModel: userModel))
+        _mainViewModel = StateObject(wrappedValue: TabViewModel(viewContext: viewContext, userModel: userModel))
         _moreViewModel = StateObject(wrappedValue: MoreViewModel(viewContext: viewContext, currentUser: userModel))
     }
 
@@ -64,7 +64,7 @@ struct MainView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return MainView(viewContext: context, userModel: sampleUserModel)
+    return TabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.light)
 }
 
@@ -81,6 +81,6 @@ struct MainView: View {
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
 
-    return MainView(viewContext: context, userModel: sampleUserModel)
+    return TabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.dark)
 }
