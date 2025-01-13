@@ -16,7 +16,13 @@ struct DiscoverView: View {
     }
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            // TODO: Make SignOut button it's own view
+            List {
+
+            }
+            .navigationTitle("Discover")
+        }
     }
 }
 
