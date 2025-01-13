@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-struct ArtTherapyModel: Identifiable {
+struct ArtTherapyModel: Identifiable, Hashable {
     let id: UUID
     let activityDescription: String
     let activityName: String

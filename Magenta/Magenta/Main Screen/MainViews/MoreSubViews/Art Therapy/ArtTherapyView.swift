@@ -52,17 +52,20 @@ struct ArtTherapyView: View {
             .frame(height: 100)
 
             List {
-                ForEach(artTherapyViewModel.artTherapyActivities) { activity in
-                    VStack(alignment: .leading) {
-                        Text(activity.activityName)
-                            .font(.headline)
-                        Text(activity.activityDescription)
-                            .font(.subheadline)
-                        Text(activity.therapeuticValue)
-                            .font(.caption)
+                ForEach(artTherapyViewModel.artTherapyActivities, id: \.self) { activity in
+                    Section(header: Text(activity.activityName)) {
+                            VStack(alignment: .leading) {
+                                Text(activity.activityDescription)
+                                    .font(.subheadline)
+                                    .padding(.bottom, 5)
+                                Text(activity.therapeuticValue)
+                                    .font(.caption)
+                                    .italic()
+                            }
+                        }
                     }
                 }
-            }
+
         }
     }
 }
