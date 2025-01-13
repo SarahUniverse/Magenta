@@ -5,29 +5,33 @@
 //  Created by Sarah Clark on 1/7/25.
 //
 
+import CoreData
 import SwiftUI
 
 final class SummaryViewModel: ObservableObject {
-    // TODO: Update this code a lot.
-    // Add any properties or methods needed for the view model
-    // For example, you might want to track user data or summary statistics
+    @Published var shouldShowLoginView = false
+    @Published var currentUser: UserModel?
+    let viewContext: NSManagedObjectContext
 
-    // Example property
-    @Published var exerciseSummary: String = "No exercise data available."
-    @Published var sleepSummary: String = "No sleep data available."
-    @Published var nutritionSummary: String = "No nutrition data available."
-    @Published var meditationSummary: String = "No meditation data available."
-
-    init() {
-        // Initialize or fetch data here
-        fetchSummaryData()
+    init (viewContext: NSManagedObjectContext, currentUser: UserModel? = nil) {
+        self.viewContext = viewContext
+        self.currentUser = currentUser
     }
 
-    private func fetchSummaryData() {
-        // Simulate fetching data
-        exerciseSummary = "You exercised for 30 minutes today."
-        sleepSummary = "You slept for 7 hours last night."
-        nutritionSummary = "You consumed 2000 calories today."
-        meditationSummary = "You meditated for 15 minutes today."
+    func signOut() {
+        self.shouldShowLoginView = true
+    }
+}
+
+extension SummaryViewModel {
+    static func createPreviewViewModel() -> SummaryViewModel {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load CoreData stack: \(error)")
+            }
+        }
+        return SummaryViewModel(viewContext: container.viewContext)
     }
 }

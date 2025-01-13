@@ -25,7 +25,7 @@ struct MainTabView: View {
 
     var body: some View {
         TabView {
-            SummaryView()
+            SummaryView(viewContext: viewContext)
                 .tabItem {
                     Label("Summary", systemImage: "heart.fill")
                 }
@@ -37,7 +37,7 @@ struct MainTabView: View {
 
             AccountView(viewContext: viewContext)
                 .tabItem {
-                    Label("Account", systemImage: "person.circle")
+                    Label("Account", systemImage: "person.fill")
                 }
         }
         .tint(.darkPurple)

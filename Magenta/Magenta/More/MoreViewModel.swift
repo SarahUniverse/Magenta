@@ -83,7 +83,7 @@ final class MoreViewModel: ObservableObject {
 
 extension MoreViewModel {
     static func createPreviewViewModel() -> MoreViewModel {
-        let container = NSPersistentContainer(name: "Model")
+        let container = NSPersistentContainer(name: "DataModel")
         container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         container.loadPersistentStores { _, error in
             if let error = error {
