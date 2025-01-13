@@ -51,6 +51,18 @@ struct ArtTherapyView: View {
             }
             .frame(height: 100)
 
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "lightbulb.max")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 24)
+                    .padding(.top, 20)
+                    .foregroundStyle(.yellow)
+                Text("Ideas for Activities:")
+                    .font(.title3)
+                    .padding(.top, 20)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             List {
                 ForEach(artTherapyViewModel.artTherapyActivities, id: \.self) { activity in
                     Section(header: Text(activity.activityName)) {
