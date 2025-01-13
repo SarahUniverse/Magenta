@@ -62,6 +62,11 @@ struct SummaryView: View {
                         summaryViewModel.signOut()
                     }, label: {
                         Text("Sign Out")
+                            .padding(8)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(20)
+                            .foregroundStyle(.darkPurple)
+                            .shadow(color: .white, radius: 3, x: 2, y: 2)
                     })
             )
         }
