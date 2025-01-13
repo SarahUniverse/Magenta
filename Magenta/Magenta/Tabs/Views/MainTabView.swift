@@ -9,14 +9,16 @@ import CoreData
 import SwiftUI
 
 struct MainTabView: View {
-    @StateObject private var mainViewModel: TabViewModel
-    @StateObject private var moreViewModel: MoreViewModel
+    @StateObject private var mainViewModel: MainTabViewModel
+    @StateObject private var discoverViewModel: DiscoverViewModel
     let userModel: UserModel
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext, userModel: UserModel) {
         self.userModel = userModel
-        _mainViewModel = StateObject(wrappedValue: TabViewModel(viewContext: viewContext, userModel: userModel))
-        _moreViewModel = StateObject(wrappedValue: MoreViewModel(viewContext: viewContext, currentUser: userModel))
+        self.viewContext = viewContext
+        _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
+        _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext))
     }
 
     var body: some View {
@@ -25,25 +27,9 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Summary", systemImage: "heart.fill")
                 }
-
-            MoodView()
+            DiscoverView(viewContext: viewContext)
                 .tabItem {
-                    Label("Mood", systemImage: "face.smiling.inverse")
-                }
-
-            MeditateView()
-                .tabItem {
-                    Label("Meditate", systemImage: "figure.mind.and.body")
-                }
-
-            ExerciseView()
-                .tabItem {
-                    Label("Exercise", systemImage: "figure.run")
-                }
-
-            MoreView(moreViewModel: moreViewModel)
-                .tabItem {
-                    Label("More", systemImage: "line.3.horizontal")
+                    Label("Discover", systemImage: "magnifyingglass")
                 }
         }
         .tint(.darkPurple)
