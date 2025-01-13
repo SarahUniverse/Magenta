@@ -70,11 +70,6 @@ final class ArtTherapyViewModel: ObservableObject {
             newActivity.therapeuticValue = activity.therapeuticValue
         }
 
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving initial Art Therapy Activities: \(error.localizedDescription)")
-        }
     }
     // swiftlint:enable line_length
 
