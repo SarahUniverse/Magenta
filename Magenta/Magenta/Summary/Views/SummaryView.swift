@@ -34,38 +34,36 @@ struct SummaryView: View {
     // MARK: - Main View Code
     var body: some View {
         NavigationView {
-            HStack {
-                Spacer()
-                Button(action: {
-                    summaryViewModel.signOut()
-                }, label: {
+            ZStack {
+                backgroundGradient
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
                     HStack {
-                        Text("Sign Out")
-                            .font(.title)
-                    }
-                    .padding(.trailing, 30)
-                    .foregroundStyle(signOutButtonColor())
-                })
-            }
-                ZStack {
-                    backgroundGradient
-                        .edgesIgnoringSafeArea(.all)
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 20) {
-                            ExerciseSummary()
-                            SleepSummaryView()
-                            NutritionSummaryView()
-                            MeditationSummaryView()
+                        Spacer()
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 20) {
+                                ExerciseSummary()
+                                SleepSummaryView()
+                                NutritionSummaryView()
+                                MeditationSummaryView()
+                            }
+                            .padding()
                         }
-                        .padding()
                     }
-                    .navigationBarTitle("Summary")
-                    .navigationBarItems(trailing: Image(systemName: "person.circle"))
-                    .foregroundStyle(iconColor())
+                }
+                .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
+                    LoginView(viewContext: summaryViewModel.viewContext)
                 }
             }
-        .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
-            LoginView(viewContext: summaryViewModel.viewContext)
+            .navigationBarTitle("Summary")
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        summaryViewModel.signOut()
+                    }, label: {
+                        Text("Sign Out")
+                    })
+            )
         }
     }
 
