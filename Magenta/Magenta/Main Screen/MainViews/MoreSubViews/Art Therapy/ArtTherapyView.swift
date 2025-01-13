@@ -15,15 +15,6 @@ struct ArtTherapyView: View {
         _artTherapyViewModel = StateObject(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
-    // MARK: - Main View Code
-    var body: some View {
-        VStack(spacing: 0) {
-            animationHeader
-            ideaHeader
-            activityList
-        }
-    }
-
     // MARK: - Private variables
     private var animationHeader: some View {
         ZStack {
@@ -96,6 +87,16 @@ struct ArtTherapyView: View {
             }
         }
     }
+
+    // MARK: - Main View Code
+    var body: some View {
+        VStack(spacing: 0) {
+            animationHeader
+            ideaHeader
+            activityList
+        }
+    }
+
 }
 
 // MARK: Previews
