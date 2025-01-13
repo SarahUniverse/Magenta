@@ -10,74 +10,90 @@ import SwiftUI
 
 struct ArtTherapyView: View {
     @StateObject private var artTherapyViewModel: ArtTherapyViewModel
-    let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         _artTherapyViewModel = StateObject(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
-        self.viewContext = viewContext
     }
 
+    // MARK: - Main View Code
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                AnimatedGradientBackgroundView(revealProgress: $artTherapyViewModel.revealProgress)
-                    .frame(height: 100)
+            animationHeader
+            ideaHeader
+            activityList
+        }
+    }
 
-                HStack {
-                    Text("Art Therapy")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
-                }
+    // MARK: - Private variables
+    private var animationHeader: some View {
+        ZStack {
+            AnimatedGradientBackgroundView(revealProgress: $artTherapyViewModel.revealProgress)
+                .frame(height: 100)
+
+            HStack {
+                Text("Art Therapy")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
+            }
+            .padding(.top, 20)
+
+            if artTherapyViewModel.revealProgress < 1.0 {
+                paintbrushAnimation
+            }
+        }
+        .onAppear {
+            artTherapyViewModel.startPaintingAnimation()
+        }
+        .frame(height: 100)
+    }
+
+    private var paintbrushAnimation: some View {
+        Image(systemName: "paintbrush.pointed.fill")
+            .resizable()
+            .frame(width: 50, height: 50)
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .offset(x: CGFloat(artTherapyViewModel.revealProgress * UIScreen.main.bounds.width), y: -15)
+    }
+
+    private var ideaHeader: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "lightbulb.max")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 24)
                 .padding(.top, 20)
+                .foregroundStyle(.yellow)
 
-                if artTherapyViewModel.revealProgress < 1.0 {
-                    Image(systemName: "paintbrush.pointed.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.red, .orange, .yellow, .green, .blue, .purple],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .offset(x: CGFloat(artTherapyViewModel.revealProgress * UIScreen.main.bounds.width), y: -15)
-                }
-            }
-            .onAppear {
-                artTherapyViewModel.startPaintingAnimation()
-            }
-            .frame(height: 100)
+            Text("Ideas for Activities:")
+                .font(.title3)
+                .padding(.top, 20)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "lightbulb.max")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 24)
-                    .padding(.top, 20)
-                    .foregroundStyle(.yellow)
-                Text("Ideas for Activities:")
-                    .font(.title3)
-                    .padding(.top, 20)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            List {
-                ForEach(artTherapyViewModel.artTherapyActivities, id: \.self) { activity in
-                    Section(header: Text(activity.activityName)) {
-                            VStack(alignment: .leading) {
-                                Text(activity.activityDescription)
-                                    .font(.subheadline)
-                                    .padding(.bottom, 5)
-                                Text(activity.therapeuticValue)
-                                    .font(.caption)
-                                    .italic()
-                            }
-                        }
+    private var activityList: some View {
+        List {
+            ForEach(artTherapyViewModel.artTherapyActivities, id: \.id) { activity in
+                Section(header: Text(activity.activityName)) {
+                    VStack(alignment: .leading) {
+                        Text(activity.activityDescription)
+                            .font(.subheadline)
+                            .padding(.bottom, 5)
+
+                        Text(activity.therapeuticValue)
+                            .font(.caption)
+                            .italic()
                     }
                 }
-
+            }
         }
     }
 }

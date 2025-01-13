@@ -13,19 +13,20 @@ final class ArtTherapyViewModel: ObservableObject {
     @Published var artTherapyActivities: [ArtTherapyModel] = []
 
     private var animationTimer: Timer?
-    let viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        setupInitialActivities()
+    }
 
-        // Check if activities exist, if not, create them
+    private func setupInitialActivities() {
         let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
 
         do {
-            let entities = try viewContext.fetch(request)
+            _ = try viewContext.fetch(request)
 
             createInitialArtTherapyActivities()
-
             fetchArtTherapyActivities()
         } catch {
             print("Error checking Art Therapy Activities: \(error.localizedDescription)")
