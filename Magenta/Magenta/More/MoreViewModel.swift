@@ -58,7 +58,7 @@ final class MoreViewModel: ObservableObject {
         case "Sleep":
             selectedView = AnyView(SleepView())
         case "Settings":
-            selectedView = AnyView(SettingsView())
+            selectedView = AnyView(AccountView(viewContext: viewContext))
         case "Find a Therapist":
             selectedView = AnyView(TherapistSearchView())
         case "Journal":

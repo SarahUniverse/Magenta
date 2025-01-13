@@ -11,6 +11,7 @@ import SwiftUI
 struct MainTabView: View {
     @StateObject private var mainViewModel: MainTabViewModel
     @StateObject private var discoverViewModel: DiscoverViewModel
+    @StateObject private var accountViewModel: AccountViewModel
     let userModel: UserModel
     private let viewContext: NSManagedObjectContext
 
@@ -19,6 +20,7 @@ struct MainTabView: View {
         self.viewContext = viewContext
         _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext))
+        _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
     }
 
     var body: some View {
@@ -27,9 +29,15 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Summary", systemImage: "heart.fill")
                 }
+
             DiscoverView(viewContext: viewContext)
                 .tabItem {
                     Label("Discover", systemImage: "magnifyingglass")
+                }
+
+            AccountView(viewContext: viewContext)
+                .tabItem {
+                    Label("Account", systemImage: "person.circle")
                 }
         }
         .tint(.darkPurple)
