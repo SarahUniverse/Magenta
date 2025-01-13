@@ -16,42 +16,15 @@ struct ArtTherapyView: View {
     }
 
     // MARK: - Private variables
-    private var animationHeader: some View {
-        ZStack {
-            AnimatedGradientBackgroundView(revealProgress: $artTherapyViewModel.revealProgress)
-                .frame(height: 100)
-
-            HStack {
-                Text("Art Therapy")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
-            }
-            .padding(.top, 20)
-
-            if artTherapyViewModel.revealProgress < 1.0 {
-                paintbrushAnimation
-            }
+    private var headerView: some View {
+        HStack {
+            Text("Art Therapy")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
         }
-        .onAppear {
-            artTherapyViewModel.startPaintingAnimation()
-        }
-        .frame(height: 100)
-    }
-
-    private var paintbrushAnimation: some View {
-        Image(systemName: "paintbrush.pointed.fill")
-            .resizable()
-            .frame(width: 50, height: 50)
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [.red, .orange, .yellow, .green, .blue, .purple],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .offset(x: CGFloat(artTherapyViewModel.revealProgress * UIScreen.main.bounds.width), y: -15)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
     }
 
     private var ideaHeader: some View {
@@ -60,14 +33,13 @@ struct ArtTherapyView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 24)
-                .padding(.top, 20)
                 .foregroundStyle(.yellow)
 
             Text("Ideas for Activities:")
                 .font(.title3)
-                .padding(.top, 20)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
     }
 
     private var activityList: some View {
@@ -93,20 +65,28 @@ struct ArtTherapyView: View {
             artTherapyViewModel.showAddActivitySheet = true
         }) {
             Text("Add Activity")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
         }
-        .padding(.top, 20)
+        .padding()
     }
 
     // MARK: - Main View Code
     var body: some View {
         VStack(spacing: 0) {
-            animationHeader
+            headerView
             addActivityButton
             ideaHeader
             activityList
         }
+        .navigationBarTitle("Art Therapy", displayMode: .inline)
+        .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
+            // Add activity sheet would go here
+            Text("Add New Activity")
+        }
     }
-
 }
 
 // MARK: Previews

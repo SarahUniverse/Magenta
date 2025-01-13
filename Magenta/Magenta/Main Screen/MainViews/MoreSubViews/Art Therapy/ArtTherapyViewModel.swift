@@ -9,11 +9,9 @@ import CoreData
 import SwiftUI
 
 final class ArtTherapyViewModel: ObservableObject {
-    @Published var revealProgress: CGFloat = 0.0
     @Published var artTherapyActivities: [ArtTherapyModel] = []
     @Published var showAddActivitySheet = false
 
-    private var animationTimer: Timer?
     private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -22,13 +20,11 @@ final class ArtTherapyViewModel: ObservableObject {
     }
 
     private func setupInitialActivities() {
-
         // TODO: Do I need this code for initial activities?
         let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
 
         do {
-            _ = try viewContext.fetch(request)
-
+            let entities = try viewContext.fetch(request)
             createInitialArtTherapyActivities()
             fetchArtTherapyActivities()
         } catch {
@@ -76,21 +72,6 @@ final class ArtTherapyViewModel: ObservableObject {
 
     }
     // swiftlint:enable line_length
-
-    func startPaintingAnimation() {
-        revealProgress = 0.0
-
-        animationTimer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
-
-            self.revealProgress += 0.01
-
-            if self.revealProgress >= 1.0 {
-                timer.invalidate()
-               self.revealProgress = 1.0
-            }
-        }
-    }
 
     func createArtTherapyActivity(
         activityDescription: String,
