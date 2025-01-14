@@ -9,7 +9,10 @@ import Speech
 
 final class SpeechRecognizer: ObservableObject {
     @Published var transcribedText: String = ""
+    @Published var isRecording: Bool = false
+
     var transcribedTextHandler: ((String) -> Void)?
+    var errorHandler: ((SpeechRecognizerError) -> Void)?
 
     private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -27,10 +30,10 @@ final class SpeechRecognizer: ObservableObject {
                     do {
                         try self?.startSpeechRecognition()
                     } catch {
-                        print("Error starting speech recognition: \(error.localizedDescription)")
+                        self?.errorHandler?(.recognitionFailed(error))
                     }
                 } else {
-                    print("Speech recognition authorization denied or not determined")
+                    self?.errorHandler?(.notAuthorized)
                 }
             }
         }
@@ -43,37 +46,49 @@ final class SpeechRecognizer: ObservableObject {
 
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
-            throw NSError(domain: "SpeechRecognizer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to create recognition request"])
+            throw SpeechRecognizerError.noRecognitionRequest
         }
         recognitionRequest.shouldReportPartialResults = true
 
         let inputNode = audioEngine.inputNode
 
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+            guard let self = self else { return }
+
             if let result = result {
                 let transcribedText = result.bestTranscription.formattedString
                 DispatchQueue.main.async {
-                    self?.transcribedText = transcribedText
-                    self?.transcribedTextHandler?(transcribedText)
+                    self.transcribedText = transcribedText
+                    self.transcribedTextHandler?(transcribedText)
                 }
             } else if let error = error {
-                print("Recognition error: \(error)")
+                DispatchQueue.main.async {
+                    self.errorHandler?(.recognitionFailed(error))
+                }
             }
         }
 
         let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, _: AVAudioTime) in
-            self.recognitionRequest?.append(buffer)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] (buffer: AVAudioPCMBuffer, _: AVAudioTime) in
+            self?.recognitionRequest?.append(buffer)
         }
 
         audioEngine.prepare()
         try audioEngine.start()
+
+        DispatchQueue.main.async {
+            self.isRecording = true
+        }
     }
 
     func stopRecording() {
         audioEngine.stop()
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
+
+        DispatchQueue.main.async {
+            self.isRecording = false
+        }
     }
 
 }
