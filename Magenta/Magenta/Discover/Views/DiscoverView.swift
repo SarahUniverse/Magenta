@@ -23,25 +23,16 @@ struct DiscoverView: View {
         NavigationStack {
             // TODO: Make SignOut button it's own view
             VStack {
-                HStack {
-                    TextField("Search", text: $searchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-
-                    Button(action: {
-                        isListening.toggle()
-                        if isListening {
-                            startSpeechRecognition()
-                        } else {
-                            stopSpeechRecognition()
-                        }
-                    }, label: {
-                        Image(systemName: isListening ? "mic.fill" : "mic")
-                            .foregroundColor(isListening ? .red : .blue)
-                            .padding()
-                    })
-                }
-                .padding(.top)
+                SearchView(
+                    text: $searchText,
+                    isListening: $isListening,
+                    startListening: {
+                        startSpeechRecognition()
+                    },
+                    stopListening: {
+                        discoverViewModel.stopSpeechRecognition()
+                    }
+                )
 
                 List {
                     // Filtered content based on search text
