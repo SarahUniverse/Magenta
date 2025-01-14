@@ -23,6 +23,7 @@ final class SpeechRecognizer: ObservableObject {
         stopRecording()
     }
 
+    // TODO: Add code to make a noise to indicate it's started to record
     func startRecording() throws {
         SFSpeechRecognizer.requestAuthorization { [weak self] authStatus in
             DispatchQueue.main.async {
