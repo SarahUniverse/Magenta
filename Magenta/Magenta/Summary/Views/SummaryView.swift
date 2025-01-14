@@ -82,7 +82,7 @@ struct SummaryView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

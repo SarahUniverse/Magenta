@@ -26,7 +26,7 @@ struct JournalView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     JournalView()
         .preferredColorScheme(.light)

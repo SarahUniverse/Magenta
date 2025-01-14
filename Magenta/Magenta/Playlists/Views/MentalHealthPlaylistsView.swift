@@ -26,7 +26,7 @@ struct MentalHealthPlaylistsView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     MentalHealthPlaylistsView()
         .preferredColorScheme(.light)

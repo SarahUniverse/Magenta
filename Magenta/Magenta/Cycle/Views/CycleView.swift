@@ -26,7 +26,7 @@ struct CycleView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     CycleView()
         .preferredColorScheme(.light)

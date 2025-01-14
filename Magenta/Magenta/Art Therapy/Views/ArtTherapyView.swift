@@ -63,13 +63,13 @@ struct ArtTherapyView: View {
     private var addActivityButton: some View {
         Button(action: {
             artTherapyViewModel.showAddActivitySheet = true
-        }) {
+        }, label: {
             Text("Add Activity")
                 .padding()
                 .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-        }
+        })
         .padding()
     }
 
@@ -89,7 +89,7 @@ struct ArtTherapyView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

@@ -26,7 +26,7 @@ struct SleepView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     SleepView()
         .preferredColorScheme(.light)

@@ -9,18 +9,19 @@ import Speech
 
 class SpeechRecognizer: ObservableObject {
     @Published var transcribedText: String = ""
-    private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")) // or whatever locale you need
+    var transcribedTextHandler: ((String) -> Void)?
+
+    private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     let audioEngine = AVAudioEngine()
 
     func startRecording() throws {
-        // Request speech recognition authorization
-        SFSpeechRecognizer.requestAuthorization { authStatus in
+        SFSpeechRecognizer.requestAuthorization { [weak self] authStatus in
             DispatchQueue.main.async {
                 if authStatus == .authorized {
                     do {
-                        try self.startSpeechRecognition()
+                        try self?.startSpeechRecognition()
                     } catch {
                         print("Error starting speech recognition: \(error.localizedDescription)")
                     }
@@ -37,15 +38,19 @@ class SpeechRecognizer: ObservableObject {
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
+        guard let recognitionRequest = recognitionRequest else {
+            throw NSError(domain: "SpeechRecognizer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to create recognition request"])
+        }
         recognitionRequest.shouldReportPartialResults = true
 
         let inputNode = audioEngine.inputNode
 
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
             if let result = result {
+                let transcribedText = result.bestTranscription.formattedString
                 DispatchQueue.main.async {
-                    self.transcribedText = result.bestTranscription.formattedString
+                    self?.transcribedText = transcribedText
+                    self?.transcribedTextHandler?(transcribedText)
                 }
             } else if let error = error {
                 print("Recognition error: \(error)")

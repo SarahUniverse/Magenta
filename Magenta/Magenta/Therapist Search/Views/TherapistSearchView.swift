@@ -26,7 +26,7 @@ struct TherapistSearchView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     TherapistSearchView()
         .preferredColorScheme(.light)

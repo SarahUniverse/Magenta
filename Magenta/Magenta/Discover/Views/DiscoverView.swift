@@ -10,6 +10,10 @@ import SwiftUI
 
 struct DiscoverView: View {
     @StateObject private var discoverViewModel: DiscoverViewModel
+    @State private var searchText = ""
+    @State private var isListening = false
+    @State private var showError = false
+    @State private var errorMessage = ""
 
     init(viewContext: NSManagedObjectContext) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext))
@@ -18,15 +22,63 @@ struct DiscoverView: View {
     var body: some View {
         NavigationStack {
             // TODO: Make SignOut button it's own view
-            List {
+            VStack {
+                HStack {
+                    TextField("Search", text: $searchText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
 
+                    Button(action: {
+                        isListening.toggle()
+                        if isListening {
+                            startSpeechRecognition()
+                        } else {
+                            stopSpeechRecognition()
+                        }
+                    }, label: {
+                        Image(systemName: isListening ? "mic.fill" : "mic")
+                            .foregroundColor(isListening ? .red : .blue)
+                            .padding()
+                    })
+                }
+                .padding(.top)
+
+                List {
+                    // Filtered content based on search text
+                    ForEach(discoverViewModel.filteredItems(searchText: searchText)) { item in
+                        Text(item.title)
+                    }
+                }
             }
             .navigationTitle("Discover")
+            .alert("Error", isPresented: $showError) {
+                Button("OK") { }
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
+
+    // MARK: - Private Functions
+    private func startSpeechRecognition() {
+        do {
+            try discoverViewModel.startSpeechRecognition { recognitionText in
+                searchText = recognitionText
+            }
+        } catch {
+            showError = true
+            errorMessage = error.localizedDescription
+            isListening = false
+        }
+    }
+
+    private func stopSpeechRecognition() {
+        discoverViewModel.stopSpeechRecognition()
+    }
+
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

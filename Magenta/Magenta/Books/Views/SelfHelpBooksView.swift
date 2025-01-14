@@ -26,7 +26,7 @@ struct SelfHelpBooksView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     SelfHelpBooksView()
         .preferredColorScheme(.light)
