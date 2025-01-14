@@ -7,7 +7,7 @@
 
 import Speech
 
-class SpeechRecognizer: ObservableObject {
+final class SpeechRecognizer: ObservableObject {
     @Published var transcribedText: String = ""
     var transcribedTextHandler: ((String) -> Void)?
 
@@ -15,6 +15,10 @@ class SpeechRecognizer: ObservableObject {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     let audioEngine = AVAudioEngine()
+
+    deinit {
+        stopRecording()
+    }
 
     func startRecording() throws {
         SFSpeechRecognizer.requestAuthorization { [weak self] authStatus in
@@ -71,4 +75,5 @@ class SpeechRecognizer: ObservableObject {
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
     }
+
 }
