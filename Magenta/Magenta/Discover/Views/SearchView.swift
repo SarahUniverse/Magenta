@@ -54,8 +54,8 @@ struct SearchView: View {
 // MARK: - Previews
 #Preview("Light Mode") {
     SearchView(
-        text: .constant("Sample Text"),
-        isListening: .constant(true),
+        text: .constant("Search"),
+        isListening: .constant(false),
         startListening: {},
         stopListening: {}
     )
@@ -64,8 +64,8 @@ struct SearchView: View {
 
 #Preview("Dark Mode") {
     SearchView(
-        text: .constant("Sample Text"),
-        isListening: .constant(true),
+        text: .constant("Search"),
+        isListening: .constant(false),
         startListening: {},
         stopListening: {}
     )
