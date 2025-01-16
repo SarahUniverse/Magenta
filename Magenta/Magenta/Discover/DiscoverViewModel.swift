@@ -12,10 +12,16 @@ final class DiscoverViewModel: ObservableObject {
     private let viewContext: NSManagedObjectContext
     private var speechRecognizer: SpeechRecognizer?
     @Published var items: [DiscoverItemModel] = []
+    @Published private(set) var colors: Colors
 
-    init(viewContext: NSManagedObjectContext) {
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
+        self.colors = Colors(colorScheme: colorScheme)
         loadInitialData()
+    }
+
+    func updateColorScheme(_ colorScheme: ColorScheme) {
+        colors = Colors(colorScheme: colorScheme)
     }
 
     func filteredItems(searchText: String) -> [DiscoverItemModel] {
@@ -48,3 +54,16 @@ final class DiscoverViewModel: ObservableObject {
     }
 
 }
+
+/*ArtTherapyView
+SelfHelpBooksView
+CycleView - shown only for females
+ExerciseView
+JournalView
+MeditationView
+MoodView
+NutritionView
+MentalHealthPlaylistView
+HelpfulQuotesView
+SleepView
+TherapistSearchView*/

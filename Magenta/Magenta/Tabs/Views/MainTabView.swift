@@ -14,12 +14,13 @@ struct MainTabView: View {
     @StateObject private var accountViewModel: AccountViewModel
     let userModel: UserModel
     private let viewContext: NSManagedObjectContext
+    @Environment(\.colorScheme) var colorScheme
 
-    init(viewContext: NSManagedObjectContext, userModel: UserModel) {
+    init(viewContext: NSManagedObjectContext, userModel: UserModel, discoverViewModel: DiscoverViewModel) {
         self.userModel = userModel
         self.viewContext = viewContext
         _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
-        _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext))
+        _discoverViewModel = StateObject(wrappedValue: discoverViewModel)
         _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
     }
 
@@ -43,9 +44,11 @@ struct MainTabView: View {
         .tint(.darkPurple)
         .navigationBarBackButtonHidden()
     }
+
 }
 
-#Preview ("Light Mode") {
+// MARK: Previews
+#Preview("Light Mode") {
     let previewContainer = NSPersistentContainer(name: "DataModel")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
@@ -57,12 +60,13 @@ struct MainTabView: View {
 
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
+    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .light)
 
-    return MainTabView(viewContext: context, userModel: sampleUserModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel, discoverViewModel: discoverViewModel)
         .preferredColorScheme(.light)
 }
 
-#Preview ("Dark Mode") {
+#Preview("Dark Mode") {
     let previewContainer = NSPersistentContainer(name: "DataModel")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
@@ -74,7 +78,8 @@ struct MainTabView: View {
 
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
+    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .dark)
 
-    return MainTabView(viewContext: context, userModel: sampleUserModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel, discoverViewModel: discoverViewModel)
         .preferredColorScheme(.dark)
 }

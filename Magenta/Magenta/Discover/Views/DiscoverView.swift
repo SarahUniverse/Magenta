@@ -14,9 +14,10 @@ struct DiscoverView: View {
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
+    @Environment(\.colorScheme) private var colorScheme
 
-    init(viewContext: NSManagedObjectContext) {
-        _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext))
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme, discoverViewModel: DiscoverViewModel) {
+        _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
     var body: some View {
@@ -38,6 +39,7 @@ struct DiscoverView: View {
                     // Filtered content based on search text
                     ForEach(discoverViewModel.filteredItems(searchText: searchText)) { item in
                         Text(item.title)
+                            .foregroundStyle(discoverViewModel.colors.textColor)
                     }
                 }
             }
@@ -47,6 +49,9 @@ struct DiscoverView: View {
             } message: {
                 Text(errorMessage)
             }
+        }
+        .onAppear {
+            discoverViewModel.updateColorScheme(colorScheme)
         }
     }
 
@@ -84,7 +89,10 @@ struct DiscoverView: View {
         return container
     }()
 
-    return DiscoverView(viewContext: persistentContainer.viewContext)
+    let context = persistentContainer.viewContext
+    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .light)
+
+    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .light, discoverViewModel: discoverViewModel)
         .preferredColorScheme(.light)
 }
 
@@ -102,6 +110,9 @@ struct DiscoverView: View {
         return container
     }()
 
-    return DiscoverView(viewContext: persistentContainer.viewContext)
+    let context = persistentContainer.viewContext
+    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .dark)
+
+    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .dark, discoverViewModel: discoverViewModel)
         .preferredColorScheme(.dark)
 }
