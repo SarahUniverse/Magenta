@@ -20,8 +20,7 @@ To be added.
 - **Nutrition**: To be added.
 - **Journal**: Maintain a private journal to express your thoughts and feelings.
 - **Therapist Search**: Find nearby mental health professionals.
-- **Mental Health Playlists**: Join a community of users for peer support and shared experiences.
-- **Reminders**: Set daily reminders for self-care activities and appointments.
+- **Mental Health Playlists**: Music playlists
 - **Helpful Quotes**: To be added.
 - **Cycle**: To be added.
 - **Sleep**: To be added.
