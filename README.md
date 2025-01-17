@@ -5,12 +5,13 @@ Currently WIP
 Welcome to **Magenta**, a comprehensive mental health app designed to support your mental well-being. Magenta offers a range of tools and resources to help you manage stress, anxiety, and other mental health challenges.
 The inspiration for the app name came from Blance Devereaux's term, "Feeling Magenta".
 
-## Introduction
+## Front End Technical Details:
+- Language: Swift
+- Architecture pattern: MVVM
+- 
 
-**Magenta** is a user-friendly mental health app developed to provide support and resources for individuals seeking to improve their mental well-being. With a combination of self-help tools, mindfulness exercises, and access to professional resources, Magenta aims to be your companion in achieving better mental health.
-
-## Project Management
-To be added.
+## Back End Technical Details:
+- 
 
 ## Features
 
@@ -27,21 +28,10 @@ To be added.
 - **Art Therapy**: To be added.
 - **Self Help Book List**: To be added.
 
-## Installation
-
-To install **Magenta**, follow these steps:
-
-1. **Download the app**:
-   - For iOS: Visit the [App Store](https://www.apple.com/app-store/) and search for "Magenta: Mental Health Mentor".
-
-2. **Install the app**: Follow the on-screen instructions to install the app on your device.
-
-3. **Create an account**: Open the app and create a new account using your email address or social media login.
 
 ## License
+Proprietary Software
+© 2025 SarahUniverse
 
-**Magenta** is licensed under the [MIT License](LICENSE.md).
-
----
-
-Thank you for choosing **Magenta**. We hope our app helps you on your journey to better mental health!
+This software and its source code are the exclusive property of SarahUniverse.
+No part of this software may be reproduced, distributed, or transmitted in any form or by any means without prior written permission.
