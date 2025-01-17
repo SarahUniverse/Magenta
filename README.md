@@ -13,7 +13,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Back-End Technical Details:
 - To be added
 
-## Features
+## Features:
 
 - **Mood Tracking**: Track your daily mood and identify patterns over time.
 - **Meditations**: Access a library of guided meditations to help you relax and reduce stress.
