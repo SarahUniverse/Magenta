@@ -11,7 +11,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - Minimum OS's supported: iOS 17.0, iPadOS 17.0, watchOS tba, visionOS 2.0, macOS 14.0
 
 ## Back End Technical Details:
-- 
+- To be added
 
 ## Features
 
