@@ -12,9 +12,8 @@ final class DiscoverViewModel: ObservableObject {
     let viewContext: NSManagedObjectContext
     private var speechRecognizer: SpeechRecognizer?
     @Published var items: [DiscoverItemModel] = []
-    @Published private(set) var colors: Colors
+    @Published var colors: Colors
     @Published var shouldShowLoginView = false
-    @Environment(\.colorScheme) var colorScheme
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
