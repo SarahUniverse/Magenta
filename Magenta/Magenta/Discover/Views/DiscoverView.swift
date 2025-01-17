@@ -38,8 +38,14 @@ struct DiscoverView: View {
                 List {
                     // Filtered content based on search text
                     ForEach(discoverViewModel.filteredItems(searchText: searchText)) { item in
-                        Text(item.title)
-                            .foregroundStyle(discoverViewModel.colors.textColor)
+                        HStack {
+                            item.icon
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                            Text(item.title)
+                                .foregroundStyle(discoverViewModel.colors.textColor)
+                        }
                     }
                 }
             }

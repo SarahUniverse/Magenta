@@ -44,27 +44,20 @@ final class DiscoverViewModel: ObservableObject {
 
     // MARK: - Private Functions
     private func loadInitialData() {
-        // Load your initial data here
         items = [
-            DiscoverItemModel(title: "Art Therapy"),
-            DiscoverItemModel(title: "Self Help Books"),
-            DiscoverItemModel(title: "Exercise"),
-            DiscoverItemModel(title: "Journal")
-            // Add more items as needed
+            DiscoverItemModel(icon: Image(systemName: "paintpalette"), title: "Art Therapy"),
+            DiscoverItemModel(icon: Image(systemName: "book"), title: "Books that Help Me"),
+            DiscoverItemModel(icon: Image(systemName: "figure.run"), title: "Get Up and Move"),
+            DiscoverItemModel(icon: Image(systemName: "pencil.and.scribble"), title: "My Thoughts"),
+            DiscoverItemModel(icon: Image(systemName: "moon.zzz"), title: "Sleep or Nightmare Time?"),
+            DiscoverItemModel(icon: Image(systemName: "face.smiling"), title: "What's My Mood?"),
+            DiscoverItemModel(icon: Image(systemName: "fork.knife"), title: "Nutrition Matters"),
+            DiscoverItemModel(icon: Image(systemName: "music.note.list"), title: "Mental Health Playlist"),
+            DiscoverItemModel(icon: Image(systemName: "text.quote"), title: "Quotes that Move Me"),
+            DiscoverItemModel(icon: Image(systemName: "brain.head.profile"), title: "Professional Help Search"),
+            DiscoverItemModel(icon: Image(systemName: "apple.meditate"), title: "Time to Chill and Meditate"),
+            DiscoverItemModel(icon: Image(systemName: "calendar.badge.clock"), title: "Track My Cycle")
         ]
     }
 
 }
-
-/*ArtTherapyView
-SelfHelpBooksView
-CycleView - shown only for females
-ExerciseView
-JournalView
-MeditationView
-MoodView
-NutritionView
-MentalHealthPlaylistView
-HelpfulQuotesView
-SleepView
-TherapistSearchView*/
