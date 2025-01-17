@@ -11,7 +11,7 @@ struct MoodView: View {
     @StateObject private var moodViewModel = MoodViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(moodViewModel.items, id: \.self) { item in
                 Text(item)
             }

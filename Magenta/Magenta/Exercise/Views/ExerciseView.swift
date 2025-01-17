@@ -11,7 +11,7 @@ struct ExerciseView: View {
     @StateObject private var exerciseViewModel = ExerciseViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Text("Step Count: \(exerciseViewModel.stepCount)")
             }

@@ -25,7 +25,7 @@ struct EditPinnedView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 HStack {
                     Image(systemName: "magnifyingglass")

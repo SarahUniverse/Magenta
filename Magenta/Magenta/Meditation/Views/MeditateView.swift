@@ -11,7 +11,7 @@ struct MeditateView: View {
     @StateObject private var viewModel = MeditateViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(viewModel.meditationSessions, id: \.self) { session in
                 Text(session)
             }

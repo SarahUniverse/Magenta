@@ -16,6 +16,21 @@ struct DiscoverView: View {
     @State private var errorMessage = ""
     @Environment(\.colorScheme) private var colorScheme
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.lightPurple,
+            Color.darkPurple,
+            Color.darkBlue,
+            Color.black,
+            Color.black,
+            Color.black,
+            Color.black,
+            Color.black
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }

@@ -33,7 +33,7 @@ struct SummaryView: View {
 
     // MARK: - Main View Code
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 backgroundGradient
                     .edgesIgnoringSafeArea(.all)

@@ -10,7 +10,7 @@ import SwiftUI
 struct NutritionView: View {
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Text("Hello, World!")
             }
