@@ -37,7 +37,6 @@ struct DiscoverView: View {
 
     var body: some View {
         NavigationStack {
-            // TODO: Make SignOut button it's own view
             ZStack {
                 backgroundGradient
                     .edgesIgnoringSafeArea(.all)
@@ -78,6 +77,7 @@ struct DiscoverView: View {
             .navigationTitle("Discover")
             .navigationBarItems(
                 trailing:
+                    // TODO: Make SignOut button it's own view
                     Button(action: {
                         discoverViewModel.signOut()
                     }, label: {
