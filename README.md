@@ -3,14 +3,14 @@
 Welcome to **Magenta**, a comprehensive mental health app designed to act as a mentor to support your mental well-being. Magenta offers a range of tools and resources to help people deal with stress, grief, anxiety, and other mental health challenges.
 The inspiration for the app name came from Blance Devereaux's term, "Feeling Magenta".
 
-## Front End Technical Details:
+## Front-End Technical Details:
 - Language: Swift
 - Architecture pattern: MVVM
 - Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL
 - OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
 - Minimum OS's supported: iOS 17.0, iPadOS 17.0, watchOS tba, visionOS 2.0, macOS 14.0
 
-## Back End Technical Details:
+## Back-End Technical Details:
 - To be added
 
 ## Features
