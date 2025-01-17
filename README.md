@@ -29,6 +29,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 
 ## License
 Proprietary Software
+
 © 2025 SarahUniverse
 
 This software and its source code are the exclusive property of SarahUniverse.
