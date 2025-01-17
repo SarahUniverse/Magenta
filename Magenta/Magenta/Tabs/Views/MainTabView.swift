@@ -10,17 +10,15 @@ import SwiftUI
 
 struct MainTabView: View {
     @StateObject private var mainViewModel: MainTabViewModel
-    @StateObject private var discoverViewModel: DiscoverViewModel
     @StateObject private var accountViewModel: AccountViewModel
     let userModel: UserModel
     private let viewContext: NSManagedObjectContext
     @Environment(\.colorScheme) var colorScheme
 
-    init(viewContext: NSManagedObjectContext, userModel: UserModel, discoverViewModel: DiscoverViewModel) {
+    init(viewContext: NSManagedObjectContext, userModel: UserModel) {
         self.userModel = userModel
         self.viewContext = viewContext
         _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
-        _discoverViewModel = StateObject(wrappedValue: discoverViewModel)
         _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
     }
 
@@ -60,9 +58,8 @@ struct MainTabView: View {
 
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
-    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .light)
 
-    return MainTabView(viewContext: context, userModel: sampleUserModel, discoverViewModel: discoverViewModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.light)
 }
 
@@ -78,8 +75,7 @@ struct MainTabView: View {
 
     let context = previewContainer.viewContext
     let sampleUserModel = UserModel.userModelDataSample(viewContext: context)
-    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .dark)
 
-    return MainTabView(viewContext: context, userModel: sampleUserModel, discoverViewModel: discoverViewModel)
+    return MainTabView(viewContext: context, userModel: sampleUserModel)
         .preferredColorScheme(.dark)
 }

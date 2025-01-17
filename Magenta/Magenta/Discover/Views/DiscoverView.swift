@@ -89,9 +89,6 @@ struct DiscoverView: View {
         return container
     }()
 
-    let context = persistentContainer.viewContext
-    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .light)
-
     return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .light)
         .preferredColorScheme(.light)
 }
@@ -109,9 +106,6 @@ struct DiscoverView: View {
 
         return container
     }()
-
-    let context = persistentContainer.viewContext
-    let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .dark)
 
     return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .dark)
         .preferredColorScheme(.dark)
