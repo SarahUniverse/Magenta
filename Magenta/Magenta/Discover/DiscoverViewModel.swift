@@ -9,10 +9,11 @@ import CoreData
 import SwiftUI
 
 final class DiscoverViewModel: ObservableObject {
-    private let viewContext: NSManagedObjectContext
+    let viewContext: NSManagedObjectContext
     private var speechRecognizer: SpeechRecognizer?
     @Published var items: [DiscoverItemModel] = []
     @Published private(set) var colors: Colors
+    @Environment(\.colorScheme) var colorScheme
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext

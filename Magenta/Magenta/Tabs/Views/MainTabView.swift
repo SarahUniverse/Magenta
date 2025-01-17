@@ -31,7 +31,7 @@ struct MainTabView: View {
                     Label("Summary", systemImage: "heart.fill")
                 }
 
-            DiscoverView(viewContext: viewContext)
+            DiscoverView(viewContext: viewContext, colorScheme: colorScheme)
                 .tabItem {
                     Label("Discover", systemImage: "magnifyingglass")
                 }

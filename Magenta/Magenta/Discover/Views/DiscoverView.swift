@@ -9,14 +9,14 @@ import CoreData
 import SwiftUI
 
 struct DiscoverView: View {
-    @StateObject private var discoverViewModel: DiscoverViewModel
+    @StateObject var discoverViewModel: DiscoverViewModel
     @State private var searchText = ""
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
     @Environment(\.colorScheme) private var colorScheme
 
-    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme, discoverViewModel: DiscoverViewModel) {
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
@@ -92,7 +92,7 @@ struct DiscoverView: View {
     let context = persistentContainer.viewContext
     let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .light)
 
-    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .light, discoverViewModel: discoverViewModel)
+    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .light)
         .preferredColorScheme(.light)
 }
 
@@ -113,6 +113,6 @@ struct DiscoverView: View {
     let context = persistentContainer.viewContext
     let discoverViewModel = DiscoverViewModel(viewContext: context, colorScheme: .dark)
 
-    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .dark, discoverViewModel: discoverViewModel)
+    return DiscoverView(viewContext: persistentContainer.viewContext, colorScheme: .dark)
         .preferredColorScheme(.dark)
 }
