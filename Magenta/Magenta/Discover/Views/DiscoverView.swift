@@ -54,11 +54,27 @@ struct DiscoverView: View {
                 }
             }
             .navigationTitle("Discover")
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        discoverViewModel.signOut()
+                    }, label: {
+                        Text("Sign Out")
+                            .padding(8)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(20)
+                            .foregroundStyle(.darkPurple)
+                            .shadow(color: .white, radius: 3, x: 2, y: 2)
+                    })
+            )
             .alert("Error", isPresented: $showError) {
                 Button("OK") { }
             } message: {
                 Text(errorMessage)
             }
+        }
+        .fullScreenCover(isPresented: $discoverViewModel.shouldShowLoginView) {
+            LoginView(viewContext: discoverViewModel.viewContext)
         }
         .onAppear {
             discoverViewModel.updateColorScheme(colorScheme)
