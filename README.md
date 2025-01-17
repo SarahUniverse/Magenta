@@ -1,6 +1,6 @@
 # Magenta: Mental Health Mentor
 
-Welcome to **Magenta**, a comprehensive mental health app designed to support your mental well-being. Magenta offers a range of tools and resources to help you manage stress, anxiety, and other mental health challenges.
+Welcome to **Magenta**, a comprehensive mental health app designed to act as a mentor to support your mental well-being. Magenta offers a range of tools and resources to help people deal with stress, grief, anxiety, and other mental health challenges.
 The inspiration for the app name came from Blance Devereaux's term, "Feeling Magenta".
 
 ## Front End Technical Details:
