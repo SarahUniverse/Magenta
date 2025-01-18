@@ -19,13 +19,11 @@ struct JournalView: View {
     }
 
     let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.blue.opacity(0.6),
-            Color.blue.opacity(0.3),
-            Color.clear,
-            Color.clear,
-            Color.clear
-        ]),
+        stops: [
+            Gradient.Stop(color: .blue.opacity(0.6), location: 0),
+            Gradient.Stop(color: .blue.opacity(0.3), location: 0.256),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
         startPoint: .top,
         endPoint: .bottom
     )
@@ -56,7 +54,8 @@ struct JournalView: View {
                     // parse selected suggestion
                 }
                 #else
-                Text("This device doesn't support JournalingSuggestions")
+                Text("This device doesn't support Journaling Suggestions")
+
                 #endif
                 journalEntryList
             }

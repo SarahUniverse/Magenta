@@ -16,17 +16,18 @@ struct ArtTherapyView: View {
     }
 
     let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.red,
-            Color.orange,
-            Color.yellow,
-            Color.green,
-            Color.blue,
-            Color.indigo,
-            Color.purple
-        ]),
-        startPoint: .leading,
-        endPoint: .trailing
+        stops: [
+            Gradient.Stop(color: .red, location: 0),
+            Gradient.Stop(color: .orange, location: 0.057),
+            Gradient.Stop(color: .yellow, location: 0.114),
+            Gradient.Stop(color: .green, location: 0.171),
+            Gradient.Stop(color: .blue, location: 0.228),
+            Gradient.Stop(color: .indigo.opacity(0.6), location: 0.285),
+            Gradient.Stop(color: .purple.opacity(0.3), location: 0.342),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
     )
 
     // MARK: - Private variables
@@ -75,6 +76,7 @@ struct ArtTherapyView: View {
             }
             .navigationBarTitle("Art Therapy")
             .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
                 // Add activity sheet would go here
                 Text("Add New Activity")
