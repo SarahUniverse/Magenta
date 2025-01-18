@@ -11,7 +11,7 @@ import UIKit
 
 struct SummaryView: View {
     @StateObject var summaryViewModel: SummaryViewModel
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
@@ -27,9 +27,9 @@ struct SummaryView: View {
         endPoint: .bottomLeading
     )
 
-    init(viewContext: NSManagedObjectContext) {
-        _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext))
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
+        _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
+
     }
 
     // MARK: - Main View
@@ -50,6 +50,9 @@ struct SummaryView: View {
                     }
                 }
                 .background(backgroundGradient)
+                .onChange(of: colorScheme) {
+                    summaryViewModel.updateColorScheme($1)
+                }
                 .scrollContentBackground(.hidden)
                 .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
                     LoginView(viewContext: summaryViewModel.viewContext)
@@ -63,7 +66,7 @@ struct SummaryView: View {
                             Text("Sign Out")
                                 .padding(8)
                                 .cornerRadius(20)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(summaryViewModel.colors.textColor)
                         })
             )
         }
@@ -94,7 +97,7 @@ struct SummaryView: View {
         return container
     }()
 
-    return SummaryView(viewContext: persistentContainer.viewContext)
+    return SummaryView(viewContext: persistentContainer.viewContext, colorScheme: .light)
         .preferredColorScheme(.light)
 }
 
@@ -112,6 +115,6 @@ struct SummaryView: View {
         return container
     }()
 
-    return SummaryView(viewContext: persistentContainer.viewContext)
+    return SummaryView(viewContext: persistentContainer.viewContext, colorScheme: .dark)
         .preferredColorScheme(.dark)
 }

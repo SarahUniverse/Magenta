@@ -10,7 +10,6 @@ import SwiftUI
 
 struct MainTabView: View {
     @StateObject private var mainViewModel: MainTabViewModel
-    @StateObject private var accountViewModel: AccountViewModel
     let userModel: UserModel
     private let viewContext: NSManagedObjectContext
     @Environment(\.colorScheme) var colorScheme
@@ -19,12 +18,11 @@ struct MainTabView: View {
         self.userModel = userModel
         self.viewContext = viewContext
         _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
-        _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
     }
 
     var body: some View {
         TabView {
-            SummaryView(viewContext: viewContext)
+            SummaryView(viewContext: viewContext, colorScheme: colorScheme)
                 .tabItem {
                     Label("Summary", systemImage: "heart.fill")
                 }
@@ -34,7 +32,7 @@ struct MainTabView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
 
-            AccountView(viewContext: viewContext)
+            AccountView(viewContext: viewContext, colorScheme: colorScheme)
                 .tabItem {
                     Label("Account", systemImage: "person.fill")
                 }

@@ -12,26 +12,20 @@ final class SummaryViewModel: ObservableObject {
     @Published var shouldShowLoginView = false
     @Published var currentUser: UserModel?
     let viewContext: NSManagedObjectContext
+    @Published var colors: Colors
 
-    init (viewContext: NSManagedObjectContext, currentUser: UserModel? = nil) {
+    init (viewContext: NSManagedObjectContext, currentUser: UserModel? = nil, colorScheme: ColorScheme) {
         self.viewContext = viewContext
+        self.colors = Colors(colorScheme: colorScheme)
         self.currentUser = currentUser
     }
 
     func signOut() {
         self.shouldShowLoginView = true
     }
-}
 
-extension SummaryViewModel {
-    static func createPreviewViewModel() -> SummaryViewModel {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load CoreData stack: \(error)")
-            }
-        }
-        return SummaryViewModel(viewContext: container.viewContext)
+    func updateColorScheme(_ colorScheme: ColorScheme) {
+        colors = Colors(colorScheme: colorScheme)
     }
+
 }

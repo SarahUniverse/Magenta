@@ -34,7 +34,6 @@ struct DiscoverView: View {
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
     // MARK: - Main View
@@ -87,7 +86,7 @@ struct DiscoverView: View {
                         Text("Sign Out")
                             .padding(8)
                             .cornerRadius(20)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(discoverViewModel.colors.textColor)
                     })
             )
             .alert("Error", isPresented: $showError) {

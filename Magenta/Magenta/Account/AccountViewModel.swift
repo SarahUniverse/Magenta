@@ -11,14 +11,19 @@ import SwiftUI
 final class AccountViewModel: ObservableObject {
     @Published var shouldShowLoginView = false
     let viewContext: NSManagedObjectContext
+    @Published var colors: Colors
 
-    init(viewContext: NSManagedObjectContext) {
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
-        // Do any initial set here to get data.
+        self.colors = Colors(colorScheme: colorScheme)
     }
 
     func signOut() {
         self.shouldShowLoginView = true
+    }
+
+    func updateColorScheme(_ colorScheme: ColorScheme) {
+        colors = Colors(colorScheme: colorScheme)
     }
 
 }

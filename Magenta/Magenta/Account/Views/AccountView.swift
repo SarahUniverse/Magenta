@@ -7,14 +7,13 @@
 
 import CoreData
 import SwiftUI
-import UIKit
 
 struct AccountView: View {
     @StateObject private var accountViewModel: AccountViewModel
+    @Environment(\.colorScheme) private var colorScheme
 
-    init(viewContext: NSManagedObjectContext) {
-        _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
+        _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
     let backgroundGradient = LinearGradient(
@@ -51,9 +50,12 @@ struct AccountView: View {
                         Text("Sign Out")
                             .padding(8)
                             .cornerRadius(20)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(accountViewModel.colors.textColor)
                     })
             )
+            .onChange(of: colorScheme) {
+                accountViewModel.updateColorScheme($1)
+            }
         }
     }
 
@@ -74,7 +76,7 @@ struct AccountView: View {
         return container
     }()
 
-    return AccountView(viewContext: persistentContainer.viewContext)
+    return AccountView(viewContext: persistentContainer.viewContext, colorScheme: .light)
         .preferredColorScheme(.light)
 }
 
@@ -92,6 +94,6 @@ struct AccountView: View {
         return container
     }()
 
-    return AccountView(viewContext: persistentContainer.viewContext)
+    return AccountView(viewContext: persistentContainer.viewContext, colorScheme: .dark)
         .preferredColorScheme(.dark)
 }
