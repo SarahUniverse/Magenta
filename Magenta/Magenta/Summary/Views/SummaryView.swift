@@ -14,7 +14,6 @@ struct SummaryView: View {
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
-            Color.lightPurple,
             Color.darkPurple,
             Color.darkBlue,
             Color.black,
@@ -34,9 +33,6 @@ struct SummaryView: View {
     // MARK: - Main View Code
     var body: some View {
         NavigationStack {
-            ZStack {
-                backgroundGradient
-                    .edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack {
                         Spacer()
@@ -51,21 +47,23 @@ struct SummaryView: View {
                         }
                     }
                 }
+                .background(backgroundGradient)
+                .scrollContentBackground(.hidden)
                 .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
                     LoginView(viewContext: summaryViewModel.viewContext)
                 }
-            }
-            .navigationBarTitle("Summary")
-            .navigationBarItems(
-                trailing:
-                    Button(action: {
-                        summaryViewModel.signOut()
-                    }, label: {
-                        Text("Sign Out")
-                            .padding(8)
-                            .cornerRadius(20)
-                            .foregroundStyle(.white)
-                    })
+                .navigationBarTitle("Summary")
+                .navigationBarItems(
+                    trailing:
+                        Button(action: {
+                            summaryViewModel.signOut()
+                        }, label: {
+                            Text("Sign Out")
+                                .bold()
+                                .padding(8)
+                                .cornerRadius(20)
+                                .foregroundStyle(.white)
+                        })
             )
         }
     }

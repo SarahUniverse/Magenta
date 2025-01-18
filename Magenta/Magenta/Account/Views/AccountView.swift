@@ -15,20 +15,47 @@ struct AccountView: View {
         _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
     }
 
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.darkPurple,
+            Color.darkBlue,
+            Color.black,
+            Color.black,
+            Color.black,
+            Color.black
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomLeading
+    )
+
     // MARK: - Main View code
     var body: some View {
-        List {
-            Text("Hello, World!")
-        }
-        .navigationTitle("Settings")
-        .toolbarBackground(.darkBlue, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Image(systemName: "person.circle")
+        NavigationStack {
+            List {
+                Text("Hello, World!")
             }
+            .padding(.top, 20)
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
+            .fullScreenCover(isPresented: $accountViewModel.shouldShowLoginView) {
+                LoginView(viewContext: accountViewModel.viewContext)
+            }
+            .navigationTitle("Account")
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        accountViewModel.signOut()
+                    }, label: {
+                        Text("Sign Out")
+                            .bold()
+                            .padding(8)
+                            .cornerRadius(20)
+                            .foregroundStyle(.white)
+                    })
+            )
         }
     }
+
 }
 
 // MARK: - Previews

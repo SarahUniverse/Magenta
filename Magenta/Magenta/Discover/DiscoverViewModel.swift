@@ -63,7 +63,7 @@ final class DiscoverViewModel: ObservableObject {
             MoodView()
         case "Nutrition Matters":
             NutritionView()
-        case "Mental Health Playlist":
+        case "Mental Health Playlists":
             MentalHealthPlaylistsView()
         case "Quotes that Move Me":
             HelpfulQuotesView()
@@ -88,7 +88,7 @@ final class DiscoverViewModel: ObservableObject {
             DiscoverItemModel(icon: Image(systemName: "moon.zzz"), title: "Sleep or Nightmare Time?"),
             DiscoverItemModel(icon: Image(systemName: "theatermasks"), title: "What's My Mood?"),
             DiscoverItemModel(icon: Image(systemName: "fork.knife"), title: "Nutrition Matters"),
-            DiscoverItemModel(icon: Image(systemName: "music.note.list"), title: "Mental Health Playlist"),
+            DiscoverItemModel(icon: Image(systemName: "music.note.list"), title: "Mental Health Playlists"),
             DiscoverItemModel(icon: Image(systemName: "text.quote"), title: "Quotes that Move Me"),
             DiscoverItemModel(icon: Image(systemName: "brain.head.profile"), title: "Professional Help Search"),
             DiscoverItemModel(icon: Image(systemName: "figure.mind.and.body"), title: "Time to Chill and Meditate"),
