@@ -7,6 +7,7 @@
 
 import CoreData
 import SwiftUI
+import UIKit
 
 struct SummaryView: View {
     @StateObject var summaryViewModel: SummaryViewModel
@@ -28,9 +29,10 @@ struct SummaryView: View {
 
     init(viewContext: NSManagedObjectContext) {
         _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext))
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
-    // MARK: - Main View Code
+    // MARK: - Main View
     var body: some View {
         NavigationStack {
                 VStack {

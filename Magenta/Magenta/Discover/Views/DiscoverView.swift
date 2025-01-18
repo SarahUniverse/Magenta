@@ -7,6 +7,7 @@
 
 import CoreData
 import SwiftUI
+import UIKit
 
 struct DiscoverView: View {
     @StateObject var discoverViewModel: DiscoverViewModel
@@ -33,8 +34,10 @@ struct DiscoverView: View {
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
+    // MARK: - Main View
     var body: some View {
         NavigationStack {
             ZStack {

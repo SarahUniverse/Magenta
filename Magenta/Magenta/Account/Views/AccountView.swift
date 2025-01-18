@@ -7,12 +7,14 @@
 
 import CoreData
 import SwiftUI
+import UIKit
 
 struct AccountView: View {
     @StateObject private var accountViewModel: AccountViewModel
 
     init(viewContext: NSManagedObjectContext) {
         _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext))
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
     let backgroundGradient = LinearGradient(
