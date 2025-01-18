@@ -5,9 +5,11 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import JournalingSuggestions
 import SwiftUI
 
 struct JournalView: View {
+    @StateObject private var journalViewModel: JournalViewModel
 
     var body: some View {
         NavigationStack {
