@@ -92,11 +92,6 @@ final class DiscoverViewModel: ObservableObject {
                 iconColor: .blue
             ),
             DiscoverItemModel(
-                icon: Image(systemName: "books.vertical"),
-                title: "Books that Help Me",
-                iconColor: .brown
-            ),
-            DiscoverItemModel(
                 icon: Image(systemName: "figure.run"),
                 title: "Get Up and Move",
                 iconColors: [.yellow, .orange, .red]
@@ -115,6 +110,11 @@ final class DiscoverViewModel: ObservableObject {
                 icon: Image(systemName: "fork.knife"),
                 title: "Nutrition Matters",
                 iconColor: .green
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "books.vertical"),
+                title: "Books that Help Me",
+                iconColor: .brown
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "music.note.list"),

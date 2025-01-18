@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExerciseSummary: View {
+struct ExerciseSummaryView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("EXERCISE")
@@ -37,11 +37,11 @@ struct ExerciseSummary: View {
 }
 
 #Preview ("Light Mode") {
-    ExerciseSummary()
+    ExerciseSummaryView()
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    ExerciseSummary()
+    ExerciseSummaryView()
         .preferredColorScheme(.dark)
 }
