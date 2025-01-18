@@ -15,30 +15,35 @@ struct ArtTherapyView: View {
         _artTherapyViewModel = StateObject(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
-    // MARK: - Private variables
-    private var headerView: some View {
-        HStack {
-            Text("Art Therapy")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-    }
+    let backgroundGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.red,
+            Color.orange,
+            Color.yellow,
+            Color.green,
+            Color.blue,
+            Color.indigo,
+            Color.purple
+        ]),
+        startPoint: .leading,
+        endPoint: .trailing
+    )
 
+    // MARK: - Private variables
     private var ideaHeader: some View {
         HStack(alignment: .top, spacing: 10) {
-            Image(systemName: "lightbulb.max")
+            Image(systemName: "lightbulb.max.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 24)
                 .foregroundStyle(.yellow)
+                .shadow(radius: 2)
 
             Text("Ideas for Activities:")
                 .font(.title3)
+                .bold()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .center)
         .padding()
     }
 
@@ -60,31 +65,20 @@ struct ArtTherapyView: View {
         }
     }
 
-    private var addActivityButton: some View {
-        Button(action: {
-            artTherapyViewModel.showAddActivitySheet = true
-        }, label: {
-            Text("Add Activity")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-        })
-        .padding()
-    }
-
     // MARK: - Main View Code
     var body: some View {
-        VStack(spacing: 0) {
-            headerView
-            addActivityButton
-            ideaHeader
-            activityList
-        }
-        .navigationBarTitle("Art Therapy", displayMode: .inline)
-        .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
-            // Add activity sheet would go here
-            Text("Add New Activity")
+        NavigationStack {
+            VStack(spacing: 0) {
+                ideaHeader
+                    .padding(.top, 20)
+                activityList
+            }
+            .navigationBarTitle("Art Therapy")
+            .background(backgroundGradient)
+            .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
+                // Add activity sheet would go here
+                Text("Add New Activity")
+            }
         }
     }
 }

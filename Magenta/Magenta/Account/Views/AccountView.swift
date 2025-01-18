@@ -49,7 +49,6 @@ struct AccountView: View {
                         accountViewModel.signOut()
                     }, label: {
                         Text("Sign Out")
-                            .bold()
                             .padding(8)
                             .cornerRadius(20)
                             .foregroundStyle(.white)
