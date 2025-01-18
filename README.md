@@ -6,7 +6,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Front-End Technical Details:
 - Language: Swift
 - Architecture pattern: MVVM
-- Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL
+- Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL, Journaling Suggestions
 - OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
 - Minimum OS's supported: iOS 18.0, iPadOS 18.0, watchOS tba, visionOS 2.0, macOS 14.0
 
