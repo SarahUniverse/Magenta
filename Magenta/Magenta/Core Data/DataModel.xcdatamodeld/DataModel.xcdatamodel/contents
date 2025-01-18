@@ -6,6 +6,12 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="therapeuticValue" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="JournalEntity" representedClassName="JournalEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

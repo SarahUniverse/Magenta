@@ -56,7 +56,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Get Up and Move":
             ExerciseView()
         case "My Thoughts":
-            JournalView()
+            JournalView(viewContext: viewContext)
         case "Sleep or Nightmare Time":
             SleepView()
         case "What's My Mood?":

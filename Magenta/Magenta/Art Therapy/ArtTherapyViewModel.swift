@@ -19,6 +19,7 @@ final class ArtTherapyViewModel: ObservableObject {
         setupInitialActivities()
     }
 
+    // MARK: - Private Functions
     private func setupInitialActivities() {
         // TODO: Do I need this code for initial activities?
         let request: NSFetchRequest<ArtTherapyEntity> = ArtTherapyEntity.fetchRequest()
@@ -28,7 +29,7 @@ final class ArtTherapyViewModel: ObservableObject {
             createInitialArtTherapyActivities()
             fetchArtTherapyActivities()
         } catch {
-            print("Error checking Art Therapy Activities: \(error.localizedDescription)")
+            print("Error fetching Art Therapy Activities: \(error.localizedDescription)")
         }
     }
 
