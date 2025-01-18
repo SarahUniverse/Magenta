@@ -11,14 +11,17 @@ struct DiscoverItemModel: Identifiable {
     let id = UUID()
     let icon: Image
     let title: String
+    let iconColors: [Color]
 
-    init(icon: Image, title: String) {
+    init(icon: Image, title: String, iconColor: Color) {
         self.icon = icon
         self.title = title
+        self.iconColors = [iconColor]
     }
 
-    init(title: String) {
-        self.icon = Image(systemName: "questionmark")
+    init(icon: Image, title: String, iconColors: [Color]) {
+        self.icon = icon
         self.title = title
+        self.iconColors = iconColors
     }
 }

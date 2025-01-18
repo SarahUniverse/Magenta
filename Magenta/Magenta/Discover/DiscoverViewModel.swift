@@ -18,7 +18,7 @@ final class DiscoverViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
-        loadInitialData()
+        loadDiscoverItemData()
     }
 
     func signOut() {
@@ -79,20 +79,68 @@ final class DiscoverViewModel: ObservableObject {
     }
 
     // MARK: - Private Functions
-    private func loadInitialData() {
+    private func loadDiscoverItemData() {
         items = [
-            DiscoverItemModel(icon: Image(systemName: "paintpalette").symbolRenderingMode(.multicolor), title: "Art Therapy"),
-            DiscoverItemModel(icon: Image(systemName: "book"), title: "Books that Help Me"),
-            DiscoverItemModel(icon: Image(systemName: "figure.run"), title: "Get Up and Move"),
-            DiscoverItemModel(icon: Image(systemName: "pencil.and.scribble"), title: "My Thoughts"),
-            DiscoverItemModel(icon: Image(systemName: "moon.zzz"), title: "Sleep or Nightmare Time?"),
-            DiscoverItemModel(icon: Image(systemName: "theatermasks"), title: "What's My Mood?"),
-            DiscoverItemModel(icon: Image(systemName: "fork.knife"), title: "Nutrition Matters"),
-            DiscoverItemModel(icon: Image(systemName: "music.note.list"), title: "Mental Health Playlists"),
-            DiscoverItemModel(icon: Image(systemName: "text.quote"), title: "Quotes that Move Me"),
-            DiscoverItemModel(icon: Image(systemName: "brain.head.profile"), title: "Professional Help Search"),
-            DiscoverItemModel(icon: Image(systemName: "figure.mind.and.body"), title: "Time to Chill and Meditate"),
-            DiscoverItemModel(icon: Image(systemName: "calendar.badge.clock"), title: "Track My Cycle")
+            DiscoverItemModel(
+                icon: Image(systemName: "paintpalette").symbolRenderingMode(.multicolor),
+                title: "Art Therapy",
+                iconColor: .purple
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "pencil.and.scribble"),
+                title: "My Thoughts",
+                iconColor: .blue
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "books.vertical"),
+                title: "Books that Help Me",
+                iconColor: .brown
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "figure.run"),
+                title: "Get Up and Move",
+                iconColors: [.yellow, .orange, .red]
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "moon.zzz.fill").symbolRenderingMode(.palette),
+                title: "Sleep or Nightmare Time?",
+                iconColors: [.mediumBlue, .indigo]
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "theatermasks.fill").symbolRenderingMode(.palette),
+                title: "What's My Mood?",
+                iconColors: [.yellow, .blue]
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "fork.knife"),
+                title: "Nutrition Matters",
+                iconColor: .green
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "music.note.list"),
+                title: "Mental Health Playlists",
+                iconColor: .hotPink
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "text.quote").symbolRenderingMode(.palette),
+                title: "Quotes that Move Me",
+                iconColors: [.gray, .yellow]
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "brain.head.profile"),
+                title: "Professional Help Search",
+                iconColor: .teal
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "figure.mind.and.body"),
+                title: "Time to Chill and Meditate",
+                iconColors: [.cyan, .darkBlue]
+            ),
+            DiscoverItemModel(
+                icon: Image(systemName: "calendar.badge.clock"),
+                title: "Track My Cycle",
+                iconColor: .pink
+            )
         ]
     }
 
