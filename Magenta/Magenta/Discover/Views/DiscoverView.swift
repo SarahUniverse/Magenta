@@ -32,6 +32,67 @@ struct DiscoverView: View {
         endPoint: .bottomLeading
     )
 
+    // MARK: - Private Variables
+    private var mainContentView: some View {
+        ZStack {
+            backgroundGradient
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                searchSection
+                itemListSection
+            }
+        }
+        .navigationTitle("Discover")
+        .navigationBarItems(trailing: signOutButton)
+        .alert("Error", isPresented: $showError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
+        }
+        .fullScreenCover(isPresented: $discoverViewModel.shouldShowLoginView) {
+            LoginView(viewContext: discoverViewModel.viewContext)
+        }
+    }
+
+    private var searchSection: some View {
+        SearchView(
+            text: $searchText,
+            isListening: $isListening,
+            startListening: {
+                startSpeechRecognition()
+            },
+            stopListening: {
+                discoverViewModel.stopSpeechRecognition()
+            }
+        )
+    }
+
+    private var itemListSection: some View {
+        List {
+            ForEach(discoverViewModel.filteredItems(searchText: searchText)) { item in
+                NavigationLink(destination: discoverViewModel.destinationView(for: item)) {
+                    itemRowContent(item)
+                }
+                .padding(.vertical, 10)
+            }
+            .onChange(of: colorScheme) {
+                discoverViewModel.updateColorScheme($1)
+            }
+        }
+    }
+
+    private var signOutButton: some View {
+        Button(action: {
+            discoverViewModel.signOut()
+        }, label: {
+            Text("Sign Out")
+                .padding(8)
+                .cornerRadius(20)
+                .foregroundStyle(discoverViewModel.colors.textColor)
+        })
+    }
+
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
@@ -39,69 +100,25 @@ struct DiscoverView: View {
     // MARK: - Main View
     var body: some View {
         NavigationStack {
-            ZStack {
-                backgroundGradient
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    SearchView(
-                        text: $searchText,
-                        isListening: $isListening,
-                        startListening: {
-                            startSpeechRecognition()
-                        },
-                        stopListening: {
-                            discoverViewModel.stopSpeechRecognition()
-                        }
-                    )
-
-                    List {
-                        ForEach(discoverViewModel.filteredItems(searchText: searchText)) { item in
-                            NavigationLink(destination: discoverViewModel.destinationView(for: item)) {
-                                HStack {
-                                    item.icon
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 30, height: 30)
-                                        .padding(.trailing, 10)
-                                    Text(item.title)
-                                        .foregroundStyle(discoverViewModel.colors.textColor)
-                                }
-                            }
-                            .padding(.top, 10)
-                            .padding(.bottom, 10)
-                        }
-                        .onChange(of: colorScheme) {
-                            discoverViewModel.updateColorScheme($1)
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Discover")
-            .navigationBarItems(
-                trailing:
-                    // TODO: Make SignOut button it's own view
-                    Button(action: {
-                        discoverViewModel.signOut()
-                    }, label: {
-                        Text("Sign Out")
-                            .padding(8)
-                            .cornerRadius(20)
-                            .foregroundStyle(discoverViewModel.colors.textColor)
-                    })
-            )
-            .alert("Error", isPresented: $showError) {
-                Button("OK") { }
-            } message: {
-                Text(errorMessage)
-            }
+            mainContentView
         }
-        .fullScreenCover(isPresented: $discoverViewModel.shouldShowLoginView) {
-            LoginView(viewContext: discoverViewModel.viewContext)
-        }
-
     }
 
     // MARK: - Private Functions
+    private func itemRowContent(_ item: DiscoverItemModel) -> some View {
+        HStack {
+            item.icon
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .padding(.trailing, 10)
+                .foregroundStyle(.red, .yellow, .green)
+
+            Text(item.title)
+                .foregroundStyle(discoverViewModel.colors.textColor)
+        }
+    }
+
     private func startSpeechRecognition() {
         do {
             try discoverViewModel.startSpeechRecognition { recognitionText in

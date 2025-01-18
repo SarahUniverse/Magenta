@@ -81,7 +81,7 @@ final class DiscoverViewModel: ObservableObject {
     // MARK: - Private Functions
     private func loadInitialData() {
         items = [
-            DiscoverItemModel(icon: Image(systemName: "paintpalette"), title: "Art Therapy"),
+            DiscoverItemModel(icon: Image(systemName: "paintpalette").symbolRenderingMode(.multicolor), title: "Art Therapy"),
             DiscoverItemModel(icon: Image(systemName: "book"), title: "Books that Help Me"),
             DiscoverItemModel(icon: Image(systemName: "figure.run"), title: "Get Up and Move"),
             DiscoverItemModel(icon: Image(systemName: "pencil.and.scribble"), title: "My Thoughts"),
