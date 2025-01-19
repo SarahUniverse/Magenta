@@ -60,6 +60,8 @@ struct JournalView: View {
                 }
                 #else
                 Text("This device doesn't support Journaling Suggestions")
+                    .italic()
+                    .font(.caption)
                 #endif
                 journalEntryList
             }
@@ -141,6 +143,32 @@ struct JournalView: View {
             }
         }
 
+        let context = container.viewContext
+
+        let entry1 = JournalEntity(context: context)
+        entry1.id = UUID()
+        entry1.title = "First Day of Summer"
+        entry1.date = Date().addingTimeInterval(-86400) // Yesterday
+        entry1.content = "Today was the first day of summer vacation. I spent the morning at the beach, feeling the warm sun and listening to the waves. It was incredibly relaxing and reminded me why I love this time of year."
+
+        let entry2 = JournalEntity(context: context)
+        entry2.id = UUID()
+        entry2.title = "Thoughts on Personal Growth"
+        entry2.date = Date().addingTimeInterval(-172800) // Two days ago
+        entry2.content = "I've been reflecting on my personal growth journey. It's amazing how much I've learned about myself in the past year. Challenges have become opportunities, and I'm grateful for every experience that has shaped me."
+
+        let entry3 = JournalEntity(context: context)
+        entry3.id = UUID()
+        entry3.title = "Weekend Adventure"
+        entry3.date = Date().addingTimeInterval(-259200) // Three days ago
+        entry3.content = "Went on an unexpected hiking trip with friends. The trail was challenging, but the view from the top was breathtaking. It reminded me that sometimes the best experiences come from spontaneous decisions."
+
+        do {
+            try context.save()
+        } catch {
+            print("Error saving sample entries: \(error)")
+        }
+
         return container
     }()
 
@@ -157,6 +185,32 @@ struct JournalView: View {
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+        }
+
+        let context = container.viewContext
+
+        let entry1 = JournalEntity(context: context)
+        entry1.id = UUID()
+        entry1.title = "First Day of Summer"
+        entry1.date = Date().addingTimeInterval(-86400) // Yesterday
+        entry1.content = "Today was the first day of summer vacation. I spent the morning at the beach, feeling the warm sun and listening to the waves. It was incredibly relaxing and reminded me why I love this time of year."
+
+        let entry2 = JournalEntity(context: context)
+        entry2.id = UUID()
+        entry2.title = "Thoughts on Personal Growth"
+        entry2.date = Date().addingTimeInterval(-172800) // Two days ago
+        entry2.content = "I've been reflecting on my personal growth journey. It's amazing how much I've learned about myself in the past year. Challenges have become opportunities, and I'm grateful for every experience that has shaped me."
+
+        let entry3 = JournalEntity(context: context)
+        entry3.id = UUID()
+        entry3.title = "Weekend Adventure"
+        entry3.date = Date().addingTimeInterval(-259200) // Three days ago
+        entry3.content = "Went on an unexpected hiking trip with friends. The trail was challenging, but the view from the top was breathtaking. It reminded me that sometimes the best experiences come from spontaneous decisions."
+
+        do {
+            try context.save()
+        } catch {
+            print("Error saving sample entries: \(error)")
         }
 
         return container
