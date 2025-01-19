@@ -14,7 +14,7 @@ import SwiftUI
 final class JournalViewModel: ObservableObject {
     @Published var journalEntries: [JournalModel] = []
 
-    private let viewContext: NSManagedObjectContext
+    let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -57,7 +57,7 @@ final class JournalViewModel: ObservableObject {
     }
 
     private func fetchEntity(for model: JournalModel) -> JournalEntity? {
-        let request : NSFetchRequest<JournalEntity> = JournalEntity.fetchRequest()
+        let request: NSFetchRequest<JournalEntity> = JournalEntity.fetchRequest()
         request.predicate = NSPredicate(format: "title == %@", model.id as CVarArg)
 
         do {
