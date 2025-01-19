@@ -6,7 +6,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Front-End Technical Details:
 - Language: Swift
 - Architecture pattern: MVVM
-- Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL, Journaling Suggestions
+- Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL, Journaling Suggestions, MusicKit
 - OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
 - Minimum OS's supported: iOS 18.0, iPadOS 18.0, watchOS tba, visionOS 2.0, macOS 14.0
 
@@ -19,9 +19,9 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - **Meditations**: Access a library of guided meditations to help you relax and reduce stress.
 - **Exercise**: To be added.
 - **Nutrition**: To be added.
-- **Journal**: Maintain a private journal to express your thoughts and feelings.
-- **Therapist Search**: Find nearby mental health professionals.
-- **Mental Health Playlists**: Music playlists
+- **Journal**: Maintain a private journal to express your thoughts and feelings using suggestions provided by Apple's Journaling Suggestions framework.
+- **Therapist Search**: Find nearby mental health professionals using this api: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+- **Mental Health Playlists**: Curate Music playlists using Apple's MusicKit framework. 
 - **Helpful Quotes**: To be added.
 - **Cycle**: To be added.
 - **Sleep**: To be added.
