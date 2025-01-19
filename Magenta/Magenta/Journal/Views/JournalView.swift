@@ -16,6 +16,8 @@ struct JournalView: View {
     @State private var showingAddEntrySheet = false
     @State private var entryTitle = ""
     @State private var entryContent = ""
+    @State private var journalSuggestionTitle: String?
+    @State private var reflectionSuggestions: [JournalingSuggestion.Reflection] = []
 
     init(viewContext: NSManagedObjectContext) {
         _journalViewModel = StateObject(wrappedValue: JournalViewModel(viewContext: viewContext))
@@ -52,27 +54,29 @@ struct JournalView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                #if canImport(JournalingSuggestions)
+#if canImport(JournalingSuggestions)
+                ForEach($reflectionSuggestions, content: ReflectionPromptView.init)
                 JournalingSuggestionsPicker {
-                    Text("Show my personal events")
+                    Text("Get Reflection.")
                 } onCompletion: { suggestion in
-                    // parse selected suggestion
+                    Task {
+                        journalSuggestionTitle = suggestion.title
+                        reflectionSuggestions = await suggestion.content(forType: JournalingSuggestion.Reflection.self)
+                    }
                 }
-                #else
-                Text("This device doesn't support Journaling Suggestions")
-                    .italic()
-                    .font(.caption)
-                #endif
+                .buttonStyle(.borderedProminent)
+#endif
+
                 journalEntryList
             }
             .navigationTitle("Journal")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .navigationBarItems(trailing:
-                                    Button(action: { showingAddEntrySheet = true }) {
-                Image(systemName: "plus")
-            }
-            )
+                    Button(action: { showingAddEntrySheet = true
+                    }, label: {
+                        Image(systemName: "plus")
+                    }))
         }
         .sheet(isPresented: $showingAddEntrySheet) {
             NavigationView {
@@ -121,7 +125,7 @@ struct JournalView: View {
             print("Error saving journal entry: \(error)")
         }
     }
-
+    
     private func deleteEntries(at offsets: IndexSet) {
         for index in offsets {
             let entry = journalViewModel.journalEntries[index]
@@ -131,7 +135,14 @@ struct JournalView: View {
 
 }
 
+extension JournalingSuggestion.Reflection: @retroactive Identifiable {
+    public var id: String {
+        self.prompt
+    }
+}
+
 // MARK: - Previews
+// swiftlint:disable line_length
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")
@@ -219,3 +230,4 @@ struct JournalView: View {
     return JournalView(viewContext: persistentContainer.viewContext)
         .preferredColorScheme(.dark)
 }
+// swiftlint:enable line_length
