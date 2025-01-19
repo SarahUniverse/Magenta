@@ -35,17 +35,18 @@ struct JournalView: View {
     private var journalEntryList: some View {
         List {
             ForEach(journalViewModel.journalEntries) { entry in
-                VStack(alignment: .leading) {
-                    Text(entry.journalEntryTitle)
-                        .font(.headline)
-                    Text(entry.journalEntryContent)
-                        .font(.body)
-                        .lineLimit(2)
+                Section(header: Text(entry.journalEntryDate, style: .date)) {
+                    VStack(alignment: .leading) {
+                        Text(entry.journalEntryTitle)
+                            .font(.headline)
+                        Text(entry.journalEntryContent)
+                            .font(.body)
+                            .lineLimit(2)
+                    }
                 }
             }
             .onDelete(perform: deleteEntries)
         }
-        .listStyle(PlainListStyle())
     }
 
     var body: some View {
@@ -59,7 +60,6 @@ struct JournalView: View {
                 }
                 #else
                 Text("This device doesn't support Journaling Suggestions")
-
                 #endif
                 journalEntryList
             }
