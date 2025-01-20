@@ -143,7 +143,6 @@ struct SignUpView: View {
 
 }
 
-/*
 // MARK: - Previews
 #Preview ("Light Mode") {
     let container = NSPersistentContainer(name: "Model")
@@ -172,4 +171,3 @@ struct SignUpView: View {
     return SignUpView(viewContext: container.viewContext)
         .preferredColorScheme(.dark)
 }
-*/
