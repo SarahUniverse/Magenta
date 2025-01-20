@@ -8,15 +8,27 @@
 import SwiftUI
 
 struct NutritionView: View {
+    @StateObject private var viewModel = NutritionViewModel()
+
+    let backgroundGradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: .green, location: 0),
+            Gradient.Stop(color: .green.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .green.opacity(0.3), location: 0.2),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
+    )
 
     var body: some View {
         NavigationStack {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Nutrition")
-            .toolbarBackground(.darkBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .navigationTitle("Nutrition Matters")
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
