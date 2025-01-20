@@ -8,7 +8,6 @@
 import CoreData
 #if canImport(JournalingSuggestions)
 import JournalingSuggestions
-#endif
 import SwiftUI
 
 struct JournalView: View {
@@ -231,3 +230,4 @@ extension JournalingSuggestion.Reflection: @retroactive Identifiable {
         .preferredColorScheme(.dark)
 }
 // swiftlint:enable line_length
+#endif

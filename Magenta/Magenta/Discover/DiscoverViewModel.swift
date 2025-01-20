@@ -55,8 +55,9 @@ final class DiscoverViewModel: ObservableObject {
             SelfHelpBooksView()
         case "Get Up and Move":
             ExerciseView()
-        case "My Thoughts":
-            JournalView(viewContext: viewContext)
+         // TODO: Add back
+        // case "My Thoughts":
+            // JournalView(viewContext: viewContext)
         case "Sleep or Nightmare Time":
             SleepView()
         case "What's My Mood?":
