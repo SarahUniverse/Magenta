@@ -49,7 +49,6 @@ struct AccountView: View {
                     }, label: {
                         Text("Sign Out")
                             .padding(8)
-                            .cornerRadius(20)
                             .foregroundStyle(accountViewModel.colors.textColor)
                     })
             )

@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaylistsView: View {
     @StateObject private var playlistsViewModel = PlaylistsViewModel()
 
-    let backgroundGradient = LinearGradient(
+    private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .hotPink, location: 0),
             Gradient.Stop(color: .hotPink.opacity(0.7), location: 0.1),

@@ -50,6 +50,7 @@ struct JournalView: View {
         }
     }
 
+    // MARK: - Main View
     var body: some View {
         NavigationStack {
             VStack {

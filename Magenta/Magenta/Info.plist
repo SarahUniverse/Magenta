@@ -18,5 +18,7 @@
 		<key>UIImageName</key>
 		<string>launchScreenImage</string>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Create and listen to mental health playlists</string>
 </dict>
 </plist>

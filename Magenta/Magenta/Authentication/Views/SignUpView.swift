@@ -32,9 +32,10 @@ struct SignUpView: View {
     // MARK: - Computed Variables for Views
     private var headerView: some View {
         Text("Welcome to Magenta")
-            .padding(.top, 30)
+            .padding(.top, 50)
             .foregroundStyle(.white)
-            .font(.largeTitle)
+            .font(.largeTitle.weight(.semibold))
+            .shadow(radius: 2)
     }
 
     private var formFields: some View {
