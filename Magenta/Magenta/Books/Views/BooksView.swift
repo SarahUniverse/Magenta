@@ -1,20 +1,20 @@
 //
-//  NutritionView.swift
+//  SelfHelpBooksView.swift
 //  Magenta
 //
-//  Created by Sarah Clark on 8/21/24.
+//  Created by Sarah Clark on 8/22/24.
 //
 
 import SwiftUI
 
-struct NutritionView: View {
-    @StateObject private var nutritionViewModel = NutritionViewModel()
+struct BooksView: View {
+    @StateObject private var booksViewModel = BooksViewModel()
 
     let backgroundGradient = LinearGradient(
         stops: [
-            Gradient.Stop(color: .green, location: 0),
-            Gradient.Stop(color: .green.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .green.opacity(0.3), location: 0.2),
+            Gradient.Stop(color: .brown, location: 0),
+            Gradient.Stop(color: .brown.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .brown.opacity(0.3), location: 0.2),
             Gradient.Stop(color: .clear, location: 0.4)
         ],
         startPoint: .top,
@@ -26,7 +26,7 @@ struct NutritionView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Nutrition Matters")
+            .navigationTitle("Books that Help Me")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
@@ -40,11 +40,11 @@ struct NutritionView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    NutritionView()
+    BooksView()
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    NutritionView()
+    BooksView()
         .preferredColorScheme(.dark)
 }
