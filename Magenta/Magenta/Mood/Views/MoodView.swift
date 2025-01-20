@@ -26,7 +26,7 @@ struct MoodView: View {
             List(moodViewModel.items, id: \.self) { item in
                 Text(item)
             }
-            .navigationTitle("Mood")
+            .navigationTitle("What's My Mood?")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
