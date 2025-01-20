@@ -10,14 +10,25 @@ import SwiftUI
 struct MoodView: View {
     @StateObject private var moodViewModel = MoodViewModel()
 
+    let backgroundGradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: .yellow, location: 0),
+            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .blue.opacity(0.7), location: 0.2),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+
     var body: some View {
         NavigationStack {
             List(moodViewModel.items, id: \.self) { item in
                 Text(item)
             }
             .navigationTitle("Mood")
-            .toolbarBackground(.darkBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
