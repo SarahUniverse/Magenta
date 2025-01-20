@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct SleepView: View {
+    @State private var sleepViewModel = SleepViewModel()
+
+    let backgroundGradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: .mediumBlue.opacity(0.8), location: 0),
+            Gradient.Stop(color: .mediumBlue.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .indigo.opacity(0.6), location: 0.2),
+            Gradient.Stop(color: .indigo.opacity(0.4), location: 0.3),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
+    )
 
     var body: some View {
         NavigationStack {
@@ -15,8 +28,8 @@ struct SleepView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Sleep")
-            .toolbarBackground(.darkBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
