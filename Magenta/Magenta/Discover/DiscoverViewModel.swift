@@ -67,7 +67,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Mental Health Playlists":
             PlaylistsView()
         case "Quotes that Move Me":
-            HelpfulQuotesView()
+            QuotesView()
         case "Professional Help Search":
             TherapistSearchView()
         case "Time to Chill and Meditate":
