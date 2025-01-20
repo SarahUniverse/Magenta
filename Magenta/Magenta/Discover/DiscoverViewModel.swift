@@ -65,7 +65,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Nutrition Matters":
             NutritionView()
         case "Mental Health Playlists":
-            MentalHealthPlaylistsView()
+            PlaylistsView()
         case "Quotes that Move Me":
             HelpfulQuotesView()
         case "Professional Help Search":

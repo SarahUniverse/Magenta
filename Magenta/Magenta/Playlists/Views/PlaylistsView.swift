@@ -7,7 +7,19 @@
 
 import SwiftUI
 
-struct MentalHealthPlaylistsView: View {
+struct PlaylistsView: View {
+    @StateObject private var playlistsViewModel = PlaylistsViewModel()
+
+    let backgroundGradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: .hotPink, location: 0),
+            Gradient.Stop(color: .hotPink.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.2),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
+    )
 
     var body: some View {
         NavigationStack {
@@ -15,8 +27,8 @@ struct MentalHealthPlaylistsView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Mental Health Playlists")
-            .toolbarBackground(.darkBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
@@ -28,11 +40,11 @@ struct MentalHealthPlaylistsView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    MentalHealthPlaylistsView()
+    PlaylistsView()
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    MentalHealthPlaylistsView()
+    PlaylistsView()
         .preferredColorScheme(.dark)
 }

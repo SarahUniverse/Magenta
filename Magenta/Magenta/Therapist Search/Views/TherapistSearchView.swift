@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TherapistSearchView: View {
-    @StateObject private var viewModel = TherapistSearchViewModel()
+    @StateObject private var therapistSearchViewModel = TherapistSearchViewModel()
 
     let backgroundGradient = LinearGradient(
         stops: [
