@@ -58,7 +58,7 @@ final class JournalViewModel: ObservableObject {
 
     private func fetchEntity(for model: JournalModel) -> JournalEntity? {
         let request: NSFetchRequest<JournalEntity> = JournalEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "title == %@", model.id as CVarArg)
+        request.predicate = NSPredicate(format: "id == %@", model.id as CVarArg)
 
         do {
             return try viewContext.fetch(request).first

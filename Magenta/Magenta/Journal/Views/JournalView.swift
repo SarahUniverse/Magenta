@@ -125,7 +125,7 @@ struct JournalView: View {
             print("Error saving journal entry: \(error)")
         }
     }
-    
+
     private func deleteEntries(at offsets: IndexSet) {
         for index in offsets {
             let entry = journalViewModel.journalEntries[index]
