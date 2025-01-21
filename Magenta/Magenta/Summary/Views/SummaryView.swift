@@ -43,6 +43,7 @@ struct SummaryView: View {
                                 ArtTherapySummaryView()
                                 JournalSummaryView()
                                 ExerciseSummaryView()
+                                MoodSummaryView()
                                 SleepSummaryView()
                                 NutritionSummaryView()
                                 MeditationSummaryView()
