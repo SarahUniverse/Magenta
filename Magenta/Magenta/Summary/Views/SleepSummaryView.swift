@@ -17,7 +17,13 @@ struct SleepSummaryView: View {
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "moon.zzz")
-                    .foregroundColor(.darkBlue)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.mediumBlue, .indigo],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .font(.largeTitle)
 
                 VStack(alignment: .leading, spacing: 5) {

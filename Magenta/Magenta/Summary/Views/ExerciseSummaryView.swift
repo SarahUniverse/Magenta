@@ -17,7 +17,13 @@ struct ExerciseSummaryView: View {
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "figure.run")
-                    .foregroundColor(.darkBlue)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.yellow, .orange, .red],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .font(.largeTitle)
 
                 VStack(alignment: .leading, spacing: 5) {

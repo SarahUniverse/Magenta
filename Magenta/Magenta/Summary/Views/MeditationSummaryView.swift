@@ -17,7 +17,14 @@ struct MeditationSummaryView: View {
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "figure.mind.and.body")
-                    .foregroundColor(.darkBlue)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.cyan, .darkBlue],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+
                     .font(.largeTitle)
 
                 VStack(alignment: .leading, spacing: 5) {

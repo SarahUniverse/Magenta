@@ -17,7 +17,7 @@ struct NutritionSummaryView: View {
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "fork.knife")
-                    .foregroundColor(.darkBlue)
+                    .foregroundColor(.green)
                     .font(.largeTitle)
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
