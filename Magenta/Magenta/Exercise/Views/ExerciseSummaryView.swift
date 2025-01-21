@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ExerciseSummaryView: View {
+    // @StateObject private var exerciseSummaryViewModel: ExerciseSummaryViewModel
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("EXERCISE")

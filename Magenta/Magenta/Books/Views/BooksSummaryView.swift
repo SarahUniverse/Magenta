@@ -1,5 +1,5 @@
 //
-//  JournalSummaryView.swift
+//  BooksSummaryView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 1/21/25.
@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct JournalSummaryView: View {
-    // @StateObject private var journalSummaryViewModel: JournalSummaryViewModel
+struct BooksSummaryView: View {
+    // @StateObject private var booksSummaryViewModel: BooksSummaryViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("JOURNAL")
+            Text("BOOKS")
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
 
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "pencil.and.scribble")
-                    .foregroundStyle(.blue)
+                Image(systemName: "books.vertical")
+                    .foregroundStyle(.brown)
                     .font(.largeTitle)
 
                 VStack(alignment: .leading, spacing: 5) {
@@ -39,11 +39,11 @@ struct JournalSummaryView: View {
 }
 
 #Preview ("Light Mode") {
-    JournalSummaryView()
+    BooksSummaryView()
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    JournalSummaryView()
+    BooksSummaryView()
         .preferredColorScheme(.dark)
 }

@@ -29,7 +29,6 @@ struct SummaryView: View {
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
-
     }
 
     // MARK: - Main View
@@ -46,6 +45,7 @@ struct SummaryView: View {
                                 MoodSummaryView()
                                 SleepSummaryView()
                                 NutritionSummaryView()
+                                BooksSummaryView()
                                 MeditationSummaryView()
                             }
                             .padding()
