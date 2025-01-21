@@ -41,6 +41,7 @@ struct SummaryView: View {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
                                 ArtTherapySummaryView()
+                                JournalSummaryView()
                                 ExerciseSummaryView()
                                 SleepSummaryView()
                                 NutritionSummaryView()
