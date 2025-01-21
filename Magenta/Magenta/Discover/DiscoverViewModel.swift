@@ -123,7 +123,7 @@ final class DiscoverViewModel: ObservableObject {
                 iconColor: .hotPink
             ),
             DiscoverItemModel(
-                icon: Image(systemName: "text.quote").symbolRenderingMode(.palette),
+                icon: Image(systemName: "text.quote"),
                 title: "Quotes that Move Me",
                 iconColors: [.gray, .yellow]
             ),

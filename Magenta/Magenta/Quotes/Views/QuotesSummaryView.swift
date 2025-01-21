@@ -1,27 +1,27 @@
 //
-//  SleepSummaryView.swift
+//  QuotesSummaryView.swift
 //  Magenta
 //
-//  Created by Sarah Clark on 12/11/24.
+//  Created by Sarah Clark on 1/21/25.
 //
 
 import SwiftUI
 
-struct SleepSummaryView: View {
-    // @StateObject private var sleepSummaryViewModel: SleepSummaryViewModel
+struct QuotesSummaryView: View {
+    // @StateObject private var quotesSummaryViewModel: QuotesSummaryViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("SLEEP")
+            Text("QUOTES")
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
 
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "moon.zzz")
+                Image(systemName: "text.quote")
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [.mediumBlue, .indigo],
+                            colors: [.gray, .yellow],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -45,11 +45,11 @@ struct SleepSummaryView: View {
 }
 
 #Preview ("Light Mode") {
-    SleepSummaryView()
+    BooksSummaryView()
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    SleepSummaryView()
+    BooksSummaryView()
         .preferredColorScheme(.dark)
 }
