@@ -44,7 +44,8 @@ struct DiscoverView: View {
             }
         }
         .navigationTitle("Discover")
-        .navigationBarItems(trailing: signOutButton)
+        // TODO: Decide if you want a Sign Out button here
+        // .navigationBarItems(trailing: signOutButton)
         .alert("Error", isPresented: $showError) {
             Button("OK") { }
         } message: {
@@ -88,8 +89,6 @@ struct DiscoverView: View {
         }, label: {
             Text("Sign Out")
                 .padding(8)
-                .cornerRadius(20)
-                .foregroundStyle(discoverViewModel.colors.textColor)
         })
     }
 

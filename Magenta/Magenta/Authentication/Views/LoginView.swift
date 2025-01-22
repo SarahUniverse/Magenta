@@ -73,7 +73,7 @@ struct LoginView: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.mediumBlue)
+                .background(Color.blue)
                 .cornerRadius(10)
         }
         .padding(20)
@@ -139,6 +139,7 @@ struct LoginView: View {
         }
         .padding()
         .background(backgroundGradient)
+        .scrollContentBackground(.hidden)
         .navigationBarBackButtonHidden(true)
     }
 

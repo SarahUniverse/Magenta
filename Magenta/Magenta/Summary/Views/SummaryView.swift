@@ -15,17 +15,14 @@ struct SummaryView: View {
     @State private var showEditPinnedView = false
 
     let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black,
-            Color.black,
-            Color.black,
-            Color.black,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
+        stops: [
+            Gradient.Stop(color: .darkPurple.opacity(0.5), location: 0),
+            Gradient.Stop(color: .darkPurple.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.2),
+            Gradient.Stop(color: .clear, location: 0.4)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
     )
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
@@ -106,7 +103,6 @@ struct SummaryView: View {
                         Text("Sign Out")
                             .padding(8)
                             .cornerRadius(20)
-                            .foregroundStyle(summaryViewModel.colors.textColor)
                     })
             )
         }
