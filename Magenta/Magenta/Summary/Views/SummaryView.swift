@@ -11,7 +11,6 @@ import UIKit
 
 struct SummaryView: View {
     @StateObject var summaryViewModel: SummaryViewModel
-    @StateObject var editPinnedViewModel: EditPinnedViewModel
     @Environment(\.colorScheme) private var colorScheme
     @State private var showEditPinnedView = false
 
@@ -102,7 +101,7 @@ struct SummaryView: View {
                 LoginView(viewContext: summaryViewModel.viewContext)
             }
             .sheet(isPresented: $showEditPinnedView) {
-                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems, editPinnedViewModel: editPinnedViewModel)
+                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems)
             }
             .navigationBarTitle("Summary")
             .navigationBarItems(

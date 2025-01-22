@@ -16,6 +16,12 @@ struct EditPinnedView: View {
     @State private var showError = false
     @State private var errorMessage = ""
 
+    init(pinnedItems: Binding<[String]>) {
+        self._pinnedItems = pinnedItems
+        // Initialize StateObject with proper initialization
+        self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel())
+    }
+
     private var searchSection: some View {
         SearchView(
             text: $searchText,
@@ -33,10 +39,8 @@ struct EditPinnedView: View {
     var body: some View {
         NavigationStack {
             List {
-                HStack {
-                    searchSection
+                searchSection
 
-                }
                 Section(header: Text("Pinned")) {
                     ForEach(pinnedItems, id: \.self) { item in
                         HStack {
@@ -66,8 +70,12 @@ struct EditPinnedView: View {
                                 .onDrag { NSItemProvider(object: item as NSString) }
                         }
                     }
-                    .onMove(perform: EditPinnedViewModel.moveMoodItems)
-                    .onInsert(of: ["public.txt"], perform: EditPinnedViewModel.dropList2)
+                    .onMove { source, destination in
+                        editPinnedViewModel.moveMoodItems(from: source, to: destination)
+                    }
+                    .onInsert(of: ["public.txt"]) { index, providers in
+                        editPinnedViewModel.dropList2(at: index, providers)
+                    }
                 }
             }
             .navigationTitle("Edit Pinned")
@@ -79,6 +87,11 @@ struct EditPinnedView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .alert("Error", isPresented: $showError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
+        }
     }
 
     private func startSpeechRecognition() {
@@ -92,22 +105,30 @@ struct EditPinnedView: View {
             isListening = false
         }
     }
-
-    private func stopSpeechRecognition() {
-        editPinnedViewModel.stopSpeechRecognition()
-    }
 }
 
-/*#Preview("Light Mode") {
-    @Previewable @State var pinnedItems = ["Mood", "Meditate", "Exercise"]
+#Preview("Light Mode") {
+    struct PreviewWrapper: View {
+        @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
 
-    return EditPinnedView(pinnedItems: $pinnedItems)
+        var body: some View {
+            EditPinnedView(pinnedItems: $pinnedItems)
+        }
+    }
+
+    return PreviewWrapper()
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    @Previewable @State var pinnedItems = ["Mood", "Meditate", "Exercise"]
+    struct PreviewWrapper: View {
+        @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
 
-    return EditPinnedView(pinnedItems: $pinnedItems)
+        var body: some View {
+            EditPinnedView(pinnedItems: $pinnedItems)
+        }
+    }
+
+    return PreviewWrapper()
         .preferredColorScheme(.dark)
-}*/
+}
