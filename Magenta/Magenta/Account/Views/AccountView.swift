@@ -31,7 +31,6 @@ struct AccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                // Profile Section
                 Section {
                     HStack {
                         Image(systemName: "person.circle.fill")
@@ -50,7 +49,6 @@ struct AccountView: View {
                     .padding(.vertical, 8)
                 }
 
-                // Account Settings
                 Section("Account Settings") {
                     NavigationLink(destination: EditProfileView()) {
                         SettingsRowView(icon: "person.fill",
@@ -71,7 +69,6 @@ struct AccountView: View {
                     }
                 }
 
-                // Preferences
                 Section("Preferences") {
                     Toggle("Dark Mode", isOn: $accountViewModel.isDarkMode)
 
@@ -82,13 +79,13 @@ struct AccountView: View {
                     }
                 }
 
-                // Support
                 Section("Support") {
-                    Button(action: { accountViewModel.contactSupport() }) {
+                    Button(action: { accountViewModel.contactSupport()
+                    }, label: {
                         SettingsRowView(icon: "questionmark.circle.fill",
                                         title: "Help & Support",
                                         color: .purple)
-                    }
+                    })
 
                     NavigationLink(destination: FAQView()) {
                         SettingsRowView(icon: "doc.text.fill",
@@ -97,31 +94,32 @@ struct AccountView: View {
                     }
                 }
 
-                // Legal
                 Section("Legal") {
-                    Button(action: { accountViewModel.showPrivacyPolicy() }) {
+                    Button(action: { accountViewModel.showPrivacyPolicy()
+                    }, label: {
                         SettingsRowView(icon: "doc.fill",
                                         title: "Privacy Policy",
                                         color: .gray)
-                    }
+                    })
 
-                    Button(action: { accountViewModel.showTerms() }) {
+                    Button(action: { accountViewModel.showTerms()
+                    }, label: {
                         SettingsRowView(icon: "doc.text.fill",
                                         title: "Terms of Service",
                                         color: .gray)
-                    }
+                    })
                 }
 
-                // Danger Zone
                 Section {
-                    Button(action: { accountViewModel.deleteAccount() }) {
+                    Button(action: { accountViewModel.deleteAccount()
+                    }, label: {
                         HStack {
                             Text("Delete Account")
                             Spacer()
                             Image(systemName: "trash.fill")
                         }
                         .foregroundColor(.red)
-                    }
+                    })
                 }
             }
             .padding(.top, 20)

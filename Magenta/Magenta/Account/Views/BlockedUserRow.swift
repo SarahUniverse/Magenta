@@ -13,7 +13,6 @@ struct BlockedUserRow: View {
 
     var body: some View {
         HStack {
-            // User Avatar
             if let avatarURL = user.avatarURL {
                 AsyncImage(url: avatarURL) { image in
                     image
@@ -32,7 +31,6 @@ struct BlockedUserRow: View {
                     .foregroundColor(.gray)
             }
 
-            // User Info
             VStack(alignment: .leading) {
                 Text(user.name)
                     .font(.headline)
@@ -43,7 +41,6 @@ struct BlockedUserRow: View {
 
             Spacer()
 
-            // Unblock Button
             Button(action: unblockAction) {
                 Text("Unblock")
                     .foregroundColor(.blue)

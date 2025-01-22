@@ -51,19 +51,22 @@ struct FAQView: View {
                     Text("Still need help?")
                         .font(.headline)
 
-                    Button(action: { viewModel.contactSupport() }) {
+                    Button(action: {
+                        viewModel.contactSupport()
+                    }, label: {
                         HStack {
                             Image(systemName: "message.fill")
                             Text("Contact Support")
                         }
-                    }
+                    })
 
-                    Button(action: { viewModel.startLiveChat() }) {
+                    Button(action: { viewModel.startLiveChat()
+                    }, label: {
                         HStack {
                             Image(systemName: "bubble.left.fill")
                             Text("Start Live Chat")
                         }
-                    }
+                    })
                 }
                 .padding(.vertical, 8)
             }
@@ -83,7 +86,9 @@ struct FAQQuestionRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Button(action: { withAnimation { isExpanded.toggle() }}) {
+            Button(action: { withAnimation
+                {isExpanded.toggle()}
+            }, label: {
                 HStack {
                     Text(question.question)
                         .font(.subheadline)
@@ -96,7 +101,7 @@ struct FAQQuestionRow: View {
                         .foregroundColor(.gray)
                         .animation(.easeInOut, value: isExpanded)
                 }
-            }
+            })
 
             if isExpanded {
                 Text(question.answer)

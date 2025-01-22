@@ -13,7 +13,6 @@ struct BlockedUsersView: View {
 
     var body: some View {
         List {
-            // Search Bar
             Section {
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -23,7 +22,6 @@ struct BlockedUsersView: View {
                 }
             }
 
-            // Blocked Users List
             Section {
                 if viewModel.filteredBlockedUsers.isEmpty {
                     Text("No blocked users")

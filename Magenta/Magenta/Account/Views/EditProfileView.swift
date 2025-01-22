@@ -14,7 +14,6 @@ struct EditProfileView: View {
 
     var body: some View {
         List {
-            // Profile Photo
             Section {
                 HStack {
                     if let image = viewModel.profileImage {
@@ -37,7 +36,6 @@ struct EditProfileView: View {
                 .padding(.vertical, 8)
             }
 
-            // Personal Information
             Section("Personal Information") {
                 TextField("First Name", text: $viewModel.firstName)
                 TextField("Last Name", text: $viewModel.lastName)
@@ -45,7 +43,6 @@ struct EditProfileView: View {
                 DatePicker("Birthday", selection: $viewModel.birthday, displayedComponents: .date)
             }
 
-            // Contact Information
             Section("Contact Information") {
                 TextField("Email", text: $viewModel.email)
                     .keyboardType(.emailAddress)
@@ -54,7 +51,6 @@ struct EditProfileView: View {
                     .keyboardType(.phonePad)
             }
 
-            // Bio
             Section("Bio") {
                 TextEditor(text: $viewModel.bio)
                     .frame(height: 100)
