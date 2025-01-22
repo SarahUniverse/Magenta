@@ -28,6 +28,14 @@ final class EditPinnedViewModel: ObservableObject {
         }
     }
 
+    var filteredPinnedItems: [String] {
+        filteredItems.filter { pinnedItems.contains($0) }
+    }
+
+    var filteredUnpinnedItems: [String] {
+        filteredItems.filter { unpinnedItems.contains($0) }
+    }
+
     func dropList1(at index: Int, _ items: [NSItemProvider]) {
         for item in items {
             _ = item.loadObject(ofClass: String.self) { droppedString, _ in

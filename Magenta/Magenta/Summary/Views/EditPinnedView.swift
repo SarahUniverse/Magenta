@@ -11,7 +11,6 @@ struct EditPinnedView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var pinnedItems: [String]
     @StateObject private var editPinnedViewModel: EditPinnedViewModel
-    @State private var searchText = ""
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
@@ -23,7 +22,7 @@ struct EditPinnedView: View {
 
     private var searchSection: some View {
         SearchView(
-            text: $searchText,
+            text: $editPinnedViewModel.searchText,
             isListening: $isListening,
             startListening: {
                 startSpeechRecognition()
@@ -40,7 +39,7 @@ struct EditPinnedView: View {
             searchSection
             List {
                 Section(header: Text("Pinned")) {
-                    ForEach(pinnedItems, id: \.self) { item in
+                    ForEach(editPinnedViewModel.filteredPinnedItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.slash.fill")
                                 .foregroundStyle(.red)
@@ -52,15 +51,22 @@ struct EditPinnedView: View {
                         }
                     }
                     .onDelete { offsets in
-                        pinnedItems.remove(atOffsets: offsets)
+                        // Convert filtered index to actual index
+                        let itemsToRemove = offsets.map { editPinnedViewModel.filteredPinnedItems[$0] }
+                        itemsToRemove.forEach { item in
+                            if let index = editPinnedViewModel.pinnedItems.firstIndex(of: item) {
+                                editPinnedViewModel.pinnedItems.remove(at: index)
+                                editPinnedViewModel.unpinnedItems.append(item)
+                            }
+                        }
                     }
                     .onMove { source, destination in
-                        pinnedItems.move(fromOffsets: source, toOffset: destination)
+                        editPinnedViewModel.movePinnedItems(from: source, to: destination)
                     }
                 }
 
-                Section(header: Text("Mood")) {
-                    ForEach(editPinnedViewModel.unpinnedItems, id: \.self) { item in
+                Section(header: Text("Unpinned")) {
+                    ForEach(editPinnedViewModel.filteredUnpinnedItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.fill")
                                 .foregroundStyle(.yellow)
@@ -71,7 +77,7 @@ struct EditPinnedView: View {
                     .onMove { source, destination in
                         editPinnedViewModel.moveUnpinnedItems(from: source, to: destination)
                     }
-                    .onInsert(of: ["public.txt"]) { index, providers in
+                    .onInsert(of: ["public.text"]) { index, providers in
                         editPinnedViewModel.dropList2(at: index, providers)
                     }
                 }
@@ -92,10 +98,11 @@ struct EditPinnedView: View {
         }
     }
 
+    // MARK: Private Functions
     private func startSpeechRecognition() {
         do {
             try editPinnedViewModel.startSpeechRecognition { recognitionText in
-                searchText = recognitionText
+                editPinnedViewModel.searchText = recognitionText
             }
         } catch {
             showError = true
