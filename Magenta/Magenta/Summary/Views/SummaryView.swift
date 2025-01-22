@@ -46,7 +46,9 @@ struct SummaryView: View {
                                 SleepSummaryView()
                                 NutritionSummaryView()
                                 BooksSummaryView()
+                                PlaylistsSummaryView()
                                 QuotesSummaryView()
+                                TherapistSummaryView()
                                 MeditationSummaryView()
                             }
                             .padding()

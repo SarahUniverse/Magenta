@@ -1,34 +1,26 @@
 //
-//  MeditationSummaryView.swift
+//  PlaylistsSummaryView.swift
 //  Magenta
 //
-//  Created by Sarah Clark on 12/11/24.
+//  Created by Sarah Clark on 1/21/25.
 //
 
 import SwiftUI
 
-struct MeditationSummaryView: View {
-    // @StateObject private var meditationSummaryViewModel: MeditationSummaryViewModel
+struct PlaylistsSummaryView: View {
+    // @StateObject private var playlistsSummaryViewModel: PlaylistsSummaryViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("MEDITATION")
+            Text("MUSIC")
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
 
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "figure.mind.and.body")
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.cyan, .darkBlue],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-
+                Image(systemName: "music.note.list")
+                    .foregroundColor(.hotPink)
                     .font(.largeTitle)
-
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                         .font(.subheadline)
@@ -46,11 +38,11 @@ struct MeditationSummaryView: View {
 }
 
 #Preview ("Light Mode") {
-    MeditationSummaryView()
+    PlaylistsSummaryView()
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    MeditationSummaryView()
+    PlaylistsSummaryView()
         .preferredColorScheme(.dark)
 }
