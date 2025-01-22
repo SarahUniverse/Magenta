@@ -50,6 +50,7 @@ struct SummaryView: View {
                                 QuotesSummaryView()
                                 TherapistSummaryView()
                                 MeditationSummaryView()
+                                CycleSummaryView()
                             }
                             .padding()
                         }
