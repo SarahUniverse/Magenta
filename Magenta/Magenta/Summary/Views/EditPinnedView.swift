@@ -17,7 +17,7 @@ struct EditPinnedView: View {
 
     init(pinnedItems: Binding<[String]>) {
         self._pinnedItems = pinnedItems
-        self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel())
+        self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel(initialPinnedItems: pinnedItems.wrappedValue))
     }
 
     private var searchSection: some View {
@@ -97,7 +97,10 @@ struct EditPinnedView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button("Done") {
+                        updatePinnedItems()
+                        dismiss()
+                    }
                 }
             }
         }
@@ -120,6 +123,10 @@ struct EditPinnedView: View {
             errorMessage = error.localizedDescription
             isListening = false
         }
+    }
+
+    private func updatePinnedItems() {
+        pinnedItems = editPinnedViewModel.pinnedItems
     }
 }
 

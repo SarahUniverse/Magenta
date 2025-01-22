@@ -52,41 +52,35 @@ struct SummaryView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        if summaryViewModel.pinnedItems.contains("Art Therapy") {
-                            ArtTherapySummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Journal") {
-                            JournalSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Exercise") {
-                            ExerciseSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Mood") {
-                            MoodSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Sleep") {
-                            SleepSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Nutrition") {
-                            NutritionSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Books") {
-                            BooksSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Music") {
-                            PlaylistsSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Quotes") {
-                            QuotesSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Therapy") {
-                            TherapistSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Meditation") {
-                            MeditationSummaryView()
-                        }
-                        if summaryViewModel.pinnedItems.contains("Cycle") {
-                            CycleSummaryView()
+                        ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
+                            switch item {
+                            case "Art Therapy":
+                                ArtTherapySummaryView()
+                            case "Journal":
+                                JournalSummaryView()
+                            case "Exercise":
+                                ExerciseSummaryView()
+                            case "Mood":
+                                MoodSummaryView()
+                            case "Sleep":
+                                SleepSummaryView()
+                            case "Nutrition":
+                                NutritionSummaryView()
+                            case "Books":
+                                BooksSummaryView()
+                            case "Music":
+                                PlaylistsSummaryView()
+                            case "Quotes":
+                                QuotesSummaryView()
+                            case "Therapy":
+                                TherapistSummaryView()
+                            case "Meditation":
+                                MeditationSummaryView()
+                            case "Cycle":
+                                CycleSummaryView()
+                            default:
+                                EmptyView()
+                            }
                         }
                     }
                     .padding()
