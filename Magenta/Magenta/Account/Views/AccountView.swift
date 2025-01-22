@@ -31,13 +31,112 @@ struct AccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                Text("Hello, World!")
+                // Profile Section
+                Section {
+                    HStack {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.gray)
+
+                        VStack(alignment: .leading) {
+                            Text(accountViewModel.userName)
+                                .font(.headline)
+                            Text(accountViewModel.userEmail)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding(.vertical, 8)
+                }
+
+                // Account Settings
+                Section("Account Settings") {
+                    NavigationLink(destination: EditProfileView()) {
+                        SettingsRowView(icon: "person.fill",
+                                        title: "Edit Profile",
+                                        color: .blue)
+                    }
+
+                    NavigationLink(destination: NotificationSettingsView()) {
+                        SettingsRowView(icon: "bell.fill",
+                                        title: "Notifications",
+                                        color: .red)
+                    }
+
+                    NavigationLink(destination: PrivacySettingsView()) {
+                        SettingsRowView(icon: "lock.fill",
+                                        title: "Privacy",
+                                        color: .green)
+                    }
+                }
+
+                // Preferences
+                Section("Preferences") {
+                    Toggle("Dark Mode", isOn: $accountViewModel.isDarkMode)
+
+                    Picker("Language", selection: $accountViewModel.selectedLanguage) {
+                        ForEach(accountViewModel.availableLanguages, id: \.self) { language in
+                            Text(language).tag(language)
+                        }
+                    }
+                }
+
+                // Support
+                Section("Support") {
+                    Button(action: { accountViewModel.contactSupport() }) {
+                        SettingsRowView(icon: "questionmark.circle.fill",
+                                        title: "Help & Support",
+                                        color: .purple)
+                    }
+
+                    NavigationLink(destination: FAQView()) {
+                        SettingsRowView(icon: "doc.text.fill",
+                                        title: "FAQ",
+                                        color: .orange)
+                    }
+                }
+
+                // Legal
+                Section("Legal") {
+                    Button(action: { accountViewModel.showPrivacyPolicy() }) {
+                        SettingsRowView(icon: "doc.fill",
+                                        title: "Privacy Policy",
+                                        color: .gray)
+                    }
+
+                    Button(action: { accountViewModel.showTerms() }) {
+                        SettingsRowView(icon: "doc.text.fill",
+                                        title: "Terms of Service",
+                                        color: .gray)
+                    }
+                }
+
+                // Danger Zone
+                Section {
+                    Button(action: { accountViewModel.deleteAccount() }) {
+                        HStack {
+                            Text("Delete Account")
+                            Spacer()
+                            Image(systemName: "trash.fill")
+                        }
+                        .foregroundColor(.red)
+                    }
+                }
             }
             .padding(.top, 20)
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .fullScreenCover(isPresented: $accountViewModel.shouldShowLoginView) {
                 LoginView(viewContext: accountViewModel.viewContext)
+            }
+            .alert("Delete Account", isPresented: $accountViewModel.showingDeleteAlert) {
+                Button("Cancel", role: .cancel) { }
+                Button("Delete", role: .destructive) {
+                    accountViewModel.confirmDeleteAccount()
+                }
+            } message: {
+                Text("Are you sure you want to delete your account? This action cannot be undone.")
             }
             .navigationTitle("Account")
             .navigationBarItems(
@@ -54,7 +153,6 @@ struct AccountView: View {
             }
         }
     }
-
 }
 
 // MARK: - Previews

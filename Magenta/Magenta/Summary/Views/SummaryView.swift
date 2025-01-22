@@ -84,10 +84,10 @@ struct SummaryView: View {
                 }
             }
             .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
             .onChange(of: colorScheme) {
                 summaryViewModel.updateColorScheme($1)
             }
-            .scrollContentBackground(.hidden)
             .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
                 LoginView(viewContext: summaryViewModel.viewContext)
             }
