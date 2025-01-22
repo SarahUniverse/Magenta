@@ -12,6 +12,7 @@ import UIKit
 struct SummaryView: View {
     @StateObject var summaryViewModel: SummaryViewModel
     @Environment(\.colorScheme) private var colorScheme
+    @State private var showEditPinnedView = false
 
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [
@@ -39,18 +40,42 @@ struct SummaryView: View {
                         Spacer()
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-                                ArtTherapySummaryView()
-                                JournalSummaryView()
-                                ExerciseSummaryView()
-                                MoodSummaryView()
-                                SleepSummaryView()
-                                NutritionSummaryView()
-                                BooksSummaryView()
-                                PlaylistsSummaryView()
-                                QuotesSummaryView()
-                                TherapistSummaryView()
-                                MeditationSummaryView()
-                                CycleSummaryView()
+                                if summaryViewModel.pinnedItems.contains("Art Therapy") {
+                                    ArtTherapySummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Journal") {
+                                    JournalSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Exercise") {
+                                    ExerciseSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Mood") {
+                                    MoodSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Sleep") {
+                                    SleepSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Nutrition") {
+                                    NutritionSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Books") {
+                                    BooksSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Playlists") {
+                                    PlaylistsSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Quotes") {
+                                    QuotesSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Therapist") {
+                                    TherapistSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Meditation") {
+                                    MeditationSummaryView()
+                                }
+                                if summaryViewModel.pinnedItems.contains("Cycle") {
+                                    CycleSummaryView()
+                                }
                             }
                             .padding()
                         }
@@ -63,6 +88,13 @@ struct SummaryView: View {
                 .scrollContentBackground(.hidden)
                 .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
                     LoginView(viewContext: summaryViewModel.viewContext)
+                }
+                .sheet(isPresented: $showEditPinnedView) {
+                    EditPinnedView()
+                        .onDisappear {
+                            // Update pinned items when the sheet is dismissed
+                            summaryViewModel.pinnedItems = EditPinnedView().editPinnedViewModel.pinnedItems
+                        }
                 }
                 .navigationBarTitle("Summary")
                 .navigationBarItems(

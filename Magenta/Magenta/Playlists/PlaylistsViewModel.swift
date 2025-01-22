@@ -8,5 +8,5 @@
 import CoreData
 
 final class PlaylistsViewModel: ObservableObject {
-    
+
 }

@@ -13,6 +13,7 @@ final class SummaryViewModel: ObservableObject {
     @Published var currentUser: UserModel?
     let viewContext: NSManagedObjectContext
     @Published var colors: Colors
+    @Published var pinnedItems: [String] = ["Mood", "Meditate", "Exercise"]
 
     init (viewContext: NSManagedObjectContext, currentUser: UserModel? = nil, colorScheme: ColorScheme) {
         self.viewContext = viewContext
