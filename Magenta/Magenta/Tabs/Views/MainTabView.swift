@@ -37,7 +37,6 @@ struct MainTabView: View {
                     Label("Account", systemImage: "person.fill")
                 }
         }
-        .tint(.darkPurple)
         .navigationBarBackButtonHidden()
     }
 
