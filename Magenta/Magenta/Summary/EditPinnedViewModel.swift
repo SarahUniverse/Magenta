@@ -10,9 +10,13 @@ import SwiftUI
 
 final class EditPinnedViewModel: ObservableObject {
     @Published var searchText = ""
-    @Published var items = ["Mood", "Meditate", "Exercise", "Nutrition", "Sleep"]
-    @Published var pinnedItems = ["Mood", "Meditate", "Exercise", "Nutrition", "Sleep"]
-    @Published var moodItems = ["Happy", "Sad", "Angry", "Tired", "Excited"]
+    @Published var items = ["Art Therapy", "Journal", "Exercise",
+                            "Sleep", "Mood", "Nutrition", "Books",
+                            "Music", "Quotes", "Therapy", "Meditation", "Cycle"]
+    @Published var pinnedItems = [String]()
+    @Published var unpinnedItems = ["Art Therapy", "Journal", "Exercise",
+                                    "Sleep", "Mood", "Nutrition", "Books",
+                                    "Music", "Quotes", "Therapy", "Meditation", "Cycle"]
     @Published var newItem = ""
     private var speechRecognizer: SpeechRecognizer?
 
@@ -30,7 +34,7 @@ final class EditPinnedViewModel: ObservableObject {
                 if let theString = droppedString {
                     DispatchQueue.main.async {
                         self.pinnedItems.insert(theString, at: index)
-                        self.moodItems.removeAll { $0 == theString }
+                        self.unpinnedItems.removeAll { $0 == theString }
                     }
                 }
             }
@@ -42,7 +46,7 @@ final class EditPinnedViewModel: ObservableObject {
             _ = item.loadObject(ofClass: String.self) { droppedString, _ in
                 if let theString = droppedString {
                     DispatchQueue.main.async {
-                        self.moodItems.insert(theString, at: index)
+                        self.unpinnedItems.insert(theString, at: index)
                         self.pinnedItems.removeAll { $0 == theString }
                     }
                 }
@@ -54,8 +58,8 @@ final class EditPinnedViewModel: ObservableObject {
         pinnedItems.move(fromOffsets: source, toOffset: destination)
     }
 
-    func moveMoodItems(from source: IndexSet, to destination: Int) {
-        moodItems.move(fromOffsets: source, toOffset: destination)
+    func moveUnpinnedItems(from source: IndexSet, to destination: Int) {
+        unpinnedItems.move(fromOffsets: source, toOffset: destination)
     }
 
     func deleteItem(at offsets: IndexSet) {

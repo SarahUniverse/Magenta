@@ -73,13 +73,13 @@ struct SummaryView: View {
                         if summaryViewModel.pinnedItems.contains("Books") {
                             BooksSummaryView()
                         }
-                        if summaryViewModel.pinnedItems.contains("Playlists") {
+                        if summaryViewModel.pinnedItems.contains("Music") {
                             PlaylistsSummaryView()
                         }
                         if summaryViewModel.pinnedItems.contains("Quotes") {
                             QuotesSummaryView()
                         }
-                        if summaryViewModel.pinnedItems.contains("Therapist") {
+                        if summaryViewModel.pinnedItems.contains("Therapy") {
                             TherapistSummaryView()
                         }
                         if summaryViewModel.pinnedItems.contains("Meditation") {

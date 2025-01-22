@@ -18,7 +18,6 @@ struct EditPinnedView: View {
 
     init(pinnedItems: Binding<[String]>) {
         self._pinnedItems = pinnedItems
-        // Initialize StateObject with proper initialization
         self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel())
     }
 
@@ -38,9 +37,8 @@ struct EditPinnedView: View {
     // MARK: - Main View
     var body: some View {
         NavigationStack {
+            searchSection
             List {
-                searchSection
-
                 Section(header: Text("Pinned")) {
                     ForEach(pinnedItems, id: \.self) { item in
                         HStack {
@@ -62,7 +60,7 @@ struct EditPinnedView: View {
                 }
 
                 Section(header: Text("Mood")) {
-                    ForEach(editPinnedViewModel.moodItems, id: \.self) { item in
+                    ForEach(editPinnedViewModel.unpinnedItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.fill")
                                 .foregroundStyle(.yellow)
@@ -71,7 +69,7 @@ struct EditPinnedView: View {
                         }
                     }
                     .onMove { source, destination in
-                        editPinnedViewModel.moveMoodItems(from: source, to: destination)
+                        editPinnedViewModel.moveUnpinnedItems(from: source, to: destination)
                     }
                     .onInsert(of: ["public.txt"]) { index, providers in
                         editPinnedViewModel.dropList2(at: index, providers)
