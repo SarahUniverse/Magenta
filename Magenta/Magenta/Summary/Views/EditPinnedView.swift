@@ -10,36 +10,33 @@ import SwiftUI
 struct EditPinnedView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var pinnedItems: [String]
-    @StateObject private var viewModel = EditPinnedViewModel()
-    @StateObject private var speechRecognizer = SpeechRecognizer()
+    @StateObject private var editPinnedViewModel: EditPinnedViewModel
+    @State private var searchText = ""
+    @State private var isListening = false
+    @State private var showError = false
+    @State private var errorMessage = ""
 
+    private var searchSection: some View {
+        SearchView(
+            text: $searchText,
+            isListening: $isListening,
+            startListening: {
+                startSpeechRecognition()
+            },
+            stopListening: {
+                editPinnedViewModel.stopSpeechRecognition()
+            }
+        )
+    }
+
+    // MARK: - Main View
     var body: some View {
         NavigationStack {
             List {
                 HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                    TextField("Search", text: $viewModel.searchText)
+                    searchSection
 
-                    Button {
-                        if speechRecognizer.audioEngine.isRunning {
-                            speechRecognizer.stopRecording()
-                        } else {
-                            do {
-                                try speechRecognizer.startRecording()
-                            } catch {
-                                print("Failed to start recording: \(error.localizedDescription)")
-                            }
-                        }
-                    } label: {
-                        Image(systemName: speechRecognizer.audioEngine.isRunning ? "mic.fill" : "mic")
-                            .foregroundColor(.blue)
-                    }
                 }
-                .onReceive(speechRecognizer.$transcribedText) { transcribedText in
-                    viewModel.searchText = transcribedText
-                }
-
                 Section(header: Text("Pinned")) {
                     ForEach(pinnedItems, id: \.self) { item in
                         HStack {
@@ -61,7 +58,7 @@ struct EditPinnedView: View {
                 }
 
                 Section(header: Text("Mood")) {
-                    ForEach(viewModel.moodItems, id: \.self) { item in
+                    ForEach(editPinnedViewModel.moodItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.fill")
                                 .foregroundStyle(.yellow)
@@ -69,8 +66,8 @@ struct EditPinnedView: View {
                                 .onDrag { NSItemProvider(object: item as NSString) }
                         }
                     }
-                    .onMove(perform: viewModel.moveMoodItems)
-                    .onInsert(of: ["public.txt"], perform: viewModel.dropList2)
+                    .onMove(perform: EditPinnedViewModel.moveMoodItems)
+                    .onInsert(of: ["public.txt"], perform: EditPinnedViewModel.dropList2)
                 }
             }
             .navigationTitle("Edit Pinned")
@@ -83,9 +80,25 @@ struct EditPinnedView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
+
+    private func startSpeechRecognition() {
+        do {
+            try editPinnedViewModel.startSpeechRecognition { recognitionText in
+                searchText = recognitionText
+            }
+        } catch {
+            showError = true
+            errorMessage = error.localizedDescription
+            isListening = false
+        }
+    }
+
+    private func stopSpeechRecognition() {
+        editPinnedViewModel.stopSpeechRecognition()
+    }
 }
 
-#Preview("Light Mode") {
+/*#Preview("Light Mode") {
     @Previewable @State var pinnedItems = ["Mood", "Meditate", "Exercise"]
 
     return EditPinnedView(pinnedItems: $pinnedItems)
@@ -97,4 +110,4 @@ struct EditPinnedView: View {
 
     return EditPinnedView(pinnedItems: $pinnedItems)
         .preferredColorScheme(.dark)
-}
+}*/

@@ -17,24 +17,28 @@ final class SpeechRecognizer: ObservableObject {
     private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    let audioEngine = AVAudioEngine()
+    var audioEngine = AVAudioEngine()
+
+    init() {
+        audioEngine = AVAudioEngine()
+    }
 
     deinit {
         stopRecording()
     }
 
-    // TODO: Add code to make a noise to indicate it's started to record
     func startRecording() throws {
         SFSpeechRecognizer.requestAuthorization { [weak self] authStatus in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 if authStatus == .authorized {
                     do {
-                        try self?.startSpeechRecognition()
+                        try self.startSpeechRecognition()
                     } catch {
-                        self?.errorHandler?(.recognitionFailed(error))
+                        self.errorHandler?(.recognitionFailed(error))
                     }
                 } else {
-                    self?.errorHandler?(.notAuthorized)
+                    self.errorHandler?(.notAuthorized)
                 }
             }
         }
@@ -84,12 +88,16 @@ final class SpeechRecognizer: ObservableObject {
 
     func stopRecording() {
         audioEngine.stop()
+        audioEngine.inputNode.removeTap(onBus: 0)
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
+
+        // Deactivate the audio session
+        let audioSession = AVAudioSession.sharedInstance()
+        try? audioSession.setActive(false, options: .notifyOthersOnDeactivation)
 
         DispatchQueue.main.async {
             self.isRecording = false
         }
     }
-
 }

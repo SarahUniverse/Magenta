@@ -5,7 +5,6 @@
 //  Created by Sarah Clark on 1/21/25.
 //
 
-
 import Combine
 import SwiftUI
 
@@ -15,6 +14,7 @@ final class EditPinnedViewModel: ObservableObject {
     @Published var pinnedItems = ["Mood", "Meditate", "Exercise", "Nutrition", "Sleep"]
     @Published var moodItems = ["Happy", "Sad", "Angry", "Tired", "Excited"]
     @Published var newItem = ""
+    private var speechRecognizer: SpeechRecognizer?
 
     var filteredItems: [String] {
         if searchText.isEmpty {
@@ -68,5 +68,15 @@ final class EditPinnedViewModel: ObservableObject {
             items.append(newItem)
             newItem = ""
         }
+    }
+
+    func startSpeechRecognition(completion: @escaping (String) -> Void) throws {
+        speechRecognizer = SpeechRecognizer()
+        speechRecognizer?.transcribedTextHandler = completion
+        try speechRecognizer?.startRecording()
+    }
+
+    func stopSpeechRecognition() {
+        speechRecognizer?.stopRecording()
     }
 }
