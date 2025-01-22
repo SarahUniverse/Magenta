@@ -82,6 +82,20 @@ final class EditPinnedViewModel: ObservableObject {
         }
     }
 
+    func pinItem(_ item: String) {
+        if let index = unpinnedItems.firstIndex(of: item) {
+            unpinnedItems.remove(at: index)
+            pinnedItems.append(item)
+        }
+    }
+
+    func unpinItem(_ item: String) {
+        if let index = pinnedItems.firstIndex(of: item) {
+            pinnedItems.remove(at: index)
+            unpinnedItems.append(item)
+        }
+    }
+
     func startSpeechRecognition(completion: @escaping (String) -> Void) throws {
         speechRecognizer = SpeechRecognizer()
         speechRecognizer?.transcribedTextHandler = completion

@@ -49,9 +49,14 @@ struct EditPinnedView: View {
                             Image(systemName: "line.3.horizontal")
                                 .foregroundStyle(.gray)
                         }
+                        .contentShape(Rectangle()) // Makes the entire row tappable
+                        .onTapGesture {
+                            withAnimation {
+                                editPinnedViewModel.unpinItem(item)
+                            }
+                        }
                     }
                     .onDelete { offsets in
-                        // Convert filtered index to actual index
                         let itemsToRemove = offsets.map { editPinnedViewModel.filteredPinnedItems[$0] }
                         itemsToRemove.forEach { item in
                             if let index = editPinnedViewModel.pinnedItems.firstIndex(of: item) {
@@ -72,6 +77,12 @@ struct EditPinnedView: View {
                                 .foregroundStyle(.yellow)
                             Text(item)
                                 .onDrag { NSItemProvider(object: item as NSString) }
+                        }
+                        .contentShape(Rectangle()) // Makes the entire row tappable
+                        .onTapGesture {
+                            withAnimation {
+                                editPinnedViewModel.pinItem(item)
+                            }
                         }
                     }
                     .onMove { source, destination in
