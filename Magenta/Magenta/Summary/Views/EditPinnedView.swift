@@ -9,7 +9,8 @@ import SwiftUI
 
 struct EditPinnedView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var editPinnedViewModel = EditPinnedViewModel()
+    @Binding var pinnedItems: [String]
+    @StateObject private var viewModel = EditPinnedViewModel()
     @StateObject private var speechRecognizer = SpeechRecognizer()
 
     var body: some View {
@@ -18,7 +19,7 @@ struct EditPinnedView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
-                    TextField("Search", text: $editPinnedViewModel.searchText)
+                    TextField("Search", text: $viewModel.searchText)
 
                     Button {
                         if speechRecognizer.audioEngine.isRunning {
@@ -36,11 +37,11 @@ struct EditPinnedView: View {
                     }
                 }
                 .onReceive(speechRecognizer.$transcribedText) { transcribedText in
-                    editPinnedViewModel.searchText = transcribedText
+                    viewModel.searchText = transcribedText
                 }
 
                 Section(header: Text("Pinned")) {
-                    ForEach(editPinnedViewModel.pinnedItems, id: \.self) { item in
+                    ForEach(pinnedItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.slash.fill")
                                 .foregroundStyle(.red)
@@ -51,13 +52,16 @@ struct EditPinnedView: View {
                                 .foregroundStyle(.gray)
                         }
                     }
-                    .onDelete(perform: editPinnedViewModel.deleteItem)
-                    .onMove(perform: editPinnedViewModel.movePinnedItems)
-                    .onInsert(of: ["public.txt"], perform: editPinnedViewModel.dropList1)
+                    .onDelete { offsets in
+                        pinnedItems.remove(atOffsets: offsets)
+                    }
+                    .onMove { source, destination in
+                        pinnedItems.move(fromOffsets: source, toOffset: destination)
+                    }
                 }
 
                 Section(header: Text("Mood")) {
-                    ForEach(editPinnedViewModel.moodItems, id: \.self) { item in
+                    ForEach(viewModel.moodItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.fill")
                                 .foregroundStyle(.yellow)
@@ -65,8 +69,8 @@ struct EditPinnedView: View {
                                 .onDrag { NSItemProvider(object: item as NSString) }
                         }
                     }
-                    .onMove(perform: editPinnedViewModel.moveMoodItems)
-                    .onInsert(of: ["public.txt"], perform: editPinnedViewModel.dropList2)
+                    .onMove(perform: viewModel.moveMoodItems)
+                    .onInsert(of: ["public.txt"], perform: viewModel.dropList2)
                 }
             }
             .navigationTitle("Edit Pinned")
@@ -82,11 +86,15 @@ struct EditPinnedView: View {
 }
 
 #Preview("Light Mode") {
-    EditPinnedView()
+    @Previewable @State var pinnedItems = ["Mood", "Meditate", "Exercise"]
+
+    return EditPinnedView(pinnedItems: $pinnedItems)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    EditPinnedView()
+    @Previewable @State var pinnedItems = ["Mood", "Meditate", "Exercise"]
+
+    return EditPinnedView(pinnedItems: $pinnedItems)
         .preferredColorScheme(.dark)
 }

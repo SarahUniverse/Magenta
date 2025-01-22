@@ -35,78 +35,85 @@ struct SummaryView: View {
     // MARK: - Main View
     var body: some View {
         NavigationStack {
-                VStack {
-                    HStack {
-                        Spacer()
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 20) {
-                                if summaryViewModel.pinnedItems.contains("Art Therapy") {
-                                    ArtTherapySummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Journal") {
-                                    JournalSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Exercise") {
-                                    ExerciseSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Mood") {
-                                    MoodSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Sleep") {
-                                    SleepSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Nutrition") {
-                                    NutritionSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Books") {
-                                    BooksSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Playlists") {
-                                    PlaylistsSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Quotes") {
-                                    QuotesSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Therapist") {
-                                    TherapistSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Meditation") {
-                                    MeditationSummaryView()
-                                }
-                                if summaryViewModel.pinnedItems.contains("Cycle") {
-                                    CycleSummaryView()
-                                }
-                            }
-                            .padding()
+            VStack {
+                HStack {
+                    Text("Pinned")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Button(action: {
+                        showEditPinnedView = true
+                    }, label: {
+                        Text("Edit")
+                            .foregroundColor(.blue)
+                    })
+                }
+                .padding([.leading, .trailing, .top])
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        if summaryViewModel.pinnedItems.contains("Art Therapy") {
+                            ArtTherapySummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Journal") {
+                            JournalSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Exercise") {
+                            ExerciseSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Mood") {
+                            MoodSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Sleep") {
+                            SleepSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Nutrition") {
+                            NutritionSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Books") {
+                            BooksSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Playlists") {
+                            PlaylistsSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Quotes") {
+                            QuotesSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Therapist") {
+                            TherapistSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Meditation") {
+                            MeditationSummaryView()
+                        }
+                        if summaryViewModel.pinnedItems.contains("Cycle") {
+                            CycleSummaryView()
                         }
                     }
+                    .padding()
                 }
-                .background(backgroundGradient)
-                .onChange(of: colorScheme) {
-                    summaryViewModel.updateColorScheme($1)
-                }
-                .scrollContentBackground(.hidden)
-                .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
-                    LoginView(viewContext: summaryViewModel.viewContext)
-                }
-                .sheet(isPresented: $showEditPinnedView) {
-                    EditPinnedView()
-                        .onDisappear {
-                            // Update pinned items when the sheet is dismissed
-                            summaryViewModel.pinnedItems = EditPinnedView().editPinnedViewModel.pinnedItems
-                        }
-                }
-                .navigationBarTitle("Summary")
-                .navigationBarItems(
-                    trailing:
-                        Button(action: {
-                            summaryViewModel.signOut()
-                        }, label: {
-                            Text("Sign Out")
-                                .padding(8)
-                                .cornerRadius(20)
-                                .foregroundStyle(summaryViewModel.colors.textColor)
-                        })
+            }
+            .background(backgroundGradient)
+            .onChange(of: colorScheme) {
+                summaryViewModel.updateColorScheme($1)
+            }
+            .scrollContentBackground(.hidden)
+            .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
+                LoginView(viewContext: summaryViewModel.viewContext)
+            }
+            .sheet(isPresented: $showEditPinnedView) {
+                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems)
+            }
+            .navigationBarTitle("Summary")
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        summaryViewModel.signOut()
+                    }, label: {
+                        Text("Sign Out")
+                            .padding(8)
+                            .cornerRadius(20)
+                            .foregroundStyle(summaryViewModel.colors.textColor)
+                    })
             )
         }
     }
