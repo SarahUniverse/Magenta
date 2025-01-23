@@ -23,7 +23,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - **Therapist Search**: Find nearby mental health professionals using this api: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
 - **Mental Health Playlists**: Curate Music playlists using Apple's MusicKit framework. 
 - **Helpful Quotes**: To be added.
-- **Cycle**: To be added.
+- **Cycle**: For females to track their period cycle.
 - **Sleep**: To be added.
 - **Art Therapy**: To be added.
 - **Self Help Book List**: To be added.
