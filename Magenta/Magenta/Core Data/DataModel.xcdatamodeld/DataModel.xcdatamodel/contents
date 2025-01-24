@@ -9,6 +9,7 @@
     <entity name="BookEntity" representedClassName="BookEntity" syncable="YES" codeGenerationType="class">
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="bookDescription" optional="YES" attributeType="String"/>
+        <attribute name="bookEdition" optional="YES" attributeType="String"/>
         <attribute name="bookPublisher" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>

@@ -86,8 +86,9 @@ struct FAQQuestionRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Button(action: { withAnimation
-                {isExpanded.toggle()}
+            Button(action: { withAnimation {
+                isExpanded.toggle()
+            }
             }, label: {
                 HStack {
                     Text(question.question)
