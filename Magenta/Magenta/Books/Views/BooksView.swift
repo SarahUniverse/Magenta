@@ -70,8 +70,12 @@ struct BooksView: View {
 
     private func bookRow(for book: BookModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(book.bookTitle)
-                .font(.headline)
+            HStack {
+                Text(book.bookTitle)
+                    .font(.headline)
+                Text(book.bookEdition + " Edition")
+                    .font(.subheadline)
+            }
             Text("by \(book.bookAuthor)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
@@ -172,7 +176,7 @@ struct BooksView: View {
             bookAuthor: "Cal Newport",
             bookDescription: "Rules for focused success in a distracted world. Learn to focus without distraction on cognitively demanding tasks.",
             bookPublisher: "Grand Central Publishing",
-            bookEdition: "2nd Edition"
+            bookEdition: "3rd"
         ),
         BookModel(
             id: UUID(),
@@ -180,7 +184,7 @@ struct BooksView: View {
             bookAuthor: "Adam Grant",
             bookDescription: "The power of knowing what you don't know. Discover the critical art of rethinking: learning to question your opinions and open other people's minds.",
             bookPublisher: "Viking",
-            bookEdition: "2nd Edition"
+            bookEdition: "1st"
         )
     ]
 
@@ -206,7 +210,7 @@ struct BooksView: View {
             bookAuthor: "Cal Newport",
             bookDescription: "Rules for focused success in a distracted world. Learn to focus without distraction on cognitively demanding tasks.",
             bookPublisher: "Grand Central Publishing",
-            bookEdition: "2nd Edition"
+            bookEdition: "3rd Edition"
         ),
         BookModel(
             id: UUID(),
@@ -214,7 +218,7 @@ struct BooksView: View {
             bookAuthor: "Adam Grant",
             bookDescription: "The power of knowing what you don't know. Discover the critical art of rethinking: learning to question your opinions and open other people's minds.",
             bookPublisher: "Viking",
-            bookEdition: "2nd Edition"
+            bookEdition: "1st Edition"
         )
     ]
 
