@@ -66,7 +66,7 @@ struct BooksView: View {
     private var booksList: some View {
         Form {
             ForEach(filteredBooks) { book in
-                BookRowView(book: book, viewContext: viewContext)
+                BookRowView(book: book, booksViewModel: booksViewModel)
             }
             .onDelete(perform: deleteBooks)
         }
@@ -83,38 +83,6 @@ struct BooksView: View {
             systemImage: "book",
             description: Text("Add some books to your reading list")
         )
-    }
-
-    private func deleteBooks(at offsets: IndexSet) {
-        offsets.forEach { index in
-            let bookToDelete = booksViewModel.books[index]
-            booksViewModel.removeBook(bookToDelete)
-        }
-    }
-
-    private var booksContent: some View {
-        ForEach(booksViewModel.books) { book in
-            bookRow(for: book)
-        }
-        .onDelete(perform: deleteBooks)
-    }
-
-    private func bookRow(for book: BookModel) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(book.bookTitle)
-                    .font(.headline)
-                Text(book.bookEdition + " Edition")
-                    .font(.subheadline)
-            }
-            Text("by \(book.bookAuthor)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            Text(book.bookDescription)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 8)
     }
 
     private var toolbarContent: some ToolbarContent {
@@ -179,7 +147,7 @@ struct BooksView: View {
             bookDescription: newBookDescription,
             bookPublisher: newBookPublisher,
             bookEdition: newBookEdition,
-            status: .wantToRead
+            status: selectedStatus
         )
 
         booksViewModel.addBook(newBook)
@@ -195,6 +163,14 @@ struct BooksView: View {
         newBookPublisher = ""
         newBookEdition = ""
     }
+
+    private func deleteBooks(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let bookToDelete = filteredBooks[index]
+            booksViewModel.removeBook(bookToDelete)
+        }
+    }
+
 }
 
 // MARK: - Previews

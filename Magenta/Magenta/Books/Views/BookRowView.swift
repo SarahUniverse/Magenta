@@ -9,37 +9,38 @@ import CoreData
 import SwiftUI
 
 struct BookRowView: View {
-    @ObservedObject var book: BookEntity
-    let viewContext: NSManagedObjectContext
+    let book: BookModel
+    @ObservedObject var booksViewModel: BooksViewModel
 
+    // MARK: - Main View
     var body: some View {
         Section {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text(book.title ?? "")
+                    Text(book.bookTitle)
                         .font(.headline)
-                    Text((book.bookEdition ?? "") + " Edition")
+                    Text(book.bookEdition + " Edition")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
 
-                Text("by \(book.author ?? "")")
+                Text("by \(book.bookAuthor)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
 
-                Text(book.bookDescription ?? "")
+                Text(book.bookDescription)
                     .font(.caption)
                     .foregroundColor(.secondary)
 
                 HStack {
-                    Image(systemName: currentStatus.systemImage)
+                    Image(systemName: book.status.systemImage)
                         .foregroundColor(.secondary)
 
                     Spacer()
 
                     // Move book between statuses
                     Menu {
-                        ForEach(BookStatus.allCases.filter { $0 != currentStatus }) { status in
+                        ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
                             Button(action: {
                                 updateBookStatus(to: status)
                             }, label: {
@@ -58,27 +59,14 @@ struct BookRowView: View {
                 }
             }
             .padding(.vertical, 8)
-        } header: {
-            HStack {
-                Image(systemName: currentStatus.systemImage)
-                Text(currentStatus.rawValue)
-            }
         }
     }
 
-    private var currentStatus: BookStatus {
-        BookStatus(rawValue: book.status ?? "") ?? .wantToRead
-    }
-
+    // MARK: - Private Functions
     private func updateBookStatus(to newStatus: BookStatus) {
-        book.status = newStatus.rawValue
-
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error updating book status: \(error)")
-        }
+        booksViewModel.updateBookStatus(book, to: newStatus)
     }
+
 }
 
 // MARK: - Previews
@@ -97,24 +85,39 @@ struct BookRowView: View {
     }()
 
     let viewContext = persistentContainer.viewContext
+    let booksViewModel = BooksViewModel(viewContext: viewContext)
 
-    // Create a mock book entity
-    let mockBook = BookEntity(context: viewContext)
-    mockBook.id = UUID()
-    mockBook.title = "Sample Book"
-    mockBook.author = "John Doe"
-    mockBook.bookDescription = "A sample book description"
-    mockBook.bookPublisher = "Sample Publisher"
-    mockBook.bookEdition = "1st"
-    mockBook.status = BookStatus.wantToRead.rawValue
+    let sampleBooks = [
+        BookModel(
+            id: UUID(),
+            bookTitle: "Sample Book",
+            bookAuthor: "John Doe",
+            bookDescription: "A sample book description",
+            bookPublisher: "Sample Publisher",
+            bookEdition: "1st",
+            status: .wantToRead
+        )
+    ]
+
+    sampleBooks.forEach { book in
+        let bookEntity = BookEntity(context: viewContext)
+        bookEntity.id = book.id
+        bookEntity.title = book.bookTitle
+        bookEntity.author = book.bookAuthor
+        bookEntity.bookDescription = book.bookDescription
+        bookEntity.bookPublisher = book.bookPublisher
+        bookEntity.bookEdition = book.bookEdition
+        bookEntity.status = book.status.rawValue
+    }
 
     do {
         try viewContext.save()
     } catch {
-        print("Error saving mock book: \(error)")
+        print("Error saving sample books: \(error)")
     }
 
-    return BookRowView(book: mockBook, viewContext: viewContext)
+    return BookRowView(book: sampleBooks[0], booksViewModel: booksViewModel)
+        .padding(20)
         .preferredColorScheme(.light)
 }
 
@@ -133,23 +136,38 @@ struct BookRowView: View {
     }()
 
     let viewContext = persistentContainer.viewContext
+    let booksViewModel = BooksViewModel(viewContext: viewContext)
 
-    // Create a mock book entity
-    let mockBook = BookEntity(context: viewContext)
-    mockBook.id = UUID()
-    mockBook.title = "Sample Book"
-    mockBook.author = "John Doe"
-    mockBook.bookDescription = "A sample book description"
-    mockBook.bookPublisher = "Sample Publisher"
-    mockBook.bookEdition = "1st"
-    mockBook.status = BookStatus.wantToRead.rawValue
+    let sampleBooks = [
+        BookModel(
+            id: UUID(),
+            bookTitle: "Sample Book",
+            bookAuthor: "John Doe",
+            bookDescription: "A sample book description",
+            bookPublisher: "Sample Publisher",
+            bookEdition: "1st",
+            status: .wantToRead
+        )
+    ]
+
+    sampleBooks.forEach { book in
+        let bookEntity = BookEntity(context: viewContext)
+        bookEntity.id = book.id
+        bookEntity.title = book.bookTitle
+        bookEntity.author = book.bookAuthor
+        bookEntity.bookDescription = book.bookDescription
+        bookEntity.bookPublisher = book.bookPublisher
+        bookEntity.bookEdition = book.bookEdition
+        bookEntity.status = book.status.rawValue
+    }
 
     do {
         try viewContext.save()
     } catch {
-        print("Error saving mock book: \(error)")
+        print("Error saving sample books: \(error)")
     }
 
-    return BookRowView(book: mockBook, viewContext: viewContext)
+    return BookRowView(book: sampleBooks[0], booksViewModel: booksViewModel)
+        .padding(20)
         .preferredColorScheme(.dark)
 }
