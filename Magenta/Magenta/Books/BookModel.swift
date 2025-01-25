@@ -24,10 +24,15 @@ struct BookModel: Identifiable {
         self.bookDescription = entity.bookDescription ?? ""
         self.bookPublisher = entity.bookPublisher ?? ""
         self.bookEdition = entity.bookEdition ?? ""
-        self.status = BookStatus(rawValue: entity.status ?? "") ?? .wantToRead
+
+        if let statusString = entity.status, let bookStatus = BookStatus(rawValue: statusString) {
+            self.status = bookStatus
+        } else {
+            fatalError("Invalid or missing book status")
+        }
     }
 
-    init(id: UUID, bookTitle: String, bookAuthor: String, bookDescription: String, bookPublisher: String, bookEdition: String, status: BookStatus = .wantToRead) {
+    init(id: UUID, bookTitle: String, bookAuthor: String, bookDescription: String, bookPublisher: String, bookEdition: String, status: BookStatus) {
         self.id = id
         self.bookTitle = bookTitle
         self.bookAuthor = bookAuthor

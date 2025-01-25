@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BooksView: View {
     @StateObject private var booksViewModel: BooksViewModel
-    @State private var selectedStatus: BookStatus = .wantToRead
+    @State private var selectedStatus: BookStatus? = nil
     @State private var showingAddBookSheet = false
     @State private var newBookTitle = ""
     @State private var newBookAuthor = ""
@@ -51,12 +51,13 @@ struct BooksView: View {
     // MARK: - Private Variables for View
     private var statusPicker: some View {
         Picker("Reading Status", selection: $selectedStatus) {
+            Text("Select Status").tag(nil as BookStatus?)
             ForEach(BookStatus.allCases) { status in
                 HStack {
                     Image(systemName: status.systemImage)
                     Text(status.rawValue)
                 }
-                .tag(status)
+                .tag(status as BookStatus?)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
@@ -74,7 +75,9 @@ struct BooksView: View {
     }
 
     private var filteredBooks: [BookModel] {
-        booksViewModel.books.filter { $0.status == selectedStatus }
+        selectedStatus == nil
+        ? booksViewModel.books
+        : booksViewModel.books.filter { $0.status == selectedStatus }
     }
 
     private var emptyStateView: some View {
@@ -113,9 +116,9 @@ struct BooksView: View {
                 TextField("Publisher", text: $newBookPublisher)
                 TextField("Edition", text: $newBookEdition)
 
-                Picker("Reading Status", selection: $selectedStatus) {
+                Picker(selectedStatus == nil ? "Select Status" : "Reading Status", selection: $selectedStatus) {
                     ForEach(BookStatus.allCases) { status in
-                        Text(status.rawValue).tag(status)
+                        Text(status.rawValue).tag(status as BookStatus?)
                     }
                 }
             }
@@ -133,13 +136,25 @@ struct BooksView: View {
                 Button("Save") {
                     saveNewBook()
                 }
-                .disabled(newBookTitle.isEmpty || newBookAuthor.isEmpty)
+                .disabled(
+                    newBookTitle.isEmpty ||
+                    newBookAuthor.isEmpty ||
+                    newBookDescription.isEmpty ||
+                    newBookPublisher.isEmpty ||
+                    newBookEdition.isEmpty ||
+                    selectedStatus == nil
+                )
             }
         }
     }
 
     // MARK: - Private Functions
     private func saveNewBook() {
+        guard let status = selectedStatus else {
+            // Handle case where no status is selected
+            return
+        }
+
         let newBook = BookModel(
             id: UUID(),
             bookTitle: newBookTitle,
@@ -147,7 +162,7 @@ struct BooksView: View {
             bookDescription: newBookDescription,
             bookPublisher: newBookPublisher,
             bookEdition: newBookEdition,
-            status: selectedStatus
+            status: status
         )
 
         booksViewModel.addBook(newBook)
