@@ -66,7 +66,7 @@ struct BooksView: View {
     private var booksList: some View {
         Form {
             ForEach(filteredBooks) { book in
-                bookRowView(for: book)
+                BookRowView(book: book, viewContext: viewContext)
             }
             .onDelete(perform: deleteBooks)
         }
@@ -75,55 +75,6 @@ struct BooksView: View {
 
     private var filteredBooks: [BookModel] {
         booksViewModel.books.filter { $0.status == selectedStatus }
-    }
-
-    private func bookRowView(for book: BookModel) -> some View {
-        Section {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(book.bookTitle)
-                        .font(.headline)
-                    Text(book.bookEdition + " Edition")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                Text("by \(book.bookAuthor)")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-
-                Text(book.bookDescription)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                HStack {
-                    Image(systemName: book.status.systemImage)
-                        .foregroundColor(.secondary)
-
-                    Spacer()
-
-                    // Move book between statuses
-                    Menu {
-                        ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
-                            Button(action: {
-                                booksViewModel.updateBookStatus(book, to: status)
-                            }, label: {
-                                Text("Move to \(status.rawValue)")
-                                Image(systemName: status.systemImage)
-                            })
-                        }
-                    } label: {
-                        HStack {
-                            Text("Change Status")
-                            Image(systemName: "ellipsis.circle")
-                        }
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                    }
-                }
-            }
-            .padding(.vertical, 8)
-        }
     }
 
     private var emptyStateView: some View {
