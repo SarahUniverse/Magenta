@@ -143,7 +143,9 @@ struct BooksView: View {
             bookPublisher: newBookPublisher,
             bookEdition: newBookEdition
         )
-        booksViewModel.books.append(newBook)
+
+        booksViewModel.addBook(newBook)
+
         resetFields()
         showingAddBookSheet = false
     }

@@ -34,9 +34,11 @@ final class BooksViewModel: ObservableObject {
         newBookEntity.author = book.bookAuthor
         newBookEntity.bookDescription = book.bookDescription
         newBookEntity.bookPublisher = book.bookPublisher
+        newBookEntity.bookEdition = book.bookEdition
 
         do {
             try viewContext.save()
+            // Refetch books to update the view
             fetchBooks()
         } catch {
             print("Error saving book: \(error)")
