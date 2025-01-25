@@ -15,22 +15,25 @@ struct BookModel: Identifiable {
     let bookDescription: String
     let bookPublisher: String
     let bookEdition: String
+    var status: BookStatus
 
     init(entity: BookEntity) {
-        id = entity.id ?? UUID()
-        bookTitle = entity.title ?? ""
-        bookAuthor = entity.author ?? ""
-        bookDescription = entity.bookDescription ?? ""
-        bookPublisher = entity.bookPublisher ?? ""
-        bookEdition = entity.bookEdition ?? ""
+        self.id = entity.id ?? UUID()
+        self.bookTitle = entity.title ?? ""
+        self.bookAuthor = entity.author ?? ""
+        self.bookDescription = entity.bookDescription ?? ""
+        self.bookPublisher = entity.bookPublisher ?? ""
+        self.bookEdition = entity.bookEdition ?? ""
+        self.status = BookStatus(rawValue: entity.status ?? "") ?? .wantToRead
     }
 
-    init(id: UUID, bookTitle: String, bookAuthor: String, bookDescription: String, bookPublisher: String, bookEdition: String) {
+    init(id: UUID, bookTitle: String, bookAuthor: String, bookDescription: String, bookPublisher: String, bookEdition: String, status: BookStatus = .wantToRead) {
         self.id = id
         self.bookTitle = bookTitle
         self.bookAuthor = bookAuthor
         self.bookDescription = bookDescription
         self.bookPublisher = bookPublisher
         self.bookEdition = bookEdition
+        self.status = status
     }
 }

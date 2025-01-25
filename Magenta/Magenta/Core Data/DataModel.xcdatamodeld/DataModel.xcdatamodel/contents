@@ -12,6 +12,7 @@
         <attribute name="bookEdition" optional="YES" attributeType="String"/>
         <attribute name="bookPublisher" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="JournalEntity" representedClassName="JournalEntity" syncable="YES" codeGenerationType="class">

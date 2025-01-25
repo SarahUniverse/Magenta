@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BooksView: View {
     @StateObject private var booksViewModel: BooksViewModel
+    @State private var selectedStatus: BookStatus = .wantToRead
     @State private var showingAddBookSheet = false
     @State private var newBookTitle = ""
     @State private var newBookAuthor = ""
@@ -35,24 +36,75 @@ struct BooksView: View {
     // MARK: - Main View
     var body: some View {
         NavigationStack {
-            booksList
-                .navigationTitle("Books that Help Me")
-                .background(backgroundGradient)
-                .scrollContentBackground(.hidden)
-                .toolbar { toolbarContent }
-                .sheet(isPresented: $showingAddBookSheet) { addBookSheet }
+            VStack {
+                statusPicker
+                booksList
+            }
+            .navigationTitle("Books that Help Me")
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
+            .toolbar { toolbarContent }
+            .sheet(isPresented: $showingAddBookSheet) { addBookSheet }
         }
     }
 
     // MARK: - Private Variables for View
-    private var booksList: some View {
-        List {
-            if booksViewModel.books.isEmpty {
-                emptyStateView
-            } else {
-                booksContent
+    private var statusPicker: some View {
+        Picker("Reading Status", selection: $selectedStatus) {
+            ForEach(BookStatus.allCases) { status in
+                HStack {
+                    Image(systemName: status.systemImage)
+                    Text(status.rawValue)
+                }
+                .tag(status)
             }
         }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding()
+    }
+
+    private var booksList: some View {
+        List {
+            ForEach(filteredBooks) { book in
+                bookRowView(for: book)
+            }
+            .onDelete(perform: deleteBooks)
+        }
+        .listStyle(PlainListStyle())
+    }
+
+    private var filteredBooks: [BookModel] {
+        booksViewModel.books.filter { $0.status == selectedStatus }
+    }
+
+    private func bookRowView(for book: BookModel) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(book.bookTitle)
+                    .font(.headline)
+                Text(book.bookAuthor)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            // Move book between statuses
+            Menu {
+                ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
+                    Button(action: {
+                        booksViewModel.updateBookStatus(book, to: status)
+                    }, label: {
+                        Text("Move to \(status.rawValue)")
+                        Image(systemName: status.systemImage)
+                    })
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.vertical, 8)
     }
 
     private var emptyStateView: some View {
