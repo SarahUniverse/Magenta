@@ -9,13 +9,54 @@ import CoreData
 
 final class BooksViewModel: ObservableObject {
     @Published var books: [BookModel] = []
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        fetchBooks()
+    }
+
+    private func fetchBooks() {
+        let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+
+        do {
+            let entities = try viewContext.fetch(request)
+            books = entities.map { BookModel(entity: $0)}
+        } catch {
+            print("Error fetching books: \(error.localizedDescription)")
+        }
+    }
 
     func addBook(_ book: BookModel) {
-        books.append(book)
+        let newBookEntity = BookEntity(context: viewContext)
+        newBookEntity.id = book.id
+        newBookEntity.title = book.bookTitle
+        newBookEntity.author = book.bookAuthor
+        newBookEntity.bookDescription = book.bookDescription
+        newBookEntity.bookPublisher = book.bookPublisher
+
+        do {
+            try viewContext.save()
+            fetchBooks()
+        } catch {
+            print("Error saving book: \(error)")
+        }
     }
 
     func removeBook(_ book: BookModel) {
-        books.removeAll { $0.id == book.id }
+        let fetchRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", book.id as CVarArg)
+
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            for object in results {
+                viewContext.delete(object)
+            }
+            try viewContext.save()
+            fetchBooks()
+        } catch {
+            print("Error deleting book: \(error)")
+        }
     }
 
 }

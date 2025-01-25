@@ -52,7 +52,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Art Therapy":
             ArtTherapyView(viewContext: viewContext)
         case "Books that Help Me":
-            BooksView()
+            BooksView(viewContext: viewContext)
         case "Get Up and Move":
             ExerciseView()
          // TODO: Add back

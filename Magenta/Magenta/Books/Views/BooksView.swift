@@ -5,6 +5,7 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct BooksView: View {
@@ -16,8 +17,8 @@ struct BooksView: View {
     @State private var newBookPublisher = ""
     @State private var newBookEdition = ""
 
-    init(booksViewModel: BooksViewModel = BooksViewModel()) {
-        _booksViewModel = StateObject(wrappedValue: booksViewModel)
+    init(viewContext: NSManagedObjectContext) {
+        _booksViewModel = StateObject(wrappedValue: BooksViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
@@ -159,9 +160,23 @@ struct BooksView: View {
 // MARK: - Previews
 // swiftlint:disable line_length
 #Preview("Light Mode") {
-    let viewModel = BooksViewModel()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
-    viewModel.books = [
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    let booksViewModel = BooksViewModel(viewContext: viewContext)
+
+    let sampleBooks = [
         BookModel(
             id: UUID(),
             bookTitle: "Atomic Habits",
@@ -188,21 +203,52 @@ struct BooksView: View {
         )
     ]
 
-    return BooksView(booksViewModel: viewModel)
+    // Add sample books to CoreData
+    sampleBooks.forEach { book in
+        let bookEntity = BookEntity(context: viewContext)
+        bookEntity.id = book.id
+        bookEntity.title = book.bookTitle
+        bookEntity.author = book.bookAuthor
+        bookEntity.bookDescription = book.bookDescription
+        bookEntity.bookPublisher = book.bookPublisher
+        bookEntity.bookEdition = book.bookEdition
+    }
+
+    do {
+        try viewContext.save()
+    } catch {
+        print("Error saving sample books: \(error)")
+    }
+
+    return BooksView(viewContext: viewContext)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    let viewModel = BooksViewModel()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
-    viewModel.books = [
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    let booksViewModel = BooksViewModel(viewContext: viewContext)
+
+    let sampleBooks = [
         BookModel(
             id: UUID(),
             bookTitle: "Atomic Habits",
             bookAuthor: "James Clear",
             bookDescription: "An easy and proven way to build good habits and break bad ones. The book offers a proven framework for improving every day.",
             bookPublisher: "Penguin Random House",
-            bookEdition: "2nd Edition"
+            bookEdition: "2nd"
         ),
         BookModel(
             id: UUID(),
@@ -210,7 +256,7 @@ struct BooksView: View {
             bookAuthor: "Cal Newport",
             bookDescription: "Rules for focused success in a distracted world. Learn to focus without distraction on cognitively demanding tasks.",
             bookPublisher: "Grand Central Publishing",
-            bookEdition: "3rd Edition"
+            bookEdition: "3rd"
         ),
         BookModel(
             id: UUID(),
@@ -218,11 +264,28 @@ struct BooksView: View {
             bookAuthor: "Adam Grant",
             bookDescription: "The power of knowing what you don't know. Discover the critical art of rethinking: learning to question your opinions and open other people's minds.",
             bookPublisher: "Viking",
-            bookEdition: "1st Edition"
+            bookEdition: "1st"
         )
     ]
 
-    return BooksView(booksViewModel: viewModel)
+    // Add sample books to CoreData
+    sampleBooks.forEach { book in
+        let bookEntity = BookEntity(context: viewContext)
+        bookEntity.id = book.id
+        bookEntity.title = book.bookTitle
+        bookEntity.author = book.bookAuthor
+        bookEntity.bookDescription = book.bookDescription
+        bookEntity.bookPublisher = book.bookPublisher
+        bookEntity.bookEdition = book.bookEdition
+    }
+
+    do {
+        try viewContext.save()
+    } catch {
+        print("Error saving sample books: \(error)")
+    }
+
+    return BooksView(viewContext: viewContext)
         .preferredColorScheme(.dark)
 }
 // swiftlint:enable line_length
