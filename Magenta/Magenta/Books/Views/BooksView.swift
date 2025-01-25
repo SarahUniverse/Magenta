@@ -63,10 +63,18 @@ struct BooksView: View {
         )
     }
 
+    private func deleteBooks(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let bookToDelete = booksViewModel.books[index]
+            booksViewModel.removeBook(bookToDelete)
+        }
+    }
+
     private var booksContent: some View {
         ForEach(booksViewModel.books) { book in
             bookRow(for: book)
         }
+        .onDelete(perform: deleteBooks)
     }
 
     private func bookRow(for book: BookModel) -> some View {
@@ -113,6 +121,7 @@ struct BooksView: View {
                 TextField("Author", text: $newBookAuthor)
                 TextField("Description", text: $newBookDescription)
                 TextField("Publisher", text: $newBookPublisher)
+                TextField("Edition", text: $newBookEdition)
             }
         }
     }
