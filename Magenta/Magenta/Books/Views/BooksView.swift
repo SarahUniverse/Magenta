@@ -1,5 +1,5 @@
 //
-//  SelfHelpBooksView.swift
+//  BooksView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 8/22/24.
