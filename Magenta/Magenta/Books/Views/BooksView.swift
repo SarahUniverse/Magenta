@@ -174,6 +174,12 @@ struct BooksView: View {
                 TextField("Description", text: $newBookDescription)
                 TextField("Publisher", text: $newBookPublisher)
                 TextField("Edition", text: $newBookEdition)
+
+                Picker("Reading Status", selection: $selectedStatus) {
+                    ForEach(BookStatus.allCases) { status in
+                        Text(status.rawValue).tag(status)
+                    }
+                }
             }
         }
     }
@@ -202,7 +208,8 @@ struct BooksView: View {
             bookAuthor: newBookAuthor,
             bookDescription: newBookDescription,
             bookPublisher: newBookPublisher,
-            bookEdition: newBookEdition
+            bookEdition: newBookEdition,
+            status: .wantToRead
         )
 
         booksViewModel.addBook(newBook)
@@ -246,7 +253,8 @@ struct BooksView: View {
             bookAuthor: "James Clear",
             bookDescription: "An easy and proven way to build good habits and break bad ones. The book offers a proven framework for improving every day.",
             bookPublisher: "Penguin Random House",
-            bookEdition: "2nd"
+            bookEdition: "2nd",
+            status: .wantToRead
         ),
         BookModel(
             id: UUID(),
@@ -254,7 +262,8 @@ struct BooksView: View {
             bookAuthor: "Cal Newport",
             bookDescription: "Rules for focused success in a distracted world. Learn to focus without distraction on cognitively demanding tasks.",
             bookPublisher: "Grand Central Publishing",
-            bookEdition: "3rd"
+            bookEdition: "3rd",
+            status: .currentlyReading
         ),
         BookModel(
             id: UUID(),
@@ -262,7 +271,8 @@ struct BooksView: View {
             bookAuthor: "Adam Grant",
             bookDescription: "The power of knowing what you don't know. Discover the critical art of rethinking: learning to question your opinions and open other people's minds.",
             bookPublisher: "Viking",
-            bookEdition: "1st"
+            bookEdition: "1st",
+            status: .finishedReading
         )
     ]
 
@@ -275,6 +285,7 @@ struct BooksView: View {
         bookEntity.bookDescription = book.bookDescription
         bookEntity.bookPublisher = book.bookPublisher
         bookEntity.bookEdition = book.bookEdition
+        bookEntity.status = book.status.rawValue
     }
 
     do {
@@ -311,7 +322,8 @@ struct BooksView: View {
             bookAuthor: "James Clear",
             bookDescription: "An easy and proven way to build good habits and break bad ones. The book offers a proven framework for improving every day.",
             bookPublisher: "Penguin Random House",
-            bookEdition: "2nd"
+            bookEdition: "2nd",
+            status: .wantToRead
         ),
         BookModel(
             id: UUID(),
@@ -319,7 +331,8 @@ struct BooksView: View {
             bookAuthor: "Cal Newport",
             bookDescription: "Rules for focused success in a distracted world. Learn to focus without distraction on cognitively demanding tasks.",
             bookPublisher: "Grand Central Publishing",
-            bookEdition: "3rd"
+            bookEdition: "3rd",
+            status: .currentlyReading
         ),
         BookModel(
             id: UUID(),
@@ -327,7 +340,8 @@ struct BooksView: View {
             bookAuthor: "Adam Grant",
             bookDescription: "The power of knowing what you don't know. Discover the critical art of rethinking: learning to question your opinions and open other people's minds.",
             bookPublisher: "Viking",
-            bookEdition: "1st"
+            bookEdition: "1st",
+            status: .finishedReading
         )
     ]
 
@@ -340,6 +354,7 @@ struct BooksView: View {
         bookEntity.bookDescription = book.bookDescription
         bookEntity.bookPublisher = book.bookPublisher
         bookEntity.bookEdition = book.bookEdition
+        bookEntity.status = book.status.rawValue
     }
 
     do {
