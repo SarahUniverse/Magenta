@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum BookStatus: String, CaseIterable, Identifiable {
-    case wantToRead = "Want to Read"
+enum BookStatus: String, CaseIterable, Identifiable, Hashable {
     case currentlyReading = "Currently Reading"
     case finishedReading = "Finished Reading"
+    case wantToRead = "Want to Read"
 
     var id: String {
         self.rawValue
@@ -18,12 +18,12 @@ enum BookStatus: String, CaseIterable, Identifiable {
 
     var systemImage: String {
         switch self {
-        case .wantToRead:
-            return "bookmark"
         case .currentlyReading:
             return "book.fill"
         case .finishedReading:
             return "checkmark.circle.fill"
+        case .wantToRead:
+            return "bookmark"
         }
     }
 

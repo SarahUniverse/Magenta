@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BooksView: View {
     @StateObject private var booksViewModel: BooksViewModel
-    @State private var selectedStatus: BookStatus? = nil
+    @State private var selectedStatus: BookStatus?
     @State private var showingAddBookSheet = false
     @State private var newBookTitle = ""
     @State private var newBookAuthor = ""
@@ -51,17 +51,19 @@ struct BooksView: View {
     // MARK: - Private Variables for View
     private var statusPicker: some View {
         Picker("Reading Status", selection: $selectedStatus) {
-            Text("Select Status").tag(nil as BookStatus?)
             ForEach(BookStatus.allCases) { status in
-                HStack {
-                    Image(systemName: status.systemImage)
+                HStack(spacing: 0) {
                     Text(status.rawValue)
+                        .font(.headline)
                 }
+                .frame(maxWidth: .infinity) // Ensure full width
+                .contentShape(Rectangle())
                 .tag(status as BookStatus?)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
         .padding()
+        .foregroundStyle(.secondary)
     }
 
     private var booksList: some View {
@@ -118,7 +120,8 @@ struct BooksView: View {
 
                 Picker(selectedStatus == nil ? "Select Status" : "Reading Status", selection: $selectedStatus) {
                     ForEach(BookStatus.allCases) { status in
-                        Text(status.rawValue).tag(status as BookStatus?)
+                        Text(status.rawValue)
+                            .tag(status as BookStatus?)
                     }
                 }
             }
