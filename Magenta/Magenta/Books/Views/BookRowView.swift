@@ -15,50 +15,74 @@ struct BookRowView: View {
     // MARK: - Main View
     var body: some View {
         Section {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(book.bookTitle)
-                        .font(.headline)
-                    Text(book.bookEdition + " Edition")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                Text("by \(book.bookAuthor)")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-
-                Text(book.bookDescription)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                HStack {
-                    // Move book between statuses
-                    Menu {
-                        ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
-                            Button(action: {
-                                updateBookStatus(to: status)
-                            }, label: {
-                                Text("Move to \(status.rawValue)")
-                                Image(systemName: status.systemImage)
-                            })
-                        }
-                    } label: {
-                        HStack {
-                            Text("Change Status")
-                            Image(systemName: "ellipsis.circle")
-                        }
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                    }
-                    Spacer()
-                    Image(systemName: book.status.systemImage)
-                        .foregroundColor(.secondary)
-
-                }
-            }
-            .padding(.vertical, 8)
+            bookDetailsView
         }
+    }
+
+    // MARK: Private Variables for View
+    private var bookDetailsView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bookTitleAndEditionView
+            bookAuthorView
+            bookDescriptionView
+            bookStatusAndActionView
+        }
+        .padding(.vertical, 8)
+    }
+
+    private var bookTitleAndEditionView: some View {
+        HStack {
+            Text(book.bookTitle)
+                .font(.headline)
+            Text(book.bookEdition + " Edition")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var bookAuthorView: some View {
+        Text("by \(book.bookAuthor)")
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+    }
+
+    private var bookDescriptionView: some View {
+        Text(book.bookDescription)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+    }
+
+    private var bookStatusAndActionView: some View {
+        HStack {
+            changeStatusMenu
+            Spacer()
+            statusIcon
+        }
+    }
+
+    private var changeStatusMenu: some View {
+        Menu {
+            ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
+                Button(action: {
+                    updateBookStatus(to: status)
+                }, label: {
+                    Text("Move to \(status.rawValue)")
+                    Image(systemName: status.systemImage)
+                })
+            }
+        } label: {
+            HStack {
+                Text("Change Status")
+                Image(systemName: "ellipsis.circle")
+            }
+            .font(.caption)
+            .foregroundStyle(.blue)
+        }
+    }
+
+    private var statusIcon: some View {
+        Image(systemName: book.status.systemImage)
+            .foregroundStyle(.secondary)
     }
 
     // MARK: - Private Functions
