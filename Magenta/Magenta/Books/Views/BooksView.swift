@@ -37,13 +37,19 @@ struct BooksView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                statusPicker
+                if !booksViewModel.books.isEmpty {
+                    statusPicker
+                }
                 booksList
             }
             .navigationTitle("Books that Help Me")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
-            .toolbar { toolbarContent }
+            .toolbar {
+                if !booksViewModel.books.isEmpty {
+                    toolbarContent
+                }
+            }
             .sheet(isPresented: $showingAddBookSheet) { addBookSheet }
         }
     }
@@ -67,11 +73,20 @@ struct BooksView: View {
     }
 
     private var booksList: some View {
-        Form {
-            ForEach(filteredBooks) { book in
-                BookRowView(book: book, booksViewModel: booksViewModel)
+        Group {
+            if filteredBooks.isEmpty {
+                EmptyBooksView(
+                    status: selectedStatus,
+                    action: { showingAddBookSheet = true }
+                )
+            } else {
+                Form {
+                    ForEach(filteredBooks) { book in
+                        BookRowView(book: book, booksViewModel: booksViewModel)
+                    }
+                    .onDelete(perform: deleteBooks)
+                }
             }
-            .onDelete(perform: deleteBooks)
         }
         .listStyle(PlainListStyle())
     }
@@ -80,14 +95,6 @@ struct BooksView: View {
         selectedStatus == nil
         ? booksViewModel.books
         : booksViewModel.books.filter { $0.status == selectedStatus }
-    }
-
-    private var emptyStateView: some View {
-        ContentUnavailableView(
-            "No Books",
-            systemImage: "book",
-            description: Text("Add some books to your reading list")
-        )
     }
 
     private var toolbarContent: some ToolbarContent {
