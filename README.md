@@ -15,20 +15,111 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Back-End Technical Details:
 - To be added
 
-## Features:
+## Features
 
-- **Mood Tracking**: Track your daily mood and identify patterns over time.
-- **Meditations**: Access a library of guided meditations to help you relax and reduce stress.
-- **Exercise**: To be added.
-- **Nutrition**: To be added.
-- **Journal**: Maintain a private journal to express your thoughts and feelings using suggestions provided by Apple's Journaling Suggestions framework.
-- **Therapist Search**: Find nearby mental health professionals using this api: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
-- **Mental Health Playlists**: Curate Music playlists using Apple's MusicKit framework. 
-- **Helpful Quotes**: To be added.
-- **Cycle**: For females to track their period cycle.
-- **Sleep**: To be added.
-- **Art Therapy**: To be added.
-- **Self Help Book List**: To be added.
+<details>
+<summary><strong>Mood Tracking</strong></summary>
+
+Track your daily mood and identify patterns over time.
+
+### Key Features
+- To Be Added
+
+</details>
+
+<details>
+<summary><strong>Meditations</strong></summary>
+
+Access a library of guided meditations to help you relax and reduce stress.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Exercise</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Nutrition</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Journal</strong></summary>
+
+Maintain a private journal to express your thoughts and feelings using suggestions provided by Apple's Journaling Suggestions framework.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Therapist Search</strong></summary>
+
+Find nearby mental health professionals using this API: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Mental Health Playlists</strong></summary>
+
+Curate Music playlists using Apple's MusicKit framework.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Helpful Quotes</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Cycle</strong></summary>
+
+For females to track their period cycle.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Sleep</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Art Therapy</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Books that Help Me</strong></summary>
+
+A curated digital bookshelf designed to support mental health and personal growth.
+
+### Key Features
+- Track books related to mental health, personal development, and self-improvement
+- Organize books into three reading statuses:
+  - Want to Read
+  - Currently Reading
+  - Finished Reading
+
+</details>
 
 
 ## License
