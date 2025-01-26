@@ -33,11 +33,6 @@ struct BookRowView: View {
                     .foregroundColor(.secondary)
 
                 HStack {
-                    Image(systemName: book.status.systemImage)
-                        .foregroundColor(.secondary)
-
-                    Spacer()
-
                     // Move book between statuses
                     Menu {
                         ForEach(BookStatus.allCases.filter { $0 != book.status }) { status in
@@ -56,6 +51,10 @@ struct BookRowView: View {
                         .font(.caption)
                         .foregroundColor(.blue)
                     }
+                    Spacer()
+                    Image(systemName: book.status.systemImage)
+                        .foregroundColor(.secondary)
+
                 }
             }
             .padding(.vertical, 8)

@@ -56,7 +56,7 @@ struct BooksView: View {
                     Text(status.rawValue)
                         .font(.headline)
                 }
-                .frame(maxWidth: .infinity) // Ensure full width
+                .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
                 .tag(status as BookStatus?)
             }
