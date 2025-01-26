@@ -11,6 +11,7 @@ struct EmptyBooksView: View {
     let status: BookStatus?
     let action: () -> Void
 
+    // MARK: - Main View
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "book.fill")
@@ -39,6 +40,7 @@ struct EmptyBooksView: View {
         .background(Color.secondary.opacity(0.1))
     }
 
+    // MARK: Private Variables for View
     private var emptyStateTitle: String {
         switch status {
         case .wantToRead:
@@ -66,7 +68,7 @@ struct EmptyBooksView: View {
     }
 }
 
-// Preview for the EmptyBooksView
+// MARK: - Previews
 #Preview("Want to Read") {
     EmptyBooksView(status: .wantToRead, action: {})
 }
