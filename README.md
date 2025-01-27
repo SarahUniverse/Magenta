@@ -85,9 +85,9 @@ Curate Music playlists using Apple's MusicKit framework.
 </details>
 
 <details>
-<summary><strong>Cycle</strong></summary>
+<summary><strong>Cycle Tracking</strong></summary>
 
-For females to track their period cycle.
+For females to track their period cycle using HealthKit because fluctuating hormones can have a huge effect on mental health.
 
 ### Key Features
 - To Be Added
