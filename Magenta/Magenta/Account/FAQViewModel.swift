@@ -26,8 +26,8 @@ final class FAQViewModel: ObservableObject {
         loadFAQData()
     }
 
+    // swiftlint:disable line_length
     private func loadFAQData() {
-        // Sample FAQ data
         categories = [
             FAQCategory(name: "Getting Started", questions: [
                 FAQQuestion(
@@ -66,6 +66,7 @@ final class FAQViewModel: ObservableObject {
             ])
         ]
     }
+    // swiftlint:enable line_length
 
     func contactSupport() {
         showingSupportSheet = true

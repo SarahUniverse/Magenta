@@ -163,8 +163,6 @@ struct SupportContactView: View {
     }
 }
 
-
-
 // MARK: - Models
 struct FAQCategory: Identifiable {
     let id = UUID()
