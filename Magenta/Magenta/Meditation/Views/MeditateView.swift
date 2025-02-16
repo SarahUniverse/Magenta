@@ -23,8 +23,38 @@ struct MeditateView: View {
 
     var body: some View {
         NavigationStack {
-            List(viewModel.meditationSessions, id: \.self) { session in
-                Text(session)
+            ScrollView(.vertical) {
+                VStack {
+                    ForEach(viewModel.meditationSessions, id: \.self) { session in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(.darkBlue)
+                                .frame(height: 100)
+                                .shadow(radius: 5)
+                                .visualEffect { content, proxy in
+                                    let frame = proxy.frame(in: .scrollView(axis: .vertical))
+                                    _ = proxy
+                                        .bounds(of: .scrollView(axis: .vertical)) ??
+                                        .infinite
+
+                                    // The distance this view extends past the bottom edge
+                                    // of the scroll view.
+                                    let distance = min(0, frame.minY)
+
+                                    return content
+                                        .hueRotation(.degrees(frame.origin.y / 10))
+                                        .scaleEffect(1 + distance / 700)
+                                        .offset(y: -distance / 1.25)
+                                        .brightness(-distance / 400)
+                                        .blur(radius: -distance / 50)
+                                }
+                            Text(session)
+                                .foregroundStyle(.white)
+                                .bold(true)
+                        }
+                    }
+                }
+                .padding()
             }
             .navigationTitle("Meditate")
             .background(backgroundGradient)
