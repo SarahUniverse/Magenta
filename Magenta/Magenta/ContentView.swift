@@ -11,19 +11,24 @@ import SwiftUI
 public struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var contentViewModel: ContentViewModel
+    @StateObject private var loginViewModel: LoginViewModel
+    @State private var currentUser: String = ""
 
     public init(viewContext: NSManagedObjectContext) {
         _contentViewModel = StateObject(wrappedValue: ContentViewModel(viewContext: viewContext))
+        _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
     }
 
     public var body: some View {
         Group {
             if contentViewModel.isUserLoggedIn() {
-                if let currentUser = contentViewModel.getCurrentUser() {
-                    MainTabView(viewContext: viewContext, userModel: currentUser)
-                } else {
-                    LoginView(viewContext: viewContext)
-                }
+                MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
+                    .onAppear {
+                        loginViewModel.loadSavedUser()
+                        currentUser = loginViewModel.username
+                    }
+            } else if !contentViewModel.isUserLoggedIn() {
+                LoginView(viewContext: viewContext)
             } else {
                 SignUpView(viewContext: viewContext)
             }

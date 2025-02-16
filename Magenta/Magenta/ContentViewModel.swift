@@ -16,14 +16,6 @@ class ContentViewModel: ObservableObject {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        self.loadCurrentUser()
-    }
-
-    private func loadCurrentUser() {
-        if let currentUser = getCurrentUser() {
-            self.userModel = currentUser
-            self.username = currentUser.username
-        }
     }
 
     func isUserLoggedIn() -> Bool {
@@ -48,46 +40,6 @@ class ContentViewModel: ObservableObject {
         } catch {
             print("Keychain access error: \(error.localizedDescription)")
             return false
-        }
-    }
-
-    func getCurrentUser() -> UserModel? {
-        guard isUserLoggedIn() else { return nil }
-
-        do {
-            // Retrieve user from CoreData
-            let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "username == %@", username)
-            print("The username is: \(username)") // Debugging line
-
-            let results = try viewContext.fetch(fetchRequest)
-            if let existingUser = results.first {
-                let userModel = UserModel(entity: existingUser)
-                print("UserModel created with username: \(userModel.username), email: \(userModel.email)") // Debugging line
-                return userModel
-            }
-
-            // If user not found in Core Data, check Keychain
-            guard let userName = keychainManager.retrieveAccountNameFromKeychain(for: username) else {
-                throw KeychainManager.KeychainError.itemNotFound
-            }
-
-            // Create a new UserEntity if not found
-            let newUser = UserEntity(context: viewContext)
-            newUser.id = UUID()
-            newUser.username = userName
-            newUser.email = ""
-
-            try viewContext.save()
-
-            return UserModel(entity: newUser)
-
-        } catch KeychainManager.KeychainError.itemNotFound {
-            print("No user data found in Keychain.")
-            return nil
-        } catch {
-            print("Failed to retrieve or process user: \(error.localizedDescription)")
-            return nil
         }
     }
 

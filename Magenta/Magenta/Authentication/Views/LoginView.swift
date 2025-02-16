@@ -89,7 +89,7 @@ struct LoginView: View {
 
     private var destinationView: some View {
         Group {
-            if let currentUser = loginViewModel.currentUser {
+            if let currentUser = loginViewModel.userModel {
                 MainTabView(viewContext: viewContext, userModel: currentUser)
             } else {
                 Text("Error loading user")

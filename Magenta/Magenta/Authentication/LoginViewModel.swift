@@ -12,7 +12,7 @@ import GoogleSignIn
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
-    @Published var currentUser: UserModel?
+    @Published var userModel: UserModel?
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var error: String = ""
@@ -48,7 +48,7 @@ class LoginViewModel: ObservableObject {
                 if password == storedPassword {
                     self.isLoggedIn = true
                     self.error = ""
-                    self.currentUser = userModel
+                    self.userModel = userModel
                 } else {
                     self.error = "Incorrect password."
                 }
@@ -108,17 +108,18 @@ class LoginViewModel: ObservableObject {
     }
 
     // MARK: - Private functions
-    private func loadSavedUser() {
+    func loadSavedUser() {
         do {
             let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
 
             if let userEntity = try viewContext.fetch(fetchRequest).first {
                 let userModel = UserModel(entity: userEntity)
                 self.username = userModel.username
-                self.currentUser = userModel
+                self.userModel = userModel
             }
         } catch {
             print("Error loading saved user: \(error.localizedDescription)")
         }
     }
+
 }
