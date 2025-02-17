@@ -17,8 +17,8 @@ final class AccountViewModel: ObservableObject {
     @Published var colors: Colors
 
     // User Info
-    @Published var userName = "John Doe"
-    @Published var userEmail = "john.doe@example.com"
+    @Published var userName = "Orko C. Puppy"
+    @Published var userEmail = "Orko@puppy.com"
 
     // Settings
     let availableLanguages = ["English", "Spanish", "French", "German"]

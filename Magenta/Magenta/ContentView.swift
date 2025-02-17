@@ -22,7 +22,7 @@ public struct ContentView: View {
 
     public var body: some View {
         Group {
-            if contentViewModel.isUserLoggedIn() && biometricAuthViewModel.isAuthenticated {
+            if contentViewModel.isUserLoggedIn() || biometricAuthViewModel.isAuthenticated {
                 MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
                     .onAppear {
                         loginViewModel.loadSavedUser()
