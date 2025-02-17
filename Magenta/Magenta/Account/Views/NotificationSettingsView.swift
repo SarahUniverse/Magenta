@@ -14,7 +14,7 @@ struct NotificationSettingsView: View {
         List {
             Section("Push Notifications") {
                 Toggle("Enable Notifications", isOn: $viewModel.enableNotifications)
-                    .onChange(of: viewModel.enableNotifications) { newValue in
+                    .onChange(of: viewModel.enableNotifications) {
                         viewModel.requestNotificationPermission()
                     }
             }

@@ -37,7 +37,8 @@ struct MoodView: View {
         "Tired": "😴",
         "Sad": "😢",
         "Anxious": "😰",
-        "Angry": "😡"
+        "Angry": "😡",
+        "Heavy Grief": "🧌"
     ]
 
     var body: some View {
@@ -73,15 +74,23 @@ struct MoodView: View {
                     }
 
                     if let selected = selectedMood {
-                        Text("You're feeling \(selected)")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(
-                                Capsule()
-                                    .fill(.ultraThinMaterial)
-                            )
-                            .transition(.move(edge: .bottom))
+                        /*if selected == "Grief Monster" {
+                            Text("🧌")
+                                .resizable()
+                                .frame(width: 200, height: 200)
+                                .padding()
+                            Text("The Grief Monster has arrived. Play your grief playlist. If that doesn't work please seek support from a friend, family member, or a mental health professional.")
+                        } else {*/
+                            Text("You're feeling \(selected)")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(
+                                    Capsule()
+                                        .fill(.ultraThinMaterial)
+                                )
+                                .transition(.move(edge: .bottom))
+                        //}
                     }
                 }
             }
