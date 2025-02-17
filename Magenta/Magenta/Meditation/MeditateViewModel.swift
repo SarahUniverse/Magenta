@@ -29,6 +29,21 @@ final class MeditateViewModel: ObservableObject {
         }
     }
 
+    func addMeditation(_ meditation: MeditationModel) {
+        let entity = MeditationEntity(context: viewContext)
+        entity.meditationTitle = meditation.meditationTitle
+        entity.meditationDescription = meditation.meditationDescription
+        entity.meditationDuration = Int64(meditation.meditationDuration)
+        entity.meditationURL = meditation.meditationURL
+
+        do {
+            try viewContext.save()
+            fetchMeditationSessions()
+        } catch {
+            print("Error saving meditation session: \(error.localizedDescription)")
+        }
+    }
+
     func createInitialMeditationSessions() {
         // Check if sessions already exist
         let request: NSFetchRequest<MeditationEntity> = MeditationEntity.fetchRequest()

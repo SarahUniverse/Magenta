@@ -10,6 +10,11 @@ import SwiftUI
 
 struct MeditateView: View {
     @StateObject private var meditateViewModel: MeditateViewModel
+    @State private var showAddMeditationSheet: Bool = false
+    @State private var newMeditationTitle = ""
+    @State private var newMeditationDuration: Float = 5
+    @State private var newMeditationDescription: String = ""
+    @State private var newMeditationURL: String = ""
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -38,10 +43,22 @@ struct MeditateView: View {
             .toolbar {
                 toolbarContent
             }
+            .sheet(isPresented: $showAddMeditationSheet) {
+                addMeditationSheet
+            }
         }
     }
 
     // MARK: - Private Variables
+    private var addMeditationSheet: some View {
+        NavigationStack {
+            addMeditationForm
+                .navigationTitle("Add New Meditation")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { addMeditationToolbar }
+        }
+        .presentationDetents([.medium])
+    }
     private var meditationSessionsList: some View {
         VStack {
             ForEach(meditateViewModel.meditationSessions) { session in
@@ -71,11 +88,87 @@ struct MeditateView: View {
 
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            Image(systemName: "person.circle")
+            Button(action: { showAddMeditationSheet = true
+            }, label: {
+                Image(systemName: "plus.circle")
+                    .shadow(radius: 3)
+            })
+        }
+    }
+
+    private var addMeditationForm: some View {
+        Form {
+            Section(header: Text("Add Meditation Session")) {
+                TextField("Meditation Title", text: $newMeditationTitle)
+                TextField("Description", text: $newMeditationDescription)
+                TextField("Meditation link", text: $newMeditationURL)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("Duration: \(Int(newMeditationDuration)) minutes")
+                            .font(.headline)
+                    }
+
+                    HStack {
+                        Text("0")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        Slider(value: $newMeditationDuration, in: 5...60, step: 1)
+
+                        Text("60")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+        }
+    }
+
+    private var addMeditationToolbar: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Cancel") {
+                    showAddMeditationSheet = false
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    saveNewMeditation()
+                }
+                .disabled(
+                    newMeditationTitle.isEmpty ||
+                    newMeditationDescription.isEmpty ||
+                    newMeditationDuration == 5 ||
+                    newMeditationURL.isEmpty
+                )
+            }
         }
     }
 
     // MARK: - Private Functions
+    private func saveNewMeditation() {
+        let newMeditation = MeditationModel(
+            id: UUID(),
+            meditationTitle: newMeditationTitle,
+            meditationDescription: newMeditationDescription,
+            meditationDuration: Int(newMeditationDuration),
+            meditationURL: (URL(string: newMeditationURL) ?? URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"))!
+            )
+
+        meditateViewModel.addMeditation(newMeditation)
+        resetFields()
+        showAddMeditationSheet = false
+    }
+
+    private func resetFields() {
+        newMeditationTitle = ""
+        newMeditationDescription = ""
+        newMeditationDuration = 5
+        newMeditationURL = ""
+    }
+
     private func cardContent(for session: MeditationModel) -> some View {
         VStack {
             HStack {
