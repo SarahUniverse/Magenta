@@ -61,7 +61,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Sleep or Nightmare Time?":
             SleepView()
         case "What's My Mood?":
-            MoodView()
+            MoodView(viewContext: viewContext)
         case "Nutrition Matters":
             NutritionView()
         case "Mental Health Playlists":
