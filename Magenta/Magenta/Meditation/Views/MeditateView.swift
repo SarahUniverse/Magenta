@@ -5,10 +5,11 @@
 //  Created by Sarah Clark on 8/21/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct MeditateView: View {
-    @StateObject private var viewModel = MeditateViewModel()
+    @StateObject private var meditateViewModel: MeditateViewModel
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -21,16 +22,20 @@ struct MeditateView: View {
         endPoint: .bottom
     )
 
+    init(viewContext: NSManagedObjectContext) {
+        _meditateViewModel = StateObject(wrappedValue: MeditateViewModel(viewContext: viewContext))
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {
                 VStack {
-                    ForEach(viewModel.meditationSessions, id: \.self) { session in
+                    ForEach(meditateViewModel.meditationSessions, id: \.self) { session in
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
                                 .fill(.darkBlue)
                                 .frame(height: 100)
-                                .shadow(radius: 5)
+                                .shadow(radius: 3)
                                 .visualEffect { content, proxy in
                                     let frame = proxy.frame(in: .scrollView(axis: .vertical))
                                     _ = proxy
@@ -48,9 +53,14 @@ struct MeditateView: View {
                                         .brightness(-distance / 400)
                                         .blur(radius: -distance / 50)
                                 }
-                            Text(session)
-                                .foregroundStyle(.white)
-                                .bold(true)
+                            VStack {
+                                HStack {
+                                    Text(session)
+                                        .foregroundStyle(.white)
+                                        .bold(true)
+                                    Text("blah")
+                                }
+                            }
                         }
                     }
                 }
