@@ -11,7 +11,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL, Journaling Suggestions, MusicKit
 - OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
 - Minimum OS's supported: iOS 18.0, iPadOS 18.0, watchOS tba, visionOS 2.0, macOS 14.0
-- Authentication - Supports Apple Sign-In, Google Sign-In and traditional email sign in.
+- Authentication - Supports Apple Sign-In, Google Sign-In, Face ID and traditional username/email sign in.
 
 ## Back-End Technical Details:
 - To be added
