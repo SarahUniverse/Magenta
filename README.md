@@ -18,6 +18,13 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Features
 
 <details>
+<summary><strong>Authentication</strong></summary>
+
+You have the option of using Apple Sign-In, Google Sign-In or traditional email sign in.
+
+</details>
+
+<details>
 <summary><strong>Mood Tracking</strong></summary>
 
 Track your daily mood and identify patterns over time.
