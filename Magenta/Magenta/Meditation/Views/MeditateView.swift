@@ -80,23 +80,35 @@ struct MeditateView: View {
         VStack {
             HStack {
                 Text(session.meditationTitle)
+                    .font(.title3)
                     .foregroundStyle(.white)
                     .bold()
+                Spacer()
                 Text("\(session.meditationDuration) min")
                     .foregroundStyle(.white)
-                Spacer()
+                Image(systemName: "clock")
+                    .foregroundStyle(.white)
             }
-            .padding()
-
+            .padding(.horizontal)
+            Spacer()
             HStack {
                 Text(session.meditationDescription)
                     .foregroundStyle(.white)
                     .font(.caption)
                     .lineLimit(2)
                 Spacer()
+                Link(destination: session.meditationURL) {
+                    Image(systemName: "waveform.and.person.filled")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                        .shadow(radius: 5)
+                }
             }
             .padding(.horizontal)
+
         }
+        .padding()
     }
 
     private func meditationCard(for session: MeditationModel) -> some View {
