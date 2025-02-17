@@ -1,8 +1,10 @@
 disabled_rules:
   - todo
+  - empty_count
+  - large_tuple
 
 opt_in_rules:
-  - empty_count
+
   - empty_string
 
 excluded:

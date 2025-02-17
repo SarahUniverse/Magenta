@@ -71,7 +71,7 @@ final class DiscoverViewModel: ObservableObject {
         case "Professional Help Search":
             TherapistSearchView()
         case "Time to Chill and Meditate":
-            MeditateView()
+            MeditateView(viewContext: viewContext)
         case "Track My Cycle":
             CycleView()
         default:

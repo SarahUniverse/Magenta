@@ -11,7 +11,7 @@ import SwiftUI
 struct MeditateView: View {
     @StateObject private var meditateViewModel: MeditateViewModel
 
-    let backgroundGradient = LinearGradient(
+    private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .cyan, location: 0),
             Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.1),
@@ -26,64 +26,122 @@ struct MeditateView: View {
         _meditateViewModel = StateObject(wrappedValue: MeditateViewModel(viewContext: viewContext))
     }
 
+    // MARK: Main View
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {
-                VStack {
-                    ForEach(meditateViewModel.meditationSessions, id: \.self) { session in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(.darkBlue)
-                                .frame(height: 100)
-                                .shadow(radius: 3)
-                                .visualEffect { content, proxy in
-                                    let frame = proxy.frame(in: .scrollView(axis: .vertical))
-                                    _ = proxy
-                                        .bounds(of: .scrollView(axis: .vertical)) ??
-                                        .infinite
-
-                                    // The distance this view extends past the bottom edge
-                                    // of the scroll view.
-                                    let distance = min(0, frame.minY)
-
-                                    return content
-                                        .hueRotation(.degrees(frame.origin.y / 10))
-                                        .scaleEffect(1 + distance / 700)
-                                        .offset(y: -distance / 1.25)
-                                        .brightness(-distance / 400)
-                                        .blur(radius: -distance / 50)
-                                }
-                            VStack {
-                                HStack {
-                                    Text(session)
-                                        .foregroundStyle(.white)
-                                        .bold(true)
-                                    Text("blah")
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding()
+                meditationSessionsList
             }
             .navigationTitle("Meditate")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
-                }
+                toolbarContent
             }
         }
     }
+
+    // MARK: - Private Variables
+    private var meditationSessionsList: some View {
+        VStack {
+            ForEach(meditateViewModel.meditationSessions) { session in
+                meditationCard(for: session)
+            }
+        }
+        .padding()
+    }
+
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: 24)
+            .fill(.darkBlue)
+            .frame(height: 100)
+            .shadow(radius: 3)
+            .visualEffect { content, proxy in
+                let frame = proxy.frame(in: .scrollView(axis: .vertical))
+                let distance = min(0, frame.minY)
+
+                return content
+                    .hueRotation(.degrees(frame.origin.y / 10))
+                    .scaleEffect(1 + distance / 700)
+                    .offset(y: -distance / 1.25)
+                    .brightness(-distance / 400)
+                    .blur(radius: -distance / 50)
+            }
+    }
+
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Image(systemName: "person.circle")
+        }
+    }
+
+    // MARK: - Private Functions
+    private func cardContent(for session: MeditationModel) -> some View {
+        VStack {
+            HStack {
+                Text(session.meditationTitle)
+                    .foregroundStyle(.white)
+                    .bold()
+                Text("\(session.meditationDuration) min")
+                    .foregroundStyle(.white)
+                Spacer()
+            }
+            .padding()
+
+            HStack {
+                Text(session.meditationDescription)
+                    .foregroundStyle(.white)
+                    .font(.caption)
+                    .lineLimit(2)
+                Spacer()
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    private func meditationCard(for session: MeditationModel) -> some View {
+        ZStack {
+            cardBackground
+            cardContent(for: session)
+        }
+    }
+
 }
 
+// MARK: - Preview
 #Preview ("Light Mode") {
-    MeditateView()
+    let context = PersistenceController.preview.container.viewContext
+    return MeditateView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    MeditateView()
+    let context = PersistenceController.preview.container.viewContext
+    return MeditateView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+// For preview content
+struct PersistenceController {
+    static let preview: PersistenceController = {
+        let controller = PersistenceController(inMemory: true)
+        // Add any preview data setup here
+        return controller
+    }()
+
+    let container: NSPersistentContainer
+
+    init(inMemory: Bool = false) {
+        container = NSPersistentContainer(name: "DataModel")
+
+        if inMemory {
+            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        }
+
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError("Error: \(error.localizedDescription)")
+            }
+        }
+    }
 }
