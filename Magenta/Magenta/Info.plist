@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl</string>
-			</array>
-		</dict>
-	</array>
-	<key>GIDClientID</key>
-	<string>988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl.apps.googleusercontent.com</string>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIImageName</key>
-		<string>launchScreenImage</string>
-	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Create and listen to mental health playlists</string>
-</dict>
+    <dict>
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>com.googleusercontent.apps.988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl</string>
+                </array>
+            </dict>
+        </array>
+        <key>GIDClientID</key>
+        <string>988111963445-df0iqtns8hbhhul9lgfqccapt3ptbgcl.apps.googleusercontent.com</string>
+        <key>UILaunchScreen</key>
+        <dict>
+            <key>UIImageName</key>
+            <string>launchScreenImage</string>
+        </dict>
+        <key>NSFaceIDUsageDescription</key>
+        <string>We need to use Face ID to secure your account</string>
+        <key>NSAppleMusicUsageDescription</key>
+        <string>Create and listen to mental health playlists</string>
+    </dict>
 </plist>

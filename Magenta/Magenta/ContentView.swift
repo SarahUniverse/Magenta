@@ -12,6 +12,7 @@ public struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var contentViewModel: ContentViewModel
     @StateObject private var loginViewModel: LoginViewModel
+    @StateObject private var biometricAuthViewModel = BiometricAuthViewModel()
     @State private var currentUser: String = ""
 
     public init(viewContext: NSManagedObjectContext) {
@@ -21,7 +22,7 @@ public struct ContentView: View {
 
     public var body: some View {
         Group {
-            if contentViewModel.isUserLoggedIn() {
+            if contentViewModel.isUserLoggedIn() && biometricAuthViewModel.isAuthenticated {
                 MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
                     .onAppear {
                         loginViewModel.loadSavedUser()
@@ -29,8 +30,17 @@ public struct ContentView: View {
                     }
             } else if !contentViewModel.isUserLoggedIn() {
                 LoginView(viewContext: viewContext)
-            } else {
+            } else if !contentViewModel.isUserLoggedIn() && !biometricAuthViewModel.isAuthenticated {
                 SignUpView(viewContext: viewContext)
+            } else {
+                WaitingOnFaceIDAuthView()
+            }
+        }
+        .task {
+            if contentViewModel.isUserLoggedIn() {
+                await MainActor.run {
+                    biometricAuthViewModel.authenticateWithFaceID()
+                }
             }
         }
     }

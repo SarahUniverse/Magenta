@@ -107,7 +107,6 @@ class LoginViewModel: ObservableObject {
         // Implement Apple Sign-In logic here
     }
 
-    // MARK: - Private functions
     func loadSavedUser() {
         do {
             let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
