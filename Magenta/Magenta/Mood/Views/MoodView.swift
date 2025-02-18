@@ -46,52 +46,42 @@ struct MoodView: View {
             ZStack {
                 backgroundGradient
                     .ignoresSafeArea()
-
                 VStack(spacing: 20) {
                     Text("How are you feeling today?")
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
                         .opacity(isAnimating ? 1 : 0)
                         .offset(y: isAnimating ? 0 : -20)
-
-                    ScrollView(.horizontal) {
-                        LazyVGrid(columns: [
-                            GridItem(.adaptive(minimum: 150), spacing: 10)
-                        ], spacing: 20) {
-                            ForEach(moodViewModel.items, id: \.self) { mood in
-                                IndividualMoodView(mood: mood, emoji: moodEmojis[mood] ?? "😊")
-                                    .scaleEffect(selectedMood == mood ? 1.1 : 1.0)
-                                    .onTapGesture {
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                            selectedMood = mood
-                                            showingMoodDetail = true
+                        .padding(.top, 40)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 0) {
+                            HStack(spacing: 15) {
+                                ForEach(moodViewModel.items, id: \.self) { mood in
+                                    IndividualMoodView(mood: mood, emoji: moodEmojis[mood] ?? "😊")
+                                        .onTapGesture {
+                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                                selectedMood = mood
+                                                showingMoodDetail = true
+                                            }
                                         }
-                                    }
+                                }
                             }
+                            .padding()
                         }
-                        .padding()
+                        .frame(maxWidth: .infinity)
                     }
-
                     if let selected = selectedMood {
-                        /*if selected == "Grief Monster" {
-                            Text("🧌")
-                                .resizable()
-                                .frame(width: 200, height: 200)
-                                .padding()
-                            Text("The Grief Monster has arrived. Play your grief playlist. If that doesn't work please seek support from a friend, family member, or a mental health professional.")
-                        } else {*/
-                            Text("You're feeling \(selected)")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(
-                                    Capsule()
-                                        .fill(.ultraThinMaterial)
-                                )
-                                .transition(.move(edge: .bottom))
-                        //}
+                        Text("You're feeling \(selected)")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                            )
+                            .transition(.move(edge: .bottom))
                     }
+                    Spacer()
                 }
             }
             .navigationTitle("Mood Tracker")
