@@ -13,11 +13,6 @@ struct MoodChartView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            Text("Weekly Mood Overview")
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding()
-
             Chart {
                 ForEach(viewModel.dailyMoods) { daily in
                     LineMark(

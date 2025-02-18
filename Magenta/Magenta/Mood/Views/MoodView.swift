@@ -13,6 +13,12 @@ struct MoodView: View {
     @State private var isAnimating = false
     @State private var selectedMood: String?
     @State private var showingMoodDetail = false
+    @Environment(\.colorScheme) var colorScheme
+
+    // MARK: - Animations
+    @State private var moodSectionOffset: CGFloat = 30
+    @State private var chartSectionOffset: CGFloat = 30
+    @State private var opacity: Double = 0
 
     init(viewContext: NSManagedObjectContext) {
         _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
@@ -48,7 +54,7 @@ struct MoodView: View {
             .fontWeight(.bold)
             .opacity(isAnimating ? 1 : 0)
             .offset(y: isAnimating ? 0 : -20)
-            .padding(.top, 40)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var moodScrollView: some View {
@@ -85,22 +91,126 @@ struct MoodView: View {
         })
     }
 
+    private var chartSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Weekly Mood Overview")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .padding(.horizontal)
+            .padding(.top)
+
+            MoodChartView()
+                .padding(.horizontal, 5)
+        }
+        .background {
+            glassBackground
+        }
+        .offset(y: isAnimating ? 0 : chartSectionOffset)
+        .opacity(isAnimating ? 1 : 0)
+        .padding(.horizontal)
+    }
+
     private var mainContent: some View {
         VStack(spacing: 20) {
+            Spacer()
             titleText
             moodScrollView
-            Spacer()
             MoodChartView()
+            Spacer()
+            Spacer()
+        }
+        .background(glassBackground)
+    }
+
+    // MARK: - Animation Methods
+    private func animateContent() {
+        // Staggered animation for sections
+        withAnimation(.spring(
+            response: AnimationConstants.springResponse,
+            dampingFraction: AnimationConstants.springDamping,
+            blendDuration: 1)
+        ) {
+            isAnimating = true
+        }
+
+        // Animate sections with delay
+        withAnimation(.spring(
+            response: AnimationConstants.springResponse,
+            dampingFraction: AnimationConstants.springDamping
+        ).delay(AnimationConstants.appearDelay)) {
+            moodSectionOffset = 0
+            opacity = 1
+        }
+
+        withAnimation(.spring(
+            response: AnimationConstants.springResponse,
+            dampingFraction: AnimationConstants.springDamping
+        ).delay(AnimationConstants.appearDelay * 2)) {
+            chartSectionOffset = 0
         }
     }
 
-    // MARK: - Body
+    private var moodSection: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            titleText
+            moodScrollView
+        }
+        .padding()
+        .background {
+            glassBackground
+        }
+        .offset(y: isAnimating ? 0 : moodSectionOffset)
+        .opacity(isAnimating ? 1 : 0)
+        .padding(.horizontal)
+    }
+
+    private var glassBackground: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.ultraThinMaterial)
+            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        LinearGradient(
+                            colors: [
+                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
+                                .white.opacity(0.2)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.5
+                    )
+            }
+            .overlay {
+                // Subtle inner shadow
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        .black.opacity(0.1),
+                        lineWidth: 1
+                    )
+                    .blur(radius: 1)
+                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
+            }
+    }
+
+    // MARK: - Main View
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundGradient
                     .ignoresSafeArea()
-                mainContent
+
+                ScrollView {
+                    VStack(spacing: 20) {
+                        moodSection
+                        chartSection
+                    }
+                    .padding(.top)
+                }
             }
             .navigationTitle("Mood Tracker")
             .toolbar {
@@ -108,12 +218,32 @@ struct MoodView: View {
                     profileButton
                 }
             }
-            .onAppear {
-                withAnimation(.easeOut(duration: 0.8)) {
-                    isAnimating = true
-                }
-            }
+            .onAppear(perform: animateContent)
         }
+    }
+
+}
+
+private struct AnimationConstants {
+    static let appearDelay = 0.3
+    static let springResponse = 0.5
+    static let springDamping = 0.65
+}
+
+struct GlassBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.ultraThinMaterial)
+                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            }
+    }
+}
+
+extension View {
+    func glassBackground() -> some View {
+        modifier(GlassBackground())
     }
 }
 

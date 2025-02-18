@@ -28,7 +28,8 @@ struct IndividualMoodView: View {
 
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.blue)
+                    .shadow(color: .yellow, radius: 3)
                     .font(.system(size: 21))
                     .padding(.bottom, 10)
             }
