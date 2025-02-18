@@ -57,13 +57,17 @@ struct MoodView: View {
                         HStack(spacing: 0) {
                             HStack(spacing: 15) {
                                 ForEach(moodViewModel.items, id: \.self) { mood in
-                                    IndividualMoodView(mood: mood, emoji: moodEmojis[mood] ?? "😊")
-                                        .onTapGesture {
-                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                                selectedMood = mood
-                                                showingMoodDetail = true
-                                            }
+                                    IndividualMoodView(
+                                        mood: mood,
+                                        emoji: moodEmojis[mood] ?? "😊",
+                                        isSelected: selectedMood == mood
+                                    )
+                                    .onTapGesture {
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                            selectedMood = mood
+                                            showingMoodDetail = true
                                         }
+                                    }
                                 }
                             }
                             .padding()
@@ -96,14 +100,14 @@ struct MoodView: View {
                     })
                 }
             }
-        }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.8)) {
-                isAnimating = true
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.8)) {
+                    isAnimating = true
+                }
             }
-        }
-        .sheet(isPresented: $showingMoodDetail) {
-            MoodDetailView(mood: selectedMood ?? "")
+           /* .sheet(isPresented: $showingMoodDetail) {
+                MoodDetailView(mood: selectedMood ?? "")
+            }*/
         }
     }
 }

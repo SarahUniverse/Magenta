@@ -12,6 +12,7 @@ struct IndividualMoodView: View {
     let mood: String
     let emoji: String
     @State private var isHovered = false
+    let isSelected: Bool
 
     var body: some View {
         VStack {
@@ -31,8 +32,31 @@ struct IndividualMoodView: View {
                 .fill(.ultraThinMaterial)
                 .shadow(radius: isHovered ? 10 : 5)
         )
-        .scaleEffect(isHovered ? 1.05 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isHovered)
+        .overlay(
+            Circle()
+                .stroke(
+                    isSelected ?
+                    LinearGradient(
+                        colors: [
+                            Color.blue.opacity(0.7),
+                            Color.blue.opacity(0.7)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    : LinearGradient(
+                        colors: [
+                            Color.clear,
+                            Color.clear
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 3
+                )
+        )
+        .scaleEffect(isSelected ? 1.05 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isSelected)
         .onHover { hovering in
             isHovered = hovering
         }
@@ -40,11 +64,11 @@ struct IndividualMoodView: View {
 }
 
 #Preview("Light Mode") {
-    IndividualMoodView(mood: "Excited", emoji: "🤩")
+    IndividualMoodView(mood: "Excited", emoji: "🤩", isSelected: true)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    IndividualMoodView(mood: "Excited", emoji: "🤩")
+    IndividualMoodView(mood: "Excited", emoji: "🤩", isSelected: true)
         .preferredColorScheme(.dark)
 }
