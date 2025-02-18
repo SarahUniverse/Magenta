@@ -55,12 +55,12 @@ struct MoodView: View {
                         .opacity(isAnimating ? 1 : 0)
                         .offset(y: isAnimating ? 0 : -20)
 
-                    ScrollView {
+                    ScrollView(.horizontal) {
                         LazyVGrid(columns: [
                             GridItem(.adaptive(minimum: 150), spacing: 10)
                         ], spacing: 20) {
                             ForEach(moodViewModel.items, id: \.self) { mood in
-                                MoodCardView(mood: mood, emoji: moodEmojis[mood] ?? "😊")
+                                IndividualMoodView(mood: mood, emoji: moodEmojis[mood] ?? "😊")
                                     .scaleEffect(selectedMood == mood ? 1.1 : 1.0)
                                     .onTapGesture {
                                         withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {

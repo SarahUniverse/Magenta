@@ -1,5 +1,5 @@
 //
-//  MoodCardView.swift
+//  IndividualMoodView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 2/16/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-struct MoodCardView: View {
+struct IndividualMoodView: View {
     let mood: String
     let emoji: String
     @State private var isHovered = false
@@ -17,16 +17,17 @@ struct MoodCardView: View {
         VStack {
             Text(emoji)
                 .font(.system(size: 50))
-                .padding(.bottom, 5)
+                .padding(.top, 5)
 
             Text(mood)
                 .font(.title3)
                 .foregroundColor(Color(white: 0.4745))
                 .bold(true)
+                .padding(.bottom, 20)
         }
         .frame(width: 140, height: 140)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            Circle()
                 .fill(.ultraThinMaterial)
                 .shadow(radius: isHovered ? 10 : 5)
         )
@@ -39,11 +40,11 @@ struct MoodCardView: View {
 }
 
 #Preview("Light Mode") {
-    MoodCardView(mood: "Excited", emoji: "🤩")
+    IndividualMoodView(mood: "Excited", emoji: "🤩")
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    MoodCardView(mood: "Excited", emoji: "🤩")
+    IndividualMoodView(mood: "Excited", emoji: "🤩")
         .preferredColorScheme(.dark)
 }
