@@ -35,6 +35,7 @@ struct MoodDetailView: View {
     }
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
     MoodDetailView(mood: "Excited")
         .preferredColorScheme(.light)

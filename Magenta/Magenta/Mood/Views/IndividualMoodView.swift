@@ -25,6 +25,13 @@ struct IndividualMoodView: View {
                 .foregroundColor(Color(white: 0.4745))
                 .bold(true)
                 .padding(.bottom, 20)
+
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(.green)
+                    .font(.system(size: 21))
+                    .padding(.bottom, 10)
+            }
         }
         .frame(width: 140, height: 140)
         .background(
@@ -63,6 +70,7 @@ struct IndividualMoodView: View {
     }
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
     IndividualMoodView(mood: "Excited", emoji: "🤩", isSelected: true)
         .preferredColorScheme(.light)

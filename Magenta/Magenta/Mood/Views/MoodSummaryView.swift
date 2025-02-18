@@ -45,6 +45,7 @@ struct MoodSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     MoodSummaryView()
         .preferredColorScheme(.light)

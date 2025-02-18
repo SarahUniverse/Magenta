@@ -74,19 +74,11 @@ struct MoodView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    if let selected = selectedMood {
-                        Text("You're feeling \(selected)")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .padding()
-                            .background(
-                                Capsule()
-                                    .fill(.ultraThinMaterial)
-                            )
-                            .transition(.move(edge: .bottom))
-                    }
                     Spacer()
+                    MoodChartView()
+                        .padding(.horizontal, 5)
                 }
+
             }
             .navigationTitle("Mood Tracker")
             .toolbar {
@@ -105,9 +97,6 @@ struct MoodView: View {
                     isAnimating = true
                 }
             }
-           /* .sheet(isPresented: $showingMoodDetail) {
-                MoodDetailView(mood: selectedMood ?? "")
-            }*/
         }
     }
 }
@@ -128,6 +117,7 @@ extension MoodView {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     let context = MoodView.createPreviewContext()
     return MoodView(viewContext: context)
