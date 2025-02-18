@@ -37,7 +37,7 @@ struct MeditateView: View {
             ScrollView(.vertical) {
                 meditationSessionsList
             }
-            .navigationTitle("Meditate")
+            .navigationTitle("Chill and Meditate")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {

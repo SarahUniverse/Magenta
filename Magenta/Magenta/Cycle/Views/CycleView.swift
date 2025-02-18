@@ -26,7 +26,7 @@ struct CycleView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Cycle")
+            .navigationTitle("Track My Cycle")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {

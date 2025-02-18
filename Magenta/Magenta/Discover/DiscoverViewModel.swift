@@ -51,28 +51,28 @@ final class DiscoverViewModel: ObservableObject {
         switch item.title {
         case "Art Therapy":
             ArtTherapyView(viewContext: viewContext)
-        case "Books that Help Me":
+        case "Books":
             BooksView(viewContext: viewContext)
-        case "Get Up and Move":
+        case "Exercise":
             ExerciseView()
          // TODO: Add back
-        // case "My Thoughts":
+        // case "Journal":
             // JournalView(viewContext: viewContext)
-        case "Sleep or Nightmare Time?":
+        case "Sleep":
             SleepView()
-        case "What's My Mood?":
+        case "Mood Tracker":
             MoodView(viewContext: viewContext)
-        case "Nutrition Matters":
+        case "Nutrition":
             NutritionView()
-        case "Mental Health Playlists":
+        case "Playlists":
             PlaylistsView()
-        case "Quotes that Move Me":
+        case "Quotes":
             QuotesView()
-        case "Professional Help Search":
+        case "Professional Help":
             TherapistSearchView()
-        case "Time to Chill and Meditate":
+        case "Meditate":
             MeditateView(viewContext: viewContext)
-        case "Track My Cycle":
+        case "Cycle":
             CycleView()
         default:
             Text("View Not Found")
@@ -89,57 +89,57 @@ final class DiscoverViewModel: ObservableObject {
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "pencil.and.scribble"),
-                title: "My Thoughts",
+                title: "Journal",
                 iconColor: .blue
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "figure.run"),
-                title: "Get Up and Move",
+                title: "Exercise",
                 iconColors: [.yellow, .orange, .red]
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "moon.zzz.fill").symbolRenderingMode(.palette),
-                title: "Sleep or Nightmare Time?",
+                title: "Sleep",
                 iconColors: [.mediumBlue, .indigo]
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "theatermasks.fill").symbolRenderingMode(.palette),
-                title: "What's My Mood?",
+                title: "Mood Tracker",
                 iconColors: [.yellow, .blue]
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "fork.knife"),
-                title: "Nutrition Matters",
+                title: "Nutrition",
                 iconColor: .green
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "books.vertical"),
-                title: "Books that Help Me",
+                title: "Books",
                 iconColor: .brown
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "music.note.list"),
-                title: "Mental Health Playlists",
+                title: "Playlists",
                 iconColor: .hotPink
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "text.quote"),
-                title: "Quotes that Move Me",
+                title: "Quotes",
                 iconColors: [.gray, .yellow]
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "brain.head.profile"),
-                title: "Professional Help Search",
+                title: "Professional Help",
                 iconColor: .teal
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "figure.mind.and.body"),
-                title: "Time to Chill and Meditate",
+                title: "Meditate",
                 iconColors: [.cyan, .darkBlue]
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "calendar.badge.clock"),
-                title: "Track My Cycle",
+                title: "Cycle",
                 iconColor: .pink
             )
         ]

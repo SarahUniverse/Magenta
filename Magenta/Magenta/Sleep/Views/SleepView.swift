@@ -27,7 +27,7 @@ struct SleepView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Sleep")
+            .navigationTitle("Sleep or Nightmare Time?")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {

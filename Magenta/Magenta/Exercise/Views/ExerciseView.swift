@@ -27,7 +27,7 @@ struct ExerciseView: View {
             List {
                 Text("Step Count: \(exerciseViewModel.stepCount)")
             }
-            .navigationTitle("Exercise")
+            .navigationTitle("Get Up and Move")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {

@@ -26,7 +26,7 @@ struct QuotesView: View {
             List {
                 Text("Hello, World!")
             }
-            .navigationTitle("Helpful Quotes")
+            .navigationTitle("Quotes that Move Me")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {

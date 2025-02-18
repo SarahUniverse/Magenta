@@ -69,7 +69,7 @@ struct JournalView: View {
 
                 journalEntryList
             }
-            .navigationTitle("Journal")
+            .navigationTitle("My Thoughts")
             .background(backgroundGradient)
             .scrollContentBackground(.hidden)
             .navigationBarItems(trailing:
