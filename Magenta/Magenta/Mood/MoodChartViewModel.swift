@@ -41,7 +41,7 @@ final class MoodChartViewModel: ObservableObject {
         case 2.0: return "Sad"
         case 1.5: return "Anxious"
         case 1.0: return "Angry"
-        case 0.5: return "Heavy Grief"
+        case 0.5: return "Grief"
         default: return ""
         }
     }

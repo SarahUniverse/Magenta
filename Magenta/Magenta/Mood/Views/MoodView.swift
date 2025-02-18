@@ -44,7 +44,7 @@ struct MoodView: View {
         "Sad": "😢",
         "Anxious": "😰",
         "Angry": "😡",
-        "Heavy Grief": "🧌"
+        "Grief": "🧌"
     ]
 
     // MARK: - Private Views
