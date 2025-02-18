@@ -41,55 +41,71 @@ struct MoodView: View {
         "Heavy Grief": "🧌"
     ]
 
+    // MARK: - Private Views
+    private var titleText: some View {
+        Text("How are you feeling today?")
+            .font(.title2)
+            .fontWeight(.bold)
+            .opacity(isAnimating ? 1 : 0)
+            .offset(y: isAnimating ? 0 : -20)
+            .padding(.top, 40)
+    }
+
+    private var moodScrollView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                HStack(spacing: 15) {
+                    ForEach(moodViewModel.items, id: \.self) { mood in
+                        IndividualMoodView(
+                            mood: mood,
+                            emoji: moodEmojis[mood] ?? "😊",
+                            isSelected: selectedMood == mood
+                        )
+                        .onTapGesture {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                selectedMood = mood
+                                showingMoodDetail = true
+                            }
+                        }
+                    }
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var profileButton: some View {
+        Button(action: {
+            // Add profile action
+        }, label: {
+            Image(systemName: "person.circle")
+                .font(.title2)
+                .foregroundColor(.white)
+        })
+    }
+
+    private var mainContent: some View {
+        VStack(spacing: 20) {
+            titleText
+            moodScrollView
+            Spacer()
+            MoodChartView()
+        }
+    }
+
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundGradient
                     .ignoresSafeArea()
-                VStack(spacing: 20) {
-                    Text("How are you feeling today?")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .opacity(isAnimating ? 1 : 0)
-                        .offset(y: isAnimating ? 0 : -20)
-                        .padding(.top, 40)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 0) {
-                            HStack(spacing: 15) {
-                                ForEach(moodViewModel.items, id: \.self) { mood in
-                                    IndividualMoodView(
-                                        mood: mood,
-                                        emoji: moodEmojis[mood] ?? "😊",
-                                        isSelected: selectedMood == mood
-                                    )
-                                    .onTapGesture {
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                            selectedMood = mood
-                                            showingMoodDetail = true
-                                        }
-                                    }
-                                }
-                            }
-                            .padding()
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    Spacer()
-                    MoodChartView()
-                        .padding(.horizontal, 5)
-                }
-
+                mainContent
             }
             .navigationTitle("Mood Tracker")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Add profile action
-                    }, label: {
-                        Image(systemName: "person.circle")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                    })
+                    profileButton
                 }
             }
             .onAppear {

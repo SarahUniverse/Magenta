@@ -12,7 +12,7 @@ struct MoodChartView: View {
     @StateObject private var viewModel = MoodChartViewModel()
 
     var body: some View {
-        VStack(alignment:.center) {
+        VStack(alignment: .center) {
             Text("Mood Overview")
                 .font(.title2)
                 .fontWeight(.bold)
@@ -61,7 +61,6 @@ struct MoodChartView: View {
         }
         .cornerRadius(20)
         .shadow(radius: 10)
-        .padding()
     }
 }
 
