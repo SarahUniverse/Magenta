@@ -13,7 +13,7 @@ struct MoodChartView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            Text("Mood Overview")
+            Text("Weekly Mood Overview")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding()
