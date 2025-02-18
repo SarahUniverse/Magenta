@@ -203,11 +203,11 @@ struct MoodView: View {
             ZStack {
                 backgroundGradient
                     .ignoresSafeArea()
-
                 ScrollView {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 10) {
                         moodSection
                         chartSection
+                        Spacer()
                     }
                     .padding(.top)
                 }
@@ -228,23 +228,6 @@ private struct AnimationConstants {
     static let appearDelay = 0.3
     static let springResponse = 0.5
     static let springDamping = 0.65
-}
-
-struct GlassBackground: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(.ultraThinMaterial)
-                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
-            }
-    }
-}
-
-extension View {
-    func glassBackground() -> some View {
-        modifier(GlassBackground())
-    }
 }
 
 // MARK: - Previews
