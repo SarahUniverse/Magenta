@@ -1,5 +1,5 @@
 //
-//  DailyMoodModel.swift
+//  MoodModel.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 2/17/25.
@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-struct DailyMoodModel: Identifiable {
+struct MoodModel: Identifiable {
     let id: UUID
     let mood: String
     let moodDate: Date

@@ -13,8 +13,9 @@ struct MoodView: View {
     @State private var isAnimating = false
     @State private var selectedMood: String?
     @State private var showingMoodDetail = false
-    @State private var hasMoodBeenLoggedToday = false
+    @State private var moodHasBeenLoggedToday = false
     @Environment(\.colorScheme) var colorScheme
+    @State private var currentMoodText = "How are you feeling today?"
 
     // MARK: - Animations
     @State private var moodSectionOffset: CGFloat = 30
@@ -61,7 +62,7 @@ struct MoodView: View {
 
     // MARK: - Private Views
     private var titleText: some View {
-        Text("How are you feeling today?")
+        Text(currentMoodText)
             .font(.title2)
             .fontWeight(.bold)
             .opacity(isAnimating ? 1 : 0)
@@ -83,7 +84,8 @@ struct MoodView: View {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                                 selectedMood = mood
                                 showingMoodDetail = true
-                                hasMoodBeenLoggedToday = true
+                                moodHasBeenLoggedToday = true
+                                currentMoodText = "Today's mood is: \(mood)"
                             }
                         }
                     }
