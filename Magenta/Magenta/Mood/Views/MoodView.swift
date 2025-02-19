@@ -13,6 +13,7 @@ struct MoodView: View {
     @State private var isAnimating = false
     @State private var selectedMood: String?
     @State private var showingMoodDetail = false
+    @State private var isShowingAlert = false
     @Environment(\.colorScheme) var colorScheme
 
     // MARK: - Animations
@@ -82,6 +83,7 @@ struct MoodView: View {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                                 selectedMood = mood
                                 showingMoodDetail = true
+                                isShowingAlert = true
                             }
                         }
                     }
@@ -89,6 +91,11 @@ struct MoodView: View {
                 .padding()
             }
             .frame(maxWidth: .infinity)
+        }
+        .alert(isPresented: $isShowingAlert) {
+            Alert (title: Text("Mood logged"),
+                   message: Text("Your mood has been logged for today."),
+                   dismissButton: .default(Text("OK")))
         }
     }
 
