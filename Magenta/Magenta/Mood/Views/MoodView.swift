@@ -114,7 +114,7 @@ struct MoodView: View {
     }
 
     private var mainContent: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             Spacer()
             titleText
             moodScrollView
@@ -195,6 +195,7 @@ struct MoodView: View {
                     .blur(radius: 1)
                     .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
             }
+            .padding(.top, 10)
     }
 
     // MARK: - Main View
