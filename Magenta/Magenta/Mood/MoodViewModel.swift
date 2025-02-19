@@ -22,12 +22,23 @@ final class MoodViewModel: ObservableObject {
             "Excited",
             "Happy",
             "Calm",
+            "Curious",
+            "Relieved",
+            "Loved",
+            "Dread",
+            "Vulnerable",
+            "Surprised",
             "Neutral",
             "Tired",
+            "Stressed",
             "Sad",
             "Anxious",
-            "Angry",
-            "Grief"
+            "Worry",
+            "Grief",
+            "Fear",
+            "Heartbreak",
+            "Lonely",
+            "Angry"
         ]
     }
 

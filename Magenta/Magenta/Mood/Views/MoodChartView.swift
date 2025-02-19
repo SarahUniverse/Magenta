@@ -16,7 +16,7 @@ struct MoodChartView: View {
             Chart {
                 ForEach(viewModel.dailyMoods) { daily in
                     LineMark(
-                        x: .value("Date", daily.date),
+                        x: .value("Date", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
                     )
                     .interpolationMethod(.catmullRom)
@@ -25,7 +25,7 @@ struct MoodChartView: View {
                     .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.5)]))
 
                     AreaMark(
-                        x: .value("Date", daily.date),
+                        x: .value("Date", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
                     )
                     .interpolationMethod(.catmullRom)
