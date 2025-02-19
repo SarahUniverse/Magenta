@@ -35,7 +35,7 @@ struct MoodChartView: View {
             .frame(height: 300)
             .chartYScale(domain: 0...10)
             .chartYAxis {
-                AxisMarks(values: [1.0, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
+                AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
                     AxisGridLine()
                     AxisTick()
                     AxisValueLabel {
