@@ -14,7 +14,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - Authentication - Supports Apple Sign-In, Google Sign-In, Face ID and traditional username/email sign in.
 
 ## Back-End Technical Details:
-- To be added
+- Go
 
 ## Features
 
