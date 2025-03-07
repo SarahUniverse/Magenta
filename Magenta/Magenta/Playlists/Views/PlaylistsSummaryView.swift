@@ -37,6 +37,7 @@ struct PlaylistsSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     PlaylistsSummaryView()
         .preferredColorScheme(.light)

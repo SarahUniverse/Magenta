@@ -38,6 +38,7 @@ struct ArtTherapySummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     ArtTherapySummaryView()
         .preferredColorScheme(.light)

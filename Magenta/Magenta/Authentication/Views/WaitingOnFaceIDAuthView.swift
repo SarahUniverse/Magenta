@@ -36,6 +36,7 @@ struct WaitingOnFaceIDAuthView: View {
     }
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
     WaitingOnFaceIDAuthView()
         .preferredColorScheme(.light)

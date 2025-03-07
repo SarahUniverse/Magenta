@@ -246,7 +246,7 @@ private struct AnimationConstants {
     static let springDamping = 0.65
 }
 
-// MARK: - Previews
+// MARK: - Preview Helpers
 extension MoodView {
     static func createPreviewContext() -> NSManagedObjectContext {
         let container = NSPersistentContainer(name: "DataModel")

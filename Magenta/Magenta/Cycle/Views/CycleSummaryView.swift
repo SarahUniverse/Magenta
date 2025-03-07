@@ -38,6 +38,7 @@ struct CycleSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     CycleSummaryView()
         .preferredColorScheme(.light)

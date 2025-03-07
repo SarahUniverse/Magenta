@@ -44,6 +44,7 @@ struct ExerciseSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     ExerciseSummaryView()
         .preferredColorScheme(.light)

@@ -71,6 +71,13 @@ struct PrivacySettingsView: View {
     }
 }
 
-#Preview {
+// MARK: - Previews
+#Preview("Light Mode") {
     PrivacySettingsView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    PrivacySettingsView()
+        .preferredColorScheme(.dark)
 }

@@ -37,6 +37,7 @@ struct TherapistSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     TherapistSummaryView()
         .preferredColorScheme(.light)

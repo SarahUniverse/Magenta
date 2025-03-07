@@ -44,6 +44,7 @@ struct QuotesSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     BooksSummaryView()
         .preferredColorScheme(.light)

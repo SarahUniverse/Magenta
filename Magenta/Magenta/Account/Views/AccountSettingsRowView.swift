@@ -21,6 +21,7 @@ struct SettingsRowView: View {
     }
 }
 
+// MARK: Previews
 #Preview("Light Mode") {
     SettingsRowView(icon: "doc.text.fill", title: "Privacy Policy", color: .gray)
         .preferredColorScheme(.light)

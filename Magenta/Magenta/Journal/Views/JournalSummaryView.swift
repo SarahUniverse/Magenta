@@ -38,6 +38,7 @@ struct JournalSummaryView: View {
     }
 }
 
+// MARK: - Previews
 #Preview ("Light Mode") {
     JournalSummaryView()
         .preferredColorScheme(.light)

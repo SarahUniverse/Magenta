@@ -133,6 +133,7 @@ struct EditPinnedView: View {
     }
 }
 
+// MARK: Previews
 #Preview("Light Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]

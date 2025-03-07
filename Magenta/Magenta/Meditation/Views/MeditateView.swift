@@ -213,7 +213,7 @@ struct MeditateView: View {
 
 }
 
-// MARK: - Preview
+// MARK: - Previews
 #Preview ("Light Mode") {
     let context = PersistenceController.preview.container.viewContext
     return MeditateView(viewContext: context)

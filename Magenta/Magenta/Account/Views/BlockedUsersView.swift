@@ -62,9 +62,17 @@ struct BlockedUsersView: View {
     }
 }
 
-// MARK: - Preview
-#Preview {
+// MARK: - Previews
+#Preview("Light Mode") {
     NavigationStack {
         BlockedUsersView()
+            .preferredColorScheme(.light)
+    }
+}
+
+#Preview("Dark Mode") {
+    NavigationStack {
+        BlockedUsersView()
+            .preferredColorScheme(.dark)
     }
 }

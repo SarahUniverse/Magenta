@@ -48,6 +48,13 @@ struct NotificationSettingsView: View {
     }
 }
 
-#Preview {
+// MARK: - Previews
+#Preview("Light Mode"){
     NotificationSettingsView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode"){
+    NotificationSettingsView()
+        .preferredColorScheme(.dark)
 }
