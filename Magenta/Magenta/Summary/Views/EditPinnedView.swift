@@ -14,9 +14,11 @@ struct EditPinnedView: View {
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
+    @ObservedObject var summaryViewModel: SummaryViewModel
 
-    init(pinnedItems: Binding<[String]>) {
+    init(pinnedItems: Binding<[String]>, summaryViewModel: SummaryViewModel) {
         self._pinnedItems = pinnedItems
+        self.summaryViewModel = summaryViewModel
         self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel(initialPinnedItems: pinnedItems.wrappedValue))
     }
 
@@ -99,6 +101,7 @@ struct EditPinnedView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         updatePinnedItems()
+                        summaryViewModel.savePinnedItems()
                         dismiss()
                     }
                 }
@@ -133,9 +136,15 @@ struct EditPinnedView: View {
 #Preview("Light Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
+        @StateObject private var summaryViewModel: SummaryViewModel
+
+        init() {
+            let context = PersistenceController.preview.container.viewContext
+            _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .light))
+        }
 
         var body: some View {
-            EditPinnedView(pinnedItems: $pinnedItems)
+            EditPinnedView(pinnedItems: $pinnedItems, summaryViewModel: summaryViewModel)
         }
     }
 
@@ -146,9 +155,15 @@ struct EditPinnedView: View {
 #Preview("Dark Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
+        @StateObject private var summaryViewModel: SummaryViewModel
+
+        init() {
+            let context = PersistenceController.preview.container.viewContext
+            _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .dark))
+        }
 
         var body: some View {
-            EditPinnedView(pinnedItems: $pinnedItems)
+            EditPinnedView(pinnedItems: $pinnedItems, summaryViewModel: summaryViewModel)
         }
     }
 

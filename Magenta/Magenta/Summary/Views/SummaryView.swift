@@ -92,7 +92,7 @@ struct SummaryView: View {
                 LoginView(viewContext: summaryViewModel.viewContext)
             }
             .sheet(isPresented: $showEditPinnedView) {
-                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems)
+                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems, summaryViewModel: summaryViewModel)
             }
             .navigationBarTitle("Summary")
             .navigationBarItems(
