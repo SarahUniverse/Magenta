@@ -19,33 +19,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 ## Features
 
 <details>
-<summary><strong>Mood Tracking</strong></summary>
-
-Track your daily mood and identify patterns over time.
-
-### Key Features
-- To Be Added
-
-</details>
-
-<details>
-<summary><strong>Meditations</strong></summary>
-
-Access a library of guided meditations to help you relax and reduce stress.
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Exercise</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Nutrition</strong></summary>
+<summary><strong>Art Therapy</strong></summary>
 
 ### Key Features
 - To Be Added
@@ -61,34 +35,7 @@ Maintain a private journal to express your thoughts and feelings using suggestio
 </details>
 
 <details>
-<summary><strong>Therapist Search</strong></summary>
-
-Find nearby mental health professionals using this API: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Mental Health Playlists</strong></summary>
-
-Curate Music playlists using Apple's MusicKit framework.
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Helpful Quotes</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Cycle Tracking</strong></summary>
-
-For females to track their period cycle using HealthKit because fluctuating hormones can have a huge effect on mental health.
+<summary><strong>Exercise</strong></summary>
 
 ### Key Features
 - To Be Added
@@ -102,7 +49,17 @@ For females to track their period cycle using HealthKit because fluctuating horm
 </details>
 
 <details>
-<summary><strong>Art Therapy</strong></summary>
+<summary><strong>Mood Tracking</strong></summary>
+
+Track your daily mood and identify patterns over time.
+
+### Key Features
+- To Be Added
+
+</details>
+
+<details>
+<summary><strong>Nutrition</strong></summary>
 
 ### Key Features
 - To Be Added
@@ -122,6 +79,48 @@ A curated digital bookshelf designed to support mental health and personal growt
 
 </details>
 
+<details>
+<summary><strong>Mental Health Playlists</strong></summary>
+
+Curate Music playlists using Apple's MusicKit framework.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Helpful Quotes</strong></summary>
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Therapist Search</strong></summary>
+
+Find nearby mental health professionals using this API: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Meditations</strong></summary>
+
+Access a library of guided meditations to help you relax and reduce stress.
+
+### Key Features
+- To Be Added
+</details>
+
+<details>
+<summary><strong>Cycle Tracking</strong></summary>
+
+For females to track their period cycle using HealthKit because fluctuating hormones can have a huge effect on mental health.
+
+### Key Features
+- To Be Added
+</details>
 
 ## License
 Proprietary Software
