@@ -12,14 +12,14 @@ import SwiftUI
 struct MoodChartView: View {
     @StateObject private var moodChartViewModel: MoodChartViewModel
 
-    init(viewContext: NSManagedObjectContext, moodViewModel: MoodViewModel) {
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(moodViewModel: moodViewModel))
+    init(viewContext: NSManagedObjectContext) {
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
     }
 
     var body: some View {
         VStack(alignment: .center) {
             Chart {
-                ForEach(moodChartViewModel.dailyMoods) { daily in
+                ForEach(moodChartViewModel.moods) { daily in
                     LineMark(
                         x: .value("Date", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
@@ -84,13 +84,13 @@ extension MoodChartView {
 #Preview("Light Mode") {
     let context = MoodChartView.createPreviewContext()
     let moodViewModel = MoodViewModel(viewContext: context)
-    return MoodChartView(viewContext: context, moodViewModel: moodViewModel)
+    return MoodChartView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
     let context = MoodChartView.createPreviewContext()
     let moodViewModel = MoodViewModel(viewContext: context)
-    return MoodChartView(viewContext: context, moodViewModel: moodViewModel)
+    return MoodChartView(viewContext: context)
         .preferredColorScheme(.dark)
 }

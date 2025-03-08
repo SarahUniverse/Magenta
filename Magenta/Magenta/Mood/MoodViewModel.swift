@@ -16,7 +16,6 @@ final class MoodViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         setupInitialData()
-        fetchMoodsFromCoreData()
     }
 
     func saveMoodToCoreData(mood: String, emoji: String) {
@@ -26,6 +25,13 @@ final class MoodViewModel: ObservableObject {
         newMood.moodEmoji = emoji
         newMood.moodDate = Date()
         newMood.moodValue = moodValue(for: mood)
+
+        do {
+            try viewContext.save()
+            print("Mood saved: \(mood)")
+        } catch {
+            print("Failed to save mood: \(error)")
+        }
     }
 
     // MARK: Private Functions
@@ -52,16 +58,6 @@ final class MoodViewModel: ObservableObject {
             "Lonely",
             "Angry"
         ]
-    }
-
-    private func fetchMoodsFromCoreData() {
-        let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
-        do {
-            let entities = try viewContext.fetch(request)
-            moods = entities.map { MoodModel(entity: $0) }
-        } catch {
-            print("Error fetching moods from Core Data: \(error)")
-        }
     }
 
     private func moodValue(for mood: String) -> Double {

@@ -11,20 +11,26 @@ import Foundation
 import SwiftUI
 
 final class MoodChartViewModel: ObservableObject {
-    @Published var dailyMoods: [MoodModel] = []
-    private let moodViewModel: MoodViewModel
+    @Published var moods: [MoodModel] = []
+    private let viewContext: NSManagedObjectContext
 
-    init(moodViewModel: MoodViewModel) {
-        self.moodViewModel = moodViewModel
-        loadMoodData()
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        fetchMoodsFromCoreData()
     }
 
     func refreshChart() {
-        loadMoodData()
+        fetchMoodsFromCoreData()
     }
 
-    private func loadMoodData() {
-        dailyMoods = moodViewModel.moods
+    private func fetchMoodsFromCoreData() {
+        let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
+        do {
+            let entities = try viewContext.fetch(request)
+            moods = entities.map { MoodModel(entity: $0) }
+        } catch {
+            print("Error fetching moods from Core Data: \(error)")
+        }
     }
 
     func getMoodLabel(for value: Double) -> String {

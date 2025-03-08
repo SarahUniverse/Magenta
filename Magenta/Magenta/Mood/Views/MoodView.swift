@@ -26,7 +26,7 @@ struct MoodView: View {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(moodViewModel: MoodViewModel(viewContext: viewContext)))
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
@@ -121,7 +121,7 @@ struct MoodView: View {
             .padding(.horizontal)
             .padding(.top)
 
-            MoodChartView(viewContext: viewContext, moodViewModel: moodViewModel)
+            MoodChartView(viewContext: viewContext)
                 .padding(.horizontal, 5)
                 .onChange(of: moodViewModel.moods) {
                     // Refresh chart when moods change{
@@ -141,7 +141,7 @@ struct MoodView: View {
             Spacer()
             titleText
             moodScrollView
-            MoodChartView(viewContext: viewContext, moodViewModel: moodViewModel)
+            MoodChartView(viewContext: viewContext)
             Spacer()
             Spacer()
         }
@@ -243,6 +243,9 @@ struct MoodView: View {
                 }
             }
             .onAppear(perform: animateContent)
+            .onAppear {
+                moodChartViewModel.refreshChart()
+            }
         }
     }
 
