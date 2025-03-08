@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-struct MoodModel: Identifiable {
+struct MoodModel: Identifiable, Equatable {
     let id: UUID
     let mood: String
     let moodDate: Date

@@ -16,14 +16,17 @@ struct MoodView: View {
     @State private var moodHasBeenLoggedToday = false
     @Environment(\.colorScheme) var colorScheme
     @State private var currentMoodText = "How are you feeling today?"
-
+    @StateObject private var moodChartViewModel: MoodChartViewModel
     // MARK: - Animations
     @State private var moodSectionOffset: CGFloat = 30
     @State private var chartSectionOffset: CGFloat = 30
     @State private var opacity: Double = 0
+    let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
         _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
@@ -86,6 +89,7 @@ struct MoodView: View {
                                 showingMoodDetail = true
                                 moodHasBeenLoggedToday = true
                                 currentMoodText = "Today's mood is: \(mood)"
+                                moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊")
                             }
                         }
                     }
@@ -117,8 +121,12 @@ struct MoodView: View {
             .padding(.horizontal)
             .padding(.top)
 
-            MoodChartView()
+            MoodChartView(viewContext: viewContext, moodViewModel: moodViewModel)
                 .padding(.horizontal, 5)
+                .onChange(of: moodViewModel.moods) {
+                    // Refresh chart when moods change{
+                    moodChartViewModel.refreshChart()
+                }
         }
         .background {
             glassBackground
@@ -133,7 +141,7 @@ struct MoodView: View {
             Spacer()
             titleText
             moodScrollView
-            MoodChartView()
+            MoodChartView(viewContext: viewContext, moodViewModel: moodViewModel)
             Spacer()
             Spacer()
         }
@@ -263,7 +271,7 @@ extension MoodView {
 }
 
 // MARK: - Previews
-#Preview ("Light Mode") {
+#Preview("Light Mode") {
     let context = MoodView.createPreviewContext()
     return MoodView(viewContext: context)
         .environment(\.managedObjectContext, context)

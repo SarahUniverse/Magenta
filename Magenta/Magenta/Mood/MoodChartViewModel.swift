@@ -6,28 +6,25 @@
 //
 
 import Charts
+import CoreData
 import Foundation
+import SwiftUI
 
 final class MoodChartViewModel: ObservableObject {
     @Published var dailyMoods: [MoodModel] = []
+    @StateObject private var moodViewModel: MoodViewModel
 
-    init() {
+    init(viewContext: NSManagedObjectContext) {
+        _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
+        loadMoodData()
+    }
+
+    func refreshChart() {
         loadMoodData()
     }
 
     private func loadMoodData() {
-        // Sample data - replace with your actual data source
-        let lastWeek = [
-        MoodModel(id: UUID(), mood: "Happy", moodDate: Calendar.current.date(byAdding: .day, value: -6, to: Date())!, moodValue: 9.0, moodEmoji: "😊"),
-        MoodModel(id: UUID(), mood: "Excited", moodDate: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, moodValue: 10.0, moodEmoji: "🤩"),
-        MoodModel(id: UUID(), mood: "Neutral", moodDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, moodValue: 6.0, moodEmoji: "😐"),
-        MoodModel(id: UUID(), mood: "Sad", moodDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, moodValue: 2.5, moodEmoji: "😢"),
-        MoodModel(id: UUID(), mood: "Happy", moodDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, moodValue: 9.0, moodEmoji: "😊"),
-        MoodModel(id: UUID(), mood: "Calm", moodDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, moodValue: 7.5, moodEmoji: "😌"),
-        MoodModel(id: UUID(), mood: "Excited", moodDate: Date(), moodValue: 10.0, moodEmoji: "🤩")
-        ]
-
-        dailyMoods = lastWeek
+        dailyMoods = moodViewModel.moods
     }
 
     func getMoodLabel(for value: Double) -> String {

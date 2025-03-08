@@ -6,15 +6,20 @@
 //
 
 import Charts
+import CoreData
 import SwiftUI
 
 struct MoodChartView: View {
-    @StateObject private var viewModel = MoodChartViewModel()
+    @StateObject private var moodChartViewModel: MoodChartViewModel
+
+    init(viewContext: NSManagedObjectContext, moodViewModel: MoodViewModel) {
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
+    }
 
     var body: some View {
         VStack(alignment: .center) {
             Chart {
-                ForEach(viewModel.dailyMoods) { daily in
+                ForEach(moodChartViewModel.dailyMoods) { daily in
                     LineMark(
                         x: .value("Date", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
@@ -40,7 +45,7 @@ struct MoodChartView: View {
                     AxisTick()
                     AxisValueLabel {
                         if let doubleValue = value.as(Double.self) {
-                            Text(viewModel.getMoodLabel(for: doubleValue))
+                            Text(moodChartViewModel.getMoodLabel(for: doubleValue))
                         }
                     }
                 }
@@ -59,13 +64,33 @@ struct MoodChartView: View {
     }
 }
 
+// MARK: - Preview Helper
+extension MoodChartView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel") // Replace with your Core Data model name
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+
+        return container.viewContext
+    }
+}
+
 // MARK: - Previews
 #Preview("Light Mode") {
-        MoodChartView()
+    let context = MoodChartView.createPreviewContext()
+    let moodViewModel = MoodViewModel(viewContext: context)
+    return MoodChartView(viewContext: context, moodViewModel: moodViewModel)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    MoodChartView()
+    let context = MoodChartView.createPreviewContext()
+    let moodViewModel = MoodViewModel(viewContext: context)
+    return MoodChartView(viewContext: context, moodViewModel: moodViewModel)
         .preferredColorScheme(.dark)
 }
