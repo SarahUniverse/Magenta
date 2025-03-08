@@ -15,6 +15,7 @@ final class MoodViewModel: ObservableObject {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        setupInitialData()
         fetchMoodsFromCoreData()
     }
 
@@ -28,6 +29,31 @@ final class MoodViewModel: ObservableObject {
     }
 
     // MARK: Private Functions
+    private func setupInitialData() {
+        items = [
+            "Excited",
+            "Happy",
+            "Calm",
+            "Curious",
+            "Relieved",
+            "Loved",
+            "Dread",
+            "Vulnerable",
+            "Surprised",
+            "Neutral",
+            "Tired",
+            "Stressed",
+            "Sad",
+            "Anxious",
+            "Worry",
+            "Grief",
+            "Fear",
+            "Heartbreak",
+            "Lonely",
+            "Angry"
+        ]
+    }
+
     private func fetchMoodsFromCoreData() {
         let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
         do {
