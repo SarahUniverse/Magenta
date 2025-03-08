@@ -26,7 +26,7 @@ struct MoodView: View {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(moodViewModel: MoodViewModel(viewContext: viewContext)))
     }
 
     let backgroundGradient = LinearGradient(
@@ -278,7 +278,7 @@ extension MoodView {
         .preferredColorScheme(.light)
 }
 
-#Preview ("Dark Mode") {
+#Preview("Dark Mode") {
     let context = MoodView.createPreviewContext()
     return MoodView(viewContext: context)
         .environment(\.managedObjectContext, context)

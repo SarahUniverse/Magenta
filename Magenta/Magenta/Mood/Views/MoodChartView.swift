@@ -13,7 +13,7 @@ struct MoodChartView: View {
     @StateObject private var moodChartViewModel: MoodChartViewModel
 
     init(viewContext: NSManagedObjectContext, moodViewModel: MoodViewModel) {
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
+        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(moodViewModel: moodViewModel))
     }
 
     var body: some View {

@@ -12,10 +12,10 @@ import SwiftUI
 
 final class MoodChartViewModel: ObservableObject {
     @Published var dailyMoods: [MoodModel] = []
-    @StateObject private var moodViewModel: MoodViewModel
+    private let moodViewModel: MoodViewModel
 
-    init(viewContext: NSManagedObjectContext) {
-        _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
+    init(moodViewModel: MoodViewModel) {
+        self.moodViewModel = moodViewModel
         loadMoodData()
     }
 

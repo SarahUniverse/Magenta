@@ -32,7 +32,7 @@ final class MoodViewModel: ObservableObject {
         let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
         do {
             let entities = try viewContext.fetch(request)
-            moods = entities.map { MoodModel (entity: $0)}
+            moods = entities.map { MoodModel(entity: $0) }
         } catch {
             print("Error fetching moods from Core Data: \(error)")
         }
