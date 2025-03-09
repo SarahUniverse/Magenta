@@ -125,54 +125,80 @@ For females to track their period cycle using HealthKit because fluctuating horm
 
 ## Project Roadmap
 
-Below is the development plan and subsequent phases for Magenta, leading up to the app's release on August 25th, 2025.
+Below is the development plan and subsequent phases for Magenta, leading up to the app's release on July 28th, 2025.
 
 ### Development Phase
 - **Tasks**:
   - **March 10th**: Mood Tracker
-  - **March 17th**: Quotes
+  - **March 17th**: Helpful Quotes
   - **March 24th**: Sleep
   - **March 31st**: Exercise
   - **April 7th**: Nutrition
-  - **April 14th**: Playlists
-  - **April 21st**: Cycle
+  - **April 14th**: Mental Health Playlists
+  - **April 21st**: Cycle Tracking
   - **April 28th**: Art Therapy
-  - **May 5th**: Books  
-  - **May 12th**: Journal 
-  - **May 19th**: Meditate 
-  - **May 26th**: Professional Help 
-  - **June 2nd**: Watch 
-  - **June 9th**: Account  
+  - **May 5th**: Books that Help Me
+  - **May 12th**: Journal
+  - **May 19th**: Meditations
+  - **May 26th**: Therapist Search
+  - **June 2nd**: Apple Watch Integration
+  - **June 9th**: Account Setup
   - **June 16th**: Authentication
-  - **June 23rd**: Backend
+  - **June 23rd**: Backend Integration
 - **Deliverable**: Individual feature modules completed and unit tested.
 
 ### Integration Phase
 - **Start Date**: June 30th, 2025  
-- **End Date**: August 4th, 2025  
+- **End Date**: July 7th, 2025  
 - **Duration**: 1 week  
 - **Tasks**:
-  - June 24th - June 26th: Combine all features into a cohesive app.  
-  - June 27th - June 30th: Test initial integration and resolve conflicts.  
+  - Combine all features into a cohesive app.  
+  - Test initial integration and resolve conflicts.  
 - **Deliverable**: Fully integrated app prototype.
 
 ### Testing Phase
-- **Start Date**: August 4th, 2025  
-- **End Date**: August 18th, 2025  
+- **Start Date**: July 7th, 2025  
+- **End Date**: July 21st, 2025  
 - **Duration**: ~2 weeks  
 - **Tasks**:
-   User testing, performance testing, UI/UX validation, bug tracking, network testing, accessibility testing and resolution.  
+  - User testing, performance testing, UI/UX validation, bug tracking, network testing, accessibility testing, and resolution.  
 - **Deliverable**: Stable app with minimal bugs.
 
 ### Release Preparation and Deployment Phase
-- **Start Date**: August 18th, 2025  
-- **End Date**: August 25th, 2025  
+- **Start Date**: July 21st, 2025  
+- **End Date**: July 28th, 2025  
 - **Duration**: ~1 week
 - **Tasks**:
   - Prepare App Store assets (screenshots, description, icons) and submit for review.  
   - Final testing and approval checks.  
-  - August 25th, 2025: Release app to App Store.  
+  - July 28th, 2025: Release app to App Store.  
 - **Deliverable**: App live on App Store.
+
+### Gantt Chart
+The following table represents the timeline for all features and phases. Each "X" indicates a task being active during that week.
+
+| Task                          | Mar 10 | Mar 17 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
+|-------------------------------|--------|--------|--------|--------|-------|--------|--------|--------|-------|--------|--------|--------|-------|-------|--------|--------|--------|-------|--------|--------|--------|
+| Mood Tracker                 |   X    |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Helpful Quotes               |        |   X    |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Sleep                        |        |        |   X    |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Exercise                     |        |        |        |   X    |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Nutrition                    |        |        |        |        |   X   |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Mental Health Playlists      |        |        |        |        |       |   X    |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Cycle Tracking               |        |        |        |        |       |        |   X    |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Art Therapy                  |        |        |        |        |       |        |        |   X    |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Books that Help Me           |        |        |        |        |       |        |        |        |   X   |        |        |        |       |       |        |        |        |       |        |        |        |
+| Journal                      |        |        |        |        |       |        |        |        |       |   X    |        |        |       |       |        |        |        |       |        |        |        |
+| Meditations                  |        |        |        |        |       |        |        |        |       |        |   X    |        |       |       |        |        |        |       |        |        |        |
+| Therapist Search             |        |        |        |        |       |        |        |        |       |        |        |   X    |       |       |        |        |        |       |        |        |        |
+| Apple Watch Integration      |        |        |        |        |       |        |        |        |       |        |        |        |   X   |       |        |        |        |       |        |        |        |
+| Account Setup                |        |        |        |        |       |        |        |        |       |        |        |        |       |   X   |        |        |        |       |        |        |        |
+| Authentication               |        |        |        |        |       |        |        |        |       |        |        |        |       |       |   X    |        |        |       |        |        |        |
+| Backend Integration          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |   X    |        |       |        |        |        |
+| Integration Phase            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |   X    |       |        |        |        |
+| Testing Phase                |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |   X   |   X    |        |        |
+| Release Preparation          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |   X    |        |
+| App Store Release            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |   X    |
 
 ## License
 Proprietary Software
