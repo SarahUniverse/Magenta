@@ -136,6 +136,9 @@ struct MoodSummaryView: View {
                 .background(glassBackground)
             }
         }
+        .onAppear {
+            moodSummaryViewModel.refreshChart()
+        }
     }
 
     private func getWeekDates() -> [Date] {
