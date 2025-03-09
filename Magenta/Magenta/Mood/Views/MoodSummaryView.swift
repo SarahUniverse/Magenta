@@ -11,6 +11,7 @@ import SwiftUI
 
 struct MoodSummaryView: View {
     @StateObject private var moodSummaryViewModel: MoodSummaryViewModel
+    @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -25,85 +26,115 @@ struct MoodSummaryView: View {
         .blue.opacity(0.3)
     ])
 
+    private var glassBackground: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.ultraThinMaterial)
+            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        LinearGradient(
+                            colors: [
+                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
+                                .white.opacity(0.2)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.5
+                    )
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        .black.opacity(0.1),
+                        lineWidth: 1
+                    )
+                    .blur(radius: 1)
+                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
+            }
+            .padding(.top, 10)
+    }
+
     var body: some View {
         let weekDates = getWeekDates()
 
-        VStack(alignment: .leading, spacing: 10) {
-            Text("MOOD")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundColor(.gray)
+        NavigationLink(destination: MoodView(viewContext: viewContext)) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("MOOD")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(.gray)
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "theatermasks.fill")
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.yellow, .blue],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "theatermasks.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.yellow, .blue],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                    )
-                    .font(.largeTitle)
+                        .font(.largeTitle)
 
-                Chart {
-                    ForEach(moodSummaryViewModel.moods) { daily in
-                        BarMark(
-                            x: .value("Day", daily.moodDate ?? Date(), unit: .day),
-                            y: .value("Mood", daily.moodValue)
-                        )
-                        .foregroundStyle(barGradient)
-                        .cornerRadius(2)
+                    Chart {
+                        ForEach(moodSummaryViewModel.moods) { daily in
+                            BarMark(
+                                x: .value("Day", daily.moodDate ?? Date(), unit: .day),
+                                y: .value("Mood", daily.moodValue)
+                            )
+                            .foregroundStyle(barGradient)
+                            .cornerRadius(2)
+                        }
                     }
-                }
-                .frame(height: 90)
-                .chartYScale(domain: 0...10)
-                .chartXAxis {
-                    AxisMarks(values: weekDates) {
-                        AxisTick(length: 2)
-                        AxisGridLine()
-                        AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
-                            .font(.caption2)
-                            .foregroundStyle(.white)
-                    }
-                }
-                .chartXScale(domain: weekDates.first!...weekDates.last!)
-                .chartYAxis {
-                    AxisMarks(values: [0, 2, 4, 6, 8, 10]) { value in
-                        AxisGridLine()
-                            .foregroundStyle(.gray)
-                        AxisTick(length: 2)
-                        AxisValueLabel {
-                            let moodValue = value.as(Int.self) ?? 0
-                            let moodString: String = {
-                                switch moodValue {
-                                case 0: return "Terrible"
-                                case 2: return "Bad"
-                                case 4: return "Okay"
-                                case 6: return "Good"
-                                case 8: return "Great"
-                                case 10: return "Amazing"
-                                default: return "\(moodValue)"
-                                }
-                            }()
-                            Text(moodString)
+                    .frame(height: 90)
+                    .chartYScale(domain: 0...10)
+                    .chartXAxis {
+                        AxisMarks(values: weekDates) {
+                            AxisTick(length: 2)
+                            AxisGridLine()
+                            AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
                                 .font(.caption2)
                                 .foregroundStyle(.white)
                         }
                     }
+                    .chartXScale(domain: weekDates.first!...weekDates.last!)
+                    .chartYAxis {
+                        AxisMarks(values: [0, 2, 4, 6, 8, 10]) { value in
+                            AxisGridLine()
+                                .foregroundStyle(.gray)
+                            AxisTick(length: 2)
+                            AxisValueLabel {
+                                let moodValue = value.as(Int.self) ?? 0
+                                let moodString: String = {
+                                    switch moodValue {
+                                    case 0: return "Terrible"
+                                    case 2: return "Bad"
+                                    case 4: return "Okay"
+                                    case 6: return "Good"
+                                    case 8: return "Great"
+                                    case 10: return "Amazing"
+                                    default: return "\(moodValue)"
+                                    }
+                                }()
+                                Text(moodString)
+                                    .font(.caption2)
+                                    .foregroundStyle(.white)
+                            }
+                        }
+                    }
+                    .chartPlotStyle { plotArea in
+                        plotArea
+                            .border(Color.gray, width: 1)
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 3)
+                    Spacer()
                 }
-                .chartPlotStyle { plotArea in
-                    plotArea
-                        .border(Color.gray, width: 1)
-                }
-                .padding(.horizontal, 5)
-                .padding(.vertical, 3)
-
-                Spacer()
+                .padding(30)
+                .background(glassBackground)
             }
-            .padding()
-            .background(Color.almostBlack)
-            .cornerRadius(10)
         }
     }
 
@@ -197,8 +228,10 @@ extension MoodSummaryView {
 
     try? context.save()
 
-    return MoodSummaryView(viewContext: context)
-        .preferredColorScheme(.light)
+    return NavigationStack {
+        MoodSummaryView(viewContext: context)
+    }
+    .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
@@ -266,6 +299,8 @@ extension MoodSummaryView {
 
     try? context.save()
 
-    return MoodSummaryView(viewContext: context)
-        .preferredColorScheme(.dark)
+    return NavigationStack {
+        MoodSummaryView(viewContext: context)
+    }
+    .preferredColorScheme(.dark)
 }
