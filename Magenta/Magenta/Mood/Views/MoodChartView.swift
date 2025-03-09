@@ -16,40 +16,28 @@ struct MoodChartView: View {
         self.moodChartViewModel = MoodChartViewModel(viewContext: viewContext)
     }
 
+    // Gradient matching MoodView's theme
+    private let barGradient = Gradient(colors: [
+        .yellow,
+        .yellow.opacity(0.7),
+        .blue.opacity(0.7),
+        .blue.opacity(0.3)
+    ])
+
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             Chart {
                 ForEach(moodChartViewModel.moods) { daily in
-                    LineMark(
+                    BarMark(
                         x: .value("Day", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
                     )
-                    .interpolationMethod(.catmullRom)
-                    .symbol(Circle())
-                    .symbolSize(30)
-                    .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.5)]))
-
-                    AreaMark(
-                        x: .value("Day", daily.moodDate),
-                        y: .value("Mood", daily.moodValue)
-                    )
-                    .interpolationMethod(.catmullRom)
-                    .foregroundStyle(Gradient(colors: [.blue.opacity(0.2), .blue.opacity(0.05)]))
+                    .foregroundStyle(barGradient) // Revert to yellow-to-blue gradient
+                    .cornerRadius(4)
                 }
             }
             .frame(height: 300)
             .chartYScale(domain: 0...10)
-            .chartYAxis {
-                AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    AxisValueLabel {
-                        if let doubleValue = value.as(Double.self) {
-                            Text(moodChartViewModel.getMoodLabel(for: doubleValue))
-                        }
-                    }
-                }
-            }
             .chartXAxis {
                 AxisMarks(values: moodChartViewModel.moods.map { $0.moodDate }) { value in
                     AxisGridLine()
@@ -61,18 +49,32 @@ struct MoodChartView: View {
                     }
                 }
             }
+            .chartYAxis {
+                AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel {
+                        if let doubleValue = value.as(Double.self) {
+                            Text(moodChartViewModel.getMoodLabel(for: doubleValue))
+                        }
+                    }
+                }
+            }
+            .chartPlotStyle { plotArea in
+                plotArea
+                    .border(Color.blue, width: 2)
+            }
             .padding()
         }
-        .cornerRadius(20)
-        .shadow(radius: 10)
+        .frame(maxWidth: .infinity)
     }
 }
 
 // MARK: - Preview Helper
 extension MoodChartView {
     static func createPreviewContext() -> NSManagedObjectContext {
-        let container = NSPersistentContainer(name: "DataModel") // Replace with your Core Data model name
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
         container.loadPersistentStores { _, error in
             if let error = error {
@@ -88,6 +90,46 @@ extension MoodChartView {
 #Preview("Light Mode") {
     let context = MoodChartView.createPreviewContext()
     let chartViewModel = MoodChartViewModel(viewContext: context)
+
+    // Add sample data
+    let sampleMood1 = MoodEntity(context: context)
+    sampleMood1.id = UUID()
+    sampleMood1.mood = "Happy"
+    sampleMood1.moodEmoji = "😊"
+    sampleMood1.moodDate = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    sampleMood1.moodValue = 9.0
+
+    let sampleMood2 = MoodEntity(context: context)
+    sampleMood2.id = UUID()
+    sampleMood2.mood = "Calm"
+    sampleMood2.moodEmoji = "😌"
+    sampleMood2.moodDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+    sampleMood2.moodValue = 6.0
+
+    let sampleMood3 = MoodEntity(context: context)
+    sampleMood3.id = UUID()
+    sampleMood3.mood = "Neutral"
+    sampleMood3.moodEmoji = "😐"
+    sampleMood3.moodDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+    sampleMood3.moodValue = 4.0
+
+    let sampleMood4 = MoodEntity(context: context)
+    sampleMood4.id = UUID()
+    sampleMood4.mood = "Sad"
+    sampleMood4.moodEmoji = "😢"
+    sampleMood4.moodDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+    sampleMood4.moodValue = 2.0
+
+    let sampleMood5 = MoodEntity(context: context)
+    sampleMood5.id = UUID()
+    sampleMood5.mood = "Excited"
+    sampleMood5.moodEmoji = "🤩"
+    sampleMood5.moodDate = Date()
+    sampleMood5.moodValue = 8.0
+
+    try? context.save()
+    chartViewModel.refreshChart()
+
     return MoodChartView(viewContext: context)
         .preferredColorScheme(.light)
         .padding(30)
@@ -96,6 +138,46 @@ extension MoodChartView {
 #Preview("Dark Mode") {
     let context = MoodChartView.createPreviewContext()
     let chartViewModel = MoodChartViewModel(viewContext: context)
+
+    // Add sample data
+    let sampleMood1 = MoodEntity(context: context)
+    sampleMood1.id = UUID()
+    sampleMood1.mood = "Happy"
+    sampleMood1.moodEmoji = "😊"
+    sampleMood1.moodDate = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    sampleMood1.moodValue = 9.0
+
+    let sampleMood2 = MoodEntity(context: context)
+    sampleMood2.id = UUID()
+    sampleMood2.mood = "Calm"
+    sampleMood2.moodEmoji = "😌"
+    sampleMood2.moodDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+    sampleMood2.moodValue = 6.0
+
+    let sampleMood3 = MoodEntity(context: context)
+    sampleMood3.id = UUID()
+    sampleMood3.mood = "Neutral"
+    sampleMood3.moodEmoji = "😐"
+    sampleMood3.moodDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+    sampleMood3.moodValue = 4.0
+
+    let sampleMood4 = MoodEntity(context: context)
+    sampleMood4.id = UUID()
+    sampleMood4.mood = "Sad"
+    sampleMood4.moodEmoji = "😢"
+    sampleMood4.moodDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+    sampleMood4.moodValue = 2.0
+
+    let sampleMood5 = MoodEntity(context: context)
+    sampleMood5.id = UUID()
+    sampleMood5.mood = "Excited"
+    sampleMood5.moodEmoji = "🤩"
+    sampleMood5.moodDate = Date()
+    sampleMood5.moodValue = 8.0
+
+    try? context.save()
+    chartViewModel.refreshChart()
+
     return MoodChartView(viewContext: context)
         .preferredColorScheme(.dark)
         .padding(30)
