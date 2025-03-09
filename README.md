@@ -12,6 +12,7 @@ The inspiration for the app name came from Blance Devereaux's term, "Feeling Mag
 - OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
 - Minimum OS's supported: iOS 18.0, iPadOS 18.0, watchOS tba, visionOS 2.0
 - Authentication - Supports Apple Sign-In, Google Sign-In, Face ID and traditional username/email sign in.
+- TODO: Add Push Notifications and Activities for some of the features
 
 ## Back-End Technical Details:
 - Go
@@ -121,6 +122,57 @@ For females to track their period cycle using HealthKit because fluctuating horm
 ### Key Features
 - To Be Added
 </details>
+
+## Project Roadmap
+
+Below is the development plan and subsequent phases for Magenta, leading up to the app's release on August 25th, 2025.
+
+### Development Phase
+- **Tasks**:
+  _ **March 1oth**: Mood Tracker
+  - **March 17th**: Quotes
+  - **March 24th**: Sleep
+  - **March 31st**: Exercise
+  - **April 7th**: Nutrition
+  - **April 14th**: Playlists
+  - **April 21st**: Cycle
+  - **April 28th**: Art Therapy
+  - **May 5th**: Books  
+  - **May 12th**: Journal 
+  - **May 19th**: Meditate 
+  - **May 26th**: Professional Help 
+  - **June 2nd**: Watch 
+  - **June 9th**: Account  
+  - **June 16th**: Authentication
+  - **June 23rd**: Backend
+- **Deliverable**: Individual feature modules completed and unit tested.
+
+### Integration Phase
+- **Start Date**: June 30th, 2025  
+- **End Date**: August 4th, 2025  
+- **Duration**: 1 week  
+- **Tasks**:
+  - June 24th - June 26th: Combine all features into a cohesive app.  
+  - June 27th - June 30th: Test initial integration and resolve conflicts.  
+- **Deliverable**: Fully integrated app prototype.
+
+### Testing Phase
+- **Start Date**: August 4th, 2025  
+- **End Date**: August 18th, 2025  
+- **Duration**: ~2 weeks  
+- **Tasks**:
+   User testing, performance testing, UI/UX validation, bug tracking, network testing, accessibility testing and resolution.  
+- **Deliverable**: Stable app with minimal bugs.
+
+### Release Preparation and Deployment Phase
+- **Start Date**: August 18th, 2025  
+- **End Date**: August 25th, 2025  
+- **Duration**: ~1 week
+- **Tasks**:
+  - Prepare App Store assets (screenshots, description, icons) and submit for review.  
+  - Final testing and approval checks.  
+  - August 25th, 2025: Release app to App Store.  
+- **Deliverable**: App live on App Store.
 
 ## License
 Proprietary Software
