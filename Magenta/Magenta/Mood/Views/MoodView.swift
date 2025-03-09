@@ -84,14 +84,22 @@ struct MoodView: View {
                             isSelected: selectedMood == mood
                         )
                         .onTapGesture {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                selectedMood = mood
-                                showingMoodDetail = true
-                                moodHasBeenLoggedToday = true
-                                currentMoodText = "Today's mood is: \(mood)"
-                                moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊")
+                            let canLogMood = !moodViewModel.hasMoodForToday() // Explicit Bool
+                            if canLogMood {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                    selectedMood = mood
+                                    showingMoodDetail = true
+                                    if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
+                                        moodHasBeenLoggedToday = true
+                                        currentMoodText = "Today's mood is: \(mood)"
+                                    }
+                                }
+                            } else {
+                                currentMoodText = "You've already logged a mood today!"
                             }
                         }
+                        .disabled(moodViewModel.hasMoodForToday()) // Disable interaction
+                        .opacity(moodViewModel.hasMoodForToday() ? 0.5 : 1.0) // Visual feedback
                     }
                 }
                 .padding()
@@ -99,7 +107,6 @@ struct MoodView: View {
             .frame(maxWidth: .infinity)
         }
     }
-
     private var profileButton: some View {
         Button(action: {
             // Add profile action
@@ -245,6 +252,12 @@ struct MoodView: View {
             .onAppear(perform: animateContent)
             .onAppear {
                 moodChartViewModel.refreshChart()
+                moodHasBeenLoggedToday = moodViewModel.hasMoodForToday()
+                if moodHasBeenLoggedToday, let todayMood = moodViewModel.moods.last(where: { Calendar.current.isDate($0.moodDate, inSameDayAs: Date()) }) {
+                    currentMoodText = "Today's mood is: \(todayMood.mood)"
+                } else {
+                    currentMoodText = "How are you feeling today?"
+                }
             }
         }
     }

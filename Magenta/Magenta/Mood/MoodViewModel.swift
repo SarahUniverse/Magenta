@@ -15,10 +15,19 @@ final class MoodViewModel: ObservableObject {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+#if DEBUG
+        // clearCoreData() // Uncomment for testing purposes
+#endif
         setupInitialData()
+        fetchMoods()
     }
 
-    func saveMoodToCoreData(mood: String, emoji: String) {
+    func saveMoodToCoreData(mood: String, emoji: String) -> Bool {
+        guard !hasMoodForToday() else {
+            print("Mood already logged for today")
+            return false
+        }
+
         let newMood = MoodEntity(context: viewContext)
         newMood.id = UUID()
         newMood.mood = mood
@@ -28,13 +37,38 @@ final class MoodViewModel: ObservableObject {
 
         do {
             try viewContext.save()
+            moods.append(MoodModel(entity: newMood))
             print("Mood saved: \(mood)")
+            return true
         } catch {
             print("Failed to save mood: \(error)")
+            return false
+        }
+    }
+
+    func hasMoodForToday() -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return moods.contains { mood in
+            if let moodDate = calendar.startOfDay(for: mood.moodDate) as Date? {
+                return calendar.isDate(moodDate, inSameDayAs: today)
+            }
+            return false
         }
     }
 
     // MARK: Private Functions
+    private func fetchMoods() {
+        let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "moodDate", ascending: true)]
+        do {
+            let entities = try viewContext.fetch(request)
+            moods = entities.map { MoodModel(entity: $0) }
+        } catch {
+            print("Error fetching moods: \(error)")
+        }
+    }
+
     private func setupInitialData() {
         items = [
             "Excited",
@@ -87,3 +121,21 @@ final class MoodViewModel: ObservableObject {
     }
 
 }
+
+#if DEBUG
+extension MoodViewModel {
+    func clearCoreData() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MoodEntity.fetchRequest()
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try viewContext.execute(batchDeleteRequest)
+            try viewContext.save()
+            moods.removeAll()
+            print("Core Data cleared successfully")
+        } catch {
+            print("Failed to clear Core Data: \(error)")
+        }
+    }
+}
+#endif
