@@ -84,17 +84,17 @@ struct MoodView: View {
                                 emoji: moodEmojis[mood] ?? "😊",
                                 isSelected: selectedMood == mood
                             )
-                            .id(mood) // Assign an id for ScrollViewReader
+                            .id(mood)
                             .onTapGesture {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                    if selectedMood == mood { // Unselect if already selected
+                                    if selectedMood == mood {
                                         selectedMood = nil
                                         if moodViewModel.removeMoodForToday() {
                                             moodHasBeenLoggedToday = false
                                             currentMoodText = "How are you feeling today?"
                                             moodChartViewModel.refreshChart()
                                         }
-                                    } else if !moodViewModel.hasMoodForToday() { // Select if no mood logged
+                                    } else if !moodViewModel.hasMoodForToday() {
                                         selectedMood = mood
                                         showingMoodDetail = true
                                         if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
@@ -143,8 +143,7 @@ struct MoodView: View {
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .center)
             }
-            .padding(.horizontal)
-            .padding(.top)
+            .padding()
 
             MoodChartView(viewContext: viewContext)
                 .padding(15)
@@ -212,7 +211,7 @@ struct MoodView: View {
         }
         .offset(y: isAnimating ? 0 : moodSectionOffset)
         .opacity(isAnimating ? 1 : 0)
-        .padding(.horizontal)
+        .padding(.horizontal, 30)
     }
 
     private var glassBackground: some View {
@@ -234,7 +233,6 @@ struct MoodView: View {
                     )
             }
             .overlay {
-                // Subtle inner shadow
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(
                         .black.opacity(0.1),

@@ -25,11 +25,6 @@ struct MoodChartView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 0)
-                    .stroke(Color.blue, lineWidth: 2)
-                    .frame(height: 300)
-
                 Chart {
                     ForEach(moodChartViewModel.moods) { daily in
                         BarMark(
@@ -67,13 +62,12 @@ struct MoodChartView: View {
                     }
                 }
                 .chartPlotStyle { plotArea in
-                    plotArea
-                        .border(Color.clear, width: 0)
+                    plotArea.frame(width: 300, height: 300)
+                        .border(Color.gray, width: 1)
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
             }
-        }
         .frame(maxWidth: .infinity)
     }
 }
