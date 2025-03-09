@@ -1,131 +1,64 @@
 # Magenta: Mental Health Mentor
 
-Currently WIP
+**Status**: Currently in Progress (WIP)
 
-Welcome to **Magenta**, a comprehensive mental health app designed to act as a mentor to support your mental well-being. Magenta offers a range of tools and resources to help people deal with stress, grief, anxiety, and other mental health challenges.
-The inspiration for the app name came from Blance Devereaux's term, "Feeling Magenta".
+Welcome to **Magenta**, a comprehensive mental health app designed to act as a mentor to support your mental well-being. Magenta offers a range of tools and resources to help individuals manage stress, grief, anxiety, and other mental health challenges. The inspiration for the app name stems from Blanche Devereaux's term, "Feeling Magenta."
 
-## Front-End Technical Details:
-- Language: Swift
-- Architecture pattern: MVVM
-- Frameworks used: SwiftUI, UIKit, CoreData, Combine, Security, Foundation, Health Kit, XCTest, Swift Testing, GraphQL, Journaling Suggestions, MusicKit, Swift Charts
-- OS's supported: iOS, iPadOS, watchOS, visionOS, macOS
-- Minimum OS's supported: iOS 18.0, iPadOS 18.0, watchOS tba
-- Authentication - Supports Apple Sign-In, Google Sign-In, Face ID and traditional username/email sign in.
-- TODO: Add Push Notifications and Activities for some of the features
+---
 
-## Back-End Technical Details:
-- Go
+## Technical Specifications
+
+### Front-End Technical Details
+The following table summarizes the front-end technologies and configurations for Magenta:
+
+| **Category**            | **Details**                                      |
+|--------------------------|--------------------------------------------------|
+| **Language**            | Swift                                           |
+| **Architecture Pattern**| MVVM                                            |
+| **Frameworks**          | SwiftUI, UIKit, CoreData, Combine, Security, Foundation, HealthKit, XCTest, Swift Testing, GraphQL, Journaling Suggestions, MusicKit, Swift Charts |
+| **Supported OS**        | iOS, watchOS |
+| **Minimum OS Versions** | iOS 18.0, iPadOS 18.0, watchOS (TBA) |
+| **Authentication**      | Apple Sign-In, Google Sign-In, Face ID, Username/Email |
+| **TODO**                | Add Push Notifications and Activities for some features |
+
+### Back-End Technical Details
+The back-end is built using **Go**. Further details (e.g., APIs, databases) will be added as development progresses.
+
+| **Category**      | **Details**      |
+|-------------------|------------------|
+| **Language**      | Go               |
+| **TODO**          | Define APIs, database structure, server setup |
+
+*Note*: Expand this section with additional back-end specifics (e.g., server architecture, deployment) as they are implemented.
+
+---
 
 ## Features
 
-<details>
-<summary><strong>Art Therapy</strong></summary>
+The following table provides an overview of Magenta's features, with planned key functionalities to be detailed during development.
 
-### Key Features
-- To Be Added
-</details>
+| **Feature**              | **Description**                                                                 | **Key Features (TBA)**         |
+|---------------------------|---------------------------------------------------------------------------------|--------------------------------|
+| **Art Therapy**           | Interactive tools for creative expression to support mental health.             | To Be Added                    |
+| **Journal**               | Private journaling with suggestions from Apple's Journaling Suggestions framework. | To Be Added                    |
+| **Exercise**              | Tools to track and encourage physical activity for mental well-being.           | To Be Added                    |
+| **Sleep**                 | Features to monitor and improve sleep patterns.                                | To Be Added                    |
+| **Mood Tracking**         | Track daily moods and identify patterns over time.                             | To Be Added                    |
+| **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                    |
+| **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
+| **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                    |
+| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | To Be Added                    |
+| **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                    |
+| **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                    |
+| **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                    |
 
-<details>
-<summary><strong>Journal</strong></summary>
+*Note*: "Key Features" will be populated with specific functionalities as development progresses (e.g., for Mood Tracking: "Daily mood logging, weekly summary chart").
 
-Maintain a private journal to express your thoughts and feelings using suggestions provided by Apple's Journaling Suggestions framework.
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Exercise</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Sleep</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Mood Tracking</strong></summary>
-
-Track your daily mood and identify patterns over time.
-
-### Key Features
-- To Be Added
-
-</details>
-
-<details>
-<summary><strong>Nutrition</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Books that Help Me</strong></summary>
-
-A curated digital bookshelf designed to support mental health and personal growth.
-
-### Key Features
-- Track books related to mental health, personal development, and self-improvement
-- Organize books into three reading statuses:
-  - Want to Read
-  - Currently Reading
-  - Finished Reading
-
-</details>
-
-<details>
-<summary><strong>Mental Health Playlists</strong></summary>
-
-Curate Music playlists using Apple's MusicKit framework.
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Helpful Quotes</strong></summary>
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Therapist Search</strong></summary>
-
-Find nearby mental health professionals using this API: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Meditations</strong></summary>
-
-Access a library of guided meditations to help you relax and reduce stress.
-
-### Key Features
-- To Be Added
-</details>
-
-<details>
-<summary><strong>Cycle Tracking</strong></summary>
-
-For females to track their period cycle using HealthKit because fluctuating hormones can have a huge effect on mental health.
-
-### Key Features
-- To Be Added
-</details>
+---
 
 ## Project Roadmap
 
-Below is the development plan and subsequent phases for Magenta, leading up to the app's release on July 28th, 2025.
+Below is the development plan and subsequent phases for Magenta, leading to the app's release on July 28th, 2025.
 
 ### Development Phase
 - **Tasks**:
