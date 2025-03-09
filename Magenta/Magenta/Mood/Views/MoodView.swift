@@ -147,7 +147,7 @@ struct MoodView: View {
             .padding(.top)
 
             MoodChartView(viewContext: viewContext)
-                .padding(.horizontal, 5)
+                .padding(15)
                 .onChange(of: moodViewModel.moods) {
                     // Refresh chart when moods change{
                     moodChartViewModel.refreshChart()
@@ -309,6 +309,69 @@ extension MoodView {
 // MARK: - Previews
 #Preview("Light Mode") {
     let context = MoodView.createPreviewContext()
+
+    // Define mood emojis to match MoodView's dictionary
+    let moodEmojis: [String: String] = [
+        "Excited": "🤩",
+        "Happy": "😊",
+        "Calm": "😌",
+        "Curious": "🤔",
+        "Relieved": "😮‍💨",
+        "Loved": "🥰",
+        "Dread": "😩",
+        "Vulnerable": "😶‍🌫️ ",
+        "Surprised": "😲",
+        "Neutral": "😐",
+        "Tired": "😴",
+        "Stressed": "😓",
+        "Sad": "😢",
+        "Anxious": "😰",
+        "Worry": "😟",
+        "Grief": "🥺",
+        "Fear": "😱",
+        "Heartbreak": "💔",
+        "Lonely": "😔",
+        "Angry": "😡"
+    ]
+
+    // Add sample data
+    let sampleMood1 = MoodEntity(context: context)
+    sampleMood1.id = UUID()
+    sampleMood1.mood = "Happy"
+    sampleMood1.moodEmoji = moodEmojis["Happy"]
+    sampleMood1.moodDate = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    sampleMood1.moodValue = 9.0
+
+    let sampleMood2 = MoodEntity(context: context)
+    sampleMood2.id = UUID()
+    sampleMood2.mood = "Calm"
+    sampleMood2.moodEmoji = moodEmojis["Calm"]
+    sampleMood2.moodDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+    sampleMood2.moodValue = 6.0
+
+    let sampleMood3 = MoodEntity(context: context)
+    sampleMood3.id = UUID()
+    sampleMood3.mood = "Neutral"
+    sampleMood3.moodEmoji = moodEmojis["Neutral"]
+    sampleMood3.moodDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+    sampleMood3.moodValue = 4.0
+
+    let sampleMood4 = MoodEntity(context: context)
+    sampleMood4.id = UUID()
+    sampleMood4.mood = "Sad"
+    sampleMood4.moodEmoji = moodEmojis["Sad"]
+    sampleMood4.moodDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+    sampleMood4.moodValue = 2.0
+
+    let sampleMood5 = MoodEntity(context: context)
+    sampleMood5.id = UUID()
+    sampleMood5.mood = "Excited"
+    sampleMood5.moodEmoji = moodEmojis["Excited"]
+    sampleMood5.moodDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
+    sampleMood5.moodValue = 8.0
+
+    try? context.save()
+
     return MoodView(viewContext: context)
         .environment(\.managedObjectContext, context)
         .preferredColorScheme(.light)
@@ -316,6 +379,69 @@ extension MoodView {
 
 #Preview("Dark Mode") {
     let context = MoodView.createPreviewContext()
+
+    // Define mood emojis to match MoodView's dictionary
+    let moodEmojis: [String: String] = [
+        "Excited": "🤩",
+        "Happy": "😊",
+        "Calm": "😌",
+        "Curious": "🤔",
+        "Relieved": "😮‍💨",
+        "Loved": "🥰",
+        "Dread": "😩",
+        "Vulnerable": "😶‍🌫️ ",
+        "Surprised": "😲",
+        "Neutral": "😐",
+        "Tired": "😴",
+        "Stressed": "😓",
+        "Sad": "😢",
+        "Anxious": "😰",
+        "Worry": "😟",
+        "Grief": "🥺",
+        "Fear": "😱",
+        "Heartbreak": "💔",
+        "Lonely": "😔",
+        "Angry": "😡"
+    ]
+
+    // Add sample data
+    let sampleMood1 = MoodEntity(context: context)
+    sampleMood1.id = UUID()
+    sampleMood1.mood = "Happy"
+    sampleMood1.moodEmoji = moodEmojis["Happy"]
+    sampleMood1.moodDate = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    sampleMood1.moodValue = 9.0
+
+    let sampleMood2 = MoodEntity(context: context)
+    sampleMood2.id = UUID()
+    sampleMood2.mood = "Calm"
+    sampleMood2.moodEmoji = moodEmojis["Calm"]
+    sampleMood2.moodDate = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+    sampleMood2.moodValue = 6.0
+
+    let sampleMood3 = MoodEntity(context: context)
+    sampleMood3.id = UUID()
+    sampleMood3.mood = "Neutral"
+    sampleMood3.moodEmoji = moodEmojis["Neutral"]
+    sampleMood3.moodDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+    sampleMood3.moodValue = 4.0
+
+    let sampleMood4 = MoodEntity(context: context)
+    sampleMood4.id = UUID()
+    sampleMood4.mood = "Sad"
+    sampleMood4.moodEmoji = moodEmojis["Sad"]
+    sampleMood4.moodDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+    sampleMood4.moodValue = 2.0
+
+    let sampleMood5 = MoodEntity(context: context)
+    sampleMood5.id = UUID()
+    sampleMood5.mood = "Excited"
+    sampleMood5.moodEmoji = moodEmojis["Excited"]
+    sampleMood5.moodDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
+    sampleMood5.moodValue = 8.0
+
+    try? context.save()
+
     return MoodView(viewContext: context)
         .environment(\.managedObjectContext, context)
         .preferredColorScheme(.dark)

@@ -26,45 +26,55 @@ struct MoodChartView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Chart {
-                ForEach(moodChartViewModel.moods) { daily in
-                    BarMark(
-                        x: .value("Day", daily.moodDate),
-                        y: .value("Mood", daily.moodValue)
-                    )
-                    .foregroundStyle(barGradient) // Revert to yellow-to-blue gradient
-                    .cornerRadius(4)
+            ZStack {
+                // Blue frame as the background
+                RoundedRectangle(cornerRadius: 0)
+                    .stroke(Color.blue, lineWidth: 2)
+                    .frame(height: 300)
+
+                Chart {
+                    ForEach(moodChartViewModel.moods) { daily in
+                        BarMark(
+                            x: .value("Day", daily.moodDate),
+                            y: .value("Mood", daily.moodValue)
+                        )
+                        .foregroundStyle(barGradient)
+                        .cornerRadius(4)
+                    }
                 }
-            }
-            .frame(height: 300)
-            .chartYScale(domain: 0...10)
-            .chartXAxis {
-                AxisMarks(values: moodChartViewModel.moods.map { $0.moodDate }) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    AxisValueLabel {
-                        if let date = value.as(Date.self) {
-                            Text(date, format: .dateTime.weekday(.abbreviated))
+                .frame(height: 280) // Slightly less than the frame to account for border and padding
+                .chartYScale(domain: 0...10)
+                .chartXAxis {
+                    AxisMarks(values: moodChartViewModel.moods.map { $0.moodDate }) { value in
+                        AxisGridLine()
+                        AxisTick(length: 4) // Reduced length to fit inside
+                        AxisValueLabel(centered: true, anchor: .center) {
+                            if let date = value.as(Date.self) {
+                                Text(date, format: .dateTime.weekday(.abbreviated))
+                                    .font(.caption) // Smaller font to prevent overflow
+                            }
                         }
                     }
                 }
-            }
-            .chartYAxis {
-                AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    AxisValueLabel {
-                        if let doubleValue = value.as(Double.self) {
-                            Text(moodChartViewModel.getMoodLabel(for: doubleValue))
+                .chartYAxis {
+                    AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
+                        AxisGridLine()
+                        AxisTick(length: 4) // Reduced length to fit inside
+                        AxisValueLabel(centered: true, anchor: .center) {
+                            if let doubleValue = value.as(Double.self) {
+                                Text(moodChartViewModel.getMoodLabel(for: doubleValue))
+                                    .font(.caption) // Smaller font to prevent overflow
+                            }
                         }
                     }
                 }
+                .chartPlotStyle { plotArea in
+                    plotArea
+                        .border(Color.clear, width: 0) // Remove internal border to avoid overlap
+                }
+                .padding(.horizontal, 10) // Increased horizontal padding
+                .padding(.vertical, 5) // Adjusted vertical padding
             }
-            .chartPlotStyle { plotArea in
-                plotArea
-                    .border(Color.blue, width: 2)
-            }
-            .padding()
         }
         .frame(maxWidth: .infinity)
     }
