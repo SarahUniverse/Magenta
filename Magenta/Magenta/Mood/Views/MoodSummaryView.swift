@@ -45,64 +45,66 @@ struct MoodSummaryView: View {
                         )
                     )
                     .font(.largeTitle)
-            }
 
-            Chart {
-                ForEach(moodSummaryViewModel.moods) { daily in
-                    BarMark(
-                        x: .value("Day", daily.moodDate ?? Date(), unit: .day),
-                        y: .value("Mood", daily.moodValue)
-                    )
-                    .foregroundStyle(barGradient)
-                    .cornerRadius(2)
-                }
-            }
-            .frame(height: 120)
-            .chartYScale(domain: 0...10)
-            .chartXAxis {
-                AxisMarks(values: weekDates) {
-                    AxisTick(length: 2)
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
-                        .font(.caption2)
-                }
-            }
-            .chartXScale(domain: weekDates.first!...weekDates.last!)
-            .chartYAxis {
-                AxisMarks(values: [0, 2, 4, 6, 8, 10]) { value in
-                    AxisGridLine()
-                        .foregroundStyle(.gray)
-                    AxisTick(length: 2)
-                    AxisValueLabel {
-                        let moodValue = value.as(Int.self) ?? 0
-                        let moodString: String = {
-                            switch moodValue {
-                            case 0: return "Terrible"
-                            case 2: return "Bad"
-                            case 4: return "Okay"
-                            case 6: return "Good"
-                            case 8: return "Great"
-                            case 10: return "Amazing"
-                            default: return "\(moodValue)"
-                            }
-                        }()
-                        Text(moodString)
-                            .font(.caption2)
+                Chart {
+                    ForEach(moodSummaryViewModel.moods) { daily in
+                        BarMark(
+                            x: .value("Day", daily.moodDate ?? Date(), unit: .day),
+                            y: .value("Mood", daily.moodValue)
+                        )
+                        .foregroundStyle(barGradient)
+                        .cornerRadius(2)
                     }
                 }
-            }
-            .chartPlotStyle { plotArea in
-                plotArea
-                    .border(Color.gray, width: 1)
-            }
-            .padding(.horizontal, 5)
-            .padding(.vertical, 3)
+                .frame(height: 90)
+                .chartYScale(domain: 0...10)
+                .chartXAxis {
+                    AxisMarks(values: weekDates) {
+                        AxisTick(length: 2)
+                        AxisGridLine()
+                        AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
+                            .font(.caption2)
+                            .foregroundStyle(.white)
+                    }
+                }
+                .chartXScale(domain: weekDates.first!...weekDates.last!)
+                .chartYAxis {
+                    AxisMarks(values: [0, 2, 4, 6, 8, 10]) { value in
+                        AxisGridLine()
+                            .foregroundStyle(.gray)
+                        AxisTick(length: 2)
+                        AxisValueLabel {
+                            let moodValue = value.as(Int.self) ?? 0
+                            let moodString: String = {
+                                switch moodValue {
+                                case 0: return "Terrible"
+                                case 2: return "Bad"
+                                case 4: return "Okay"
+                                case 6: return "Good"
+                                case 8: return "Great"
+                                case 10: return "Amazing"
+                                default: return "\(moodValue)"
+                                }
+                            }()
+                            Text(moodString)
+                                .font(.caption2)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                }
+                .chartPlotStyle { plotArea in
+                    plotArea
+                        .border(Color.gray, width: 1)
+                }
+                .padding(.horizontal, 5)
+                .padding(.vertical, 3)
 
-            Spacer()
+                Spacer()
+            }
+            .padding()
+            .background(Color.almostBlack)
+            .cornerRadius(10)
         }
-        .padding()
-        .background(Color.almostBlack)
-        .cornerRadius(10)
     }
 
     private func getWeekDates() -> [Date] {
