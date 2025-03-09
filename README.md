@@ -8,7 +8,7 @@ Welcome to **Magenta**, a comprehensive mental health app designed to act as a m
 
 ## Technical Specifications
 
-### Front-End Technical Details
+### Front-End Technical Details:
 The following table summarizes the front-end technologies and configurations for Magenta:
 
 | **Category**            | **Details**                                      |
@@ -21,15 +21,13 @@ The following table summarizes the front-end technologies and configurations for
 | **Authentication**      | Apple Sign-In, Google Sign-In, Face ID, Username/Email |
 | **TODO**                | Add Push Notifications and Activities for some features |
 
-### Back-End Technical Details
+### Back-End Technical Details:
 The back-end is built using **Go**. Further details (e.g., APIs, databases) will be added as development progresses.
 
 | **Category**      | **Details**      |
 |-------------------|------------------|
 | **Language**      | Go               |
 | **TODO**          | Define APIs, database structure, server setup |
-
-*Note*: Expand this section with additional back-end specifics (e.g., server architecture, deployment) as they are implemented.
 
 ---
 
