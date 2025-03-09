@@ -22,6 +22,28 @@ final class MoodViewModel: ObservableObject {
         fetchMoods()
     }
 
+    func removeMoodForToday() -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        if let moodToRemove = moods.first(where: { calendar.isDate($0.moodDate, inSameDayAs: today) }) {
+            let fetchRequest: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", moodToRemove.id as CVarArg)
+            do {
+                let results = try viewContext.fetch(fetchRequest)
+                if let entityToDelete = results.first {
+                    viewContext.delete(entityToDelete)
+                    try viewContext.save()
+                    moods.removeAll { $0.id == moodToRemove.id }
+                    print("Mood removed for today")
+                    return true
+                }
+            } catch {
+                print("Failed to remove mood: \(error)")
+            }
+        }
+        return false
+    }
+
     func saveMoodToCoreData(mood: String, emoji: String) -> Bool {
         guard !hasMoodForToday() else {
             print("Mood already logged for today")
@@ -55,6 +77,12 @@ final class MoodViewModel: ObservableObject {
             }
             return false
         }
+    }
+
+    func getTodayMood() -> String? {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return moods.first(where: { calendar.isDate($0.moodDate, inSameDayAs: today) })?.mood
     }
 
     // MARK: Private Functions

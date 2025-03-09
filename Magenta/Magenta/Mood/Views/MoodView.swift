@@ -84,22 +84,27 @@ struct MoodView: View {
                             isSelected: selectedMood == mood
                         )
                         .onTapGesture {
-                            let canLogMood = !moodViewModel.hasMoodForToday() // Explicit Bool
-                            if canLogMood {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                if selectedMood == mood { // Unselect if already selected
+                                    selectedMood = nil
+                                    if moodViewModel.removeMoodForToday() {
+                                        moodHasBeenLoggedToday = false
+                                        currentMoodText = "How are you feeling today?"
+                                        moodChartViewModel.refreshChart()
+                                    }
+                                } else if !moodViewModel.hasMoodForToday() { // Select if no mood logged
                                     selectedMood = mood
                                     showingMoodDetail = true
                                     if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
                                         moodHasBeenLoggedToday = true
                                         currentMoodText = "Today's mood is: \(mood)"
+                                        moodChartViewModel.refreshChart()
                                     }
                                 }
-                            } else {
-                                currentMoodText = "You've already logged a mood today!"
                             }
                         }
-                        .disabled(moodViewModel.hasMoodForToday()) // Disable interaction
-                        .opacity(moodViewModel.hasMoodForToday() ? 0.5 : 1.0) // Visual feedback
+                        .disabled(moodViewModel.hasMoodForToday() && selectedMood != mood) // Disable others if mood logged
+                        .opacity(moodViewModel.hasMoodForToday() && selectedMood != mood ? 0.5 : 1.0) // Visual feedback
                     }
                 }
                 .padding()
@@ -107,6 +112,7 @@ struct MoodView: View {
             .frame(maxWidth: .infinity)
         }
     }
+
     private var profileButton: some View {
         Button(action: {
             // Add profile action
@@ -253,9 +259,11 @@ struct MoodView: View {
             .onAppear {
                 moodChartViewModel.refreshChart()
                 moodHasBeenLoggedToday = moodViewModel.hasMoodForToday()
-                if moodHasBeenLoggedToday, let todayMood = moodViewModel.moods.last(where: { Calendar.current.isDate($0.moodDate, inSameDayAs: Date()) }) {
-                    currentMoodText = "Today's mood is: \(todayMood.mood)"
+                if moodHasBeenLoggedToday, let todayMood = moodViewModel.getTodayMood() {
+                    selectedMood = todayMood // Persist the selected mood
+                    currentMoodText = "Today's mood is: \(todayMood)"
                 } else {
+                    selectedMood = nil
                     currentMoodText = "How are you feeling today?"
                 }
             }
