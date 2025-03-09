@@ -16,7 +16,6 @@ struct MoodChartView: View {
         self.moodChartViewModel = MoodChartViewModel(viewContext: viewContext)
     }
 
-    // Gradient matching MoodView's theme
     private let barGradient = Gradient(colors: [
         .yellow,
         .yellow.opacity(0.7),
@@ -27,7 +26,6 @@ struct MoodChartView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             ZStack {
-                // Blue frame as the background
                 RoundedRectangle(cornerRadius: 0)
                     .stroke(Color.blue, lineWidth: 2)
                     .frame(height: 300)
@@ -42,16 +40,16 @@ struct MoodChartView: View {
                         .cornerRadius(4)
                     }
                 }
-                .frame(height: 280) // Slightly less than the frame to account for border and padding
+                .frame(height: 280)
                 .chartYScale(domain: 0...10)
                 .chartXAxis {
                     AxisMarks(values: moodChartViewModel.moods.map { $0.moodDate }) { value in
                         AxisGridLine()
-                        AxisTick(length: 4) // Reduced length to fit inside
+                        AxisTick(length: 4)
                         AxisValueLabel(centered: true, anchor: .center) {
                             if let date = value.as(Date.self) {
                                 Text(date, format: .dateTime.weekday(.abbreviated))
-                                    .font(.caption) // Smaller font to prevent overflow
+                                    .font(.caption)
                             }
                         }
                     }
@@ -59,21 +57,21 @@ struct MoodChartView: View {
                 .chartYAxis {
                     AxisMarks(values: [1.2, 2.5, 3.5, 5.0, 6.5, 7.0, 8.0, 9.0]) { value in
                         AxisGridLine()
-                        AxisTick(length: 4) // Reduced length to fit inside
+                        AxisTick(length: 4)
                         AxisValueLabel(centered: true, anchor: .center) {
                             if let doubleValue = value.as(Double.self) {
                                 Text(moodChartViewModel.getMoodLabel(for: doubleValue))
-                                    .font(.caption) // Smaller font to prevent overflow
+                                    .font(.caption)
                             }
                         }
                     }
                 }
                 .chartPlotStyle { plotArea in
                     plotArea
-                        .border(Color.clear, width: 0) // Remove internal border to avoid overlap
+                        .border(Color.clear, width: 0)
                 }
-                .padding(.horizontal, 10) // Increased horizontal padding
-                .padding(.vertical, 5) // Adjusted vertical padding
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
             }
         }
         .frame(maxWidth: .infinity)
