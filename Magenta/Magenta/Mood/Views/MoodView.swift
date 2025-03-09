@@ -74,42 +74,54 @@ struct MoodView: View {
     }
 
     private var moodScrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                HStack(spacing: 15) {
-                    ForEach(moodViewModel.items, id: \.self) { mood in
-                        IndividualMoodView(
-                            mood: mood,
-                            emoji: moodEmojis[mood] ?? "😊",
-                            isSelected: selectedMood == mood
-                        )
-                        .onTapGesture {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                if selectedMood == mood { // Unselect if already selected
-                                    selectedMood = nil
-                                    if moodViewModel.removeMoodForToday() {
-                                        moodHasBeenLoggedToday = false
-                                        currentMoodText = "How are you feeling today?"
-                                        moodChartViewModel.refreshChart()
-                                    }
-                                } else if !moodViewModel.hasMoodForToday() { // Select if no mood logged
-                                    selectedMood = mood
-                                    showingMoodDetail = true
-                                    if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
-                                        moodHasBeenLoggedToday = true
-                                        currentMoodText = "Today's mood is: \(mood)"
-                                        moodChartViewModel.refreshChart()
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    HStack(spacing: 15) {
+                        ForEach(moodViewModel.items, id: \.self) { mood in
+                            IndividualMoodView(
+                                mood: mood,
+                                emoji: moodEmojis[mood] ?? "😊",
+                                isSelected: selectedMood == mood
+                            )
+                            .id(mood) // Assign an id for ScrollViewReader
+                            .onTapGesture {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                    if selectedMood == mood { // Unselect if already selected
+                                        selectedMood = nil
+                                        if moodViewModel.removeMoodForToday() {
+                                            moodHasBeenLoggedToday = false
+                                            currentMoodText = "How are you feeling today?"
+                                            moodChartViewModel.refreshChart()
+                                        }
+                                    } else if !moodViewModel.hasMoodForToday() { // Select if no mood logged
+                                        selectedMood = mood
+                                        showingMoodDetail = true
+                                        if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
+                                            moodHasBeenLoggedToday = true
+                                            currentMoodText = "Today's mood is: \(mood)"
+                                            moodChartViewModel.refreshChart()
+                                            // Scroll to the newly selected mood
+                                            proxy.scrollTo(mood, anchor: .center)
+                                        }
                                     }
                                 }
                             }
+                            .disabled(moodViewModel.hasMoodForToday() && selectedMood != mood)
+                            .opacity(moodViewModel.hasMoodForToday() && selectedMood != mood ? 0.5 : 1.0)
                         }
-                        .disabled(moodViewModel.hasMoodForToday() && selectedMood != mood) // Disable others if mood logged
-                        .opacity(moodViewModel.hasMoodForToday() && selectedMood != mood ? 0.5 : 1.0) // Visual feedback
+                    }
+                    .padding()
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .onAppear {
+                if let mood = selectedMood {
+                    withAnimation {
+                        proxy.scrollTo(mood, anchor: .center)
                     }
                 }
-                .padding()
             }
-            .frame(maxWidth: .infinity)
         }
     }
 
@@ -260,7 +272,7 @@ struct MoodView: View {
                 moodChartViewModel.refreshChart()
                 moodHasBeenLoggedToday = moodViewModel.hasMoodForToday()
                 if moodHasBeenLoggedToday, let todayMood = moodViewModel.getTodayMood() {
-                    selectedMood = todayMood // Persist the selected mood
+                    selectedMood = todayMood
                     currentMoodText = "Today's mood is: \(todayMood)"
                 } else {
                     selectedMood = nil

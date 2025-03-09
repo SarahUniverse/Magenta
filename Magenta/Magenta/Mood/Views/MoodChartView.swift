@@ -10,10 +10,10 @@ import CoreData
 import SwiftUI
 
 struct MoodChartView: View {
-    @StateObject private var moodChartViewModel: MoodChartViewModel
+    @ObservedObject var moodChartViewModel: MoodChartViewModel
 
     init(viewContext: NSManagedObjectContext) {
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
+        self.moodChartViewModel = MoodChartViewModel(viewContext: viewContext)
     }
 
     var body: some View {
@@ -21,7 +21,7 @@ struct MoodChartView: View {
             Chart {
                 ForEach(moodChartViewModel.moods) { daily in
                     LineMark(
-                        x: .value("Date", daily.moodDate),
+                        x: .value("Day", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
                     )
                     .interpolationMethod(.catmullRom)
@@ -30,7 +30,7 @@ struct MoodChartView: View {
                     .foregroundStyle(Gradient(colors: [.blue, .blue.opacity(0.5)]))
 
                     AreaMark(
-                        x: .value("Date", daily.moodDate),
+                        x: .value("Day", daily.moodDate),
                         y: .value("Mood", daily.moodValue)
                     )
                     .interpolationMethod(.catmullRom)
@@ -51,10 +51,14 @@ struct MoodChartView: View {
                 }
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) {
+                AxisMarks(values: moodChartViewModel.moods.map { $0.moodDate }) { value in
                     AxisGridLine()
                     AxisTick()
-                    AxisValueLabel(format: .dateTime.weekday())
+                    AxisValueLabel {
+                        if let date = value.as(Date.self) {
+                            Text(date, format: .dateTime.weekday(.abbreviated))
+                        }
+                    }
                 }
             }
             .padding()
@@ -83,14 +87,16 @@ extension MoodChartView {
 // MARK: - Previews
 #Preview("Light Mode") {
     let context = MoodChartView.createPreviewContext()
-    let moodViewModel = MoodViewModel(viewContext: context)
+    let chartViewModel = MoodChartViewModel(viewContext: context)
     return MoodChartView(viewContext: context)
         .preferredColorScheme(.light)
+        .padding(30)
 }
 
 #Preview("Dark Mode") {
     let context = MoodChartView.createPreviewContext()
-    let moodViewModel = MoodViewModel(viewContext: context)
+    let chartViewModel = MoodChartViewModel(viewContext: context)
     return MoodChartView(viewContext: context)
         .preferredColorScheme(.dark)
+        .padding(30)
 }
