@@ -101,7 +101,6 @@ struct MoodView: View {
                                             moodHasBeenLoggedToday = true
                                             currentMoodText = "Today's mood is: \(mood)"
                                             moodChartViewModel.refreshChart()
-                                            // Scroll to the newly selected mood
                                             proxy.scrollTo(mood, anchor: .center)
                                         }
                                     }
@@ -147,8 +146,8 @@ struct MoodView: View {
 
             MoodChartView(viewContext: viewContext)
                 .padding(15)
+                .padding(.bottom, 20)
                 .onChange(of: moodViewModel.moods) {
-                    // Refresh chart when moods change{
                     moodChartViewModel.refreshChart()
                 }
         }
@@ -174,7 +173,6 @@ struct MoodView: View {
 
     // MARK: - Animation Methods
     private func animateContent() {
-        // Staggered animation for sections
         withAnimation(.spring(
             response: AnimationConstants.springResponse,
             dampingFraction: AnimationConstants.springDamping,
@@ -183,7 +181,6 @@ struct MoodView: View {
             isAnimating = true
         }
 
-        // Animate sections with delay
         withAnimation(.spring(
             response: AnimationConstants.springResponse,
             dampingFraction: AnimationConstants.springDamping
@@ -279,7 +276,6 @@ struct MoodView: View {
             }
         }
     }
-
 }
 
 private struct AnimationConstants {
