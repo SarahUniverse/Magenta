@@ -50,34 +50,34 @@ struct SummaryView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
-                            switch item {
-                            case "Art Therapy":
-                                ArtTherapySummaryView()
-                            case "Journal":
-                                JournalSummaryView()
-                            case "Exercise":
-                                ExerciseSummaryView()
-                            case "Mood":
-                                MoodSummaryView()
-                            case "Sleep":
-                                SleepSummaryView()
-                            case "Nutrition":
-                                NutritionSummaryView()
-                            case "Books":
-                                BooksSummaryView()
-                            case "Music":
-                                PlaylistsSummaryView()
-                            case "Quotes":
-                                QuotesSummaryView()
-                            case "Therapy":
-                                TherapistSummaryView()
-                            case "Meditation":
-                                MeditationSummaryView()
-                            case "Cycle":
-                                CycleSummaryView()
-                            default:
-                                EmptyView()
-                            }
+                        switch item {
+                        case "Art Therapy":
+                            ArtTherapySummaryView()
+                        case "Journal":
+                            JournalSummaryView()
+                        case "Exercise":
+                            ExerciseSummaryView()
+                        case "Mood":
+                            MoodSummaryView(viewContext: summaryViewModel.viewContext)
+                        case "Sleep":
+                            SleepSummaryView()
+                        case "Nutrition":
+                            NutritionSummaryView()
+                        case "Books":
+                            BooksSummaryView()
+                        case "Music":
+                            PlaylistsSummaryView()
+                        case "Quotes":
+                            QuotesSummaryView()
+                        case "Therapy":
+                            TherapistSummaryView()
+                        case "Meditation":
+                            MeditationSummaryView()
+                        case "Cycle":
+                            CycleSummaryView()
+                        default:
+                            EmptyView()
+                        }
                         }
                     }
                     .padding()
