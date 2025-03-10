@@ -62,6 +62,16 @@ struct MoodSummaryView: View {
         })
     }
 
+    private var lastMoodDateString: String {
+        guard let lastMood = moodSummaryViewModel.moods.last,
+              let moodDate = lastMood.moodDate else {
+            return "No moods logged"
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d"
+        return formatter.string(from: moodDate)
+    }
+
     var body: some View {
         let weekDates = getWeekDates()
 
@@ -82,24 +92,25 @@ struct MoodSummaryView: View {
                             .padding(.bottom, 10)
                         ZStack {
                             Circle()
-                                .frame(width: 90, height: 90)
+                                .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-90))
                                 .foregroundStyle(.gray.opacity(0.3))
                             Circle()
                                 .trim(from: 0, to: todayMood != nil ? CGFloat((todayMood?.moodValue ?? 0) / 10) : 0)
                                 .stroke(barGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                                .frame(width: 90, height: 90)
+                                .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeInOut(duration: 1.0), value: todayMood?.moodValue)
                             Text(todayMood?.moodEmoji ?? "😶")
-                                .font(.system(size: 30))
+                                .font(.system(size: 40))
+                                .animation(.easeInOut(duration: 1.0), value: todayMood?.moodEmoji)
                         }
                     }
                     Spacer()
                     VStack {
                         HStack {
                             Spacer()
-                            Text("This week")
+                            Text(lastMoodDateString)
                                 .font(.subheadline)
                                 .foregroundStyle(.primary)
                                 .padding(.bottom, 10)
