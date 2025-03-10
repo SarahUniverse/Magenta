@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 73;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,8 +44,18 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		2650CB862D7FA5C9007503F7 /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 26559B4E2C62577D008E9E75 /* Sources */;
+			membershipExceptions = (
+				quotes.json,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		26559B542C62577D008E9E75 /* Magenta */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (269ED7302C63A0AA0053D1CC /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Magenta; sourceTree = "<group>"; };
+		26559B542C62577D008E9E75 /* Magenta */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (269ED7302C63A0AA0053D1CC /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 2650CB862D7FA5C9007503F7 /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Magenta; sourceTree = "<group>"; };
 		26559B682C62577F008E9E75 /* MagentaTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MagentaTests; sourceTree = "<group>"; };
 		26559B722C62577F008E9E75 /* MagentaUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MagentaUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -203,7 +213,6 @@
 				};
 			};
 			buildConfigurationList = 26559B4D2C62577D008E9E75 /* Build configuration list for PBXProject "Magenta" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -214,6 +223,7 @@
 			packageReferences = (
 				26559B862C627A2E008E9E75 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
+			preferredProjectObjectVersion = 60;
 			productRefGroup = 26559B532C62577D008E9E75 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

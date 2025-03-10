@@ -23,12 +23,13 @@ struct QuotesView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Text("Hello, World!")
+            VStack(spacing: 0) {
+                searchBar
+                subjectFilter
+                quotesList
             }
             .navigationTitle("Quotes that Move Me")
             .background(backgroundGradient)
-            .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
@@ -36,6 +37,68 @@ struct QuotesView: View {
             }
         }
     }
+
+    private var searchBar: some View {
+        TextField("Search quotes...", text: $quotesViewModel.searchText)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding()
+            .submitLabel(.search)
+            .onSubmit {
+                quotesViewModel.fetchQuotes()
+            }
+    }
+
+    private var subjectFilter: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(quotesViewModel.subjects, id: \.self) { subject in
+                    Button(action: {
+                        quotesViewModel.selectedSubject = subject
+                        quotesViewModel.fetchQuotes()
+                    }, label: {
+                        Text(subject.capitalized)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                quotesViewModel.selectedSubject == subject ?
+                                Color.yellow.opacity(0.8) : Color.gray.opacity(0.3)
+                            )
+                            .clipShape(Capsule())
+                            .foregroundStyle(.primary)
+                    })
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    private var quotesList: some View {
+        List(quotesViewModel.quotes) { quote in
+            VStack(alignment: .leading, spacing: 8) {
+                Text(quote.quoteContent)
+                    .font(.body)
+                Text("— \(quote.quoteAuthor)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        quotesViewModel.toggleFavorite(quoteId: quote.id) // Pass String id
+                    }, label: {
+                        Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
+                            .foregroundStyle(.red)
+                    })
+                }
+            }
+            .padding(.vertical, 4)
+        }
+        .scrollContentBackground(.hidden)
+        .onAppear {
+            quotesViewModel.fetchQuotes()
+        }
+    }
+
 }
 
 // MARK: - Previews
