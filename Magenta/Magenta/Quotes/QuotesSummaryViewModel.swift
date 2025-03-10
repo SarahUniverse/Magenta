@@ -8,5 +8,10 @@
 import CoreData
 
 final class QuotesSummaryViewModel: ObservableObject {
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
 
 }

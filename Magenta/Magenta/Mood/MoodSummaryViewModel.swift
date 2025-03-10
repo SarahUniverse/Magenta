@@ -20,9 +20,9 @@ final class MoodSummaryViewModel: ObservableObject {
         let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \MoodEntity.moodDate, ascending: true)]
 
-        // Fetch moods for the last 5 days
-        if let fiveDaysAgo = Calendar.current.date(byAdding: .day, value: -4, to: Date()) {
-            request.predicate = NSPredicate(format: "moodDate >= %@", fiveDaysAgo as NSDate)
+        // Fetch moods for the last 7 days
+        if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -6, to: Date()) {
+            request.predicate = NSPredicate(format: "moodDate >= %@", sevenDaysAgo as NSDate)
         }
 
         do {
