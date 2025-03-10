@@ -35,22 +35,22 @@ The back-end is built using **Go**. Further details (e.g., APIs, databases) will
 
 The following table provides an overview of Magenta's features, with planned key functionalities to be detailed during development.
 
-| **Feature**              | **Description**                                                                 | **Key Features (TBA)**         |
-|---------------------------|---------------------------------------------------------------------------------|--------------------------------|
-| **Art Therapy**           | Interactive tools for creative expression to support mental health.             | To Be Added                    |
-| **Journal**               | Private journaling with suggestions from Apple's Journaling Suggestions framework. | To Be Added                    |
-| **Exercise**              | Tools to track and encourage physical activity for mental well-being.           | To Be Added                    |
-| **Sleep**                 | Features to monitor and improve sleep patterns.                                | To Be Added                    |
-| **Mood Tracking**         | Track daily moods and identify patterns over time.                             | To Be Added                    |
-| **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                    |
+| **Feature**              | **Description**                                                                 | **Key Features**                                                                 |
+|---------------------------|---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| **Art Therapy**           | Interactive tools for creative expression to support mental health.             | To Be Added                                                                      |
+| **Journal**               | Private journaling with suggestions from Apple's Journaling Suggestions framework. | To Be Added                                                                      |
+| **Exercise**              | Tools to track and encourage physical activity for mental well-being.           | To Be Added                                                                      |
+| **Sleep**                 | Features to monitor and improve sleep patterns.                                | To Be Added                                                                      |
+| **Mood Tracking**         | Track daily moods and identify patterns over time. **(Completed March 9, 2025)** | Daily mood logging with emoji selection, 7-day bar chart summary, today’s mood circle indicator with month/date navigation |
+| **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                                                                      |
 | **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
-| **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                    |
-| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | To Be Added                    |
-| **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                    |
-| **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                    |
-| **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                    |
+| **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                                                                      |
+| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | To Be Added                                                                      |
+| **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                                                                      |
+| **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                                                                      |
+| **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                                                                      |
 
-*Note*: "Key Features" will be populated with specific functionalities as development progresses (e.g., for Mood Tracking: "Daily mood logging, weekly summary chart").
+*Note*: "Key Features" will be populated with specific functionalities as development progresses.
 
 ---
 
@@ -60,7 +60,7 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 
 ### Development Phase
 - **Tasks**:
-  - **March 10th**: Mood Tracker
+  - **March 10th**: Mood Tracker **(Completed March 9, 2025)**  
   - **March 17th**: Helpful Quotes
   - **March 24th**: Sleep
   - **March 31st**: Exercise
@@ -106,11 +106,11 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 - **Deliverable**: App live on App Store.
 
 ### Gantt Chart
-The following table represents the timeline for all features and phases. Each "X" indicates a task being active during that week.
+The following table represents the timeline for all features and phases. Each "X" indicates a task being active during that week. (Note: Mood Tracker marked complete early.)
 
 | Task                          | Mar 10 | Mar 17 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
 |-------------------------------|--------|--------|--------|--------|-------|--------|--------|--------|-------|--------|--------|--------|-------|-------|--------|--------|--------|-------|--------|--------|--------|
-| Mood Tracker                 |   X    |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Mood Tracker                 |   X*   |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Helpful Quotes               |        |   X    |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Sleep                        |        |        |   X    |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Exercise                     |        |        |        |   X    |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
@@ -130,6 +130,8 @@ The following table represents the timeline for all features and phases. Each "X
 | Testing Phase                |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |   X   |   X    |        |        |
 | Release Preparation          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |   X    |        |
 | App Store Release            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |   X    |
+
+*Note*: "X*" for Mood Tracker indicates completion ahead of schedule on March 9, 2025.
 
 ## License
 Proprietary Software
