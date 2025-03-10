@@ -114,10 +114,12 @@ struct MoodSummaryView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.primary)
                                 .padding(.bottom, 10)
+                                .padding(.top, 10)
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 12, weight: .semibold))
                                 .foregroundStyle(.gray)
                                 .padding(.bottom, 10)
+                                .padding(.top, 10)
                         }
                         Chart {
                             ForEach(moodSummaryViewModel.moods) { daily in
@@ -138,7 +140,7 @@ struct MoodSummaryView: View {
                         .padding(.vertical, 3)
                     }
                 }
-                .padding(30)
+                .padding()
                 .background(glassBackground)
             }
         }
