@@ -56,49 +56,76 @@ struct MoodSummaryView: View {
             .padding(.top, 10)
     }
 
+    private var todayMood: MoodEntity? {
+        moodSummaryViewModel.moods.last(where: {
+            Calendar.current.isDate($0.moodDate ?? Date(), inSameDayAs: Date())
+        })
+    }
+
     var body: some View {
         let weekDates = getWeekDates()
 
         NavigationLink(destination: MoodView(viewContext: viewContext)) {
             VStack(alignment: .leading) {
-                HStack(alignment: .top) {
-                    HStack {
-                        Image(systemName: "theatermasks.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.yellow, .blue],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .font(.title3)
-                            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 2)
-                        Text("MOOD")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.yellow)
-                            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 0)
-                        Spacer()
-                    }
-                    Spacer()
-                    Chart {
-                        ForEach(moodSummaryViewModel.moods) { daily in
-                            BarMark(
-                                x: .value("Day", daily.moodDate ?? Date(), unit: .day),
-                                y: .value("Mood", daily.moodValue)
-                            )
-                            .foregroundStyle(barGradient)
-                            .cornerRadius(2)
+                Text("MOOD")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
+                    .padding(.leading, 5)
+                    .padding(.bottom, -20)
+
+                HStack(alignment: .center, spacing: 15) {
+                    VStack {
+                        Text(todayMood != nil ? "Today: \(todayMood?.mood ?? "Unknown")" : "No mood logged today")
+                            .font(.subheadline)
+                            .foregroundStyle(.primary)
+                            .padding(.bottom, 10)
+                        ZStack {
+                            Circle()
+                                .frame(width: 90, height: 90)
+                                .rotationEffect(.degrees(-90))
+                                .foregroundStyle(.gray.opacity(0.3))
+                            Circle()
+                                .trim(from: 0, to: todayMood != nil ? CGFloat((todayMood?.moodValue ?? 0) / 10) : 0)
+                                .stroke(barGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                                .frame(width: 90, height: 90)
+                                .rotationEffect(.degrees(-90))
+                                .animation(.easeInOut(duration: 1.0), value: todayMood?.moodValue)
+                            Text(todayMood?.moodEmoji ?? "😶")
+                                .font(.system(size: 30))
                         }
                     }
-                    .frame(height: 90)
-                    .chartYScale(domain: 0...10)
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .chartXScale(domain: weekDates.first!...weekDates.last!)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 3)
+                    Spacer()
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Text("This week")
+                                .font(.subheadline)
+                                .foregroundStyle(.primary)
+                                .padding(.bottom, 10)
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .padding(.bottom, 10)
+                        }
+                        Chart {
+                            ForEach(moodSummaryViewModel.moods) { daily in
+                                BarMark(
+                                    x: .value("Day", daily.moodDate ?? Date(), unit: .day),
+                                    y: .value("Mood", daily.moodValue)
+                                )
+                                .foregroundStyle(barGradient)
+                                .cornerRadius(2)
+                            }
+                        }
+                        .frame(height: 90)
+                        .chartYScale(domain: 0...10)
+                        .chartXAxis(.hidden)
+                        .chartYAxis(.hidden)
+                        .chartXScale(domain: weekDates.first!...weekDates.last!)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 3)
+                    }
                 }
                 .padding(30)
                 .background(glassBackground)
