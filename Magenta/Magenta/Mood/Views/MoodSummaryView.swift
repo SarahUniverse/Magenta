@@ -144,9 +144,11 @@ struct MoodSummaryView: View {
     private func getWeekDates() -> [Date] {
         let calendar = Calendar.current
         let today = Date()
-        let weekStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
-        return (0...7).map { calendar.date(byAdding: .day, value: $0, to: weekStart)! }
+        return (-7...0).map { offset in
+            calendar.date(byAdding: .day, value: offset, to: today)!
+        }
     }
+
 }
 
 // MARK: - Preview Helper

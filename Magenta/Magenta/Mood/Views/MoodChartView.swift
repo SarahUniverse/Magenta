@@ -41,7 +41,7 @@ struct MoodChartView: View {
             .frame(height: 280)
             .chartYScale(domain: 0...10)
             .chartXAxis {
-                AxisMarks(values: weekDates) { value in
+                AxisMarks(values: weekDates) {
                     AxisTick()
                     AxisGridLine()
                     AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
@@ -84,8 +84,9 @@ struct MoodChartView: View {
     private func getWeekDates() -> [Date] {
         let calendar = Calendar.current
         let today = Date()
-        let weekStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
-        return (0...7).map { calendar.date(byAdding: .day, value: $0, to: weekStart)! }
+        return (-7...0).map { offset in
+            calendar.date(byAdding: .day, value: offset, to: today)!
+        }
     }
 
 }
