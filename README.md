@@ -60,7 +60,7 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 
 ### Development Phase
 - **Tasks(dates to be completed by)**:
-  - **March 10th**: Mood Tracker :white_check_mark: 
+  - **March 9th**: Mood Tracker :white_check_mark: 
   - **March 17th**: Helpful Quotes
   - **March 24th**: Sleep
   - **March 31st**: Exercise
