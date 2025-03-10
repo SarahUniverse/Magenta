@@ -17,7 +17,7 @@ The following table summarizes the front-end technologies and configurations for
 | **Architecture Pattern**| MVVM                                            |
 | **Frameworks**          | SwiftUI, UIKit, CoreData, Combine, Security, Foundation, HealthKit, XCTest, Swift Testing, GraphQL, Journaling Suggestions, MusicKit, Swift Charts |
 | **Supported OS**        | iOS, watchOS |
-| **Minimum OS Versions** | iOS 18.0, iPadOS 18.0, watchOS (TBA) |
+| **Minimum OS Versions** | iOS 18.0, watchOS (TBA) |
 | **Authentication**      | Apple Sign-In, Google Sign-In, Face ID, Username/Email |
 | **TODO**                | Add Push Notifications and Activities for some features |
 
