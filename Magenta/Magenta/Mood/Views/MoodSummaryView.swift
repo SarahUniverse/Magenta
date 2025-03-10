@@ -60,24 +60,28 @@ struct MoodSummaryView: View {
         let weekDates = getWeekDates()
 
         NavigationLink(destination: MoodView(viewContext: viewContext)) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("MOOD")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.gray)
-
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "theatermasks.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.yellow, .blue],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+            VStack(alignment: .leading) {
+                HStack(alignment: .top) {
+                    HStack {
+                        Image(systemName: "theatermasks.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.yellow, .blue],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                        )
-                        .font(.largeTitle)
-
+                            .font(.title3)
+                            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 2)
+                        Text("MOOD")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.yellow)
+                            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 0)
+                        Spacer()
+                    }
+                    Spacer()
                     Chart {
                         ForEach(moodSummaryViewModel.moods) { daily in
                             BarMark(
@@ -90,47 +94,11 @@ struct MoodSummaryView: View {
                     }
                     .frame(height: 90)
                     .chartYScale(domain: 0...10)
-                    .chartXAxis {
-                        AxisMarks(values: weekDates) {
-                            AxisTick(length: 2)
-                            AxisGridLine()
-                            AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
-                                .font(.caption2)
-                                .foregroundStyle(.gray)
-                        }
-                    }
+                    .chartXAxis(.hidden)
+                    .chartYAxis(.hidden)
                     .chartXScale(domain: weekDates.first!...weekDates.last!)
-                    .chartYAxis {
-                        AxisMarks(values: [0, 2, 4, 6, 8, 10]) { value in
-                            AxisGridLine()
-                                .foregroundStyle(.gray)
-                            AxisTick(length: 2)
-                            AxisValueLabel {
-                                let moodValue = value.as(Int.self) ?? 0
-                                let moodString: String = {
-                                    switch moodValue {
-                                    case 0: return "Terrible"
-                                    case 2: return "Bad"
-                                    case 4: return "Okay"
-                                    case 6: return "Good"
-                                    case 8: return "Great"
-                                    case 10: return "Amazing"
-                                    default: return "\(moodValue)"
-                                    }
-                                }()
-                                Text(moodString)
-                                    .font(.caption2)
-                                    .foregroundStyle(.gray)
-                            }
-                        }
-                    }
-                    .chartPlotStyle { plotArea in
-                        plotArea
-                            .border(Color.gray, width: 1)
-                    }
                     .padding(.horizontal, 5)
                     .padding(.vertical, 3)
-                    Spacer()
                 }
                 .padding(30)
                 .background(glassBackground)
