@@ -59,8 +59,8 @@ The following table provides an overview of Magenta's features, with planned key
 Below is the development plan and subsequent phases for Magenta, leading to the app's release on July 28th, 2025.
 
 ### Development Phase
-- **Tasks**:
-  - **March 10th**: Mood Tracker **(Completed March 9, 2025)**  
+- **Tasks(dates to be completed by)**:
+  - **March 10th**: Mood Tracker :white_check_mark: 
   - **March 17th**: Helpful Quotes
   - **March 24th**: Sleep
   - **March 31st**: Exercise
@@ -110,7 +110,7 @@ The following table represents the timeline for all features and phases. Each "X
 
 | Task                          | Mar 10 | Mar 17 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
 |-------------------------------|--------|--------|--------|--------|-------|--------|--------|--------|-------|--------|--------|--------|-------|-------|--------|--------|--------|-------|--------|--------|--------|
-| Mood Tracker                 |   X*   |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Mood Tracker                 |  :white_check_mark:  |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Helpful Quotes               |        |   X    |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Sleep                        |        |        |   X    |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Exercise                     |        |        |        |   X    |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
@@ -131,7 +131,7 @@ The following table represents the timeline for all features and phases. Each "X
 | Release Preparation          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |   X    |        |
 | App Store Release            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |   X    |
 
-*Note*: "X*" for Mood Tracker indicates completion ahead of schedule on March 9, 2025.
+
 
 ## License
 Proprietary Software
