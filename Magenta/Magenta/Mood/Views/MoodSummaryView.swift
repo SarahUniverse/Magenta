@@ -64,7 +64,7 @@ struct MoodSummaryView: View {
                 Text("MOOD")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "theatermasks.fill")
@@ -96,7 +96,7 @@ struct MoodSummaryView: View {
                             AxisGridLine()
                             AxisValueLabel(format: .dateTime.weekday(.abbreviated), centered: true)
                                 .font(.caption2)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.gray)
                         }
                     }
                     .chartXScale(domain: weekDates.first!...weekDates.last!)
@@ -120,7 +120,7 @@ struct MoodSummaryView: View {
                                 }()
                                 Text(moodString)
                                     .font(.caption2)
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(.gray)
                             }
                         }
                     }
