@@ -45,7 +45,7 @@ The following table provides an overview of Magenta's features, with planned key
 | **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                                                                      |
 | **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
 | **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                                                                      |
-| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | To Be Added                                                                      |
+| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | Currently WIP                                                                    |
 | **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                                                                      |
 | **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                                                                      |
 | **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                                                                      |
