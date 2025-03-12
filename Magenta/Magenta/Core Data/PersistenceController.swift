@@ -1,5 +1,5 @@
 //
-//  CoreDataStack.swift
+//  PersistenceController.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 1/6/25.
@@ -7,8 +7,8 @@
 
 import CoreData
 
-class CoreDataStack: ObservableObject {
-    static let shared = CoreDataStack()
+class PersistenceController: ObservableObject {
+    static let shared = PersistenceController()
 
     lazy var persistentContainer: NSPersistentContainer = {
 

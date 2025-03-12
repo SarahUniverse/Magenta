@@ -140,7 +140,7 @@ struct EditPinnedView: View {
         @StateObject private var summaryViewModel: SummaryViewModel
 
         init() {
-            let context = PersistenceController.preview.container.viewContext
+            let context = PreviewPersistenceController.preview.container.viewContext
             _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .light))
         }
 
@@ -159,7 +159,7 @@ struct EditPinnedView: View {
         @StateObject private var summaryViewModel: SummaryViewModel
 
         init() {
-            let context = PersistenceController.preview.container.viewContext
+            let context = PreviewPersistenceController.preview.container.viewContext
             _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .dark))
         }
 

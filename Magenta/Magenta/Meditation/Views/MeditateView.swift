@@ -215,21 +215,21 @@ struct MeditateView: View {
 
 // MARK: - Previews
 #Preview ("Light Mode") {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PreviewPersistenceController.preview.container.viewContext
     return MeditateView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PreviewPersistenceController.preview.container.viewContext
     return MeditateView(viewContext: context)
         .preferredColorScheme(.dark)
 }
 
 // For preview content
-struct PersistenceController {
-    static let preview: PersistenceController = {
-        let controller = PersistenceController(inMemory: true)
+struct PreviewPersistenceController {
+    static let preview: PreviewPersistenceController = {
+        let controller = PreviewPersistenceController(inMemory: true)
         // Add any preview data setup here
         return controller
     }()
