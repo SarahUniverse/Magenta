@@ -96,7 +96,7 @@ struct DiscoverView: View {
         _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
-    // MARK: - Main View
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             mainContentView

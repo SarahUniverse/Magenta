@@ -31,7 +31,7 @@ struct MeditateView: View {
         _meditateViewModel = StateObject(wrappedValue: MeditateViewModel(viewContext: viewContext))
     }
 
-    // MARK: Main View
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {

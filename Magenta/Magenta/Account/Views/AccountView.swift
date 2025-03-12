@@ -27,7 +27,7 @@ struct AccountView: View {
         endPoint: .bottom
     )
 
-    // MARK: - Main View code
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             List {

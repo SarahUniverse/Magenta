@@ -20,7 +20,7 @@ struct WaitingOnFaceIDAuthView: View {
         endPoint: .bottomLeading
     )
 
-    // MARK: - Main View Code
+    // MARK: - Body
     var body: some View {
         ZStack {
             backgroundGradient

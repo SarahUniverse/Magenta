@@ -11,7 +11,7 @@ struct EmptyBooksView: View {
     let status: BookStatus?
     let action: () -> Void
 
-    // MARK: - Main View
+    // MARK: - Body
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "book.fill")

@@ -241,7 +241,7 @@ struct MoodView: View {
             .padding(.top, 10)
     }
 
-    // MARK: - Main View
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             ZStack {

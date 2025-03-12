@@ -21,6 +21,7 @@ struct QuotesView: View {
         endPoint: .bottom
     )
 
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -84,7 +85,7 @@ struct QuotesView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        quotesViewModel.toggleFavorite(quoteId: quote.id) // Pass String id
+                        quotesViewModel.toggleFavorite(quoteId: quote.id)
                     }, label: {
                         Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
                             .foregroundStyle(.red)

@@ -91,7 +91,7 @@ struct SignUpView: View {
         }
     }
 
-    // MARK: - Main View Code
+    // MARK: - Body
     var body: some View {
         VStack {
             headerView

@@ -66,7 +66,7 @@ struct ArtTherapyView: View {
         }
     }
 
-    // MARK: - Main View Code
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {

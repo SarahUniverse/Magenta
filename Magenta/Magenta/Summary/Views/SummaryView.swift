@@ -29,7 +29,7 @@ struct SummaryView: View {
         _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
-    // MARK: - Main View
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {

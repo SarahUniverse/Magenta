@@ -35,7 +35,7 @@ struct EditPinnedView: View {
         )
     }
 
-    // MARK: - Main View
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             searchSection
