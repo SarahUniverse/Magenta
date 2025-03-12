@@ -15,6 +15,7 @@ class QuotesViewModel: ObservableObject {
     @Published var selectedSubject: String? = nil
 
     let subjects = ["love", "grief", "motivation", "friendship", "anger"]
+    private var allQuotes: [QuotesModel] = []
 
     init() {
         loadQuotesFromJSON()
@@ -28,6 +29,7 @@ class QuotesViewModel: ObservableObject {
             return
         }
         quotes = decodedQuotes
+        syncFavoriteQuotes()
         filterQuotes()
     }
 
@@ -35,8 +37,28 @@ class QuotesViewModel: ObservableObject {
         filterQuotes()
     }
 
+    func toggleFavorite(quoteId: String) {
+        if favoriteQuotes.contains(quoteId) {
+            favoriteQuotes.remove(quoteId)
+        } else {
+            favoriteQuotes.insert(quoteId)
+        }
+
+        UserDefaults.standard.set(Array(favoriteQuotes), forKey: "FavoriteQuotes")
+
+        if let index = quotes.firstIndex(where: { $0.id == quoteId }) {
+            quotes[index].favoriteQuote.toggle()
+        }
+
+        if let allIndex = allQuotes.firstIndex(where: { $0.id == quoteId }) {
+            allQuotes[allIndex].favoriteQuote = favoriteQuotes.contains(quoteId)
+        }
+
+    }
+
+    // MARK: - Private Functions
     private func filterQuotes() {
-        var filteredQuotes = quotes
+        var filteredQuotes = allQuotes
 
         // Filter by subject if one is selected
         if let subject = selectedSubject {
@@ -51,22 +73,16 @@ class QuotesViewModel: ObservableObject {
             }
         }
 
-        DispatchQueue.main.async {
             self.quotes = filteredQuotes
-        }
     }
 
-    func toggleFavorite(quoteId: String) {
-        if favoriteQuotes.contains(quoteId) {
-            favoriteQuotes.remove(quoteId)
-        } else {
-            favoriteQuotes.insert(quoteId)
+    private func syncFavoriteQuotes() {
+        allQuotes = quotes.map { quote in
+            var mutableQuote = quote
+            mutableQuote.favoriteQuote = favoriteQuotes.contains(quote.id)
+            return mutableQuote
         }
-        UserDefaults.standard.set(Array(favoriteQuotes), forKey: "FavoriteQuotes")
-
-        if let index = quotes.firstIndex(where: { $0.id == quoteId }) {
-            quotes[index].favoriteQuote.toggle()
-        }
+        quotes = allQuotes
     }
 
 }

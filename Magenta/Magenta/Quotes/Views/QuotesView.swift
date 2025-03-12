@@ -74,7 +74,7 @@ struct QuotesView: View {
     }
 
     private var quotesList: some View {
-        List(quotesViewModel.quotes) { quote in
+        List(quotesViewModel.quotes, id: \.id) { quote in
             VStack(alignment: .leading, spacing: 8) {
                 Text(quote.quoteContent)
                     .font(.body)
@@ -94,6 +94,7 @@ struct QuotesView: View {
             }
             .padding(.vertical, 4)
         }
+        .id(quotesViewModel.selectedSubject ?? "all")
         .scrollContentBackground(.hidden)
         .onAppear {
             quotesViewModel.fetchQuotes()
