@@ -15,7 +15,7 @@ struct SettingsRowView: View {
     var body: some View {
         HStack {
             Image(systemName: icon)
-                .foregroundColor(color)
+                .foregroundStyle(color)
             Text(title)
         }
     }

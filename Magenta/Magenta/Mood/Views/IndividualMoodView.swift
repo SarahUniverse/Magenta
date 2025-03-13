@@ -22,7 +22,7 @@ struct IndividualMoodView: View {
 
             Text(mood)
                 .font(.title3)
-                .foregroundColor(Color(white: 0.4745))
+                .foregroundStyle(Color(white: 0.4745))
                 .bold(true)
                 .padding(.bottom, 20)
 

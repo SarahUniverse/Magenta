@@ -112,13 +112,13 @@ struct MeditateView: View {
                     HStack {
                         Text("0")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
 
                         Slider(value: $newMeditationDuration, in: 5...60, step: 1)
 
                         Text("60")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 .padding(.vertical, 8)

@@ -36,13 +36,13 @@ struct SummaryView: View {
                 HStack {
                     Text("Pinned")
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                     Spacer()
                     Button(action: {
                         showEditPinnedView = true
                     }, label: {
                         Text("Edit")
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                     })
                 }
                 .padding([.leading, .trailing, .top])

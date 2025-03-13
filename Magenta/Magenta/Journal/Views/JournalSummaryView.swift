@@ -15,7 +15,7 @@ struct JournalSummaryView: View {
             Text("JOURNAL")
                 .font(.caption)
                 .fontWeight(.bold)
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "pencil.and.scribble")
@@ -25,10 +25,10 @@ struct JournalSummaryView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                         .font(.subheadline)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
 
                     Button("Review") { }
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.blue)
                 }
             }
             .padding()

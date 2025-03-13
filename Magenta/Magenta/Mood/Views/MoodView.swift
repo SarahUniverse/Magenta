@@ -130,7 +130,7 @@ struct MoodView: View {
         }, label: {
             Image(systemName: "person.circle")
                 .font(.title2)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
         })
     }
 

@@ -13,19 +13,19 @@ struct NutritionSummaryView: View {
             Text("NUTRITION")
                 .font(.caption)
                 .fontWeight(.bold)
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
 
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "fork.knife")
-                    .foregroundColor(.green)
+                    .foregroundStyle(.green)
                     .font(.largeTitle)
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                         .font(.subheadline)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
 
                     Button("Review") { }
-                    .foregroundColor(.blue)
+                        .foregroundStyle(.blue)
                 }
             }
             .padding()

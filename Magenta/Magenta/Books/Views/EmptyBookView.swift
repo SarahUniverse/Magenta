@@ -18,7 +18,7 @@ struct EmptyBooksView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
 
             Text(emptyStateTitle)
                 .font(.title2)
@@ -26,7 +26,7 @@ struct EmptyBooksView: View {
 
             Text(emptyStateDescription)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
 
             Button(action: action) {
                 Label("Add Your First Book", systemImage: "plus.circle.fill")

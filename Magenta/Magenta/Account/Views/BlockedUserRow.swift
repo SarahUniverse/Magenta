@@ -20,7 +20,7 @@ struct BlockedUserRow: View {
                         .scaledToFill()
                 } placeholder: {
                     Image(systemName: "person.circle.fill")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                 }
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
@@ -28,7 +28,7 @@ struct BlockedUserRow: View {
                 Image(systemName: "person.circle.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
             }
 
             VStack(alignment: .leading) {
@@ -36,14 +36,14 @@ struct BlockedUserRow: View {
                     .font(.headline)
                 Text("Blocked on \(user.blockedDate.formatted(date: .abbreviated, time: .shortened))")
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
             }
 
             Spacer()
 
             Button(action: unblockAction) {
                 Text("Unblock")
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.blue)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
                     .background(

@@ -77,7 +77,7 @@ struct QuotesView: View {
                             .padding(.horizontal, 12)
                             .background(
                                 quotesViewModel.selectedSubject == subject ?
-                                Color.yellow.opacity(0.6) : Color.gray.opacity(0.8)
+                                Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
                             )
                             .clipShape(Capsule())
                             .foregroundStyle(.black.opacity(0.6))

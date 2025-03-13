@@ -81,7 +81,7 @@ struct LoginView: View {
 
     private var errorView: some View {
         Text(loginViewModel.error)
-            .foregroundColor(.red)
+            .foregroundStyle(.red)
             .fullScreenCover(isPresented: $loginViewModel.isNavigating) {
                 destinationView
             }
@@ -99,7 +99,7 @@ struct LoginView: View {
 
     private var divider: some View {
         Text("Or sign in with")
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .bold()
             .shadow(radius: 1)
     }

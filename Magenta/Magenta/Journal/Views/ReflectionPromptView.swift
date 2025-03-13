@@ -20,14 +20,14 @@ struct ReflectionPromptView: View {
             .font(.title)
             .bold()
             .multilineTextAlignment(.center)
-            .foregroundStyle(foregroundColor(for: backgroundColor))
+            .foregroundStyle(foregroundStyle(for: backgroundColor))
             .frame(maxHeight: .infinity)
             .padding()
             .background(backgroundColor, in: RoundedRectangle(cornerRadius: 16))
             .padding()
     }
 
-    private func foregroundColor(for backgroundColor: Color) -> Color {
+    private func foregroundStyle(for backgroundColor: Color) -> Color {
         var whiteValue = CGFloat()
         if UIColor(backgroundColor).getWhite(&whiteValue, alpha: nil) {
             return whiteValue > 0.6 ? .black : .white

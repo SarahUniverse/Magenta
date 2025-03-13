@@ -16,7 +16,7 @@ struct BlockedUsersView: View {
             Section {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                     TextField("Search blocked users", text: $viewModel.searchText)
                         .textFieldStyle(PlainTextFieldStyle())
                 }
@@ -25,7 +25,7 @@ struct BlockedUsersView: View {
             Section {
                 if viewModel.filteredBlockedUsers.isEmpty {
                     Text("No blocked users")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .italic()
                 } else {
                     ForEach(viewModel.filteredBlockedUsers) { user in

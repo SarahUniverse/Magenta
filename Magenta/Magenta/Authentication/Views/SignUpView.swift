@@ -58,7 +58,7 @@ struct SignUpView: View {
         } label: {
             Text("Sign Up")
                 .bold()
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color.blue)
@@ -69,7 +69,7 @@ struct SignUpView: View {
 
     private var errorMessage: some View {
         Text(signUpViewModel.errorMessage)
-            .foregroundColor(.red)
+            .foregroundStyle(.red)
             .padding()
     }
 

@@ -41,7 +41,7 @@ struct SearchView: View {
                 }
             }, label: {
                 Image(systemName: isListening ? "mic.slash.fill" : "mic.fill")
-                    .foregroundColor(isListening ? .red : .gray)
+                    .foregroundStyle(isListening ? .red : .gray)
             })
         }
         .padding(10)

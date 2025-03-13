@@ -17,7 +17,7 @@ struct FAQView: View {
             Section {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                     TextField("Search FAQ", text: $viewModel.searchText)
                 }
             }
@@ -36,7 +36,7 @@ struct FAQView: View {
                 // Show search results
                 if viewModel.filteredQuestions.isEmpty {
                     Text("No matching questions found")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .italic()
                 } else {
                     ForEach(viewModel.filteredQuestions) { question in
@@ -93,13 +93,13 @@ struct FAQQuestionRow: View {
                 HStack {
                     Text(question.question)
                         .font(.subheadline)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                         .multilineTextAlignment(.leading)
 
                     Spacer()
 
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .animation(.easeInOut, value: isExpanded)
                 }
             })
@@ -107,20 +107,20 @@ struct FAQQuestionRow: View {
             if isExpanded {
                 Text(question.answer)
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .padding(.top, 4)
 
                 if !question.relatedLinks.isEmpty {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Related Links:")
                             .font(.caption)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
 
                         ForEach(question.relatedLinks, id: \.url) { link in
                             Link(destination: link.url) {
                                 Text(link.title)
                                     .font(.caption)
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.blue)
                             }
                         }
                     }

@@ -36,14 +36,14 @@ struct AccountView: View {
                         Image(systemName: "person.circle.fill")
                             .resizable()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
 
                         VStack(alignment: .leading) {
                             Text(accountViewModel.userName)
                                 .font(.headline)
                             Text(accountViewModel.userEmail)
                                 .font(.subheadline)
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                         }
                     }
                     .padding(.vertical, 8)
@@ -118,7 +118,7 @@ struct AccountView: View {
                             Spacer()
                             Image(systemName: "trash.fill")
                         }
-                        .foregroundColor(.red)
+                        .foregroundStyle(.red)
                     })
                 }
             }
