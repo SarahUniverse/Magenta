@@ -55,6 +55,7 @@ struct QuotesView: View {
 
             TextField("Search", text: $quotesViewModel.searchText)
                 .submitLabel(.search)
+                .textInputAutocapitalization(.never)
                 .onSubmit {
                     quotesViewModel.fetchQuotes()
                 }
