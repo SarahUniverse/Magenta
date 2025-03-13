@@ -16,7 +16,7 @@ struct SearchView: View {
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
 
             TextField("Search", text: $text)
 
@@ -25,7 +25,7 @@ struct SearchView: View {
                     text = ""
                 }, label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                 })
             }
 

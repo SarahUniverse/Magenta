@@ -40,13 +40,30 @@ struct QuotesView: View {
     }
 
     private var searchBar: some View {
-        TextField("Search quotes...", text: $quotesViewModel.searchText)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
-            .submitLabel(.search)
-            .onSubmit {
-                quotesViewModel.fetchQuotes()
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.gray)
+
+            TextField("Search", text: $quotesViewModel.searchText)
+                .submitLabel(.search)
+                .onSubmit {
+                    quotesViewModel.fetchQuotes()
+                }
+
+            if !quotesViewModel.searchText.isEmpty {
+                Button(action: {
+                    quotesViewModel.searchText = ""
+                    quotesViewModel.fetchQuotes()
+                }, label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.gray)
+                })
             }
+        }
+        .padding(10)
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
+        .padding()
     }
 
     private var subjectFilter: some View {
