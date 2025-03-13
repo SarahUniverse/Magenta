@@ -100,10 +100,13 @@ struct QuotesView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        quotesViewModel.toggleFavorite(quoteId: quote.id)
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            quotesViewModel.toggleFavorite(quoteId: quote.id)
+                        }
                     }, label: {
                         Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
                             .foregroundStyle(.yellow)
+                            .rotationEffect(.degrees(quote.favoriteQuote ? 360 : 0))
                     })
                 }
             }
