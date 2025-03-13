@@ -9,6 +9,7 @@ import SwiftUI
 
 struct QuotesView: View {
     @StateObject private var quotesViewModel = QuotesViewModel()
+    @State private var showAddQuoteSheet = false
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -32,8 +33,17 @@ struct QuotesView: View {
             .background(backgroundGradient)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
+                    Button(action: {
+                        showAddQuoteSheet = true
+                    }, label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.blue, .yellow)
+                    })
+
                 }
+            }
+            .sheet(isPresented: $showAddQuoteSheet) {
+                AddQuoteSheet(viewModel: quotesViewModel)
             }
         }
     }
@@ -102,7 +112,7 @@ struct QuotesView: View {
                     Spacer()
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            quotesViewModel.toggleFavorite(quoteId: quote.id)
+                            quotesViewModel.toggleFavorite(quoteId: quote.id.uuidString)
                         }
                     }, label: {
                         Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")

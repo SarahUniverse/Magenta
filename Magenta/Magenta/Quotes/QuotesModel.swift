@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct QuotesModel: Identifiable, Codable {
-    let id: String
+    let id: UUID
     let quoteContent: String
     let quoteAuthor: String
     let quoteSubject: String
     var favoriteQuote: Bool
 
+    init(quote: QuoteEntity) {
+        self.id = quote.id ?? UUID()
+        self.quoteContent = quote.quoteContent ?? ""
+        self.quoteAuthor = quote.quoteAuthor ?? ""
+        self.quoteSubject = quote.quoteSubject ?? ""
+        self.favoriteQuote = quote.favoriteQuote
+    }
+
     enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case id
         case quoteContent = "content"
         case quoteAuthor = "author"
         case quoteSubject = "subject"
@@ -23,7 +31,12 @@ struct QuotesModel: Identifiable, Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
+        let idString = try container.decode(String.self, forKey: .id)
+        if let uuid = UUID(uuidString: idString) {
+            self.id = uuid
+        } else {
+            self.id = UUID()
+        }
         self.quoteContent = try container.decode(String.self, forKey: .quoteContent)
         self.quoteAuthor = try container.decode(String.self, forKey: .quoteAuthor)
         self.quoteSubject = try container.decode(String.self, forKey: .quoteSubject)
