@@ -79,6 +79,22 @@ struct QuotesView: View {
     private var subjectFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
+                // Button to reset to all quotes
+                Button(action: {
+                    quotesViewModel.selectedSubject = nil
+                    quotesViewModel.fetchAllQuotes() // Show all quotes (including favorites)
+                }, label: {
+                    Text("All")
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(
+                            quotesViewModel.selectedSubject == nil ?
+                            Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
+                        )
+                        .clipShape(Capsule())
+                        .foregroundStyle(.black.opacity(0.6))
+                })
+
                 ForEach(quotesViewModel.subjects, id: \.self) { subject in
                     Button(action: {
                         quotesViewModel.selectedSubject = subject
@@ -95,21 +111,7 @@ struct QuotesView: View {
                             .foregroundStyle(.black.opacity(0.6))
                     })
                 }
-                // Button to reset to all quotes
-                Button(action: {
-                    quotesViewModel.selectedSubject = nil
-                    quotesViewModel.fetchAllQuotes() // Show all quotes (including favorites)
-                }, label: {
-                    Text("All")
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 12)
-                        .background(
-                            quotesViewModel.selectedSubject == nil ?
-                            Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
-                        )
-                        .clipShape(Capsule())
-                        .foregroundStyle(.black.opacity(0.6))
-                })
+
             }
             .padding(.horizontal)
         }
