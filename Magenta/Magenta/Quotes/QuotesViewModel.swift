@@ -5,6 +5,7 @@
 //  Created by Sarah Clark on 1/19/25.
 //
 
+import SwiftUI
 import CoreData
 import Foundation
 
@@ -16,26 +17,28 @@ class QuotesViewModel: ObservableObject {
 
     let subjects = ["love", "grief", "motivation", "friendship", "anger"]
     private let container: NSPersistentContainer
-    private var hasLoadedInitialJSONData: Bool = false
+    private var hasLoadedInitialData: Bool = false
 
     init() {
         container = PersistenceController.shared.persistentContainer
         checkAndLoadInitialData()
-        fetchQuotes()
+        fetchAllQuotes() // Fetch all quotes initially to ensure all favorites are loaded
+        syncFavoritesFromCoreData()
     }
 
     private func checkAndLoadInitialData() {
         let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
         do {
             let count = try container.viewContext.count(for: request)
-            if count == 0 && !hasLoadedInitialJSONData {
+            if count == 0 && !hasLoadedInitialData {
                 loadAndSaveQuotesFromJSON()
-                hasLoadedInitialJSONData = true
+                hasLoadedInitialData = true
             }
         } catch {
             print("Error checking Core Data: \(error)")
+            // Fallback: Load JSON if there's an error checking Core Data
             loadAndSaveQuotesFromJSON()
-            hasLoadedInitialJSONData = true
+            hasLoadedInitialData = true
         }
     }
 
@@ -65,12 +68,25 @@ class QuotesViewModel: ObservableObject {
         }
     }
 
+    func fetchAllQuotes() {
+        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
+
+        do {
+            let fetchedQuotes = try container.viewContext.fetch(request)
+            quotes = fetchedQuotes.map { QuotesModel(quote: $0) }
+            syncFavoriteQuotes()
+        } catch {
+            print("Failed to fetch all quotes: \(error)")
+        }
+    }
+
     func fetchQuotes() {
         let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
 
         // Apply filters
         var predicates: [NSPredicate] = []
 
+        // Only apply subject filter if selectedSubject is not nil
         if let subject = selectedSubject {
             predicates.append(NSPredicate(format: "quoteSubject == %@", subject))
         }
@@ -86,7 +102,7 @@ class QuotesViewModel: ObservableObject {
         do {
             let fetchedQuotes = try container.viewContext.fetch(request)
             quotes = fetchedQuotes.map { QuotesModel(quote: $0) }
-            syncFavoriteQuotes()
+            syncFavoriteQuotes() // Sync favorites after fetching, even if filtered
         } catch {
             print("Failed to fetch quotes: \(error)")
         }
@@ -102,7 +118,7 @@ class QuotesViewModel: ObservableObject {
 
         do {
             try container.viewContext.save()
-            fetchQuotes() // Refresh the list
+            fetchAllQuotes() // Refresh with all quotes to ensure new quote is visible
         } catch {
             print("Failed to save quote: \(error)")
         }
@@ -110,12 +126,19 @@ class QuotesViewModel: ObservableObject {
 
     func toggleFavorite(quoteId: String) {
         if let index = quotes.firstIndex(where: { $0.id.uuidString == quoteId }) {
-            quotes[index].favoriteQuote.toggle()
-            favoriteQuotes = Set(quotes.filter { $0.favoriteQuote }.map { $0.id.uuidString })
+            let isNowFavorite = !quotes[index].favoriteQuote
+            quotes[index].favoriteQuote = isNowFavorite
+
+            // Update favoriteQuotes without filtering by current quotes
+            if isNowFavorite {
+                favoriteQuotes.insert(quoteId)
+            } else {
+                favoriteQuotes.remove(quoteId)
+            }
+
             UserDefaults.standard.set(Array(favoriteQuotes), forKey: "FavoriteQuotes")
 
-            // Update Core Data
-            updateFavoriteInCoreData(quoteId: quoteId, isFavorite: quotes[index].favoriteQuote)
+            updateFavoriteInCoreData(quoteId: quoteId, isFavorite: isNowFavorite)
         }
     }
 
@@ -134,10 +157,45 @@ class QuotesViewModel: ObservableObject {
     }
 
     private func syncFavoriteQuotes() {
+        // Update quotes array with favorite status from favoriteQuotes (UserDefaults)
         quotes = quotes.map { quote in
             var mutableQuote = quote
             mutableQuote.favoriteQuote = favoriteQuotes.contains(quote.id.uuidString)
             return mutableQuote
+        }
+
+        // Ensure Core Data reflects UserDefaults
+        syncFavoritesToCoreData()
+    }
+
+    private func syncFavoritesFromCoreData() {
+        // Load favorites from Core Data and update favoriteQuotes
+        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "favoriteQuote == YES")
+
+        do {
+            let favoriteEntities = try container.viewContext.fetch(request)
+            let favoriteIds = favoriteEntities.map { $0.id?.uuidString ?? "" }
+            favoriteQuotes = Set(favoriteIds.filter { !$0.isEmpty })
+            UserDefaults.standard.set(Array(favoriteQuotes), forKey: "FavoriteQuotes")
+        } catch {
+            print("Failed to sync favorites from Core Data: \(error)")
+        }
+    }
+
+    private func syncFavoritesToCoreData() {
+        // Ensure all quotes in Core Data have the correct favorite status
+        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
+
+        do {
+            let allQuotes = try container.viewContext.fetch(request)
+            for quote in allQuotes {
+                let quoteId = quote.id?.uuidString ?? ""
+                quote.favoriteQuote = favoriteQuotes.contains(quoteId)
+            }
+            try container.viewContext.save()
+        } catch {
+            print("Failed to sync favorites to Core Data: \(error)")
         }
     }
 
