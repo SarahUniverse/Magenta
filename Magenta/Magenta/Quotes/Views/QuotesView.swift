@@ -26,8 +26,9 @@ struct QuotesView: View {
                 searchBar
                 subjectFilter
                 quotesList
+                    .padding(.top, 15)
             }
-            .navigationTitle("Quotes that Move Me")
+            .navigationTitle("Quotes that Inspire")
             .background(backgroundGradient)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
