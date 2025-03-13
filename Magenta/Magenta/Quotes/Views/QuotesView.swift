@@ -13,8 +13,6 @@ struct QuotesView: View {
     let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .gray, location: 0),
-            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.2),
             Gradient.Stop(color: .clear, location: 0.4)
         ],
         startPoint: .top,
@@ -79,10 +77,10 @@ struct QuotesView: View {
                             .padding(.horizontal, 12)
                             .background(
                                 quotesViewModel.selectedSubject == subject ?
-                                Color.yellow.opacity(0.8) : Color.gray.opacity(0.3)
+                                Color.yellow.opacity(0.6) : Color.gray.opacity(0.8)
                             )
                             .clipShape(Capsule())
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(.black.opacity(0.6))
                     })
                 }
             }
@@ -105,7 +103,7 @@ struct QuotesView: View {
                         quotesViewModel.toggleFavorite(quoteId: quote.id)
                     }, label: {
                         Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
-                            .foregroundStyle(.red)
+                            .foregroundStyle(.yellow)
                     })
                 }
             }
