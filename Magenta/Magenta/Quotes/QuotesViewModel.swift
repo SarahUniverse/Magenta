@@ -88,7 +88,11 @@ class QuotesViewModel: ObservableObject {
 
         // Only apply subject filter if selectedSubject is not nil
         if let subject = selectedSubject {
-            predicates.append(NSPredicate(format: "quoteSubject == %@", subject))
+            if subject == "favorites" {
+                predicates.append(NSPredicate(format: "favoriteQuote == YES"))
+            } else {
+                predicates.append(NSPredicate(format: "quoteSubject == %@", subject))
+            }
         }
 
         if !searchText.isEmpty {

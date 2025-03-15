@@ -95,6 +95,21 @@ struct QuotesView: View {
                         .foregroundStyle(.black.opacity(0.6))
                 })
 
+                Button(action: {
+                    quotesViewModel.selectedSubject = "favorites"
+                    quotesViewModel.fetchQuotes()
+                }, label: {
+                    Text("Favorites")
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(
+                            quotesViewModel.selectedSubject == "favorites" ?
+                            Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
+                        )
+                        .clipShape(Capsule())
+                        .foregroundStyle(.black.opacity(0.6))
+                })
+
                 ForEach(quotesViewModel.subjects, id: \.self) { subject in
                     Button(action: {
                         quotesViewModel.selectedSubject = subject
