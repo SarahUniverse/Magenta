@@ -51,8 +51,8 @@ struct QuotesSummaryView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
-    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    let container = NSPersistentContainer(name: "DataModel")
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
     container.loadPersistentStores { _, error in
         if let error = error as NSError? {
             fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -65,8 +65,8 @@ struct QuotesSummaryView: View {
 }
 
 #Preview("Dark Mode") {
-    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
-    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    let container = NSPersistentContainer(name: "DataModel")
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
     container.loadPersistentStores { _, error in
         if let error = error as NSError? {
             fatalError("Unresolved error \(error), \(error.userInfo)")
