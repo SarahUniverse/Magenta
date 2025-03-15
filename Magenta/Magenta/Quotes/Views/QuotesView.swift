@@ -5,11 +5,16 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct QuotesView: View {
-    @StateObject private var quotesViewModel = QuotesViewModel()
+    @StateObject private var quotesViewModel: QuotesViewModel
     @State private var showAddQuoteSheet = false
+
+    init(viewContext: NSManagedObjectContext) {
+        _quotesViewModel = StateObject(wrappedValue: QuotesViewModel(viewContext: viewContext))
+    }
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -43,7 +48,7 @@ struct QuotesView: View {
                 }
             }
             .sheet(isPresented: $showAddQuoteSheet) {
-                AddQuoteSheet(viewModel: quotesViewModel)
+                AddQuoteSheet(quotesViewModel: quotesViewModel)
             }
         }
     }
@@ -166,11 +171,29 @@ struct QuotesView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    QuotesView()
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+
+    return QuotesView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    QuotesView()
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+
+    return QuotesView(viewContext: context)
         .preferredColorScheme(.dark)
 }

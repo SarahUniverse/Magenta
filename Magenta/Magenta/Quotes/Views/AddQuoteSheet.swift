@@ -9,13 +9,16 @@ import CoreData
 import SwiftUI
 
 struct AddQuoteSheet: View {
-    @ObservedObject var viewModel: QuotesViewModel
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @ObservedObject private var quotesViewModel: QuotesViewModel
     @Environment(\.dismiss) var dismiss
 
     @State private var content = ""
     @State private var author = ""
     @State private var subject = "love"
+
+    init(quotesViewModel: QuotesViewModel) {
+        self.quotesViewModel = quotesViewModel
+    }
 
     let subjects = ["love", "grief", "motivation", "friendship", "anger"]
 
@@ -39,7 +42,7 @@ struct AddQuoteSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        viewModel.addQuote(content: content, author: author, subject: subject)
+                        quotesViewModel.addQuote(content: content, author: author, subject: subject)
                         dismiss()
                     }
                 }
@@ -51,13 +54,31 @@ struct AddQuoteSheet: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    QuotesView()
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+    let viewModel = QuotesViewModel(viewContext: context)
+
+    return AddQuoteSheet(quotesViewModel: viewModel)
         .preferredColorScheme(.light)
-        .environment(\.managedObjectContext, PreviewPersistenceController.preview.container.viewContext)
 }
 
 #Preview("Dark Mode") {
-    QuotesView()
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+    let viewModel = QuotesViewModel(viewContext: context)
+
+    return AddQuoteSheet(quotesViewModel: viewModel)
         .preferredColorScheme(.dark)
-        .environment(\.managedObjectContext, PreviewPersistenceController.preview.container.viewContext)
 }

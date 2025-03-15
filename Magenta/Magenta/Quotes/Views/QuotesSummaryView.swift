@@ -5,10 +5,15 @@
 //  Created by Sarah Clark on 1/21/25.
 //
 
+import CoreData
 import SwiftUI
 
 struct QuotesSummaryView: View {
-    // @StateObject private var quotesSummaryViewModel: QuotesSummaryViewModel
+    @StateObject private var quotesSummaryViewModel: QuotesSummaryViewModel
+
+    init(viewContext: NSManagedObjectContext) {
+        _quotesSummaryViewModel = StateObject(wrappedValue: QuotesSummaryViewModel(viewContext: viewContext))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -28,13 +33,13 @@ struct QuotesSummaryView: View {
                     )
                     .font(.largeTitle)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
-                        .font(.subheadline)
-                        .foregroundStyle(.white)
-
-                    Button("Review") { }
-                        .foregroundStyle(.blue)
+                VStack {
+                    if let quote = quotesSummaryViewModel.quotes.first {
+                        Text(quote.quoteContent ?? "No content")
+                        Text("— \(quote.quoteAuthor ?? "Unknown")")
+                    } else {
+                        Text("No favorite quotes yet")
+                    }
                 }
             }
             .padding()
@@ -45,12 +50,30 @@ struct QuotesSummaryView: View {
 }
 
 // MARK: - Previews
-#Preview ("Light Mode") {
-    BooksSummaryView()
+#Preview("Light Mode") {
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+
+    return QuotesSummaryView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
-#Preview ("Dark Mode") {
-    BooksSummaryView()
+#Preview("Dark Mode") {
+    let container = NSPersistentContainer(name: "QuotesDataModel") // Replace with your model name
+    container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null") // In-memory store
+    container.loadPersistentStores { _, error in
+        if let error = error as NSError? {
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+    }
+    let context = container.viewContext
+
+    return QuotesSummaryView(viewContext: context)
         .preferredColorScheme(.dark)
 }
