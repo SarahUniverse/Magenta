@@ -28,7 +28,6 @@ struct QuotesSummaryView: View {
                     .background(glassBackground)
                     .cornerRadius(15)
             }
-            .buttonStyle(PlainButtonStyle())
         }
         .onAppear {
             quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
@@ -38,9 +37,11 @@ struct QuotesSummaryView: View {
     // MARK: Private Variables
     private var mainContent: some View {
         HStack(alignment: .center, spacing: 10) {
-            heartIcon
-            Spacer()
             quoteContent
+                .padding(.top, -10)
+            Spacer()
+            heartIcon
+                .padding(.top, -10)
             Spacer()
             navigationChevron
         }
@@ -72,16 +73,15 @@ struct QuotesSummaryView: View {
 
     private var navigationChevron: some View {
         Image(systemName: "chevron.right")
-            .font(.system(size: 14, weight: .semibold))
+            .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(.gray)
-            .padding(.bottom, 10)
-            .padding(.top, 10)
+            .padding(.bottom, 70)
     }
 
     private var heartIcon: some View {
         Image(systemName: "heart.fill")
             .foregroundStyle(.yellow)
-            .font(.largeTitle)
+            .font(.system(size: 60))
             .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
             .padding(.top, 10)
     }
@@ -122,7 +122,6 @@ struct QuotesSummaryView: View {
                     .blur(radius: 1)
                     .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
             }
-            .padding(.top, 0)
     }
 
 }
