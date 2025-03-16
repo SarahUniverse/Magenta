@@ -20,57 +20,81 @@ struct QuotesSummaryView: View {
 
     // MARK: Body
     var body: some View {
-        NavigationLink(destination: QuotesView(viewContext: viewContext)) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("QUOTES")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.gray)
-                    .padding(.leading, 5)
-                    .padding(.bottom, -20)
-
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "heart.fill")
-                        .foregroundStyle(.yellow)
-                        /*.foregroundStyle(
-                            LinearGradient(
-                                colors: [.gray, .yellow],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )*/
-                        .font(.largeTitle)
-                        .padding(.top, 10)
-                    Spacer()
-                    VStack {
-                        if let quote = quotesSummaryViewModel.quotes.first {
-                            Text(quote.quoteContent ?? "No content")
-                            Text("— \(quote.quoteAuthor ?? "Unknown")")
-                        } else {
-                            Text("No favorite quotes yet")
-                        }
-                    }
-                    .font(.system(.body, design: .serif))
-                    .foregroundStyle(.gray)
-                    .padding(.top, 10)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(.gray)
-                        .padding(.bottom, 10)
-                        .padding(.top, 10)
-
-                }
-                .padding(20)
-                .background(glassBackground)
+        VStack(alignment: .leading) {
+            headerText
+            NavigationLink(destination: QuotesView(viewContext: viewContext)) {
+                mainContent
+                    .padding(20)
+                    .background(glassBackground)
+                    .cornerRadius(15)
             }
-            .onAppear {
-                quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
-            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .onAppear {
+            quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
         }
     }
 
     // MARK: Private Variables
+    private var mainContent: some View {
+        HStack(alignment: .center, spacing: 10) {
+            heartIcon
+            Spacer()
+            quoteContent
+            Spacer()
+            navigationChevron
+        }
+    }
+
+    private var quoteContent: some View {
+        VStack {
+            if let quote = quotesSummaryViewModel.quotes.first {
+                Text(quote.quoteContent ?? "No content")
+                    .font(.system(.body, design: .serif))
+                    .foregroundStyle(.gray)
+
+                Text("— \(quote.quoteAuthor ?? "Unknown")")
+                    .font(.system(.caption, design: .serif))
+                    .foregroundStyle(.gray)
+            } else {
+                Text("No favorite quotes yet")
+                    .font(.system(.title3, design: .serif))
+                    .foregroundStyle(.gray)
+                    .overlay(
+                        Image(systemName: "sparkles")
+                            .font(.caption2)
+                            .foregroundStyle(.yellow)
+                    )
+            }
+        }
+        .padding(.vertical, 5)
+    }
+
+    private var navigationChevron: some View {
+        Image(systemName: "chevron.right")
+            .font(.system(size: 14, weight: .semibold))
+            .foregroundStyle(.gray)
+            .padding(.bottom, 10)
+            .padding(.top, 10)
+    }
+
+    private var heartIcon: some View {
+        Image(systemName: "heart.fill")
+            .foregroundStyle(.yellow)
+            .font(.largeTitle)
+            .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
+            .padding(.top, 10)
+    }
+
+    private var headerText: some View {
+        Text("QUOTES")
+            .font(.caption)
+            .fontWeight(.bold)
+            .foregroundStyle(.gray)
+            .padding(.leading, 5)
+            .padding(.bottom, -5)
+    }
+
     private var glassBackground: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(.ultraThinMaterial)
@@ -98,7 +122,7 @@ struct QuotesSummaryView: View {
                     .blur(radius: 1)
                     .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
             }
-            .padding(.top, 10)
+            .padding(.top, 0)
     }
 
 }
