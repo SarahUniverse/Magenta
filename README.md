@@ -45,7 +45,7 @@ The following table provides an overview of Magenta's features, with planned key
 | **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                                                                      |
 | **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
 | **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                                                                      |
-| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | Currently WIP                                                                    |
+| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | Showcase a curated collection of inspirational quotes, featuring favorites and diverse subjects for mental well-being. Allow users to add new quotes, manage them, and view a visually engaging summary highlighting the most recent favorite quote with animations and customization.|
 | **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                                                                      |
 | **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                                                                      |
 | **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                                                                      |
@@ -61,7 +61,7 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 ### Development Phase
 - **Tasks(dates to be completed by)**:
   - **March 9th**: Mood Tracker :white_check_mark: 
-  - **March 17th**: Helpful Quotes
+  - **March 16th**: Helpful Quotes :white_check_mark:
   - **March 24th**: Sleep
   - **March 31st**: Exercise
   - **April 7th**: Nutrition
@@ -108,10 +108,10 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 ### Gantt Chart
 The following table represents the timeline for all features and phases. Each "X" indicates a task being active during that week. (Note: Mood Tracker marked complete early.)
 
-| Task                          | Mar 10 | Mar 17 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
+| Task                          | Mar 9 | Mar 16 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
 |-------------------------------|--------|--------|--------|--------|-------|--------|--------|--------|-------|--------|--------|--------|-------|-------|--------|--------|--------|-------|--------|--------|--------|
 | Mood Tracker                 |  :white_check_mark:  |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Helpful Quotes               |        |   X    |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
+| Helpful Quotes               |        |   :white_check_mark:   |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Sleep                        |        |        |   X    |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Exercise                     |        |        |        |   X    |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
 | Nutrition                    |        |        |        |        |   X   |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
