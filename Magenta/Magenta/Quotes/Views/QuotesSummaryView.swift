@@ -79,11 +79,29 @@ struct QuotesSummaryView: View {
     }
 
     private var heartIcon: some View {
-        Image(systemName: "heart.fill")
-            .foregroundStyle(.yellow)
-            .font(.system(size: 60))
-            .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
-            .padding(.top, 10)
+        ZStack {
+            grayGradientRectangle
+            Image(systemName: "heart.fill")
+                .foregroundStyle(.yellow)
+                .font(.system(size: 60))
+                .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
+        }
+        .padding(.top, 10)
+    }
+
+    private var grayGradientRectangle: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(
+                LinearGradient(
+                    colors: [.gray.opacity(0.5),
+                             .gray.opacity(0.5),
+                             .clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .frame(width: 80, height: 80)
+            .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
     }
 
     private var headerText: some View {
