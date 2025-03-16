@@ -20,37 +20,53 @@ struct QuotesSummaryView: View {
 
     // MARK: Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("QUOTES")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
+        NavigationLink(destination: QuotesView(viewContext: viewContext)) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("QUOTES")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
+                    .padding(.leading, 5)
+                    .padding(.bottom, -20)
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "text.quote")
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.gray, .yellow],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .font(.largeTitle)
-
-                VStack {
-                    if let quote = quotesSummaryViewModel.quotes.first {
-                        Text(quote.quoteContent ?? "No content")
-                        Text("— \(quote.quoteAuthor ?? "Unknown")")
-                    } else {
-                        Text("No favorite quotes yet")
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(.yellow)
+                        /*.foregroundStyle(
+                            LinearGradient(
+                                colors: [.gray, .yellow],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )*/
+                        .font(.largeTitle)
+                        .padding(.top, 10)
+                    Spacer()
+                    VStack {
+                        if let quote = quotesSummaryViewModel.quotes.first {
+                            Text(quote.quoteContent ?? "No content")
+                            Text("— \(quote.quoteAuthor ?? "Unknown")")
+                        } else {
+                            Text("No favorite quotes yet")
+                        }
                     }
+                    .font(.system(.body, design: .serif))
+                    .foregroundStyle(.gray)
+                    .padding(.top, 10)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.gray)
+                        .padding(.bottom, 10)
+                        .padding(.top, 10)
+
                 }
+                .padding(20)
+                .background(glassBackground)
             }
-            .padding(20)
-            .background(glassBackground)
-        }
-        .onAppear {
-            quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
+            .onAppear {
+                quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
+            }
         }
     }
 
