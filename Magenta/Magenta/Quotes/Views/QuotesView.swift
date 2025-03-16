@@ -138,35 +138,49 @@ struct QuotesView: View {
     }
 
     private var quotesList: some View {
-        List(quotesViewModel.quotes, id: \.id) { quote in
-            VStack(alignment: .leading, spacing: 8) {
-                Text(quote.quoteContent)
-                    .font(.body)
-                Text("— \(quote.quoteAuthor)")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+        Group {
+            if quotesViewModel.quotes.isEmpty && quotesViewModel.selectedSubject == "favorites" {
+                ContentUnavailableView(
+                    "No Favorite Quotes",
+                    systemImage: "heart.slash",
+                    description: Text("Tap the heart icon on any quote to mark it as a favorite.").bold()
+                )
+                .foregroundStyle(.gray)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.black)
+            } else {
+                List(quotesViewModel.quotes, id: \.id) { quote in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(quote.quoteContent)
+                            .font(.body)
+                        Text("— \(quote.quoteAuthor)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
 
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            quotesViewModel.toggleFavorite(quoteId: quote.id.uuidString)
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    quotesViewModel.toggleFavorite(quoteId: quote.id.uuidString)
+                                }
+                            }, label: {
+                                Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
+                                    .foregroundStyle(.yellow)
+                                    .rotationEffect(.degrees(quote.favoriteQuote ? 360 : 0))
+                            })
                         }
-                    }, label: {
-                        Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
-                            .foregroundStyle(.yellow)
-                            .rotationEffect(.degrees(quote.favoriteQuote ? 360 : 0))
-                    })
+                    }
+                    .padding(.vertical, 4)
                 }
+                .id(quotesViewModel.selectedSubject ?? "all")
+                .scrollContentBackground(.hidden)
             }
-            .padding(.vertical, 4)
         }
-        .id(quotesViewModel.selectedSubject ?? "all")
-        .scrollContentBackground(.hidden)
         .onAppear {
             quotesViewModel.fetchAllQuotes() // Load all quotes initially
         }
     }
+
 }
 
 // MARK: - Previews
