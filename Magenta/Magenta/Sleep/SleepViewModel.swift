@@ -8,6 +8,6 @@
 import CoreData
 import SwiftUI
 
-final class SleepViewModel: ObservableObject {
+@Observable final class SleepViewModel {
 
 }
