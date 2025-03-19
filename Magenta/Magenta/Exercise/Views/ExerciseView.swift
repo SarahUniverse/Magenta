@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExerciseView: View {
-    @StateObject private var exerciseViewModel = ExerciseViewModel()
+    private var exerciseViewModel = ExerciseViewModel()
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -36,7 +36,7 @@ struct ExerciseView: View {
                 }
             }
             .onAppear {
-                exerciseViewModel.fetchSteps()
+                //exerciseViewModel.fetchSteps()
             }
         }
     }

@@ -6,52 +6,61 @@
 //
 
 import HealthKit
+import SwiftUI
 
-class HealthKitManager: ObservableObject {
-    let healthStore: HKHealthStore?
-    @Published var stepCount: Double = 0
+@Observable class HealthKitManager {
+    let healthStore = HKHealthStore()
+    var isAuthorizationGranted = false
+    var latestSleepDuration: Double? // In hours
+    var errorMessage: String?
 
-    init() {
-        if HKHealthStore.isHealthDataAvailable() {
-            healthStore = HKHealthStore()
-        } else {
-            healthStore = nil
-            print("HealthKit is not available on this device.")
-        }
-    }
+    // MARK: Sleep related functionality
+    func requestSleepTrackingAuthorization() {
+        let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+        let typesToRead = Set([sleepType])
 
-    func setupHealthKit() {
-        guard let healthStore = self.healthStore else { return }
-        let allTypes = Set([HKObjectType.quantityType(forIdentifier: .stepCount)!])
-
-        healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
-            if !success {
-                print("Error requesting authorization from HealthKit: \(error?.localizedDescription ?? "Unknown error")")
+        healthStore.requestAuthorization(toShare: nil, read: typesToRead) { [weak self] (success, error) in
+            DispatchQueue.main.async {
+                if success {
+                    self?.isAuthorizationGranted = true
+                    print("HealthKit authorization granted")
+                    self?.fetchSleepData()
+                } else {
+                    self?.isAuthorizationGranted = false
+                    self?.errorMessage = "HealthKit authorization denied: \(String(describing: error))"
+                    print(self?.errorMessage ?? "Unknown error")
+                }
             }
         }
     }
 
-    func fetchStepCount(completion: @escaping (Double) -> Void) {
-        guard let stepCountType = HKObjectType.quantityType(forIdentifier: .stepCount) else {
-            print("Step count type is no longer available in HealthKit")
-            return
-        }
-
+    func fetchSleepData() {
+        let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+        let calendar = Calendar.current
         let now = Date()
-        let startOfDay = Calendar.current.startOfDay(for: now)
+        let startOfDay = calendar.startOfDay(for: now)
         let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: .strictStartDate)
 
-        let query = HKStatisticsQuery(quantityType: stepCountType,
-                                      quantitySamplePredicate: predicate,
-                                      options: .cumulativeSum) { (_, result, error) in
-            guard let result = result, let sum = result.sumQuantity() else {
-                print("Failed to fetch step count: \(error?.localizedDescription ?? "Unknown error")")
-                return
+        let query = HKSampleQuery(sampleType: sleepType,
+                                  predicate: predicate,
+                                  limit: 1, // Fetch only the latest sleep session
+                                  sortDescriptors: [sortDescriptor]) { [weak self] (query, samples, error) in
+            DispatchQueue.main.async {
+                guard let samples = samples as? [HKCategorySample], let sample = samples.first, error == nil else {
+                    self?.errorMessage = "Error fetching sleep data: \(String(describing: error))"
+                    print(self?.errorMessage ?? "Unknown error")
+                    return
+                }
+
+                let duration = sample.endDate.timeIntervalSince(sample.startDate)
+                self?.latestSleepDuration = duration / 3600.0 // Convert seconds to hours
+                print("Latest sleep from \(sample.startDate) to \(sample.endDate), Duration: \(duration) seconds")
             }
-            let steps = sum.doubleValue(for: HKUnit.count())
-            completion(steps)
         }
 
-        healthStore?.execute(query)
+        healthStore.execute(query)
     }
+
+    // MARK: Exercise related functionality (placeholder for future use)
 }
