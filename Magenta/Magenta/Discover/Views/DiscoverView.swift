@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 struct DiscoverView: View {
-    @StateObject var discoverViewModel: DiscoverViewModel
+    @State var discoverViewModel: DiscoverViewModel
     @State private var searchText = ""
     @State private var isListening = false
     @State private var showError = false
@@ -93,7 +93,7 @@ struct DiscoverView: View {
     }
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
-        _discoverViewModel = StateObject(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
+        _discoverViewModel = State(wrappedValue: DiscoverViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
     // MARK: - Body

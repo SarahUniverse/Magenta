@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SleepView: View {
-    @State private var sleepViewModel = SleepViewModel()
+    @State var sleepViewModel: SleepViewModel
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -41,11 +41,15 @@ struct SleepView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    SleepView()
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    SleepView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    SleepView()
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    SleepView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }

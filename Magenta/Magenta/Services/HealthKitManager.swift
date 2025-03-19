@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable class HealthKitManager {
     let healthStore = HKHealthStore()
-    var isAuthorizationGranted = false
+    var isSleepAuthorizationGranted = false
     var latestSleepDuration: Double? // In hours
     var errorMessage: String?
 
@@ -22,11 +22,11 @@ import SwiftUI
         healthStore.requestAuthorization(toShare: nil, read: typesToRead) { [weak self] (success, error) in
             DispatchQueue.main.async {
                 if success {
-                    self?.isAuthorizationGranted = true
+                    self?.isSleepAuthorizationGranted = true
                     print("HealthKit authorization granted")
                     self?.fetchSleepData()
                 } else {
-                    self?.isAuthorizationGranted = false
+                    self?.isSleepAuthorizationGranted = false
                     self?.errorMessage = "HealthKit authorization denied: \(String(describing: error))"
                     print(self?.errorMessage ?? "Unknown error")
                 }

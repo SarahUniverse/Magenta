@@ -6,21 +6,29 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SleepTrackingOptInScreen: View {
-    @State private var viewModel = SleepViewModel()
+    @State var sleepViewModel: SleepViewModel
     @Environment(\.dismiss) var dismiss
+    let discoverViewModel: DiscoverViewModel
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
                 Spacer()
 
-                Image(systemName: "moon.zzz")
+                Image(systemName: "moon.zzz.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
-                    .foregroundColor(.blue)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.mediumBlue, .indigo],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
 
                 Text("Enable Sleep Tracking")
                     .font(.title)
@@ -32,7 +40,7 @@ struct SleepTrackingOptInScreen: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
 
-                if let error = viewModel.errorMessage {
+                if let error = sleepViewModel.errorMessage {
                     Text(error)
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
@@ -40,8 +48,8 @@ struct SleepTrackingOptInScreen: View {
                 }
 
                 Button(action: {
-                    viewModel.requestSleepTrackingAuthorization()
-                    if viewModel.isAuthorizationGranted {
+                    sleepViewModel.requestSleepTrackingAuthorization()
+                    if sleepViewModel.isAuthorizationGranted {
                         dismiss()
                     }
                 }, label: {
@@ -49,12 +57,12 @@ struct SleepTrackingOptInScreen: View {
                         .fontWeight(.medium)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(viewModel.isAuthorizationGranted ? Color.green : Color.blue)
+                        .background(sleepViewModel.isAuthorizationGranted ? Color.green : Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 })
                 .padding(.horizontal, 40)
-                .disabled(viewModel.isAuthorizationGranted)
+                .disabled(sleepViewModel.isAuthorizationGranted)
 
                 Button(action: {
                     dismiss()
@@ -74,8 +82,28 @@ struct SleepTrackingOptInScreen: View {
             }))
         }
     }
+
 }
 
-#Preview {
-    SleepTrackingOptInScreen()
+// MARK: Previews
+#Preview("Light Mode") {
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    let discoverViewModel = DiscoverViewModel(
+        viewContext: NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType),
+        colorScheme: .light
+    )
+    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: discoverViewModel)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    let discoverViewModel = DiscoverViewModel(
+        viewContext: NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType),
+        colorScheme: .dark
+    )
+    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: discoverViewModel)
+        .preferredColorScheme(.dark)
 }

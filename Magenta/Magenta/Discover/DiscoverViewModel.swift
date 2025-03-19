@@ -8,17 +8,29 @@
 import CoreData
 import SwiftUI
 
-final class DiscoverViewModel: ObservableObject {
+@Observable final class DiscoverViewModel {
     let viewContext: NSManagedObjectContext
     private var speechRecognizer: SpeechRecognizer?
-    @Published var items: [DiscoverItemModel] = []
-    @Published var colors: Colors
-    @Published var shouldShowLoginView = false
+    var items: [DiscoverItemModel] = []
+    var colors: Colors
+    var shouldShowLoginView = false
+    private let sleepViewModel: SleepViewModel
+    private let healthKitManager: HealthKitManager
+
+    // Key for UserDefaults to store opt-in status
+    private let sleepOptInKey = "hasOptedInToSleepTracking"
+
+    var hasOptedIntoSleepTracking: Bool {
+        UserDefaults.standard.bool(forKey: sleepOptInKey) || healthKitManager.isSleepAuthorizationGranted
+    }
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
+        self.healthKitManager = HealthKitManager()
+        self.sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
         loadDiscoverItemData()
+        checkSleepAuthorization()
     }
 
     func signOut() {
@@ -46,6 +58,11 @@ final class DiscoverViewModel: ObservableObject {
         speechRecognizer?.stopRecording()
     }
 
+    func completeSleepOptIn() {
+        UserDefaults.standard.set(true, forKey: sleepOptInKey)
+        sleepViewModel.requestSleepTrackingAuthorization()
+    }
+
     @ViewBuilder
     func destinationView(for item: DiscoverItemModel) -> some View {
         switch item.title {
@@ -59,7 +76,11 @@ final class DiscoverViewModel: ObservableObject {
         // case "Journal":
             // JournalView(viewContext: viewContext)
         case "Sleep":
-            SleepView()
+            if hasOptedIntoSleepTracking {
+                SleepView(sleepViewModel: sleepViewModel)
+            } else {
+                SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: self)
+            }
         case "Mood Tracker":
             MoodView(viewContext: viewContext)
         case "Nutrition":
@@ -143,6 +164,12 @@ final class DiscoverViewModel: ObservableObject {
                 iconColor: .pink
             )
         ]
+    }
+
+    private func checkSleepAuthorization() {
+        if healthKitManager.isSleepAuthorizationGranted {
+            UserDefaults.standard.set(true, forKey: sleepOptInKey)
+        }
     }
 
 }

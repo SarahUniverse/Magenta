@@ -13,7 +13,7 @@ import SwiftUI
     private let healthKitManager: HealthKitManager
 
     var isAuthorizationGranted: Bool {
-        healthKitManager.isAuthorizationGranted
+        healthKitManager.isSleepAuthorizationGranted
     }
 
     var latestSleepDuration: Double? {
