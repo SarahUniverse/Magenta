@@ -9,13 +9,14 @@ import HealthKit
 import SwiftUI
 
 @Observable class HealthKitManager {
+    static let shared = HealthKitManager()
+
     let healthStore = HKHealthStore()
     var isSleepAuthorizationGranted = false
-    var latestSleepDuration: Double? // In hours
+    var latestSleepDuration: Double?
     var errorMessage: String?
 
-    init() {
-        // Check initial authorization status
+    private init() {
         updateAuthorizationStatus()
     }
 
@@ -35,7 +36,7 @@ import SwiftUI
                 if success {
                     self?.isSleepAuthorizationGranted = true
                     print("HealthKit authorization granted")
-                    //self?.fetchSleepData()
+                    self?.fetchSleepData()
                 } else {
                     self?.isSleepAuthorizationGranted = false
                     self?.errorMessage = "HealthKit authorization denied: \(String(describing: error))"
@@ -45,7 +46,7 @@ import SwiftUI
         }
     }
 
-    /*func fetchSleepData() {
+    func fetchSleepData() {
         let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
         let calendar = Calendar.current
@@ -56,7 +57,7 @@ import SwiftUI
         let query = HKSampleQuery(sampleType: sleepType,
                                   predicate: predicate,
                                   limit: 1, // Fetch only the latest sleep session
-                                  sortDescriptors: [sortDescriptors]) { [weak self] (query, samples, error) in
+                                  sortDescriptors: [sortDescriptor]) { [weak self] (query, samples, error) in
             DispatchQueue.main.async {
                 guard let samples = samples as? [HKCategorySample], let sample = samples.first, error == nil else {
                     self?.errorMessage = "Error fetching sleep data: \(String(describing: error))"
@@ -71,8 +72,9 @@ import SwiftUI
         }
 
         healthStore.execute(query)
-    }*/
+    }
 
+    // MARK: - Private Functions
     private func updateAuthorizationStatus() {
         guard HKHealthStore.isHealthDataAvailable() else {
             isSleepAuthorizationGranted = false
@@ -84,8 +86,7 @@ import SwiftUI
         isSleepAuthorizationGranted = status == .sharingAuthorized
         print("Initial HealthKit sleep authorization status: \(isSleepAuthorizationGranted)")
         if isSleepAuthorizationGranted {
-            //fetchSleepData()
-            print("Sleep Authorization is granted.")
+            fetchSleepData()
         }
     }
 

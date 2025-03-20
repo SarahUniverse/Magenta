@@ -23,9 +23,8 @@ import SwiftUI
         healthKitManager.latestSleepDuration
     }
 
-    init(healthKitManager: HealthKitManager) {
+    init(healthKitManager: HealthKitManager = .shared) {
         self.healthKitManager = healthKitManager
-        // Initialize hasOptedIntoSleepTracking from UserDefaults and HealthKit
         let userDefaultsValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
         let healthKitAuth = healthKitManager.isSleepAuthorizationGranted
         print("Initializing SleepViewModel - UserDefaults value for \(sleepOptInKey): \(userDefaultsValue), HealthKit auth: \(healthKitAuth)")
@@ -35,7 +34,6 @@ import SwiftUI
 
     func requestSleepTrackingAuthorization() {
         healthKitManager.requestSleepTrackingAuthorization()
-        // Update hasOptedIntoSleepTracking based on the new authorization status
         if healthKitManager.isSleepAuthorizationGranted {
             hasOptedIntoSleepTracking = true
             UserDefaults.standard.set(true, forKey: sleepOptInKey)
@@ -48,7 +46,6 @@ import SwiftUI
     func completeSleepOptIn() {
         print("Setting UserDefaults value for \(sleepOptInKey) to true")
         UserDefaults.standard.set(true, forKey: sleepOptInKey)
-        // Verify the value was set
         let savedValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
         print("After setting, UserDefaults value for \(sleepOptInKey): \(savedValue)")
         requestSleepTrackingAuthorization()

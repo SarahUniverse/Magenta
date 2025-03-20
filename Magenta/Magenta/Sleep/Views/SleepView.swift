@@ -30,10 +30,43 @@ struct SleepView: View {
                 .navigationTitle("Sleep Tracking")
                 .background(backgroundGradient)
                 .scrollContentBackground(.hidden)
-
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Image(systemName: "person.circle")
+                    }
+                }
             } else {
                 SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
-            }        }
-
+            }
+        }
     }
+}
+
+// MARK: - Previews
+#Preview("Light Mode - Opted In") {
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+    sleepViewModel.hasOptedIntoSleepTracking = true // Simulate opted-in state
+    return SleepView(sleepViewModel: sleepViewModel)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Light Mode - Not Opted In") {
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+    sleepViewModel.hasOptedIntoSleepTracking = false // Simulate not opted-in state
+    return SleepView(sleepViewModel: sleepViewModel)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode - Opted In") {
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+    sleepViewModel.hasOptedIntoSleepTracking = true // Simulate opted-in state
+    return SleepView(sleepViewModel: sleepViewModel)
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Dark Mode - Not Opted In") {
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+    sleepViewModel.hasOptedIntoSleepTracking = false // Simulate not opted-in state
+    return SleepView(sleepViewModel: sleepViewModel)
+        .preferredColorScheme(.dark)
 }

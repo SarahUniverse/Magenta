@@ -86,16 +86,13 @@ struct SleepTrackingOptInScreen: View {
 
 // MARK: Previews
 #Preview("Light Mode") {
-    let healthKitManager = HealthKitManager()
-    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
     return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    let healthKitManager = HealthKitManager()
-    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
-
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
     return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }

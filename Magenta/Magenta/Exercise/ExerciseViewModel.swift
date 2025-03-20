@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable final class ExerciseViewModel {
     var stepCount: Int = 0
-    private var healthKitManager = HealthKitManager()
+    // private var healthKitManager = HealthKitManager()
     private var cancellables = Set<AnyCancellable>()
 
 }

@@ -36,7 +36,7 @@ struct ExerciseView: View {
                 }
             }
             .onAppear {
-                //exerciseViewModel.fetchSteps()
+                // exerciseViewModel.fetchSteps()
             }
         }
     }

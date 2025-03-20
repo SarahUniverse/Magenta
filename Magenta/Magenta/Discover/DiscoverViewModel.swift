@@ -20,7 +20,7 @@ import SwiftUI
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
-        self.healthKitManager = HealthKitManager()
+        self.healthKitManager = HealthKitManager.shared
         self.sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
         loadDiscoverItemData()
     }
