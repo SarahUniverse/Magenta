@@ -11,7 +11,6 @@ import CoreData
 struct SleepTrackingOptInScreen: View {
     @State var sleepViewModel: SleepViewModel
     @Environment(\.dismiss) var dismiss
-    let discoverViewModel: DiscoverViewModel
 
     var body: some View {
         NavigationStack {
@@ -89,21 +88,14 @@ struct SleepTrackingOptInScreen: View {
 #Preview("Light Mode") {
     let healthKitManager = HealthKitManager()
     let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
-    let discoverViewModel = DiscoverViewModel(
-        viewContext: NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType),
-        colorScheme: .light
-    )
-    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: discoverViewModel)
+    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
     let healthKitManager = HealthKitManager()
     let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
-    let discoverViewModel = DiscoverViewModel(
-        viewContext: NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType),
-        colorScheme: .dark
-    )
-    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: discoverViewModel)
+
+    return SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }

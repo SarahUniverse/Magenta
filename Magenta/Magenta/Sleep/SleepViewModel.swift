@@ -11,6 +11,9 @@ import SwiftUI
 
 @Observable final class SleepViewModel {
     private let healthKitManager: HealthKitManager
+    var errorMessage: String?
+    var hasOptedIntoSleepTracking: Bool = false
+    private let sleepOptInKey = "hasOptedInToSleepTracking"
 
     var isAuthorizationGranted: Bool {
         healthKitManager.isSleepAuthorizationGranted
@@ -20,25 +23,46 @@ import SwiftUI
         healthKitManager.latestSleepDuration
     }
 
-    var errorMessage: String? {
-        healthKitManager.errorMessage
-    }
-
-    init(healthKitManager: HealthKitManager = HealthKitManager()) {
+    init(healthKitManager: HealthKitManager) {
         self.healthKitManager = healthKitManager
-
-        guard HKHealthStore.isHealthDataAvailable() else {
-            healthKitManager.errorMessage = "HealthKit is not available on this device"
-            return
-        }
+        // Initialize hasOptedIntoSleepTracking from UserDefaults and HealthKit
+        let userDefaultsValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
+        let healthKitAuth = healthKitManager.isSleepAuthorizationGranted
+        print("Initializing SleepViewModel - UserDefaults value for \(sleepOptInKey): \(userDefaultsValue), HealthKit auth: \(healthKitAuth)")
+        self.hasOptedIntoSleepTracking = userDefaultsValue || healthKitAuth
+        checkSleepAuthorization()
     }
 
     func requestSleepTrackingAuthorization() {
         healthKitManager.requestSleepTrackingAuthorization()
+        // Update hasOptedIntoSleepTracking based on the new authorization status
+        if healthKitManager.isSleepAuthorizationGranted {
+            hasOptedIntoSleepTracking = true
+            UserDefaults.standard.set(true, forKey: sleepOptInKey)
+            print("After requesting authorization, UserDefaults value for \(sleepOptInKey): true")
+        } else {
+            errorMessage = healthKitManager.errorMessage
+        }
     }
 
-    func fetchSleepData() {
-        healthKitManager.fetchSleepData()
+    func completeSleepOptIn() {
+        print("Setting UserDefaults value for \(sleepOptInKey) to true")
+        UserDefaults.standard.set(true, forKey: sleepOptInKey)
+        // Verify the value was set
+        let savedValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
+        print("After setting, UserDefaults value for \(sleepOptInKey): \(savedValue)")
+        requestSleepTrackingAuthorization()
+        hasOptedIntoSleepTracking = true
+    }
+
+    private func checkSleepAuthorization() {
+        if healthKitManager.isSleepAuthorizationGranted {
+            print("HealthKit authorization granted, setting UserDefaults")
+            UserDefaults.standard.set(true, forKey: sleepOptInKey)
+            let savedValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
+            print("After checkSleepAuthorization, UserDefaults value for \(sleepOptInKey): \(savedValue)")
+            hasOptedIntoSleepTracking = true
+        }
     }
 
 }

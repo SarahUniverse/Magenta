@@ -14,8 +14,19 @@ import SwiftUI
     var latestSleepDuration: Double? // In hours
     var errorMessage: String?
 
+    init() {
+        // Check initial authorization status
+        updateAuthorizationStatus()
+    }
+
     // MARK: Sleep related functionality
     func requestSleepTrackingAuthorization() {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            errorMessage = "HealthKit is not available on this device."
+            print("HealthKit not available")
+            return
+        }
+
         let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
         let typesToRead = Set([sleepType])
 
@@ -24,7 +35,7 @@ import SwiftUI
                 if success {
                     self?.isSleepAuthorizationGranted = true
                     print("HealthKit authorization granted")
-                    self?.fetchSleepData()
+                    //self?.fetchSleepData()
                 } else {
                     self?.isSleepAuthorizationGranted = false
                     self?.errorMessage = "HealthKit authorization denied: \(String(describing: error))"
@@ -34,7 +45,7 @@ import SwiftUI
         }
     }
 
-    func fetchSleepData() {
+    /*func fetchSleepData() {
         let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
         let calendar = Calendar.current
@@ -45,7 +56,7 @@ import SwiftUI
         let query = HKSampleQuery(sampleType: sleepType,
                                   predicate: predicate,
                                   limit: 1, // Fetch only the latest sleep session
-                                  sortDescriptors: [sortDescriptor]) { [weak self] (query, samples, error) in
+                                  sortDescriptors: [sortDescriptors]) { [weak self] (query, samples, error) in
             DispatchQueue.main.async {
                 guard let samples = samples as? [HKCategorySample], let sample = samples.first, error == nil else {
                     self?.errorMessage = "Error fetching sleep data: \(String(describing: error))"
@@ -60,6 +71,22 @@ import SwiftUI
         }
 
         healthStore.execute(query)
+    }*/
+
+    private func updateAuthorizationStatus() {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            isSleepAuthorizationGranted = false
+            return
+        }
+
+        let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+        let status = healthStore.authorizationStatus(for: sleepType)
+        isSleepAuthorizationGranted = status == .sharingAuthorized
+        print("Initial HealthKit sleep authorization status: \(isSleepAuthorizationGranted)")
+        if isSleepAuthorizationGranted {
+            //fetchSleepData()
+            print("Sleep Authorization is granted.")
+        }
     }
 
     // MARK: Exercise related functionality (placeholder for future use)

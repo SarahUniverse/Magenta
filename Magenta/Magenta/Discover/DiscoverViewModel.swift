@@ -17,20 +17,12 @@ import SwiftUI
     private let sleepViewModel: SleepViewModel
     private let healthKitManager: HealthKitManager
 
-    // Key for UserDefaults to store opt-in status
-    private let sleepOptInKey = "hasOptedInToSleepTracking"
-
-    var hasOptedIntoSleepTracking: Bool {
-        UserDefaults.standard.bool(forKey: sleepOptInKey) || healthKitManager.isSleepAuthorizationGranted
-    }
-
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
         self.healthKitManager = HealthKitManager()
         self.sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
         loadDiscoverItemData()
-        checkSleepAuthorization()
     }
 
     func signOut() {
@@ -58,11 +50,6 @@ import SwiftUI
         speechRecognizer?.stopRecording()
     }
 
-    func completeSleepOptIn() {
-        UserDefaults.standard.set(true, forKey: sleepOptInKey)
-        sleepViewModel.requestSleepTrackingAuthorization()
-    }
-
     @ViewBuilder
     func destinationView(for item: DiscoverItemModel) -> some View {
         switch item.title {
@@ -76,11 +63,7 @@ import SwiftUI
         // case "Journal":
             // JournalView(viewContext: viewContext)
         case "Sleep":
-            if hasOptedIntoSleepTracking {
-                SleepView(sleepViewModel: sleepViewModel)
-            } else {
-                SleepTrackingOptInScreen(sleepViewModel: sleepViewModel, discoverViewModel: self)
-            }
+            SleepView(sleepViewModel: sleepViewModel)
         case "Mood Tracker":
             MoodView(viewContext: viewContext)
         case "Nutrition":
@@ -164,12 +147,6 @@ import SwiftUI
                 iconColor: .pink
             )
         ]
-    }
-
-    private func checkSleepAuthorization() {
-        if healthKitManager.isSleepAuthorizationGranted {
-            UserDefaults.standard.set(true, forKey: sleepOptInKey)
-        }
     }
 
 }

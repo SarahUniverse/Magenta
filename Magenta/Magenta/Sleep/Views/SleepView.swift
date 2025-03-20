@@ -4,7 +4,6 @@
 //
 //  Created by Sarah Clark on 8/22/24.
 //
-
 import SwiftUI
 
 struct SleepView: View {
@@ -24,32 +23,17 @@ struct SleepView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Text("Hello, World!")
-            }
-            .navigationTitle("Sleep Tracking")
-            .background(backgroundGradient)
-            .scrollContentBackground(.hidden)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
+            if sleepViewModel.hasOptedIntoSleepTracking {
+                List {
+                    Text("Hello, World!")
                 }
-            }
-        }
+                .navigationTitle("Sleep Tracking")
+                .background(backgroundGradient)
+                .scrollContentBackground(.hidden)
+
+            } else {
+                SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
+            }        }
+
     }
-}
-
-// MARK: - Previews
-#Preview("Light Mode") {
-    let healthKitManager = HealthKitManager()
-    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
-    SleepView(sleepViewModel: sleepViewModel)
-        .preferredColorScheme(.light)
-}
-
-#Preview("Dark Mode") {
-    let healthKitManager = HealthKitManager()
-    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
-    SleepView(sleepViewModel: sleepViewModel)
-        .preferredColorScheme(.dark)
 }
