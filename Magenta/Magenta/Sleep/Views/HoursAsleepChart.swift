@@ -12,12 +12,43 @@ import Charts
 struct HoursAsleepChart: View {
     let samples: [HKCategorySample]
     private let calendar = Calendar.current
+    @Environment(\.colorScheme) var colorScheme
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d" // e.g., "Mar 13"
         return formatter
     }()
+
+    private var glassBackground: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.ultraThinMaterial)
+            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        LinearGradient(
+                            colors: [
+                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
+                                .white.opacity(0.2)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.5
+                    )
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        .black.opacity(0.1),
+                        lineWidth: 1
+                    )
+                    .blur(radius: 1)
+                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
+            }
+            .padding(.top, 10)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -31,16 +62,16 @@ struct HoursAsleepChart: View {
                         x: .value("Date", date, unit: .day),
                         y: .value("Hours", hours)
                     )
-                    .foregroundStyle(Color.cyan.opacity(0.7))
+                    .foregroundStyle(Color.indigo.opacity(0.7))
                 }
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) { value in
+                AxisMarks(values: .stride(by: .day)) { _ in
                     AxisValueLabel(format: .dateTime.month(.abbreviated).day())
                 }
             }
             .chartYAxis {
-                AxisMarks(values: .stride(by: 2.0)) { value in
+                AxisMarks(values: .stride(by: 2.0)) { _ in
                     AxisGridLine()
                     AxisValueLabel()
                 }
@@ -48,7 +79,7 @@ struct HoursAsleepChart: View {
             .frame(height: 200)
         }
         .padding()
-        .background(Color.purple.opacity(0.2))
+        .background(glassBackground)
         .cornerRadius(12)
     }
 

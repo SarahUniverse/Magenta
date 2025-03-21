@@ -35,7 +35,6 @@ struct SleepView: View {
             // if sleepViewModel.hasOptedIntoSleepTracking {
                 ScrollView {
                     VStack(spacing: 20) {
-                        SleepTimelineView(samples: sleepViewModel.sleepSamples ?? [])
                         HoursAsleepChart(samples: sleepViewModel.sleepSamples ?? [])
                     }
                     .padding()
