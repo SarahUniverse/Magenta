@@ -9,14 +9,14 @@ import CoreData
 import SwiftUI
 
 struct MoodView: View {
-    @StateObject private var moodViewModel: MoodViewModel
+    @State private var moodViewModel: MoodViewModel
     @State private var isAnimating = false
     @State private var selectedMood: String?
     @State private var showingMoodDetail = false
     @State private var moodHasBeenLoggedToday = false
     @Environment(\.colorScheme) var colorScheme
     @State private var currentMoodText = "How are you feeling today?"
-    @StateObject private var moodChartViewModel: MoodChartViewModel
+    @State private var moodChartViewModel: MoodChartViewModel
     // MARK: - Animations
     @State private var moodSectionOffset: CGFloat = 30
     @State private var chartSectionOffset: CGFloat = 30
@@ -25,8 +25,8 @@ struct MoodView: View {
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        _moodViewModel = StateObject(wrappedValue: MoodViewModel(viewContext: viewContext))
-        _moodChartViewModel = StateObject(wrappedValue: MoodChartViewModel(viewContext: viewContext))
+        _moodViewModel = State(wrappedValue: MoodViewModel(viewContext: viewContext))
+        _moodChartViewModel = State(wrappedValue: MoodChartViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(

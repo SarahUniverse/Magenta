@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 struct SummaryView: View {
-    @StateObject var summaryViewModel: SummaryViewModel
+    @State var summaryViewModel: SummaryViewModel
     @Environment(\.colorScheme) private var colorScheme
     @State private var showEditPinnedView = false
 
@@ -26,7 +26,7 @@ struct SummaryView: View {
     )
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
-        _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
+        _summaryViewModel = State(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
     // MARK: - Body
@@ -60,7 +60,7 @@ struct SummaryView: View {
                         case "Mood":
                             MoodSummaryView(viewContext: summaryViewModel.viewContext)
                         case "Sleep":
-                            SleepSummaryView()
+                            SleepSummaryView(viewContext: summaryViewModel.viewContext)
                         case "Nutrition":
                             NutritionSummaryView()
                         case "Books":

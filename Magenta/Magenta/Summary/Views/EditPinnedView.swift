@@ -14,7 +14,7 @@ struct EditPinnedView: View {
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
-    @ObservedObject var summaryViewModel: SummaryViewModel
+    var summaryViewModel: SummaryViewModel
 
     init(pinnedItems: Binding<[String]>, summaryViewModel: SummaryViewModel) {
         self._pinnedItems = pinnedItems
@@ -137,11 +137,11 @@ struct EditPinnedView: View {
 #Preview("Light Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
-        @StateObject private var summaryViewModel: SummaryViewModel
+        @State private var summaryViewModel: SummaryViewModel
 
         init() {
             let context = PreviewPersistenceController.preview.container.viewContext
-            _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .light))
+            _summaryViewModel = State(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .light))
         }
 
         var body: some View {
@@ -156,11 +156,11 @@ struct EditPinnedView: View {
 #Preview("Dark Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]
-        @StateObject private var summaryViewModel: SummaryViewModel
+        @State private var summaryViewModel: SummaryViewModel
 
         init() {
             let context = PreviewPersistenceController.preview.container.viewContext
-            _summaryViewModel = StateObject(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .dark))
+            _summaryViewModel = State(wrappedValue: SummaryViewModel(viewContext: context, colorScheme: .dark))
         }
 
         var body: some View {

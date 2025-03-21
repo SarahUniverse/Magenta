@@ -7,8 +7,8 @@
 
 import CoreData
 
-final class MoodSummaryViewModel: ObservableObject {
-    @Published var moods: [MoodEntity] = []
+@Observable final class MoodSummaryViewModel {
+    var moods: [MoodEntity] = []
     private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {

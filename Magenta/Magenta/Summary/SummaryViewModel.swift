@@ -8,11 +8,11 @@
 import CoreData
 import SwiftUI
 
-final class SummaryViewModel: ObservableObject {
-    @Published var shouldShowLoginView = false
-    @Published var currentUser: UserModel?
-    @Published var colors: Colors
-    @Published var pinnedItems: [String] = []
+@Observable final class SummaryViewModel {
+    var shouldShowLoginView = false
+    var currentUser: UserModel?
+    var colors: Colors
+    var pinnedItems: [String] = []
     let viewContext: NSManagedObjectContext
 
     init (viewContext: NSManagedObjectContext, currentUser: UserModel? = nil, colorScheme: ColorScheme) {

@@ -21,7 +21,7 @@ import SwiftUI
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
         self.healthKitManager = HealthKitManager.shared
-        self.sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+        self.sleepViewModel = SleepViewModel(viewContext: viewContext, healthKitManager: healthKitManager)
         loadDiscoverItemData()
     }
 
@@ -63,7 +63,7 @@ import SwiftUI
         // case "Journal":
             // JournalView(viewContext: viewContext)
         case "Sleep":
-            SleepView(sleepViewModel: sleepViewModel)
+            SleepView(viewContext: viewContext)
         case "Mood Tracker":
             MoodView(viewContext: viewContext)
         case "Nutrition":

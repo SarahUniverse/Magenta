@@ -4,10 +4,13 @@
 //
 //  Created by Sarah Clark on 8/22/24.
 //
+
+import CoreData
 import SwiftUI
 
 struct SleepView: View {
     @State var sleepViewModel: SleepViewModel
+    let viewContext: NSManagedObjectContext
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -21,11 +24,21 @@ struct SleepView: View {
         endPoint: .bottom
     )
 
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _sleepViewModel = State(wrappedValue: SleepViewModel(viewContext: viewContext))
+    }
+
     var body: some View {
         NavigationStack {
             if sleepViewModel.hasOptedIntoSleepTracking {
-                List {
-                    Text("Hello, World!")
+                ScrollView {
+                    VStack(spacing: 20) {
+                        SleepSummaryView(viewContext: viewContext)
+                        SleepTimelineView(samples: sleepViewModel.sleepSamples ?? [])
+                        SleepDetailsList(samples: sleepViewModel.sleepSamples ?? [])
+                    }
+                    .padding()
                 }
                 .navigationTitle("Sleep Tracking")
                 .background(backgroundGradient)
@@ -42,31 +55,33 @@ struct SleepView: View {
     }
 }
 
+/*
 // MARK: - Previews
 #Preview("Light Mode - Opted In") {
     let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = true // Simulate opted-in state
-    return SleepView(sleepViewModel: sleepViewModel)
-        .preferredColorScheme(.light)
-}
-
-#Preview("Light Mode - Not Opted In") {
-    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = false // Simulate not opted-in state
+    sleepViewModel.hasOptedIntoSleepTracking = true
     return SleepView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode - Opted In") {
     let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = true // Simulate opted-in state
+    sleepViewModel.hasOptedIntoSleepTracking = true
     return SleepView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }
 
+#Preview("Light Mode - Not Opted In") {
+    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+    sleepViewModel.hasOptedIntoSleepTracking = false
+    return SleepView(sleepViewModel: sleepViewModel)
+        .preferredColorScheme(.light)
+}
+
 #Preview("Dark Mode - Not Opted In") {
     let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = false // Simulate not opted-in state
+    sleepViewModel.hasOptedIntoSleepTracking = false
     return SleepView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }
+*/

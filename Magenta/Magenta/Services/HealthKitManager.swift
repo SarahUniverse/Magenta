@@ -16,7 +16,7 @@ import SwiftUI
     var latestSleepDuration: Double?
     var errorMessage: String?
 
-    private init() {
+    init() {
         updateAuthorizationStatus()
     }
 
@@ -56,21 +56,42 @@ import SwiftUI
 
         let query = HKSampleQuery(sampleType: sleepType,
                                   predicate: predicate,
-                                  limit: 1, // Fetch only the latest sleep session
+                                  limit: HKObjectQueryNoLimit,
                                   sortDescriptors: [sortDescriptor]) { [weak self] (query, samples, error) in
             DispatchQueue.main.async {
-                guard let samples = samples as? [HKCategorySample], let sample = samples.first, error == nil else {
+                guard let samples = samples as? [HKCategorySample], error == nil else {
                     self?.errorMessage = "Error fetching sleep data: \(String(describing: error))"
                     print(self?.errorMessage ?? "Unknown error")
                     return
                 }
 
-                let duration = sample.endDate.timeIntervalSince(sample.startDate)
-                self?.latestSleepDuration = duration / 3600.0 // Convert seconds to hours
-                print("Latest sleep from \(sample.startDate) to \(sample.endDate), Duration: \(duration) seconds")
+                for sample in samples {
+                    let duration = sample.endDate.timeIntervalSince(sample.startDate) / 3600.0
+                    let sleepState: String
+                    switch HKCategoryValueSleepAnalysis(rawValue: sample.value) {
+                    case .inBed:
+                        sleepState = "In Bed"
+                    case .asleep:
+                        sleepState = "Asleep (Unspecified)"
+                    case .awake:
+                        sleepState = "Awake"
+                    case .asleepCore:
+                        sleepState = "Core Sleep"
+                    case .asleepDeep:
+                        sleepState = "Deep Sleep"
+                    case .asleepREM:
+                        sleepState = "REM Sleep"
+                    default:
+                        sleepState = "Unknown"
+                    }
+                    print("Sleep State: \(sleepState), Start: \(sample.startDate), End: \(sample.endDate), Duration: \(duration) hours")
+                }
+                // Update latestSleepDuration with total sleep time if needed
+                if let latest = samples.first {
+                    self?.latestSleepDuration = latest.endDate.timeIntervalSince(latest.startDate) / 3600.0
+                }
             }
         }
-
         healthStore.execute(query)
     }
 

@@ -8,9 +8,9 @@
 import CoreData
 import Foundation
 
-final class MoodViewModel: ObservableObject {
-    @Published var moods: [MoodModel] = []
-    @Published var items: [String] = []
+@Observable final class MoodViewModel {
+    var moods: [MoodModel] = []
+    var items: [String] = []
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {

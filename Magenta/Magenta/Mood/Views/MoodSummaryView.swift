@@ -10,13 +10,13 @@ import CoreData
 import SwiftUI
 
 struct MoodSummaryView: View {
-    @StateObject private var moodSummaryViewModel: MoodSummaryViewModel
+    @State private var moodSummaryViewModel: MoodSummaryViewModel
     @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        _moodSummaryViewModel = StateObject(wrappedValue: MoodSummaryViewModel(viewContext: viewContext))
+        _moodSummaryViewModel = State(wrappedValue: MoodSummaryViewModel(viewContext: viewContext))
     }
 
     // MARK: - Body

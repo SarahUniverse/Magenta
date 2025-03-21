@@ -10,10 +10,12 @@ import HealthKit
 import SwiftUI
 
 @Observable final class SleepViewModel {
-    private let healthKitManager: HealthKitManager
+    let healthKitManager: HealthKitManager
+    var sleepSamples: [HKCategorySample]? = []
     var errorMessage: String?
     var hasOptedIntoSleepTracking: Bool = false
     private let sleepOptInKey = "hasOptedInToSleepTracking"
+    private let viewContext: NSManagedObjectContext
 
     var isAuthorizationGranted: Bool {
         healthKitManager.isSleepAuthorizationGranted
@@ -23,13 +25,12 @@ import SwiftUI
         healthKitManager.latestSleepDuration
     }
 
-    init(healthKitManager: HealthKitManager = .shared) {
+    init(viewContext: NSManagedObjectContext, healthKitManager: HealthKitManager = .shared) {
+        self.viewContext = viewContext
         self.healthKitManager = healthKitManager
         let userDefaultsValue = UserDefaults.standard.bool(forKey: sleepOptInKey)
         let healthKitAuth = healthKitManager.isSleepAuthorizationGranted
-        print("Initializing SleepViewModel - UserDefaults value for \(sleepOptInKey): \(userDefaultsValue), HealthKit auth: \(healthKitAuth)")
         self.hasOptedIntoSleepTracking = userDefaultsValue || healthKitAuth
-        checkSleepAuthorization()
     }
 
     func requestSleepTrackingAuthorization() {
@@ -52,6 +53,11 @@ import SwiftUI
         hasOptedIntoSleepTracking = true
     }
 
+    func getSleepData() {
+        healthKitManager.fetchSleepData()
+    }
+
+    // MARK: Private Functions
     private func checkSleepAuthorization() {
         if healthKitManager.isSleepAuthorizationGranted {
             print("HealthKit authorization granted, setting UserDefaults")

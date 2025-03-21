@@ -5,10 +5,17 @@
 //  Created by Sarah Clark on 12/11/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct SleepSummaryView: View {
-    // @StateObject private var sleepSummaryViewModel: SleepSummaryViewModel
+    @State var sleepViewModel: SleepViewModel
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _sleepViewModel = State(wrappedValue: SleepViewModel(viewContext: viewContext))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -44,13 +51,23 @@ struct SleepSummaryView: View {
     }
 }
 
+/*
 // MARK: - Previews
-#Preview ("Light Mode") {
-    SleepSummaryView()
+#Preview("Light Mode") {
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    sleepViewModel.hasOptedIntoSleepTracking = true
+
+    return SleepSummaryView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.light)
 }
 
-#Preview ("Dark Mode") {
-    SleepSummaryView()
+#Preview("Dark Mode") {
+    let healthKitManager = HealthKitManager()
+    let sleepViewModel = SleepViewModel(healthKitManager: healthKitManager)
+    sleepViewModel.hasOptedIntoSleepTracking = true
+
+    return SleepSummaryView(sleepViewModel: sleepViewModel)
         .preferredColorScheme(.dark)
 }
+*/
