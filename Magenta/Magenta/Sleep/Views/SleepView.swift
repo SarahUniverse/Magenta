@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import HealthKit
 import SwiftUI
 
 struct SleepView: View {
@@ -31,10 +32,9 @@ struct SleepView: View {
 
     var body: some View {
         NavigationStack {
-            if sleepViewModel.hasOptedIntoSleepTracking {
+            //if sleepViewModel.hasOptedIntoSleepTracking {
                 ScrollView {
                     VStack(spacing: 20) {
-                        SleepSummaryView(viewContext: viewContext)
                         SleepTimelineView(samples: sleepViewModel.sleepSamples ?? [])
                         SleepDetailsList(samples: sleepViewModel.sleepSamples ?? [])
                     }
@@ -48,40 +48,77 @@ struct SleepView: View {
                         Image(systemName: "person.circle")
                     }
                 }
-            } else {
+            /*} else {
                 SleepTrackingOptInScreen(sleepViewModel: sleepViewModel)
-            }
+            }*/
         }
     }
 }
 
-/*
 // MARK: - Previews
-#Preview("Light Mode - Opted In") {
-    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+#Preview("Light Mode") {
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    let sleepViewModel = SleepViewModel(viewContext: viewContext, healthKitManager: HealthKitManager.shared)
     sleepViewModel.hasOptedIntoSleepTracking = true
-    return SleepView(sleepViewModel: sleepViewModel)
+
+    // Mock sleep sample
+    let calendar = Calendar.current
+    let now = Date() // March 20, 2025
+    let startOfDay = calendar.startOfDay(for: now)
+    let sample = HKCategorySample(
+        type: HKCategoryType(.sleepAnalysis),
+        value: HKCategoryValueSleepAnalysis.asleepCore.rawValue,
+        start: calendar.date(byAdding: .hour, value: 23, to: startOfDay)!,
+        end: calendar.date(byAdding: .hour, value: 25, to: startOfDay)!,
+        device: nil,
+        metadata: nil
+    )
+    sleepViewModel.sleepSamples = [sample]
+
+     return SleepView(viewContext: viewContext)
         .preferredColorScheme(.light)
 }
 
-#Preview("Dark Mode - Opted In") {
-    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
+#Preview("Dark Mode") {
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    let sleepViewModel = SleepViewModel(viewContext: viewContext, healthKitManager: HealthKitManager.shared)
     sleepViewModel.hasOptedIntoSleepTracking = true
-    return SleepView(sleepViewModel: sleepViewModel)
+
+    let calendar = Calendar.current
+    let now = Date()
+    let startOfDay = calendar.startOfDay(for: now)
+    let sample = HKCategorySample(
+        type: HKCategoryType(.sleepAnalysis),
+        value: HKCategoryValueSleepAnalysis.asleepCore.rawValue,
+        start: calendar.date(byAdding: .hour, value: 23, to: startOfDay)!,
+        end: calendar.date(byAdding: .hour, value: 25, to: startOfDay)!,
+        device: nil,
+        metadata: nil
+    )
+    sleepViewModel.sleepSamples = [sample]
+
+    return SleepView(viewContext: viewContext)
         .preferredColorScheme(.dark)
 }
-
-#Preview("Light Mode - Not Opted In") {
-    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = false
-    return SleepView(sleepViewModel: sleepViewModel)
-        .preferredColorScheme(.light)
-}
-
-#Preview("Dark Mode - Not Opted In") {
-    let sleepViewModel = SleepViewModel(healthKitManager: HealthKitManager.shared)
-    sleepViewModel.hasOptedIntoSleepTracking = false
-    return SleepView(sleepViewModel: sleepViewModel)
-        .preferredColorScheme(.dark)
-}
-*/
