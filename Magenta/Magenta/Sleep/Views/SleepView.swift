@@ -36,7 +36,7 @@ struct SleepView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         SleepTimelineView(samples: sleepViewModel.sleepSamples ?? [])
-                        SleepDetailsList(samples: sleepViewModel.sleepSamples ?? [])
+                        HoursAsleepChart(samples: sleepViewModel.sleepSamples ?? [])
                     }
                     .padding()
                 }

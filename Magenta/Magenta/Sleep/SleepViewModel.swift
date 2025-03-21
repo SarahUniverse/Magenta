@@ -4,6 +4,8 @@
 //
 //  Created by Sarah Clark on 1/19/25.
 //
+
+
 import CoreData
 import HealthKit
 import SwiftUI
@@ -40,8 +42,8 @@ import SwiftUI
             let dayStart = calendar.date(byAdding: .day, value: dayOffset, to: now)!
             let startOfDay = calendar.startOfDay(for: dayStart)
 
-            // swiftlint:disable line_length
             // March 13: Short sleep with interruptions
+            // swiftlint:disable line_length
             if dayOffset == -7 {
                 samples.append(HKCategorySample(type: HKCategoryType(.sleepAnalysis), value: HKCategoryValueSleepAnalysis.inBed.rawValue, start: calendar.date(byAdding: .hour, value: 23, to: startOfDay)!, end: calendar.date(byAdding: .hour, value: 24, to: startOfDay)!, device: nil, metadata: nil))
                 samples.append(HKCategorySample(type: HKCategoryType(.sleepAnalysis), value: HKCategoryValueSleepAnalysis.asleepCore.rawValue, start: calendar.date(byAdding: .hour, value: 24, to: startOfDay)!, end: calendar.date(byAdding: .hour, value: 26, to: startOfDay)!, device: nil, metadata: nil))
@@ -113,7 +115,6 @@ import SwiftUI
 
     func getSleepData() {
         healthKitManager.fetchSleepData()
-        // Optionally overwrite sample data with real HealthKit data
         if let fetchedSamples = healthKitManager.sleepSamples {
             self.sleepSamples = fetchedSamples
         }
@@ -128,4 +129,5 @@ import SwiftUI
             hasOptedIntoSleepTracking = true
         }
     }
+
 }
