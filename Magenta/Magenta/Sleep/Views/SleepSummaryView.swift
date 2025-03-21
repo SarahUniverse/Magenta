@@ -49,10 +49,43 @@ struct SleepSummaryView: View {
                 }
             }
             .padding()
-            .background(Color.almostBlack)
+            .background(glassBackground)
             .cornerRadius(10)
         }
     }
+
+    // MARK: - Private Variables
+    private var glassBackground: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.ultraThinMaterial)
+            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        LinearGradient(
+                            colors: [
+                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
+                                .white.opacity(0.2)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.5
+                    )
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(
+                        .black.opacity(0.1),
+                        lineWidth: 1
+                    )
+                    .blur(radius: 1)
+                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
+            }
+            .padding(.top, 10)
+    }
+
+    private var barGradient = Gradient(colors: [.blue, .indigo])
 }
 
 /*
