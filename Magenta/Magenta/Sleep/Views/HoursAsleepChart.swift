@@ -7,6 +7,7 @@
 
 import HealthKit
 import SwiftUI
+import Charts
 
 struct HoursAsleepChart: View {
     let samples: [HKCategorySample]
@@ -24,26 +25,25 @@ struct HoursAsleepChart: View {
                 .font(.headline)
                 .foregroundColor(.white)
 
-            let dailyHours = calculateDailySleepHours()
-            let maxHours = dailyHours.values.max() ?? 10.0 // Default max of 10 hours if no data
-
-            GeometryReader { geometry in
-                HStack(alignment: .bottom, spacing: 8) {
-                    ForEach(dailyHours.sorted(by: { $0.key < $1.key }), id: \.key) { date, hours in
-                        VStack {
-                            Text(String(format: "%.1f", hours))
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
-                            Rectangle()
-                                .fill(Color.cyan.opacity(0.7))
-                                .frame(width: geometry.size.width / 7 - 8, height: CGFloat(hours / maxHours) * geometry.size.height * 0.7)
-                            Text(dateFormatter.string(from: date))
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
-                        }
-                    }
+            Chart {
+                ForEach(calculateDailySleepHours().sorted(by: { $0.key < $1.key }), id: \.key) { date, hours in
+                    BarMark(
+                        x: .value("Date", date, unit: .day),
+                        y: .value("Hours", hours)
+                    )
+                    .foregroundStyle(Color.cyan.opacity(0.7))
                 }
-                .frame(height: 200)
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day)) { value in
+                    AxisValueLabel(format: .dateTime.month(.abbreviated).day())
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .stride(by: 2.0)) { value in
+                    AxisGridLine()
+                    AxisValueLabel()
+                }
             }
             .frame(height: 200)
         }
