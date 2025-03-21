@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable class HealthKitManager {
     static let shared = HealthKitManager()
-
+    var sleepSamples: [HKCategorySample]?
     let healthStore = HKHealthStore()
     var isSleepAuthorizationGranted = false
     var latestSleepDuration: Double?

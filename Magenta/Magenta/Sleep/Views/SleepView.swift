@@ -32,7 +32,7 @@ struct SleepView: View {
 
     var body: some View {
         NavigationStack {
-            //if sleepViewModel.hasOptedIntoSleepTracking {
+            // if sleepViewModel.hasOptedIntoSleepTracking {
                 ScrollView {
                     VStack(spacing: 20) {
                         SleepTimelineView(samples: sleepViewModel.sleepSamples ?? [])

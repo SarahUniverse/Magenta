@@ -39,4 +39,3 @@ struct SleepSegmentView: View {
     }
 
 }
-

@@ -39,4 +39,3 @@ struct SleepDetailsList: View {
         .cornerRadius(12)
     }
 }
-

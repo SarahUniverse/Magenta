@@ -35,5 +35,3 @@ struct SleepTimelineView: View {
         .cornerRadius(12)
     }
 }
-
-
