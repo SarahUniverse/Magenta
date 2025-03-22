@@ -11,7 +11,7 @@ import JournalingSuggestions
 import SwiftUI
 
 struct JournalView: View {
-    @StateObject private var journalViewModel: JournalViewModel
+    @State private var journalViewModel: JournalViewModel
     @State private var showingAddEntrySheet = false
     @State private var entryTitle = ""
     @State private var entryContent = ""
@@ -19,7 +19,7 @@ struct JournalView: View {
     @State private var reflectionSuggestions: [JournalingSuggestion.Reflection] = []
 
     init(viewContext: NSManagedObjectContext) {
-        _journalViewModel = StateObject(wrappedValue: JournalViewModel(viewContext: viewContext))
+        _journalViewModel = State(wrappedValue: JournalViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(

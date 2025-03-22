@@ -11,8 +11,8 @@ import JournalingSuggestions
 #endif
 import SwiftUI
 
-final class JournalViewModel: ObservableObject {
-    @Published var journalEntries: [JournalModel] = []
+@Observable final class JournalViewModel {
+    var journalEntries: [JournalModel] = []
 
     let viewContext: NSManagedObjectContext
 

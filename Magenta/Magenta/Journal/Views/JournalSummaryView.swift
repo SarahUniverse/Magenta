@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JournalSummaryView: View {
-    // @StateObject private var journalSummaryViewModel: JournalSummaryViewModel
+    // @State private var journalViewModel: JournalViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
