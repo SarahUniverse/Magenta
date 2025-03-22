@@ -1,5 +1,5 @@
 //
-//  MeditateViewModel.swift
+//  MeditationViewModel.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 1/7/25.
@@ -8,8 +8,8 @@
 import Combine
 import CoreData
 
-final class MeditateViewModel: ObservableObject {
-    @Published var meditationSessions: [MeditationModel] = []
+@Observable final class MeditationViewModel {
+    var meditationSessions: [MeditationModel] = []
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {

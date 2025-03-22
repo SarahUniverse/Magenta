@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MeditationSummaryView: View {
-    // @StateObject private var meditationSummaryViewModel: MeditationSummaryViewModel
+    @State private var meditationViewModel: MeditationViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

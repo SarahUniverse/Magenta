@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct MeditateView: View {
-    @StateObject private var meditateViewModel: MeditateViewModel
+    @State private var meditateViewModel: MeditationViewModel
     @State private var showAddMeditationSheet: Bool = false
     @State private var newMeditationTitle = ""
     @State private var newMeditationDuration: Float = 5
@@ -28,7 +28,7 @@ struct MeditateView: View {
     )
 
     init(viewContext: NSManagedObjectContext) {
-        _meditateViewModel = StateObject(wrappedValue: MeditateViewModel(viewContext: viewContext))
+        _meditateViewModel = State(wrappedValue: MeditationViewModel(viewContext: viewContext))
     }
 
     // MARK: - Body
