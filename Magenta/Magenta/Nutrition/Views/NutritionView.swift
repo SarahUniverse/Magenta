@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NutritionView: View {
-    @StateObject private var nutritionViewModel = NutritionViewModel()
+    @State private var nutritionViewModel = NutritionViewModel()
 
     let backgroundGradient = LinearGradient(
         stops: [

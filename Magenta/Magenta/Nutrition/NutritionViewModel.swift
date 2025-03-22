@@ -7,6 +7,6 @@
 
 import CoreData
 
-final class NutritionViewModel: ObservableObject {
+@Observable final class NutritionViewModel {
 
 }
