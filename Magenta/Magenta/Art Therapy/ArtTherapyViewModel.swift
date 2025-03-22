@@ -8,9 +8,9 @@
 import CoreData
 import SwiftUI
 
-final class ArtTherapyViewModel: ObservableObject {
-    @Published var artTherapyActivities: [ArtTherapyModel] = []
-    @Published var showAddActivitySheet = false
+@Observable final class ArtTherapyViewModel {
+    var artTherapyActivities: [ArtTherapyModel] = []
+    var showAddActivitySheet = false
 
     private let viewContext: NSManagedObjectContext
 

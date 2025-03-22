@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PrivacySettingsView: View {
-    @StateObject private var viewModel = PrivacySettingsViewModel()
+    @State private var viewModel = PrivacySettingsViewModel()
 
     var body: some View {
         List {

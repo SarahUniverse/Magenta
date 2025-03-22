@@ -7,13 +7,13 @@
 
 import CoreData
 
-final class BlockedUserViewModel: ObservableObject {
-    @Published var blockedUsers: [BlockedUserModel] = []
-    @Published var searchText = ""
-    @Published var isLoading = false
-    @Published var showUnblockAlert = false
-    @Published var selectedUser: BlockedUserModel?
-    @Published var errorMessage: String?
+@Observable final class BlockedUserViewModel {
+    var blockedUsers: [BlockedUserModel] = []
+    var searchText = ""
+    var isLoading = false
+    var showUnblockAlert = false
+    var selectedUser: BlockedUserModel?
+    var errorMessage: String?
 
     var filteredBlockedUsers: [BlockedUserModel] {
         if searchText.isEmpty {
@@ -53,4 +53,5 @@ final class BlockedUserViewModel: ObservableObject {
             self.selectedUser = nil
         }
     }
+
 }

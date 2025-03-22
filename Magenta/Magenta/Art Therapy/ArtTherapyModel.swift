@@ -27,4 +27,5 @@ struct ArtTherapyModel: Identifiable, Hashable {
         self.activityName = activityName
         self.therapeuticValue = therapeuticValue
     }
+
 }

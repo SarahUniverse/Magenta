@@ -9,10 +9,10 @@ import CoreData
 import SwiftUI
 
 struct ArtTherapyView: View {
-    @StateObject private var artTherapyViewModel: ArtTherapyViewModel
+    @State private var artTherapyViewModel: ArtTherapyViewModel
 
     init(viewContext: NSManagedObjectContext) {
-        _artTherapyViewModel = StateObject(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
+        _artTherapyViewModel = State(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(

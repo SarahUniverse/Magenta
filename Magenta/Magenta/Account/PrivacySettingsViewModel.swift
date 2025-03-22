@@ -23,17 +23,17 @@ enum ContactPermission: String, CaseIterable, Identifiable {
     var id: String { self.rawValue }
 }
 
-class PrivacySettingsViewModel: ObservableObject {
-    @Published var isPrivateAccount = false
-    @Published var showOnlineStatus = true
-    @Published var showActivityStatus = true
-    @Published var shareUsageData = true
-    @Published var personalizedRecommendations = true
-    @Published var thirdPartyIntegration = false
-    @Published var profileVisibility = ProfileVisibility.everyone
-    @Published var contactPermission = ContactPermission.everyone
-    @Published var showingAlert = false
-    @Published var alertMessage = ""
+@Observable class PrivacySettingsViewModel {
+    var isPrivateAccount = false
+    var showOnlineStatus = true
+    var showActivityStatus = true
+    var shareUsageData = true
+    var personalizedRecommendations = true
+    var thirdPartyIntegration = false
+    var profileVisibility = ProfileVisibility.everyone
+    var contactPermission = ContactPermission.everyone
+    var showingAlert = false
+    var alertMessage = ""
 
     func downloadData() {
         // Implement download data logic

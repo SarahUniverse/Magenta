@@ -19,4 +19,5 @@ struct BlockedUserModel: Identifiable {
         self.avatarURL = avatarURL
         self.blockedDate = blockedDate
     }
+
 }

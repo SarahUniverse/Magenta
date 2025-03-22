@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BlockedUsersView: View {
-    @StateObject private var viewModel = BlockedUserViewModel()
+    @State private var viewModel = BlockedUserViewModel()
     @Environment(\.dismiss) var dismiss
 
     var body: some View {

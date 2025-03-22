@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FAQView: View {
-    @StateObject private var viewModel = FAQViewModel()
+    @State private var viewModel = FAQViewModel()
     @Environment(\.dismiss) var dismiss
 
     var body: some View {

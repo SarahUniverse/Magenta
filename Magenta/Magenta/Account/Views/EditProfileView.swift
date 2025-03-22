@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = EditProfileViewModel()
+    @State private var viewModel = EditProfileViewModel()
     @State private var showImagePicker = false
 
     var body: some View {

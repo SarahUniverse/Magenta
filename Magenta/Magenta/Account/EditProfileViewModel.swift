@@ -8,15 +8,15 @@
 import CoreData
 import UIKit
 
-class EditProfileViewModel: ObservableObject {
-    @Published var profileImage: UIImage?
-    @Published var firstName = ""
-    @Published var lastName = ""
-    @Published var displayName = ""
-    @Published var birthday = Date()
-    @Published var email = ""
-    @Published var phone = ""
-    @Published var bio = ""
+@Observable class EditProfileViewModel {
+    var profileImage: UIImage?
+    var firstName = ""
+    var lastName = ""
+    var displayName = ""
+    var birthday = Date()
+    var email = ""
+    var phone = ""
+    var bio = ""
 
     func saveProfile() {
         // Implement save logic

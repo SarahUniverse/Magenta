@@ -9,11 +9,11 @@ import CoreData
 import SwiftUI
 
 struct AccountView: View {
-    @StateObject private var accountViewModel: AccountViewModel
+    @State private var accountViewModel: AccountViewModel
     @Environment(\.colorScheme) private var colorScheme
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
-        _accountViewModel = StateObject(wrappedValue: AccountViewModel(viewContext: viewContext, colorScheme: colorScheme))
+        _accountViewModel = State(wrappedValue: AccountViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
     let backgroundGradient = LinearGradient(

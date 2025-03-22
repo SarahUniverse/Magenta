@@ -8,17 +8,17 @@
 import CoreData
 import SwiftUI
 
-final class AccountViewModel: ObservableObject {
-    @Published var shouldShowLoginView = false
-    @Published var showingDeleteAlert = false
-    @Published var isDarkMode = false
-    @Published var selectedLanguage = "English"
+@Observable final class AccountViewModel {
+    var shouldShowLoginView = false
+    var showingDeleteAlert = false
+    var isDarkMode = false
+    var selectedLanguage = "English"
     let viewContext: NSManagedObjectContext
-    @Published var colors: Colors
+    var colors: Colors
 
     // User Info
-    @Published var userName = "Orko C. Puppy"
-    @Published var userEmail = "Orko@puppy.com"
+    var userName = "Orko C. Puppy"
+    var userEmail = "Orko@puppy.com"
 
     // Settings
     let availableLanguages = ["English", "Spanish", "French", "German"]
@@ -26,7 +26,6 @@ final class AccountViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         self.viewContext = viewContext
         self.colors = Colors(colorScheme: colorScheme)
-        // Initialize other properties as needed
     }
 
     func signOut() {

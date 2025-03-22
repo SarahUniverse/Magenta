@@ -7,10 +7,10 @@
 
 import CoreData
 
-final class FAQViewModel: ObservableObject {
-    @Published var categories: [FAQCategory] = []
-    @Published var searchText = ""
-    @Published var showingSupportSheet = false
+@Observable final class FAQViewModel {
+    var categories: [FAQCategory] = []
+    var searchText = ""
+    var showingSupportSheet = false
 
     var filteredQuestions: [FAQQuestion] {
         if searchText.isEmpty {

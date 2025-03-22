@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NotificationSettingsView: View {
-    @StateObject private var viewModel = NotificationSettingsViewModel()
+    @State private var viewModel = NotificationSettingsViewModel()
 
     var body: some View {
         List {
