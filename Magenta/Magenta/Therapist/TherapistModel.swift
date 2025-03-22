@@ -39,4 +39,5 @@ struct TherapistModel: Identifiable {
         self.rating = rating
         self.distance = distance
     }
+
 }

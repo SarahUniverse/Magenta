@@ -7,6 +7,6 @@
 
 import CoreData
 
-final class TherapistSearchViewModel: ObservableObject {
-    @Published var therapists: [TherapistModel] = []
+@Observable final class TherapistSearchViewModel {
+    var therapists: [TherapistModel] = []
 }
