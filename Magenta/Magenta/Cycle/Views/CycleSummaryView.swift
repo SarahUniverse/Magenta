@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CycleSummaryView: View {
-    // @StateObject private var cycleSummaryViewModel: CycleSummaryViewModel
+    // @State private var cycleViewModel: CycleViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

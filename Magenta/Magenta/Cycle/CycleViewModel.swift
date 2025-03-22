@@ -7,6 +7,6 @@
 
 import CoreData
 
-final class CycleViewModel: ObservableObject {
+@Observable final class CycleViewModel {
 
 }

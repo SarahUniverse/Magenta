@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CycleView: View {
-    @StateObject private var cycleViewModel = CycleViewModel()
+    @State private var cycleViewModel = CycleViewModel()
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -36,6 +36,7 @@ struct CycleView: View {
             }
         }
     }
+
 }
 
 // MARK: - Previews
