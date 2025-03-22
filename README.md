@@ -60,22 +60,23 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 
 ### Development Phase
 - **Tasks(dates to be completed by)**:
-  - **March 9th**: Mood Tracker :white_check_mark: 
-  - **March 16th**: Helpful Quotes :white_check_mark:
-  - **March 24th**: Sleep
-  - **March 31st**: Exercise
-  - **April 7th**: Nutrition
-  - **April 14th**: Mental Health Playlists
-  - **April 21st**: Cycle Tracking
-  - **April 28th**: Art Therapy
-  - **May 5th**: Books that Help Me
-  - **May 12th**: Journal
-  - **May 19th**: Meditations
-  - **May 26th**: Therapist Search
-  - **June 2nd**: Apple Watch Integration
-  - **June 9th**: Account Setup
-  - **June 16th**: Authentication
-  - **June 23rd**: Backend Integration
+  - Mood Tracker :white_check_mark: 
+  - Helpful Quotes :white_check_mark:
+  - Sleep
+  - Exercise
+  - Nutrition
+  - Mental Health Playlists
+  - Cycle Tracking
+  - Art Therapy
+  - Books that Help Me
+  - Journal
+  - Meditations
+  - Therapist Search
+  - Apple Watch Integration
+  - Account Setup
+  - Authentication
+  - Backend Integration
+  - Notifications and Activities
 - **Deliverable**: Individual feature modules completed and unit tested.
 
 ### Integration Phase
@@ -104,34 +105,6 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
   - Final testing and approval checks.  
   - July 28th, 2025: Release app to App Store.  
 - **Deliverable**: App live on App Store.
-
-### Gantt Chart
-The following table represents the timeline for all features and phases. Each "X" indicates a task being active during that week. (Note: Mood Tracker marked complete early.)
-
-| Task                          | Mar 9 | Mar 16 | Mar 24 | Mar 31 | Apr 7 | Apr 14 | Apr 21 | Apr 28 | May 5 | May 12 | May 19 | May 26 | Jun 2 | Jun 9 | Jun 16 | Jun 23 | Jun 30 | Jul 7 | Jul 14 | Jul 21 | Jul 28 |
-|-------------------------------|--------|--------|--------|--------|-------|--------|--------|--------|-------|--------|--------|--------|-------|-------|--------|--------|--------|-------|--------|--------|--------|
-| Mood Tracker                 |  :white_check_mark:  |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Helpful Quotes               |        |   :white_check_mark:   |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Sleep                        |        |        |   X    |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Exercise                     |        |        |        |   X    |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Nutrition                    |        |        |        |        |   X   |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Mental Health Playlists      |        |        |        |        |       |   X    |        |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Cycle Tracking               |        |        |        |        |       |        |   X    |        |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Art Therapy                  |        |        |        |        |       |        |        |   X    |       |        |        |        |       |       |        |        |        |       |        |        |        |
-| Books that Help Me           |        |        |        |        |       |        |        |        |   X   |        |        |        |       |       |        |        |        |       |        |        |        |
-| Journal                      |        |        |        |        |       |        |        |        |       |   X    |        |        |       |       |        |        |        |       |        |        |        |
-| Meditations                  |        |        |        |        |       |        |        |        |       |        |   X    |        |       |       |        |        |        |       |        |        |        |
-| Therapist Search             |        |        |        |        |       |        |        |        |       |        |        |   X    |       |       |        |        |        |       |        |        |        |
-| Apple Watch Integration      |        |        |        |        |       |        |        |        |       |        |        |        |   X   |       |        |        |        |       |        |        |        |
-| Account Setup                |        |        |        |        |       |        |        |        |       |        |        |        |       |   X   |        |        |        |       |        |        |        |
-| Authentication               |        |        |        |        |       |        |        |        |       |        |        |        |       |       |   X    |        |        |       |        |        |        |
-| Backend Integration          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |   X    |        |       |        |        |        |
-| Integration Phase            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |   X    |       |        |        |        |
-| Testing Phase                |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |   X   |   X    |        |        |
-| Release Preparation          |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |   X    |        |
-| App Store Release            |        |        |        |        |       |        |        |        |       |        |        |        |       |       |        |        |        |       |        |        |   X    |
-
-
 
 ## License
 Proprietary Software
