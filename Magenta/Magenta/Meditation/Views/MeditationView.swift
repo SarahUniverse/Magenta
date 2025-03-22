@@ -1,5 +1,5 @@
 //
-//  MeditateView.swift
+//  MeditationView.swift
 //  Magenta
 //
 //  Created by Sarah Clark on 8/21/24.
@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct MeditateView: View {
+struct MeditationView: View {
     @State private var meditateViewModel: MeditationViewModel
     @State private var showAddMeditationSheet: Bool = false
     @State private var newMeditationTitle = ""
@@ -216,13 +216,13 @@ struct MeditateView: View {
 // MARK: - Previews
 #Preview ("Light Mode") {
     let context = PreviewPersistenceController.preview.container.viewContext
-    return MeditateView(viewContext: context)
+    return MeditationView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
     let context = PreviewPersistenceController.preview.container.viewContext
-    return MeditateView(viewContext: context)
+    return MeditationView(viewContext: context)
         .preferredColorScheme(.dark)
 }
 

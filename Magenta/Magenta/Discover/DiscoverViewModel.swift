@@ -75,7 +75,7 @@ import SwiftUI
         case "Professional Help":
             TherapistSearchView()
         case "Meditate":
-            MeditateView(viewContext: viewContext)
+            MeditationView(viewContext: viewContext)
         case "Cycle":
             CycleView()
         default:
