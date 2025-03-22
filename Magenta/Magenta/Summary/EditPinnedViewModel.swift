@@ -8,16 +8,16 @@
 import Combine
 import SwiftUI
 
-final class EditPinnedViewModel: ObservableObject {
-    @Published var searchText = ""
-    @Published var items = ["Art Therapy", "Journal", "Exercise",
+@Observable final class EditPinnedViewModel {
+    var searchText = ""
+    var items = ["Art Therapy", "Journal", "Exercise",
                             "Sleep", "Mood", "Nutrition", "Books",
                             "Music", "Quotes", "Therapy", "Meditation", "Cycle"]
-    @Published var pinnedItems = [String]()
-    @Published var unpinnedItems = ["Art Therapy", "Journal", "Exercise",
+    var pinnedItems = [String]()
+    var unpinnedItems = ["Art Therapy", "Journal", "Exercise",
                                     "Sleep", "Mood", "Nutrition", "Books",
                                     "Music", "Quotes", "Therapy", "Meditation", "Cycle"]
-    @Published var newItem = ""
+    var newItem = ""
     private var speechRecognizer: SpeechRecognizer?
 
     var filteredItems: [String] {

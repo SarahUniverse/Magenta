@@ -10,7 +10,7 @@ import SwiftUI
 struct EditPinnedView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var pinnedItems: [String]
-    @StateObject private var editPinnedViewModel: EditPinnedViewModel
+    @State private var editPinnedViewModel: EditPinnedViewModel
     @State private var isListening = false
     @State private var showError = false
     @State private var errorMessage = ""
@@ -19,7 +19,7 @@ struct EditPinnedView: View {
     init(pinnedItems: Binding<[String]>, summaryViewModel: SummaryViewModel) {
         self._pinnedItems = pinnedItems
         self.summaryViewModel = summaryViewModel
-        self._editPinnedViewModel = StateObject(wrappedValue: EditPinnedViewModel(initialPinnedItems: pinnedItems.wrappedValue))
+        self._editPinnedViewModel = State(wrappedValue: EditPinnedViewModel(initialPinnedItems: pinnedItems.wrappedValue))
     }
 
     private var searchSection: some View {

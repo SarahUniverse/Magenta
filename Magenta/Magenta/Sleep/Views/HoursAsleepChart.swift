@@ -100,5 +100,4 @@ struct HoursAsleepChart: View {
         return dailyHours
     }
 
-
 }

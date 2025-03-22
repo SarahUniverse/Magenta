@@ -5,7 +5,6 @@
 //  Created by Sarah Clark on 1/19/25.
 //
 
-
 import CoreData
 import HealthKit
 import SwiftUI
