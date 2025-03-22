@@ -10,7 +10,7 @@ import CoreData
 import SwiftUI
 
 struct MoodChartView: View {
-    @ObservedObject var moodChartViewModel: MoodChartViewModel
+    var moodChartViewModel: MoodChartViewModel
 
     init(viewContext: NSManagedObjectContext) {
         self.moodChartViewModel = MoodChartViewModel(viewContext: viewContext)

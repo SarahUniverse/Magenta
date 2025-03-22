@@ -10,8 +10,8 @@ import CoreData
 import Foundation
 import SwiftUI
 
-final class MoodChartViewModel: ObservableObject {
-    @Published var moods: [MoodModel] = []
+@Observable final class MoodChartViewModel {
+    var moods: [MoodModel] = []
     private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
