@@ -11,7 +11,7 @@ import SwiftUI
 
 @main
 struct MagentaApp: App {
-    @StateObject private var coreDataStack = PersistenceController.shared
+    @State private var coreDataStack = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {

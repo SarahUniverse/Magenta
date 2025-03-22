@@ -7,10 +7,10 @@
 
 import CoreData
 
-class PersistenceController: ObservableObject {
+@Observable class PersistenceController {
     static let shared = PersistenceController()
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    var persistentContainer: NSPersistentContainer = {
 
         let container = NSPersistentContainer(name: "DataModel")
 
