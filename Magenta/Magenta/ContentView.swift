@@ -10,14 +10,14 @@ import SwiftUI
 
 public struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @StateObject private var contentViewModel: ContentViewModel
-    @StateObject private var loginViewModel: LoginViewModel
-    @StateObject private var biometricAuthViewModel = BiometricAuthViewModel()
+    @State private var contentViewModel: ContentViewModel
+    @State private var loginViewModel: LoginViewModel
+    @State private var biometricAuthViewModel = BiometricAuthViewModel()
     @State private var currentUser: String = ""
 
     public init(viewContext: NSManagedObjectContext) {
-        _contentViewModel = StateObject(wrappedValue: ContentViewModel(viewContext: viewContext))
-        _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
+        _contentViewModel = State(wrappedValue: ContentViewModel(viewContext: viewContext))
+        _loginViewModel = State(wrappedValue: LoginViewModel(viewContext: viewContext))
     }
 
     public var body: some View {

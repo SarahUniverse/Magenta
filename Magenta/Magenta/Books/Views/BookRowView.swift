@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BookRowView: View {
     let book: BookModel
-    @ObservedObject var booksViewModel: BooksViewModel
+    var booksViewModel: BooksViewModel
 
     // MARK: - Body
     var body: some View {

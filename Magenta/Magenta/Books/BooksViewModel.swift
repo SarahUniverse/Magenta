@@ -7,8 +7,8 @@
 
 import CoreData
 
-final class BooksViewModel: ObservableObject {
-    @Published var books: [BookModel] = []
+@Observable final class BooksViewModel {
+    var books: [BookModel] = []
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -83,7 +83,6 @@ final class BooksViewModel: ObservableObject {
 }
 
 extension BooksViewModel {
-
     func fetchBooksByStatus(_ status: BookStatus) -> [BookModel] {
         let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
         request.predicate = NSPredicate(format: "status == %@", status.rawValue)

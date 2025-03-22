@@ -13,7 +13,7 @@ struct LoginView: View {
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
-        _loginViewModel = StateObject(wrappedValue: LoginViewModel(viewContext: viewContext))
+        _loginViewModel = State(wrappedValue: LoginViewModel(viewContext: viewContext))
         self.viewContext = viewContext
     }
 

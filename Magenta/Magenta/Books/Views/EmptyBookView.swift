@@ -66,6 +66,7 @@ struct EmptyBooksView: View {
             return "Start your reading journey by adding a book to your collection."
         }
     }
+
 }
 
 // MARK: - Previews

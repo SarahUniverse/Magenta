@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct BooksView: View {
-    @StateObject private var booksViewModel: BooksViewModel
+    @State private var booksViewModel: BooksViewModel
     @State private var selectedStatus: BookStatus?
     @State private var showingAddBookSheet = false
     @State private var newBookTitle = ""
@@ -19,7 +19,7 @@ struct BooksView: View {
     @State private var newBookEdition = ""
 
     init(viewContext: NSManagedObjectContext) {
-        _booksViewModel = StateObject(wrappedValue: BooksViewModel(viewContext: viewContext))
+        _booksViewModel = State(wrappedValue: BooksViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
