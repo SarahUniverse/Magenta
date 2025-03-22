@@ -7,9 +7,9 @@
 
 import Speech
 
-final class SpeechRecognizer: ObservableObject {
-    @Published var transcribedText: String = ""
-    @Published var isRecording: Bool = false
+@Observable final class SpeechRecognizer {
+    var transcribedText: String = ""
+    var isRecording: Bool = false
 
     var transcribedTextHandler: ((String) -> Void)?
     var errorHandler: ((SpeechRecognizerError) -> Void)?

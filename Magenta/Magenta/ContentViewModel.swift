@@ -57,6 +57,7 @@ class ContentViewModel: ObservableObject {
             return nil
         }
     }
+
 }
 
 // Extension for testing and preview support
@@ -66,4 +67,5 @@ extension ContentViewModel {
         // Add any preview data setup here
         return viewModel
     }
+
 }
