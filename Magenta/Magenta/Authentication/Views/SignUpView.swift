@@ -9,12 +9,12 @@ import CoreData
 import SwiftUI
 
 struct SignUpView: View {
-    @StateObject private var signUpViewModel: SignUpViewModel
+    @State private var signUpViewModel: SignUpViewModel
     @State private var showMainView = false
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
-        _signUpViewModel = StateObject(wrappedValue: SignUpViewModel(viewContext: viewContext))
+        _signUpViewModel = State(wrappedValue: SignUpViewModel(viewContext: viewContext))
         self.viewContext = viewContext
     }
 

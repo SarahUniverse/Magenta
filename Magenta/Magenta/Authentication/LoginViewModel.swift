@@ -11,14 +11,14 @@ import Foundation
 import GoogleSignIn
 import SwiftUI
 
-class LoginViewModel: ObservableObject {
-    @Published var userModel: UserModel?
-    @Published var username: String = ""
-    @Published var password: String = ""
-    @Published var error: String = ""
-    @Published var isNavigating = false
-    @Published var isLoggedIn = false
-    @Published var userInfo = ""
+@Observable class LoginViewModel {
+    var userModel: UserModel?
+    var username: String = ""
+    var password: String = ""
+    var error: String = ""
+    var isNavigating = false
+    var isLoggedIn = false
+    var userInfo = ""
 
     private let viewContext: NSManagedObjectContext
 

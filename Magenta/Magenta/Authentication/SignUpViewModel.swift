@@ -8,14 +8,14 @@
 import CoreData
 import SwiftUI
 
-class SignUpViewModel: ObservableObject {
-    @Published var username: String = ""
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var confirmPassword: String = ""
-    @Published var errorMessage: String = ""
-    @Published var isSignUpSuccessful: Bool = false
-    @Published var createdUserModel: UserModel?
+@Observable class SignUpViewModel {
+    var username: String = ""
+    var email: String = ""
+    var password: String = ""
+    var confirmPassword: String = ""
+    var errorMessage: String = ""
+    var isSignUpSuccessful: Bool = false
+    var createdUserModel: UserModel?
 
     private var viewContext: NSManagedObjectContext
     private let keychainManager = KeychainManager.shared
@@ -129,4 +129,5 @@ class SignUpViewModel: ObservableObject {
             return false
         }
     }
+
 }

@@ -7,9 +7,9 @@
 
 import LocalAuthentication
 
-final class BiometricAuthViewModel: ObservableObject {
-    @Published var isAuthenticated = false
-    @Published var errorMessage = ""
+@Observable final class BiometricAuthViewModel {
+    var isAuthenticated = false
+    var errorMessage = ""
 
     func authenticateWithFaceID() {
         let context = LAContext()
@@ -55,4 +55,5 @@ final class BiometricAuthViewModel: ObservableObject {
             return "Face ID may not be configured"
         }
     }
+
 }
