@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct MainTabView: View {
-    @StateObject private var mainViewModel: MainTabViewModel
+    @State private var mainViewModel: MainTabViewModel
     let userModel: UserModel
     private let viewContext: NSManagedObjectContext
     @Environment(\.colorScheme) var colorScheme
@@ -17,7 +17,7 @@ struct MainTabView: View {
     init(viewContext: NSManagedObjectContext, userModel: UserModel) {
         self.userModel = userModel
         self.viewContext = viewContext
-        _mainViewModel = StateObject(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
+        _mainViewModel = State(wrappedValue: MainTabViewModel(viewContext: viewContext, userModel: userModel))
     }
 
     var body: some View {
