@@ -9,11 +9,11 @@ import CoreData
 import Foundation
 import SwiftUI
 
-final class QuotesViewModel: ObservableObject {
-    @Published var quotes: [QuotesModel] = []
-    @Published var favoriteQuotes: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "FavoriteQuotes") ?? [])
-    @Published var searchText: String = ""
-    @Published var selectedSubject: String?
+@Observable final class QuotesViewModel {
+    var quotes: [QuotesModel] = []
+    var favoriteQuotes: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "FavoriteQuotes") ?? [])
+    var searchText: String = ""
+    var selectedSubject: String?
 
     let subjects = ["love", "grief", "motivation", "friendship", "anger"]
     let viewContext: NSManagedObjectContext

@@ -9,11 +9,11 @@ import CoreData
 import SwiftUI
 
 struct QuotesView: View {
-    @StateObject private var quotesViewModel: QuotesViewModel
+    @State private var quotesViewModel: QuotesViewModel
     @State private var showAddQuoteSheet = false
 
     init(viewContext: NSManagedObjectContext) {
-        _quotesViewModel = StateObject(wrappedValue: QuotesViewModel(viewContext: viewContext))
+        _quotesViewModel = State(wrappedValue: QuotesViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(

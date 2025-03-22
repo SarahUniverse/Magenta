@@ -7,9 +7,9 @@
 
 import CoreData
 
-final class QuotesSummaryViewModel: ObservableObject {
+@Observable final class QuotesSummaryViewModel {
     private let viewContext: NSManagedObjectContext
-    @Published var quotes: [QuoteEntity] = []
+    var quotes: [QuoteEntity] = []
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -29,7 +29,6 @@ final class QuotesSummaryViewModel: ObservableObject {
             print("Failed to fetch most recent favorite quote: \(error)")
             quotes = []
         }
-
     }
 
 }

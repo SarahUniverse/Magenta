@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct AddQuoteSheet: View {
-    @ObservedObject private var quotesViewModel: QuotesViewModel
+    private var quotesViewModel: QuotesViewModel
     @Environment(\.dismiss) var dismiss
 
     @State private var content = ""

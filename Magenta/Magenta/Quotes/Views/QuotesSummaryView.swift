@@ -9,13 +9,13 @@ import CoreData
 import SwiftUI
 
 struct QuotesSummaryView: View {
-    @StateObject private var quotesSummaryViewModel: QuotesSummaryViewModel
+    @State private var quotesSummaryViewModel: QuotesSummaryViewModel
     @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        _quotesSummaryViewModel = StateObject(wrappedValue: QuotesSummaryViewModel(viewContext: viewContext))
+        _quotesSummaryViewModel = State(wrappedValue: QuotesSummaryViewModel(viewContext: viewContext))
     }
 
     // MARK: Body
