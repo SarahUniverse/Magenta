@@ -10,12 +10,16 @@ import CoreData
 
 @Observable final class MeditationViewModel {
     var meditationSessions: [MeditationModel] = []
+    var selectedMeditation: MeditationModel?
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         createInitialMeditationSessions()
         fetchMeditationSessions()
+
+        // Default to the first meditation session.
+        selectedMeditation = meditationSessions.first
     }
 
     func fetchMeditationSessions() {
@@ -110,6 +114,10 @@ import CoreData
         } catch {
             print("Error saving meditation sessions: \(error.localizedDescription)")
         }
+    }
+
+    func selectMeditation(_ meditation: MeditationModel) {
+        selectedMeditation = meditation
     }
 
 }

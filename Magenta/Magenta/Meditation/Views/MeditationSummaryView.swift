@@ -10,8 +10,15 @@ import SwiftUI
 
 struct MeditationSummaryView: View {
     @State private var meditationViewModel: MeditationViewModel
+    @State private var isAnimating = false
     @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
+
+    private let iconGradient = LinearGradient(
+        colors: [.cyan, .darkBlue],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -30,16 +37,35 @@ struct MeditationSummaryView: View {
 
                 HStack(alignment: .top, spacing: 15) {
                     Image(systemName: "figure.mind.and.body")
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.cyan, .darkBlue],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .font(.largeTitle)
+                        .foregroundStyle(iconGradient)
+                        .font(.system(size: 48))
+                        .scaleEffect(isAnimating ? 1.1 : 1.0)
+                        .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
+                        .onAppear {
+                            isAnimating = true
+                        }
+
+                    if let selected = meditationViewModel.selectedMeditation {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(selected.meditationTitle)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.gray)
+                            Text("\(selected.meditationDuration) min")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                            Text(selected.meditationDescription)
+                                .font(.caption)
+                                .foregroundStyle(.gray)
+                                .lineLimit(2)
+                        }
+                    } else {
+                        Text("No meditation selected")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                    }
                 }
-                .padding()
+                .padding(20)
                 .background(glassBackground)
                 .cornerRadius(10)
             }
