@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistsSummaryView: View {
-    // @StateObject private var playlistsSummaryViewModel: PlaylistsSummaryViewModel
+    // @State private var playlistsViewModel: PlaylistsViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

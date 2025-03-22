@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistsView: View {
-    @StateObject private var playlistsViewModel = PlaylistsViewModel()
+    @State private var playlistsViewModel = PlaylistsViewModel()
 
     private let backgroundGradient = LinearGradient(
         stops: [

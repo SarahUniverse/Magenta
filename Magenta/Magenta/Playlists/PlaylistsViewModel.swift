@@ -7,6 +7,6 @@
 
 import CoreData
 
-final class PlaylistsViewModel: ObservableObject {
+@Observable final class PlaylistsViewModel {
 
 }
