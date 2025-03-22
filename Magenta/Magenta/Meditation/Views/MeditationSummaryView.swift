@@ -36,24 +36,36 @@ struct MeditationSummaryView: View {
                     .padding(.bottom, -20)
 
                 HStack(alignment: .top, spacing: 15) {
-                    Image(systemName: "figure.mind.and.body")
-                        .foregroundStyle(iconGradient)
-                        .font(.system(size: 48))
-                        .scaleEffect(isAnimating ? 1.1 : 1.0)
-                        .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
-                        .onAppear {
-                            isAnimating = true
-                        }
+                    ZStack {
+                        Circle()
+                            .fill(Color.indigo.opacity(0.3))
+                            .frame(width: 70, height: 70)
+                            .shadow(radius: 5)
 
+                        Image(systemName: "figure.mind.and.body")
+                            .foregroundStyle(iconGradient)
+                            .font(.system(size: 48))
+                            .shadow(radius: 5)
+                            .scaleEffect(isAnimating ? 1.1 : 1.0)
+                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
+                            .onAppear {
+                                isAnimating = true
+                            }
+                    }
                     if let selected = meditationViewModel.selectedMeditation {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(selected.meditationTitle)
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.gray)
-                            Text("\(selected.meditationDuration) min")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
+                            HStack {
+                                Text("\(selected.meditationDuration) min")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.gray)
+                                Image(systemName: "clock")
+                                    .font(.caption)
+                                    .foregroundStyle(.gray)
+                            }
                             Text(selected.meditationDescription)
                                 .font(.caption)
                                 .foregroundStyle(.gray)
@@ -66,10 +78,10 @@ struct MeditationSummaryView: View {
                     }
                 }
                 .padding(20)
+                .padding(.top, 15)
                 .background(glassBackground)
                 .cornerRadius(10)
             }
-
         }
     }
 
