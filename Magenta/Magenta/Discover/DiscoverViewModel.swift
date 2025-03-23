@@ -69,7 +69,7 @@ import SwiftUI
         case "Nutrition":
             NutritionView()
         case "Playlists":
-            PlaylistsView()
+            PlaylistsView(viewContext: viewContext)
         case "Quotes":
             QuotesView(viewContext: viewContext)
         case "Professional Help":

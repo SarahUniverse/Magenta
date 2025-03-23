@@ -8,5 +8,11 @@
 import CoreData
 
 @Observable final class PlaylistsViewModel {
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
+
 
 }

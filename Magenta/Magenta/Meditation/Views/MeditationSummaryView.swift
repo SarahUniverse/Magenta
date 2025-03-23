@@ -54,6 +54,8 @@ struct MeditationSummaryView: View {
                     }
                     if let selected = meditationViewModel.selectedMeditation {
                         VStack(alignment: .leading, spacing: 3) {
+                            Text("Currently listening to:")
+                                .font(.caption)
                             Text(selected.meditationTitle)
                                 .font(.headline)
                                 .fontWeight(.bold)
@@ -80,7 +82,6 @@ struct MeditationSummaryView: View {
                 .padding(20)
                 .padding(.top, 15)
                 .background(glassBackground)
-                .cornerRadius(10)
             }
         }
     }

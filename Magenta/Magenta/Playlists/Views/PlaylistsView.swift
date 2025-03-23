@@ -5,10 +5,18 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import CoreData
+import MusicKit
 import SwiftUI
 
 struct PlaylistsView: View {
-    @State private var playlistsViewModel = PlaylistsViewModel()
+    @State private var playlistsViewModel: PlaylistsViewModel
+    let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _playlistsViewModel = State(wrappedValue: PlaylistsViewModel(viewContext: viewContext))
+    }
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -36,15 +44,40 @@ struct PlaylistsView: View {
             }
         }
     }
+
 }
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    PlaylistsView()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    return  PlaylistsView(viewContext: viewContext)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    PlaylistsView()
+    let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+
+    let viewContext = persistentContainer.viewContext
+    return  PlaylistsView(viewContext: viewContext)
         .preferredColorScheme(.dark)
 }
