@@ -12,6 +12,7 @@ import SwiftUI
 struct PlaylistsView: View {
     @State private var playlistsViewModel: PlaylistsViewModel
     let viewContext: NSManagedObjectContext
+    @State private var showingCreatePlaylist = false
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -32,7 +33,9 @@ struct PlaylistsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Text("Hello, World!")
+                ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
+                    Text(playlist.name ?? "Unnamed Playlist")
+                }
             }
             .navigationTitle("Mental Health Playlists")
             .background(backgroundGradient)
