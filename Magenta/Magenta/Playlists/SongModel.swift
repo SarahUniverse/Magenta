@@ -19,10 +19,10 @@ struct SongModel: Identifiable, Hashable {
         self.artist = song.artist ?? ""
     }
 
-    init(from musicKitSong: MusicKit.Song) {
+    init(from mockSong: MockSong) {
         self.id = UUID()
-        self.title = musicKitSong.title
-        self.artist = musicKitSong.artistName
+        self.title = mockSong.title
+        self.artist = mockSong.artistName
     }
 
     func toCoreData(context: NSManagedObjectContext) -> SongEntity {

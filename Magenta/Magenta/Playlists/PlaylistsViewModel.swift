@@ -31,6 +31,27 @@ import SwiftUI
         }
     }
 
+    func fetchMusicKitPlaylists() {
+        // Use static mock data
+        let mockPlaylists = MockPlaylist.mockPlaylists
+
+        for mockPlaylist in mockPlaylists {
+            let playlistModel = PlaylistModel(from: mockPlaylist)
+            let playlist = playlistModel.toCoreData(context: viewContext)
+            if let songs = playlist.songs as? Set<SongEntity> {
+                for song in songs {
+                    song.playlist = playlist
+                }
+            }
+        }
+        do {
+            try viewContext.save()
+            fetchPlaylists()
+        } catch {
+            print("Failed to save playlists: \(error)")
+        }
+    }
+
     func fetchPlaylists() {
         let request: NSFetchRequest<PlaylistEntity> = PlaylistEntity.fetchRequest()
         do {
@@ -41,7 +62,7 @@ import SwiftUI
         }
     }
 
-    func fetchMusicKitPlaylists() {
+    /*func fetchMusicKitPlaylists() {
         Task {
             do {
                 let request = MusicLibraryRequest<MusicKit.Playlist>()
@@ -66,15 +87,7 @@ import SwiftUI
                 print("Failed to fetch MusicKit playlists: \(error)")
             }
         }
-    }
-
-    private func fetchTracks(for playlist: MusicKit.Playlist) async throws -> [SongModel] {
-        guard let tracks = try await playlist.with([.tracks]).tracks else { return [] }
-        return tracks.compactMap { track in
-            guard let song = track as? MusicKit.Song else { return nil }
-            return SongModel(from: song)
-        }
-    }
+    }*/
 
     func createPlaylist(name: String) {
         let newPlaylist = PlaylistEntity(context: viewContext)

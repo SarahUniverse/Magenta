@@ -26,14 +26,11 @@ struct PlaylistModel: Identifiable, Hashable {
         }
     }
 
-    init(from musicKitPlaylist: MusicKit.Playlist) {
+    init(from mockPlaylist: MockPlaylist) {
         self.id = UUID()
-        self.name = musicKitPlaylist.name
-        self.createdAt = Date()
-        self.songs = musicKitPlaylist.tracks?.compactMap { track in
-            guard let song = track as? MusicKit.Song else { return nil }
-            return SongModel(from: song)
-        }
+        self.name = mockPlaylist.name
+        self.createdAt = mockPlaylist.lastModifiedDate ?? Date()
+        self.songs = mockPlaylist.tracks.map { SongModel(from: $0) }
     }
 
     func toCoreData(context: NSManagedObjectContext) -> PlaylistEntity {

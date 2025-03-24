@@ -34,7 +34,22 @@ struct PlaylistsView: View {
         NavigationStack {
             List {
                 ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
-                    Text(playlist.name)
+                    Section(header: Text(playlist.name)) {
+                        if let songs = playlist.songs, !songs.isEmpty {
+                            ForEach(songs) { song in
+                                VStack(alignment: .leading) {
+                                    Text(song.title)
+                                        .font(.headline)
+                                    Text(song.artist)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        } else {
+                            Text("No songs in this playlist")
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }
             }
             .navigationTitle("Mental Health Playlists")
