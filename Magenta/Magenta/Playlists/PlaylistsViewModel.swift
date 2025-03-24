@@ -19,20 +19,8 @@ import SwiftUI
         requestAuthorization()
     }
 
-    private func requestAuthorization() {
-        Task {
-            let status = await MusicAuthorization.request()
-            DispatchQueue.main.async {
-                self.authorizationStatus = status
-                if status == .authorized {
-                    self.fetchMusicKitPlaylists()
-                }
-            }
-        }
-    }
-
-    func fetchMusicKitPlaylists() {
-        // Use static mock data
+    func fetchMockPlaylists() {
+        // Use static mock data for now.
         let mockPlaylists = MockPlaylist.mockPlaylists
 
         for mockPlaylist in mockPlaylists {
@@ -46,13 +34,13 @@ import SwiftUI
         }
         do {
             try viewContext.save()
-            fetchPlaylists()
+            fetchPlaylistsFromCoreData()
         } catch {
             print("Failed to save playlists: \(error)")
         }
     }
 
-    func fetchPlaylists() {
+    func fetchPlaylistsFromCoreData() {
         let request: NSFetchRequest<PlaylistEntity> = PlaylistEntity.fetchRequest()
         do {
             let coreDataPlaylists = try viewContext.fetch(request)
@@ -62,6 +50,33 @@ import SwiftUI
         }
     }
 
+    func deletePlaylist(playlist: PlaylistModel) {
+        guard let playlistEntity = fetchPlaylistEntity(withId: playlist.id) else { return }
+        viewContext.delete(playlistEntity)
+
+        do {
+            try viewContext.save()
+            fetchPlaylistsFromCoreData()
+        } catch {
+            print("Error deleting playlist: \(error)")
+        }
+    }
+
+    // For testing purposes only
+    func deleteAllPlaylists() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = PlaylistEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try viewContext.execute(deleteRequest)
+            try viewContext.save()
+            playlists = []
+        } catch {
+            print("Error deleting all playlists: \(error)")
+        }
+    }
+
+    // TODO: Use this code once you have an Apple Music subscription.
     /*func fetchMusicKitPlaylists() {
         Task {
             do {
@@ -96,10 +111,37 @@ import SwiftUI
         newPlaylist.createdAt = Date()
         do {
             try viewContext.save()
-            fetchPlaylists()
+            fetchPlaylistsFromCoreData()
         } catch {
             print("Failed to save playlist: \(error)")
         }
     }
 
+    // MARK: - Private Functions
+    private func fetchPlaylistEntity(withId id: UUID) -> PlaylistEntity? {
+        let fetchRequest: NSFetchRequest<PlaylistEntity> = PlaylistEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        do {
+            let playlists = try viewContext.fetch(fetchRequest)
+            return playlists.first
+        } catch {
+            print("Error fetching playlist entity: \(error)")
+            return nil
+        }
+    }
+
+    private func requestAuthorization() {
+        Task {
+            let status = await MusicAuthorization.request()
+            DispatchQueue.main.async {
+                self.authorizationStatus = status
+                if status == .authorized {
+                    self.fetchMockPlaylists()
+                }
+            }
+        }
+    }
+
 }
+

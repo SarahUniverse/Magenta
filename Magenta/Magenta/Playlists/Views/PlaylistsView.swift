@@ -45,6 +45,7 @@ struct PlaylistsView: View {
                                         .foregroundColor(.secondary)
                                 }
                             }
+                            .onDelete(perform: deletePlaylist)
                         } else {
                             Text("No songs in this playlist")
                                 .foregroundColor(.gray)
@@ -66,11 +67,19 @@ struct PlaylistsView: View {
                 }
             }
             .onAppear {
-                playlistsViewModel.fetchPlaylists()
+                playlistsViewModel.fetchPlaylistsFromCoreData()
+                // playlistsViewModel.deleteAllPlaylists() // Uncomment during debugging if you want to use.
             }
             .sheet(isPresented: $showingCreatePlaylist) {
                 CreatePlaylistView(playlistsViewModel: playlistsViewModel)
             }
+        }
+    }
+
+    func deletePlaylist(at offsets: IndexSet) {
+        for index in offsets {
+            let playlistToDelete = playlistsViewModel.playlists[index]
+            playlistsViewModel.deletePlaylist(playlist: playlistToDelete)
         }
     }
 
