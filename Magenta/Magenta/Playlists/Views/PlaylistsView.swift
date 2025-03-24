@@ -78,35 +78,35 @@ struct PlaylistsView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        return container
-    }()
-
-    let viewContext = persistentContainer.viewContext
-    return  PlaylistsView(viewContext: viewContext)
+    PlaylistsViewPreviews.buildPreview(with: MockPlaylist.mockPlaylists)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        return container
-    }()
-
-    let viewContext = persistentContainer.viewContext
-    return  PlaylistsView(viewContext: viewContext)
+    PlaylistsViewPreviews.buildPreview(with: MockPlaylist.mockPlaylists)
         .preferredColorScheme(.dark)
+}
+
+struct PlaylistsViewPreviews {
+    static func buildPreview(with mockData: [MockPlaylist]) -> some View {
+        let persistentContainer: NSPersistentContainer = {
+            let container = NSPersistentContainer(name: "DataModel")
+            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+            container.loadPersistentStores { (_, error) in
+                if let error = error as NSError? {
+                    fatalError("Unresolved error \(error), \(error.userInfo)")
+                }
+            }
+            return container
+        }()
+
+        let viewContext = persistentContainer.viewContext
+
+        for mockPlaylist in mockData {
+            let playlistModel = PlaylistModel(from: mockPlaylist)
+            _ = playlistModel.toCoreData(context: viewContext)
+        }
+
+        return PlaylistsView(viewContext: viewContext)
+    }
 }
