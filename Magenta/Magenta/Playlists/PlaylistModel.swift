@@ -5,6 +5,7 @@
 //  Created by Sarah Clark on 3/23/25.
 //
 
+import CoreData
 import Foundation
 import MusicKit
 
@@ -15,11 +16,13 @@ struct PlaylistModel: Identifiable, Hashable {
     var songs: [SongModel]?
 
     init(from playlist: PlaylistEntity) {
-        self.id = playlist.id
-        self.name = playlist.name
-        self.createdAt = playlist.createdAt
-        if let songsSet = playlist.songs as? Set<Song> {
-            self.songs = songsSet.map { SongModel(from: $0) }
+        self.id = playlist.id ?? UUID()
+        self.name = playlist.name ?? ""
+        self.createdAt = playlist.createdAt ?? Date()
+        if let songsSet = playlist.songs as? Set<SongEntity> {
+            self.songs = songsSet.map { SongModel(from: $0) }.sorted { $0.title < $1.title }
+        } else {
+            self.songs = nil
         }
     }
 
@@ -27,12 +30,14 @@ struct PlaylistModel: Identifiable, Hashable {
         self.id = UUID()
         self.name = musicKitPlaylist.name
         self.createdAt = Date()
-        self.songs = musicKitPlaylist.tracks?.map { SongModel(from: $0) }
+        self.songs = musicKitPlaylist.tracks?.compactMap { track in
+            guard let song = track as? MusicKit.Song else { return nil }
+            return SongModel(from: song)
+        }
     }
 
-
-    func toCoreData(context: NSManagedObjectContext) -> Playlist {
-        let playlist = Playlist(context: context)
+    func toCoreData(context: NSManagedObjectContext) -> PlaylistEntity {
+        let playlist = PlaylistEntity(context: context)
         playlist.id = self.id
         playlist.name = self.name
         playlist.createdAt = self.createdAt
@@ -42,4 +47,5 @@ struct PlaylistModel: Identifiable, Hashable {
         }
         return playlist
     }
+
 }

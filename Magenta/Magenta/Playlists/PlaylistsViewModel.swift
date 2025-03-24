@@ -7,14 +7,28 @@
 
 import CoreData
 import MusicKit
+import SwiftUI
 
 @Observable final class PlaylistsViewModel {
     let viewContext: NSManagedObjectContext
-    var playlists: [Playlist] = []
+    var playlists: [PlaylistModel] = []
     var authorizationStatus: MusicAuthorization.Status = .notDetermined
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        requestAuthorization()
+    }
+
+    private func requestAuthorization() {
+        Task {
+            let status = await MusicAuthorization.request()
+            DispatchQueue.main.async {
+                self.authorizationStatus = status
+                if status == .authorized {
+                    self.fetchMusicKitPlaylists()
+                }
+            }
+        }
     }
 
     func fetchPlaylists() {
@@ -34,22 +48,36 @@ import MusicKit
                 let response = try await request.response()
                 let musicKitPlaylists = response.items
 
-                // Save to CoreData
                 for mkPlaylist in musicKitPlaylists {
-                    let playlistModel = PlaylistModel(from: mkPlaylist)
+                    // Fetch tracks asynchronously
+                    let tracks = try await fetchTracks(for: mkPlaylist)
+                    var playlistModel = PlaylistModel(from: mkPlaylist)
+                    playlistModel.songs = tracks
                     let playlist = playlistModel.toCoreData(context: viewContext)
-                    // Save to CoreData
+                    if let songs = playlist.songs as? Set<SongEntity> {
+                        for song in songs {
+                            song.playlist = playlist
+                        }
+                    }
                 }
                 try viewContext.save()
-                fetchPlaylists() // Refresh the list
+                fetchPlaylists()
             } catch {
                 print("Failed to fetch MusicKit playlists: \(error)")
             }
         }
     }
 
+    private func fetchTracks(for playlist: MusicKit.Playlist) async throws -> [SongModel] {
+        guard let tracks = try await playlist.with([.tracks]).tracks else { return [] }
+        return tracks.compactMap { track in
+            guard let song = track as? MusicKit.Song else { return nil }
+            return SongModel(from: song)
+        }
+    }
+
     func createPlaylist(name: String) {
-        let newPlaylist = Playlist(context: viewContext)
+        let newPlaylist = PlaylistEntity(context: viewContext)
         newPlaylist.id = UUID()
         newPlaylist.name = name
         newPlaylist.createdAt = Date()
@@ -58,19 +86,6 @@ import MusicKit
             fetchPlaylists()
         } catch {
             print("Failed to save playlist: \(error)")
-        }
-    }
-
-    // MARK: Private Functions
-    private func requestAuthorization() {
-        Task {
-            let status = await MusicAuthorization.request()
-            DispatchQueue.main.async {
-                self.authorizationStatus = status
-                if status == .authorized {
-                    self.fetchMusicKitPlaylists()
-                }
-            }
         }
     }
 

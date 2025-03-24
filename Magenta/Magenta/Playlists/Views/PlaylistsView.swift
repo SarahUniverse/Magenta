@@ -34,7 +34,7 @@ struct PlaylistsView: View {
         NavigationStack {
             List {
                 ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
-                    Text(playlist.name ?? "Unnamed Playlist")
+                    Text(playlist.name)
                 }
             }
             .navigationTitle("Mental Health Playlists")
@@ -44,6 +44,12 @@ struct PlaylistsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "person.circle")
                 }
+            }
+            .onAppear {
+                playlistsViewModel.fetchPlaylists()
+            }
+            .sheet(isPresented: $showingCreatePlaylist) {
+                CreatePlaylistView(playlistsViewModel: playlistsViewModel)
             }
         }
     }

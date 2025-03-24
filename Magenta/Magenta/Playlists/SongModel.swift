@@ -25,8 +25,8 @@ struct SongModel: Identifiable, Hashable {
         self.artist = musicKitSong.artistName
     }
 
-    func toCoreData(context: NSManagedObjectContext) -> Song {
-        let song = Song(context: context)
+    func toCoreData(context: NSManagedObjectContext) -> SongEntity {
+        let song = SongEntity(context: context)
         song.id = self.id
         song.title = self.title
         song.artist = self.artist
