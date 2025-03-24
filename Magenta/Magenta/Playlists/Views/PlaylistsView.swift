@@ -22,12 +22,28 @@ struct PlaylistsView: View {
     private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .gray, location: 0),
-            Gradient.Stop(color: .gray.opacity(0.6), location: 0.1),
-            Gradient.Stop(color: .gray.opacity(0.5), location: 0.2),
-            Gradient.Stop(color: .gray.opacity(0.3), location: 0.3)
+            Gradient.Stop(color: .gray.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .gray.opacity(0.6), location: 0.2),
+            Gradient.Stop(color: .gray.opacity(0.5), location: 0.3),
+            Gradient.Stop(color: .gray.opacity(0.4), location: 0.4)
         ],
         startPoint: .top,
         endPoint: .bottom
+    )
+
+    private let circleGradient = RadialGradient(
+        stops: [
+            .init(color: .clear, location: 0.0),
+            .init(color: .clear, location: 0.1),
+            .init(color: .hotPink.opacity(0.05), location: 0.2),
+            .init(color: .hotPink.opacity(0.1), location: 0.3),
+            .init(color: .hotPink.opacity(0.2), location: 0.4),
+            .init(color: .hotPink.opacity(0.3), location: 0.5),
+            .init(color: .hotPink.opacity(0.6), location: 1)
+        ],
+        center: .center,
+        startRadius: 0,
+        endRadius: 75
     )
 
     var body: some View {
@@ -42,7 +58,8 @@ struct PlaylistsView: View {
                             showingCreatePlaylist = true
                         }, label: {
                             Image(systemName: "plus.circle.fill")
-                                .foregroundStyle(.gray, .hotPink)
+                                .foregroundStyle(.black, .hotPink)
+                                .shadow(color: .black, radius: 3)
                         })
                     }
                 }
@@ -76,17 +93,17 @@ struct PlaylistsView: View {
     private func playlistIcon(playlist: PlaylistModel) -> some View {
         ZStack {
             Circle()
-                .fill(Color.gray)
+                .fill(circleGradient)
                 .frame(width: 150, height: 150)
             VStack {
-                Image(systemName: "music.note.list")
-                    .font(.system(size: 50))
-                    .foregroundStyle(.white)
                 Text(playlist.name)
-                    .foregroundStyle(.white)
-                    //.padding(10)
+                    .foregroundStyle(.black)
+                    .font(.callout)
+                    .bold()
+                Image(systemName: "music.note.list")
+                    .font(.system(size: 60))
+                    .foregroundStyle(.black)
             }
-            .shadow(color: .black.opacity(0.7), radius: 5)
             .padding(30)
         }
     }
