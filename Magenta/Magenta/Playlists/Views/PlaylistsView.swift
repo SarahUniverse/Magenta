@@ -22,9 +22,9 @@ struct PlaylistsView: View {
     private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .hotPink, location: 0),
-            Gradient.Stop(color: .hotPink.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
+            Gradient.Stop(color: .hotPink.opacity(0.6), location: 0.1),
+            Gradient.Stop(color: .hotPink.opacity(0.5), location: 0.2),
+            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.3)
         ],
         startPoint: .top,
         endPoint: .bottom
