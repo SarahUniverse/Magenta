@@ -21,10 +21,10 @@ struct PlaylistsView: View {
 
     private let backgroundGradient = LinearGradient(
         stops: [
-            Gradient.Stop(color: .hotPink, location: 0),
-            Gradient.Stop(color: .hotPink.opacity(0.6), location: 0.1),
-            Gradient.Stop(color: .hotPink.opacity(0.5), location: 0.2),
-            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.3)
+            Gradient.Stop(color: .gray, location: 0),
+            Gradient.Stop(color: .gray.opacity(0.6), location: 0.1),
+            Gradient.Stop(color: .gray.opacity(0.5), location: 0.2),
+            Gradient.Stop(color: .gray.opacity(0.3), location: 0.3)
         ],
         startPoint: .top,
         endPoint: .bottom
@@ -32,47 +32,62 @@ struct PlaylistsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
-                    Section(header: Text(playlist.name)) {
-                        if let songs = playlist.songs, !songs.isEmpty {
-                            ForEach(songs) { song in
-                                VStack(alignment: .leading) {
-                                    Text(song.title)
-                                        .font(.headline)
-                                    Text(song.artist)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                            .onDelete(perform: deletePlaylist)
-                        } else {
-                            Text("No songs in this playlist")
-                                .foregroundColor(.gray)
-                        }
+            playlistGrid
+                .navigationTitle("Mental Health Playlists")
+                .background(backgroundGradient)
+                .scrollContentBackground(.hidden)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showingCreatePlaylist = true
+                        }, label: {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundStyle(.gray, .hotPink)
+                        })
                     }
                 }
-            }
-            .navigationTitle("Mental Health Playlists")
-            .background(backgroundGradient)
-            .scrollContentBackground(.hidden)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingCreatePlaylist = true
-                    }, label: {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundStyle(.hotPink, .blue)
-                    })
+                .onAppear {
+                    playlistsViewModel.fetchPlaylistsFromCoreData()
+                    // playlistsViewModel.deleteAllPlaylists() // Uncomment during debugging if you want to use.
+                }
+                .sheet(isPresented: $showingCreatePlaylist) {
+                    CreatePlaylistView(playlistsViewModel: playlistsViewModel)
+                }
+        }
+    }
+
+    private var playlistGrid: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
+                ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
+                    playlistNavigationLink(playlist: playlist)
                 }
             }
-            .onAppear {
-                playlistsViewModel.fetchPlaylistsFromCoreData()
-                // playlistsViewModel.deleteAllPlaylists() // Uncomment during debugging if you want to use.
+            .padding()
+        }
+    }
+
+    private func playlistNavigationLink(playlist: PlaylistModel) -> some View {
+        NavigationLink(destination: PlaylistDetailView()) {
+            playlistIcon(playlist: playlist)
+        }
+    }
+
+    private func playlistIcon(playlist: PlaylistModel) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color.gray)
+                .frame(width: 150, height: 150)
+            VStack {
+                Image(systemName: "music.note.list")
+                    .font(.system(size: 50))
+                    .foregroundStyle(.white)
+                Text(playlist.name)
+                    .foregroundStyle(.white)
+                    //.padding(10)
             }
-            .sheet(isPresented: $showingCreatePlaylist) {
-                CreatePlaylistView(playlistsViewModel: playlistsViewModel)
-            }
+            .shadow(color: .black.opacity(0.7), radius: 5)
+            .padding(30)
         }
     }
 
