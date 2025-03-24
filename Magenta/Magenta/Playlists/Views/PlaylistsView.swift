@@ -42,7 +42,12 @@ struct PlaylistsView: View {
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
+                    Button(action: {
+                        showingCreatePlaylist = true
+                    }, label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.hotPink, .blue)
+                    })
                 }
             }
             .onAppear {
