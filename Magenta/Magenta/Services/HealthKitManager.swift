@@ -57,7 +57,7 @@ import SwiftUI
         let query = HKSampleQuery(sampleType: sleepType,
                                   predicate: predicate,
                                   limit: HKObjectQueryNoLimit,
-                                  sortDescriptors: [sortDescriptor]) { [weak self] (query, samples, error) in
+                                  sortDescriptors: [sortDescriptor]) { [weak self] (_, samples, error) in
             DispatchQueue.main.async {
                 guard let samples = samples as? [HKCategorySample], error == nil else {
                     self?.errorMessage = "Error fetching sleep data: \(String(describing: error))"
