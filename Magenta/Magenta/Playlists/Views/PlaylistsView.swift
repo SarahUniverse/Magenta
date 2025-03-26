@@ -73,8 +73,50 @@ struct PlaylistsView: View {
         }
     }
 
+    private var mostRecentPlaylistName: String {
+        playlistsViewModel.playlists
+            .sorted { $0.createdAt > $1.createdAt }
+            .first?.name ?? "No playlists yet"
+    }
+
+    private var mostRecentPlaylist: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.purple, .blue]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 300, height: 100)
+                .shadow(radius: 5, y: 3)
+            HStack(alignment: .center) {
+                VStack() {
+                    Text("Most Recent:")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.8))
+                        .bold()
+
+                    Text(mostRecentPlaylistName)
+                        .font(.title3)
+                        .foregroundStyle(.white)
+                        .bold()
+                        .lineLimit(1)
+                }
+                Image(systemName: "music.note")
+                    .font(.system(size: 40))
+                    .foregroundStyle(.white.opacity(0.2))
+                    .padding(.leading, 20)
+            }
+            .padding()
+        }
+    }
+
     private var playlistGrid: some View {
         ScrollView {
+            mostRecentPlaylist
+                .padding(.top, 20)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
                 ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
                     playlistNavigationLink(playlist: playlist)
