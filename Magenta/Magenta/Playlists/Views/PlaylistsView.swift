@@ -13,6 +13,7 @@ struct PlaylistsView: View {
     @State private var playlistsViewModel: PlaylistsViewModel
     let viewContext: NSManagedObjectContext
     @State private var showingCreatePlaylist = false
+    @Environment(\.colorScheme) var colorScheme
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -36,20 +37,16 @@ struct PlaylistsView: View {
         endPoint: .bottom
     )
 
-    private let circleGradient = RadialGradient(
-        stops: [
-            .init(color: .clear, location: 0.0),
-            .init(color: .clear, location: 0.1),
-            .init(color: .gray.opacity(0.05), location: 0.2),
-            .init(color: .gray.opacity(0.1), location: 0.3),
-            .init(color: .gray.opacity(0.2), location: 0.4),
-            .init(color: .gray.opacity(0.3), location: 0.5),
-            .init(color: .black.opacity(0.6), location: 1)
-        ],
-        center: .center,
-        startRadius: 0,
-        endRadius: 75
-    )
+    private var circleGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                .indigo.opacity(colorScheme == .dark ? 1.0 : 0.6),
+                .indigo.opacity(0.3)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -139,12 +136,12 @@ struct PlaylistsView: View {
                 .shadow(radius: 5, y: 3)
             VStack {
                 Text(playlist.name)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white.opacity(0.9))
                     .font(.callout)
                     .bold()
                 Image(systemName: "music.note.list")
                     .font(.system(size: 60))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white.opacity(0.8))
             }
             .padding(30)
         }
