@@ -19,13 +19,18 @@ struct PlaylistsView: View {
         _playlistsViewModel = State(wrappedValue: PlaylistsViewModel(viewContext: viewContext))
     }
 
+    private let mostRecentPlaylistGradient = LinearGradient(
+        gradient: Gradient(colors: [.purple, .blue]),
+        startPoint: .topTrailing,
+        endPoint: .bottomLeading
+    )
+
     private let backgroundGradient = LinearGradient(
         stops: [
-            Gradient.Stop(color: .gray, location: 0),
-            Gradient.Stop(color: .gray.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .gray.opacity(0.6), location: 0.2),
-            Gradient.Stop(color: .gray.opacity(0.5), location: 0.3),
-            Gradient.Stop(color: .gray.opacity(0.4), location: 0.4)
+            Gradient.Stop(color: .hotPink, location: 0),
+            Gradient.Stop(color: .hotPink.opacity(0.7), location: 0.1),
+            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.2),
+            Gradient.Stop(color: .clear, location: 0.4)
         ],
         startPoint: .top,
         endPoint: .bottom
@@ -35,11 +40,11 @@ struct PlaylistsView: View {
         stops: [
             .init(color: .clear, location: 0.0),
             .init(color: .clear, location: 0.1),
-            .init(color: .hotPink.opacity(0.05), location: 0.2),
-            .init(color: .hotPink.opacity(0.1), location: 0.3),
-            .init(color: .hotPink.opacity(0.2), location: 0.4),
-            .init(color: .hotPink.opacity(0.3), location: 0.5),
-            .init(color: .hotPink.opacity(0.6), location: 1)
+            .init(color: .gray.opacity(0.05), location: 0.2),
+            .init(color: .gray.opacity(0.1), location: 0.3),
+            .init(color: .gray.opacity(0.2), location: 0.4),
+            .init(color: .gray.opacity(0.3), location: 0.5),
+            .init(color: .black.opacity(0.6), location: 1)
         ],
         center: .center,
         startRadius: 0,
@@ -82,22 +87,16 @@ struct PlaylistsView: View {
     private var mostRecentPlaylist: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [.purple, .blue]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .frame(width: 300, height: 100)
+                .fill(mostRecentPlaylistGradient)
+                .frame(width: 350, height: 100)
                 .shadow(radius: 5, y: 3)
             HStack(alignment: .center) {
-                VStack() {
+                VStack {
                     Text("Most Recent:")
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.8))
                         .bold()
-
+                        .padding(.bottom, 5)
                     Text(mostRecentPlaylistName)
                         .font(.title3)
                         .foregroundStyle(.white)
@@ -137,6 +136,7 @@ struct PlaylistsView: View {
             Circle()
                 .fill(circleGradient)
                 .frame(width: 150, height: 150)
+                .shadow(radius: 5, y: 3)
             VStack {
                 Text(playlist.name)
                     .foregroundStyle(.black)

@@ -10,7 +10,7 @@ import SwiftUI
 struct NutritionView: View {
     @State private var nutritionViewModel = NutritionViewModel()
 
-    let backgroundGradient = LinearGradient(
+    private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .green, location: 0),
             Gradient.Stop(color: .green.opacity(0.7), location: 0.1),
