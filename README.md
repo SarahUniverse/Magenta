@@ -35,20 +35,24 @@ The back-end is built using **Go**. Further details (e.g., APIs, databases) will
 
 The following table provides an overview of Magenta's features, with planned key functionalities to be detailed during development.
 
+# Magenta App Features
+
+The following table provides an overview of Magenta's features, with key functionalities detailed for development.
+
 | **Feature**              | **Description**                                                                 | **Key Features**                                                                 |
-|---------------------------|---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| **Art Therapy**           | Interactive tools for creative expression to support mental health.             | To Be Added                                                                      |
-| **Journal**               | Private journaling with suggestions from Apple's Journaling Suggestions framework. | To Be Added                                                                      |
-| **Exercise**              | Tools to track and encourage physical activity for mental well-being.           | To Be Added                                                                      |
-| **Sleep**                 | Features to monitor and improve sleep patterns.                                | To Be Added                                                                      |
-| **Mood Tracking**         | Track daily moods and identify patterns over time. | Daily mood logging with emoji selection, 7-day bar chart summary, today’s mood circle indicator with month/date navigation |
-| **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                                                                      |
-| **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
-| **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                                                                      |
-| **Helpful Quotes**        | Inspirational quotes to uplift and motivate users.                            | Showcase a curated collection of inspirational quotes, featuring favorites and diverse subjects for mental well-being. Allow users to add new quotes, manage them, and view a visually engaging summary highlighting the most recent favorite quote with animations and customization.|
-| **Therapist Search**      | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | To Be Added                                                                      |
-| **Meditations**           | Library of guided meditations for relaxation and stress reduction.             | To Be Added                                                                      |
-| **Cycle Tracking**        | Period cycle tracking for females using HealthKit, linked to mental health.    | To Be Added                                                                      |
+|--------------------------|---------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| **Art Therapy**          | Interactive tools for creative expression to support mental health.             | Guided art prompts, track emotional impact of art sessions. Plus more TBD |
+| **Journal**              | Private journaling with suggestions from Apple's Journaling Suggestions framework. | Daily journal entries with prompts, integration with Apple’s Journaling Suggestions, mood tagging, search and filter entries, export entries as PDF. |
+| **Exercise**             | Tools to track and encourage physical activity for mental well-being.           | Activity tracking via HealthKit, set exercise goals, guided workout routines, reminders for movement breaks, log mental health benefits of exercise. |
+| **Sleep**                | Features to monitor and improve sleep patterns.                                | Sleep tracking via HealthKit, bedtime reminders, sleep quality analysis, guided wind-down routines, sleep goal setting and progress tracking. |
+| **Mood Tracking**        | Track daily moods and identify patterns over time. **(Completed March 9, 2025)** | Daily mood logging with emoji selection, 7-day bar chart summary, today’s mood circle indicator with month/date navigation. |
+| **Nutrition**            | Guidance on nutrition to support mental health.                                | Log meals and water intake, nutritional tips for mental well-being, mood-food correlation tracking, personalized meal suggestions, integration with HealthKit. |
+| **Books that Help Me**   | Curated digital bookshelf for mental health and personal growth.               | Track books, organize by status (Want to Read, Currently Reading, Finished Reading), add notes and reflections, search for recommended books. |
+| **Mental Health Playlists** | Curate playlists using Apple's MusicKit framework.                            | Create, edit, and delete playlists; search and add songs to playlists; view playlist details with songs, description, and curator info; sort playlists by creation date; swipe-to-delete playlists. |
+| **Helpful Quotes**       | Inspirational quotes to uplift and motivate users.                            | Showcase a curated collection of inspirational quotes, featuring favorites and diverse subjects for mental well-being. Allow users to add new quotes, manage them, and view a visually engaging summary highlighting the most recent favorite quote with animations and customization. |
+| **Therapist Search**     | Locate nearby mental health professionals via [FindTreatment API](https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf). | Search for therapists by location, filter by specialty and insurance, view therapist profiles, save favorite providers, direct contact options. |
+| **Meditations**          | Library of guided meditations for relaxation and stress reduction.             | Access a library of guided meditations, filter by duration and theme (e.g., stress, sleep), track meditation history, set meditation reminders, save favorite sessions. |
+| **Cycle Tracking**       | Period cycle tracking for females using HealthKit, linked to mental health.    | Track menstrual cycles via HealthKit, log symptoms and moods, analyze cycle impact on mental health, receive cycle-related wellness tips. |
 
 *Note*: "Key Features" will be populated with specific functionalities as development progresses.
 
@@ -62,15 +66,15 @@ Below is the development plan and subsequent phases for Magenta, leading to the 
 - **Tasks(dates to be completed by)**:
   - Mood Tracker :white_check_mark: 
   - Helpful Quotes :white_check_mark:
-  - Sleep
+  - Sleep :white_check_mark:
   - Exercise
   - Nutrition
-  - Mental Health Playlists
+  - Mental Health Playlists :white_check_mark:
   - Cycle Tracking
-  - Art Therapy
-  - Books that Help Me
-  - Journal
-  - Meditations
+  - Art Therapy :white_check_mark:
+  - Books that Help Me :white_check_mark:
+  - Journal :white_check_mark:
+  - Meditations :white_check_mark:
   - Therapist Search
   - Apple Watch Integration
   - Account Setup
