@@ -26,7 +26,7 @@ struct PlaylistDetailView: View {
         NavigationStack {
             List {
                 if let songs = playlist.songs, !songs.isEmpty {
-                    Section(header: Text("Songs")) {
+                    Section(header: Text("Songs").foregroundStyle(.white).bold()) {
                         ForEach(songs, id: \.self) { song in
                             VStack(alignment: .leading) {
                                 Text(song.title)
