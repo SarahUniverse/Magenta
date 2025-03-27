@@ -41,7 +41,7 @@ The following table provides an overview of Magenta's features, with planned key
 | **Journal**               | Private journaling with suggestions from Apple's Journaling Suggestions framework. | To Be Added                                                                      |
 | **Exercise**              | Tools to track and encourage physical activity for mental well-being.           | To Be Added                                                                      |
 | **Sleep**                 | Features to monitor and improve sleep patterns.                                | To Be Added                                                                      |
-| **Mood Tracking**         | Track daily moods and identify patterns over time. **(Completed March 9, 2025)** | Daily mood logging with emoji selection, 7-day bar chart summary, today’s mood circle indicator with month/date navigation |
+| **Mood Tracking**         | Track daily moods and identify patterns over time. | Daily mood logging with emoji selection, 7-day bar chart summary, today’s mood circle indicator with month/date navigation |
 | **Nutrition**             | Guidance on nutrition to support mental health.                                | To Be Added                                                                      |
 | **Books that Help Me**    | Curated digital bookshelf for mental health and personal growth.               | Track books, Organize by status (Want to Read, Currently Reading, Finished Reading) |
 | **Mental Health Playlists**| Curate playlists using Apple's MusicKit framework.                            | To Be Added                                                                      |
