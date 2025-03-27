@@ -13,6 +13,7 @@ struct CreatePlaylistView: View {
     var playlistsViewModel: PlaylistsViewModel
     @State private var playlistName = ""
     @State private var selectedSongs: Set<SongModel> = [] // Track selected songs.
+    @State private var searchText = ""
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -25,6 +26,17 @@ struct CreatePlaylistView: View {
         endPoint: .bottom
     )
 
+    private var filteredSongs: [SongModel] {
+        if searchText.isEmpty {
+            return playlistsViewModel.availableSongs
+        } else {
+            return playlistsViewModel.availableSongs.filter { song in
+                song.title.lowercased().contains(searchText.lowercased()) ||
+                song.artist.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -33,11 +45,16 @@ struct CreatePlaylistView: View {
                 }
 
                 Section(header: Text("Add Songs")) {
-                    if playlistsViewModel.availableSongs.isEmpty {
-                        Text("No songs available to add.")
+
+                    TextField("Search Songs", text: $searchText)
+                        .textFieldStyle(.roundedBorder)
+                        .padding(.vertical, 5)
+
+                    if filteredSongs.isEmpty {
+                        Text(searchText.isEmpty ? "No songs available to add." : "No songs match your search.")
                             .foregroundStyle(.gray)
                     } else {
-                        List(playlistsViewModel.availableSongs, id: \.self) { song in
+                        List(filteredSongs, id: \.self) { song in
                             Toggle(isOn: Binding(
                                 get: { selectedSongs.contains(song) },
                                 set: { isSelected in
