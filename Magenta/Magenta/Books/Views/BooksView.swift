@@ -101,7 +101,9 @@ struct BooksView: View {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: { showingAddBookSheet = true
             }, label: {
-                Image(systemName: "plus")
+                Image(systemName: "plus.circle.fill")
+                    .foregroundStyle(.white, .blue)
+                    .shadow(radius: 5, y: 3)
             })
         }
     }

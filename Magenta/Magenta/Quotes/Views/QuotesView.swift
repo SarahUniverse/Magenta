@@ -43,6 +43,7 @@ struct QuotesView: View {
                     }, label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundStyle(.blue, .yellow)
+                            .shadow(radius: 5, y: 3)
                     })
 
                 }

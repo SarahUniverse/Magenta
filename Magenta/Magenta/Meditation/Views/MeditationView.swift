@@ -90,8 +90,9 @@ struct MeditationView: View {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: { showAddMeditationSheet = true
             }, label: {
-                Image(systemName: "plus.circle")
-                    .shadow(radius: 3)
+                Image(systemName: "plus.circle.fill")
+                    .foregroundStyle(.white, .indigo)
+                    .shadow(radius: 5, y: 3)
             })
         }
     }
