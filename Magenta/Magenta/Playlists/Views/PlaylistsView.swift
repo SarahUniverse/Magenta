@@ -48,6 +48,7 @@ struct PlaylistsView: View {
         )
     }
 
+    // MARK: - BODY
     var body: some View {
         NavigationStack {
             playlistGrid
@@ -60,7 +61,7 @@ struct PlaylistsView: View {
                             showingCreatePlaylist = true
                         }, label: {
                             Image(systemName: "plus.circle.fill")
-                                .foregroundStyle(.black, .hotPink)
+                                .foregroundStyle(.black, .indigo)
                                 .shadow(color: .black, radius: 3)
                         })
                     }
