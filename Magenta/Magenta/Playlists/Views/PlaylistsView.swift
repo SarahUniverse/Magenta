@@ -128,7 +128,7 @@ struct PlaylistsView: View {
     }
 
     private func playlistNavigationLink(playlist: PlaylistModel) -> some View {
-        NavigationLink(destination: PlaylistDetailView()) {
+        NavigationLink(destination: PlaylistDetailView(playlistsViewModel: playlistsViewModel, playlist: playlist)) {
             playlistIcon(playlist: playlist)
         }
     }
