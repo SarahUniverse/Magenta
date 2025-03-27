@@ -9,7 +9,6 @@ import CoreData
 import SwiftUI
 
 struct PlaylistDetailView: View {
-    var playlistsViewModel: PlaylistsViewModel
     let playlist: PlaylistModel
 
     private let backgroundGradient = LinearGradient(
@@ -53,41 +52,21 @@ struct PlaylistDetailView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        return container
-    }()
-    let viewContext = persistentContainer.viewContext
-    let playlistsViewModel = PlaylistsViewModel(viewContext: viewContext)
     let mockPlaylist = MockPlaylist.mockPlaylists.first!
     let playlistModel = PlaylistModel(from: mockPlaylist)
 
-    return PlaylistDetailView(playlistsViewModel: playlistsViewModel, playlist: playlistModel)
-        .preferredColorScheme(.light)
+    return NavigationStack {
+        PlaylistDetailView(playlist: playlistModel)
+            .preferredColorScheme(.light)
+    }
 }
 
 #Preview("Dark Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        return container
-    }()
-    let viewContext = persistentContainer.viewContext
-    let playlistsViewModel = PlaylistsViewModel(viewContext: viewContext)
     let mockPlaylist = MockPlaylist.mockPlaylists.first!
     let playlistModel = PlaylistModel(from: mockPlaylist)
 
-    return PlaylistDetailView(playlistsViewModel: playlistsViewModel, playlist: playlistModel)
-        .preferredColorScheme(.dark)
+    return NavigationStack {
+        PlaylistDetailView(playlist: playlistModel)
+            .preferredColorScheme(.dark)
+    }
 }
