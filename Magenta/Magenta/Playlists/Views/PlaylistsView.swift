@@ -61,8 +61,8 @@ struct PlaylistsView: View {
                             showingCreatePlaylist = true
                         }, label: {
                             Image(systemName: "plus.circle.fill")
-                                .foregroundStyle(.black, .indigo)
-                                .shadow(color: .black, radius: 3)
+                                .foregroundStyle(.white, .indigo)
+                                .shadow(radius: 5, y: 3)
                         })
                     }
                 }
@@ -101,7 +101,7 @@ struct PlaylistsView: View {
                         .bold()
                         .lineLimit(1)
                 }
-                Image(systemName: "music.note")
+                Image(systemName: "music.quarternote.3")
                     .font(.system(size: 40))
                     .foregroundStyle(.white.opacity(0.2))
                     .padding(.leading, 20)
@@ -114,6 +114,10 @@ struct PlaylistsView: View {
         ScrollView {
             mostRecentPlaylist
                 .padding(.top, 20)
+                .padding(.bottom, 20)
+            Divider()
+                .background(.hotPink)
+                .padding(.horizontal)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
                 ForEach(playlistsViewModel.playlists, id: \.self) { playlist in
                     playlistNavigationLink(playlist: playlist)
