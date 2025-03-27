@@ -9,6 +9,7 @@ import CoreData
 import MusicKit
 import SwiftUI
 
+@MainActor
 @Observable final class PlaylistsViewModel {
     let viewContext: NSManagedObjectContext
     var playlists: [PlaylistModel] = []
@@ -134,11 +135,9 @@ import SwiftUI
     private func requestAuthorization() {
         Task {
             let status = await MusicAuthorization.request()
-            DispatchQueue.main.async {
-                self.authorizationStatus = status
-                if status == .authorized {
-                    self.fetchMockPlaylists()
-                }
+            self.authorizationStatus = status
+            if status == .authorized {
+                self.fetchMockPlaylists()
             }
         }
     }
