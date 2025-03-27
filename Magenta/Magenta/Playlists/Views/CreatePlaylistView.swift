@@ -12,6 +12,7 @@ struct CreatePlaylistView: View {
     @Environment(\.dismiss) var dismiss
     var playlistsViewModel: PlaylistsViewModel
     @State private var playlistName = ""
+    @State private var selectedSongs: Set<SongModel> = [] // Track selected songs.
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -29,6 +30,37 @@ struct CreatePlaylistView: View {
             Form {
                 Section(header: Text("New Playlist")) {
                     TextField("Playlist Name", text: $playlistName)
+                }
+
+                Section(header: Text("Add Songs")) {
+                    if playlistsViewModel.availableSongs.isEmpty {
+                        Text("No songs available to add.")
+                            .foregroundStyle(.gray)
+                    } else {
+                        List(playlistsViewModel.availableSongs, id: \.self) { song in
+                            Toggle(isOn: Binding(
+                                get: { selectedSongs.contains(song) },
+                                set: { isSelected in
+                                    if isSelected {
+                                        selectedSongs.insert(song)
+                                    } else {
+                                        selectedSongs.remove(song)
+                                    }
+                                }
+                            )) {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(song.title)
+                                            .font(.headline)
+                                        Text(song.artist)
+                                            .font(.subheadline)
+                                            .foregroundStyle(.gray)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .navigationTitle("Create Playlist")

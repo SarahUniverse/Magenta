@@ -12,25 +12,37 @@ struct SongModel: Identifiable, Hashable {
     let id: UUID
     let title: String
     let artist: String
-
-    init(from song: SongEntity) {
-        self.id = song.id ?? UUID()
-        self.title = song.title ?? ""
-        self.artist = song.artist ?? ""
-    }
+    let album: String?
+    let duration: TimeInterval?
+    let trackNumber: Int?
 
     init(from mockSong: MockSong) {
         self.id = UUID()
         self.title = mockSong.title
         self.artist = mockSong.artistName
+        self.album = mockSong.albumName
+        self.duration = mockSong.duration
+        self.trackNumber = mockSong.trackNumber
+    }
+
+    init(from songEntity: SongEntity) {
+        self.id = songEntity.id ?? UUID()
+        self.title = songEntity.title ?? ""
+        self.artist = songEntity.artist ?? ""
+        self.album = songEntity.album
+        self.duration = songEntity.duration
+        self.trackNumber = Int(songEntity.trackNumber)
     }
 
     func toCoreData(context: NSManagedObjectContext) -> SongEntity {
-        let song = SongEntity(context: context)
-        song.id = self.id
-        song.title = self.title
-        song.artist = self.artist
-        return song
+        let songEntity = SongEntity(context: context)
+        songEntity.id = self.id
+        songEntity.title = self.title
+        songEntity.artist = self.artist
+        songEntity.album = self.album
+        songEntity.duration = self.duration ?? 0
+        songEntity.trackNumber = Int16(self.trackNumber ?? 0)
+        return songEntity
     }
 
 }

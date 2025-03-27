@@ -14,9 +14,11 @@ import SwiftUI
     let viewContext: NSManagedObjectContext
     var playlists: [PlaylistModel] = []
     var authorizationStatus: MusicAuthorization.Status = .notDetermined
+    var availableSongs: [SongModel] = []
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        fetchAvailableSongs()
         requestAuthorization()
     }
 
@@ -105,11 +107,27 @@ import SwiftUI
         }
     }*/
 
-    func createPlaylist(name: String) {
+    func createPlaylist(name: String, songs: [SongModel] = []) {
         let newPlaylist = PlaylistEntity(context: viewContext)
         newPlaylist.id = UUID()
         newPlaylist.name = name
         newPlaylist.createdAt = Date()
+
+        if !songs.isEmpty {
+            let songEntities = songs.map { song in
+                let songEntity = SongEntity(context: viewContext)
+                songEntity.id = song.id
+                songEntity.title = song.title
+                songEntity.artist = song.artist
+                songEntity.album = song.album
+                songEntity.duration = song.duration ?? 0
+                songEntity.trackNumber = Int16(song.trackNumber ?? 0)
+                songEntity.playlist = newPlaylist
+                return songEntity
+            }
+            newPlaylist.addToSongs(NSSet(array: songEntities))
+        }
+
         do {
             try viewContext.save()
             fetchPlaylistsFromCoreData()
@@ -140,6 +158,12 @@ import SwiftUI
                 self.fetchMockPlaylists()
             }
         }
+    }
+
+    private func fetchAvailableSongs() {
+        let mockPlaylists = MockPlaylist.mockPlaylists
+        let allSongs = mockPlaylists.flatMap { $0.tracks }.map { SongModel(from: $0)}
+        self.availableSongs = Array(Set(allSongs)).sorted { $0.title < $1.title }
     }
 
 }
