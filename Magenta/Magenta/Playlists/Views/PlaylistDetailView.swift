@@ -6,10 +6,13 @@
 //
 
 import CoreData
+import MusicKit
 import SwiftUI
 
 struct PlaylistDetailView: View {
     let playlist: PlaylistModel
+    @State private var isPlaying: Bool = false
+    @State private var currentSong: Song?
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -22,18 +25,32 @@ struct PlaylistDetailView: View {
         endPoint: .bottom
     )
 
+    private let player = SystemMusicPlayer.shared
+
     var body: some View {
         NavigationStack {
             List {
                 if let songs = playlist.songs, !songs.isEmpty {
                     Section(header: Text("Songs").foregroundStyle(.white).bold()) {
                         ForEach(songs, id: \.self) { song in
-                            VStack(alignment: .leading) {
-                                Text(song.title)
-                                    .font(.headline)
-                                Text(song.artist)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.gray)
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(song.title)
+                                        .font(.headline)
+                                    Text(song.artist)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.gray)
+                                }
+                                Spacer()
+                                Button(action: {
+                                    Task {
+                                        await playSong(song)
+                                    }
+                                }, label: {
+                                    Image(systemName: isPlaying && currentSong?.id == song.id ? "pause.circle" : "play.circle")
+                                        .font(.title2)
+                                        .foregroundStyle(.hotPink)
+                                })
                             }
                         }
                     }
@@ -47,6 +64,20 @@ struct PlaylistDetailView: View {
         .navigationTitle(playlist.name)
         .background(backgroundGradient)
         .scrollContentBackground(.hidden)
+        .onAppear {
+            await requestMusicAuthorization
+        }
+    }
+
+    // MARK: - Private Functions
+    private func requestMusicAuthorization() async {
+        let status = await MusicAuthorization.request()
+            switch status {
+                case .authorized:
+                    print("MusicKit authorization granted")
+                default:
+                    print("MusicKit authorization denied")
+        }
     }
 }
 
