@@ -15,6 +15,7 @@ struct SongModel: Identifiable, Hashable {
     let album: String?
     let duration: TimeInterval?
     let trackNumber: Int?
+    let musicKitID: MusicItemID?
 
     init(from mockSong: MockSong) {
         self.id = UUID()
@@ -23,6 +24,7 @@ struct SongModel: Identifiable, Hashable {
         self.album = mockSong.albumName
         self.duration = mockSong.duration
         self.trackNumber = mockSong.trackNumber
+        self.musicKitID = nil
     }
 
     init(from songEntity: SongEntity) {
@@ -32,6 +34,7 @@ struct SongModel: Identifiable, Hashable {
         self.album = songEntity.album
         self.duration = songEntity.duration
         self.trackNumber = Int(songEntity.trackNumber)
+        self.musicKitID = songEntity.musicKitID.map { MusicItemID($0) }
     }
 
     func toCoreData(context: NSManagedObjectContext) -> SongEntity {
@@ -42,6 +45,7 @@ struct SongModel: Identifiable, Hashable {
         songEntity.album = self.album
         songEntity.duration = self.duration ?? 0
         songEntity.trackNumber = Int16(self.trackNumber ?? 0)
+        songEntity.musicKitID = self.musicKitID?.rawValue
         return songEntity
     }
 

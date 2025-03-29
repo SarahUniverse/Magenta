@@ -12,7 +12,7 @@ import SwiftUI
 struct PlaylistDetailView: View {
     let playlist: PlaylistModel
     @State private var isPlaying: Bool = false
-    @State private var currentSong: Song?
+    @State private var currentSong: SongModel?
 
     private let backgroundGradient = LinearGradient(
         stops: [
@@ -29,44 +29,78 @@ struct PlaylistDetailView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                if let songs = playlist.songs, !songs.isEmpty {
-                    Section(header: Text("Songs").foregroundStyle(.white).bold()) {
-                        ForEach(songs, id: \.self) { song in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(song.title)
-                                        .font(.headline)
-                                    Text(song.artist)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.gray)
-                                }
-                                Spacer()
-                                Button(action: {
-                                    Task {
-                                        await playSong(song)
-                                    }
-                                }, label: {
-                                    Image(systemName: isPlaying && currentSong?.id == song.id ? "pause.circle" : "play.circle")
-                                        .font(.title2)
-                                        .foregroundStyle(.hotPink)
-                                })
-                            }
-                        }
-                    }
-                } else {
-                    Text("No songs in this playlist.")
-                        .foregroundStyle(.gray)
-                        .italic()
-                }
-            }
+            songList
         }
         .navigationTitle(playlist.name)
         .background(backgroundGradient)
         .scrollContentBackground(.hidden)
         .onAppear {
-            await requestMusicAuthorization
+            Task {
+                await requestMusicAuthorization()
+            }
         }
+    }
+
+    private var songList: some View {
+        List {
+            if let songs = playlist.songs, !songs.isEmpty {
+                songsSection
+            } else {
+                emptyPlaylistText
+            }
+        }
+    }
+
+    private var songsSection: some View {
+        Section(header: sectionHeader) {
+            ForEach(playlist.songs ?? [], id: \.id) { song in
+                songRow(for: song)
+            }
+        }
+    }
+
+    private var sectionHeader: some View {
+        Text("Songs")
+            .foregroundStyle(.white)
+            .bold()
+    }
+
+    private func songRow(for song: SongModel) -> some View {
+        HStack {
+            songInfo(for: song)
+            Spacer()
+            if song.musicKitID != nil {
+                playButton(for: song)
+            }
+        }
+    }
+
+    private func songInfo(for song: SongModel) -> some View {
+        VStack(alignment: .leading) {
+            Text(song.title)
+                .font(.headline)
+            Text(song.artist)
+                .font(.subheadline)
+                .foregroundStyle(.gray)
+        }
+    }
+
+    private func playButton(for song: SongModel) -> some View {
+        Button(action: {
+            Task {
+                await playSong(song)
+            }
+        }, label: {
+            Image(systemName: isPlaying && currentSong?.id == song.id ? "pause.circle" : "play.circle")
+                .font(.title2)
+                .foregroundStyle(.hotPink)
+        })
+    }
+
+    private var emptyPlaylistText: some View {
+        Text("No songs in this playlist.")
+            .foregroundStyle(.gray)
+            .italic()
     }
 
     // MARK: - Private Functions
@@ -79,6 +113,41 @@ struct PlaylistDetailView: View {
                     print("MusicKit authorization denied")
         }
     }
+
+    private func playSong(_ song: SongModel) async {
+        guard let musicKitID = song.musicKitID else {
+            print("No MusicKit ID available for this song")
+            return
+        }
+
+        do {
+            // Pause if the current song is playing and matches the selected song
+            if currentSong?.id == song.id && isPlaying {
+                player.pause()
+                isPlaying = false
+                return
+            }
+
+            // Explicitly type as MusicKit.Song to avoid type inference issues
+            // swiftlint: disable force_cast
+            let musicSong: MusicKit.Song = try Song(from: musicKitID as! Decoder)
+            // swiftlint: enable force_cast
+
+            // Set up the queue with the song
+            player.queue = SystemMusicPlayer.Queue(for: [musicSong])
+
+            // Prepare and play the song
+            try await player.prepareToPlay()
+            try await player.play()
+
+            // Update state
+            currentSong = song
+            isPlaying = true
+        } catch {
+            print("Error playing song: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 // MARK: - Previews
