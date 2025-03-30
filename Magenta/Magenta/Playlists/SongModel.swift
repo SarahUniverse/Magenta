@@ -24,7 +24,7 @@ struct SongModel: Identifiable, Hashable {
         self.album = mockSong.albumName
         self.duration = mockSong.duration
         self.trackNumber = mockSong.trackNumber
-        self.musicKitID = nil
+        self.musicKitID = mockSong.musicKitID.map { MusicItemID($0) }
     }
 
     init(from songEntity: SongEntity) {

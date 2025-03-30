@@ -122,26 +122,21 @@ struct PlaylistDetailView: View {
         }
 
         do {
-            // Pause if the current song is playing and matches the selected song
             if currentSong?.id == song.id && isPlaying {
                 player.pause()
                 isPlaying = false
                 return
             }
 
-            // Explicitly type as MusicKit.Song to avoid type inference issues
             // swiftlint: disable force_cast
             let musicSong: MusicKit.Song = try Song(from: musicKitID as! Decoder)
             // swiftlint: enable force_cast
 
-            // Set up the queue with the song
             player.queue = SystemMusicPlayer.Queue(for: [musicSong])
 
-            // Prepare and play the song
             try await player.prepareToPlay()
             try await player.play()
 
-            // Update state
             currentSong = song
             isPlaying = true
         } catch {
