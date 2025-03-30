@@ -69,9 +69,10 @@ struct PlaylistDetailView: View {
         HStack {
             songInfo(for: song)
             Spacer()
-            if song.musicKitID != nil {
+            // TODO: Temporary for testing, remove when you have an Apple Music subscription
+            //if song.musicKitID != nil {
                 playButton(for: song)
-            }
+            //}
         }
     }
 
