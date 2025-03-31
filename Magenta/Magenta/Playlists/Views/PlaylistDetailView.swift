@@ -76,9 +76,9 @@ struct PlaylistDetailView: View {
             songInfo(for: song)
             Spacer()
             // TODO: Temporary for testing, remove when you have an Apple Music subscription
-            //if song.musicKitID != nil {
+            // if song.musicKitID != nil {
                 playButton(for: song)
-            //}
+            // }
         }
     }
 

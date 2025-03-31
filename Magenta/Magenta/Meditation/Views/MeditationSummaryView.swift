@@ -25,6 +25,7 @@ struct MeditationSummaryView: View {
         _meditationViewModel = State(wrappedValue: MeditationViewModel(viewContext: viewContext))
     }
 
+    // MARK: - Body
     var body: some View {
         NavigationLink(destination: MeditationView(viewContext: viewContext)) {
             VStack(alignment: .leading) {
@@ -119,7 +120,19 @@ struct MeditationSummaryView: View {
 
 }
 
-// For preview only
+// MARK: - Previews
+#Preview ("Light Mode") {
+    let context = MeditationSummaryView.createPreviewContext()
+    MeditationSummaryView(viewContext: context)
+        .preferredColorScheme(.light)
+}
+
+#Preview ("Dark Mode") {
+    let context = MeditationSummaryView.createPreviewContext()
+    MeditationSummaryView(viewContext: context)
+        .preferredColorScheme(.dark)
+}
+
 extension MeditationSummaryView {
     static func createPreviewContext() -> NSManagedObjectContext {
         let container = NSPersistentContainer(name: "DataModel")
@@ -133,17 +146,4 @@ extension MeditationSummaryView {
 
         return container.viewContext
     }
-}
-
-// MARK: - Previews
-#Preview ("Light Mode") {
-    let context = MeditationSummaryView.createPreviewContext()
-    MeditationSummaryView(viewContext: context)
-        .preferredColorScheme(.light)
-}
-
-#Preview ("Dark Mode") {
-    let context = MeditationSummaryView.createPreviewContext()
-    MeditationSummaryView(viewContext: context)
-        .preferredColorScheme(.dark)
 }
