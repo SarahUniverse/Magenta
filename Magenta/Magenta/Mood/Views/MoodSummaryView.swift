@@ -92,7 +92,7 @@ struct MoodSummaryView: View {
             }
         }
         .onAppear {
-            moodViewModel.fetchMoods()
+            moodViewModel.fetchWeekOfMoods()
         }
     }
 

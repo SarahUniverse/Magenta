@@ -20,7 +20,8 @@ import Foundation
         // clearCoreData() // Uncomment for testing purposes
 #endif
         setupInitialData()
-        fetchMoods()
+        fetchWeekOfMoods()
+        fetchMoodsFromCoreData()
     }
 
     func removeMoodForToday() -> Bool {
@@ -86,7 +87,7 @@ import Foundation
         return moods.first(where: { calendar.isDate($0.moodDate, inSameDayAs: today) })?.mood
     }
 
-    func fetchMoods() {
+    func fetchWeekOfMoods() {
         let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \MoodEntity.moodDate, ascending: true)]
 
@@ -103,7 +104,42 @@ import Foundation
         }
     }
 
-    // MARK: - Private Functions
+    func getMoodLabel(for value: Double) -> String {
+        switch value {
+            case 10.0: return "Excited"
+            case 9.0: return "Happy"
+            case 8.5: return "Loved"
+            case 8.0: return "Relieved"
+            case 7.5: return "Calm"
+            case 7.0: return "Curious"
+            case 6.5: return "Surprised"
+            case 5.0: return "Neutral"
+            case 4.7: return "Tired"
+            case 4.5: return "Vulnerable"
+            case 4.0: return "Stressed"
+            case 3.5: return "Anxious"
+            case 3.0: return "Worry"
+            case 2.5: return "Sad"
+            case 2.0: return "Dread"
+            case 1.8: return "Fear"
+            case 1.5: return "Grief"
+            case 1.3: return "Lonely"
+            case 1.2: return "Angry"
+            case 1.0: return "Heartbreak"
+            default: return "Unknown"
+        }
+    }
+
+    func fetchMoodsFromCoreData() {
+        let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
+        do {
+            let entities = try viewContext.fetch(request)
+            moods = entities.map { MoodModel(entity: $0) }
+        } catch {
+            print("Error fetching moods from Core Data: \(error)")
+        }
+    }
+
     private func setupInitialData() {
         items = [
             "Excited",

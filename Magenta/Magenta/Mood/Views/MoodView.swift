@@ -15,7 +15,6 @@ struct MoodView: View {
     @State private var showingMoodDetail = false
     @State private var moodHasBeenLoggedToday = false
     @State private var currentMoodText = "How are you feeling today?"
-    @State private var moodChartViewModel: MoodChartViewModel
 
     // MARK: - Animations
     @State private var moodSectionOffset: CGFloat = 30
@@ -26,7 +25,6 @@ struct MoodView: View {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         _moodViewModel = State(wrappedValue: MoodViewModel(viewContext: viewContext))
-        _moodChartViewModel = State(wrappedValue: MoodChartViewModel(viewContext: viewContext))
     }
 
     let backgroundGradient = LinearGradient(
@@ -92,7 +90,7 @@ struct MoodView: View {
                                         if moodViewModel.removeMoodForToday() {
                                             moodHasBeenLoggedToday = false
                                             currentMoodText = "How are you feeling today?"
-                                            moodChartViewModel.refreshChart()
+                                            moodViewModel.fetchMoodsFromCoreData()
                                         }
                                     } else if !moodViewModel.hasMoodForToday() {
                                         selectedMood = mood
@@ -100,7 +98,7 @@ struct MoodView: View {
                                         if moodViewModel.saveMoodToCoreData(mood: mood, emoji: moodEmojis[mood] ?? "😊") {
                                             moodHasBeenLoggedToday = true
                                             currentMoodText = "Today's mood is: \(mood)"
-                                            moodChartViewModel.refreshChart()
+                                            moodViewModel.fetchMoodsFromCoreData()
                                             proxy.scrollTo(mood, anchor: .center)
                                         }
                                     }
@@ -148,7 +146,7 @@ struct MoodView: View {
                 .padding(15)
                 .padding(.bottom, 20)
                 .onChange(of: moodViewModel.moods) {
-                    moodChartViewModel.refreshChart()
+                    moodViewModel.fetchMoodsFromCoreData()
                 }
         }
         .background {
@@ -234,7 +232,7 @@ struct MoodView: View {
             }
             .onAppear(perform: animateContent)
             .onAppear {
-                moodChartViewModel.refreshChart()
+                moodViewModel.fetchMoodsFromCoreData()
                 moodHasBeenLoggedToday = moodViewModel.hasMoodForToday()
                 if moodHasBeenLoggedToday, let todayMood = moodViewModel.getTodayMood() {
                     selectedMood = todayMood
