@@ -65,6 +65,7 @@ struct MoodSummaryView: View {
                                 .padding(.top, 10)
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(.blue)
                                 .padding(.bottom, 10)
                                 .padding(.top, 10)
                         }
