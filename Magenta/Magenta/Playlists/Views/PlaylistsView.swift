@@ -80,9 +80,7 @@ struct PlaylistsView: View {
     }
 
     private var mostRecentPlaylistModel: PlaylistModel? {
-        playlistsViewModel.playlists
-            .sorted { $0.createdAt > $1.createdAt }
-            .first
+        playlistsViewModel.fetchMostRecentPlaylist()
     }
 
     private var mostRecentPlaylist: some View {

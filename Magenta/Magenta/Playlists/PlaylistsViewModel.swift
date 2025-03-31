@@ -22,6 +22,23 @@ import SwiftUI
         requestAuthorization()
     }
 
+    func fetchMostRecentPlaylist() -> PlaylistModel? {
+        let request: NSFetchRequest<PlaylistEntity> = PlaylistEntity.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        request.fetchLimit = 1
+
+        do {
+            let coreDataPlaylists = try viewContext.fetch(request)
+            if let mostRecentEntity = coreDataPlaylists.first {
+                return PlaylistModel(from: mostRecentEntity)
+            }
+            return nil
+        } catch {
+            print("Failed to fetch most recent playlist: \(error)")
+            return nil
+        }
+    }
+
     func fetchMockPlaylists() {
         // Use static mock data for now.
         let mockPlaylists = MockPlaylist.mockPlaylists
@@ -65,7 +82,8 @@ import SwiftUI
         }
     }
 
-    // For testing purposes only
+#if DEBUG
+    // For testing purposes only.
     func deleteAllPlaylists() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = PlaylistEntity.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -78,6 +96,7 @@ import SwiftUI
             print("Error deleting all playlists: \(error)")
         }
     }
+#endif
 
     // TODO: Use this code once you have an Apple Music subscription.
     /*func fetchMusicKitPlaylists() {
