@@ -97,7 +97,7 @@ struct PlaylistsView: View {
                         HStack(alignment: .center) {
                             VStack {
                                 Text("Most Recent:")
-                                    .font(.caption)
+                                    .font(.callout)
                                     .foregroundStyle(.white.opacity(0.8))
                                     .bold()
                                     .padding(.bottom, 5)
