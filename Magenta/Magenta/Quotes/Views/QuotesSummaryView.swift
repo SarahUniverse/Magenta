@@ -10,7 +10,6 @@ import SwiftUI
 
 struct QuotesSummaryView: View {
     @State private var quotesSummaryViewModel: QuotesSummaryViewModel
-    @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -25,7 +24,7 @@ struct QuotesSummaryView: View {
             NavigationLink(destination: QuotesView(viewContext: viewContext)) {
                 mainContent
                     .padding(20)
-                    .background(glassBackground)
+                    .background(GlassBackground())
                     .cornerRadius(15)
             }
         }
@@ -111,35 +110,6 @@ struct QuotesSummaryView: View {
             .foregroundStyle(.gray)
             .padding(.leading, 5)
             .padding(.bottom, -5)
-    }
-
-    private var glassBackground: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.ultraThinMaterial)
-            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
-            .overlay {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
-                        LinearGradient(
-                            colors: [
-                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
-                                .white.opacity(0.2)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 0.5
-                    )
-            }
-            .overlay {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
-                        .black.opacity(0.1),
-                        lineWidth: 1
-                    )
-                    .blur(radius: 1)
-                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
-            }
     }
 
 }

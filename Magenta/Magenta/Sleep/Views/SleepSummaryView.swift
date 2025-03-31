@@ -12,7 +12,6 @@ import SwiftUI
 
 struct SleepSummaryView: View {
     @State var sleepViewModel: SleepViewModel
-    @Environment(\.colorScheme) var colorScheme
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -29,6 +28,14 @@ struct SleepSummaryView: View {
     }
 
     // MARK: - Private Variables
+    private var navigationChevron: some View {
+        Image(systemName: "chevron.right")
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(.blue)
+    }
+
+    private var barGradient = Gradient(colors: [.blue, .indigo])
+
     private var titleText: some View {
         Text("SLEEP")
             .font(.caption)
@@ -48,7 +55,7 @@ struct SleepSummaryView: View {
             }
         }
         .padding(20)
-        .background(glassBackground)
+        .background(GlassBackground())
         .cornerRadius(10)
     }
 
@@ -97,48 +104,9 @@ struct SleepSummaryView: View {
 
             dailyHours[startOfDay, default: 0.0] += duration
         }
-
         return dailyHours
     }
 
-    // MARK: - Private Variables (Existing)
-    private var navigationChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.blue)
-    }
-
-    private var glassBackground: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.ultraThinMaterial)
-            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
-            .overlay {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
-                        LinearGradient(
-                            colors: [
-                                .white.opacity(colorScheme == .dark ? 0.3 : 0.5),
-                                .white.opacity(0.2)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 0.5
-                    )
-            }
-            .overlay {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
-                        .black.opacity(0.1),
-                        lineWidth: 1
-                    )
-                    .blur(radius: 1)
-                    .mask(RoundedRectangle(cornerRadius: 15).fill(.black))
-            }
-            .padding(.top, 10)
-    }
-
-    private var barGradient = Gradient(colors: [.blue, .indigo])
 }
 
 // MARK: - Previews
