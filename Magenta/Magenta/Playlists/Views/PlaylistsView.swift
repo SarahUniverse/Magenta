@@ -20,6 +20,7 @@ struct PlaylistsView: View {
         _playlistsViewModel = State(wrappedValue: PlaylistsViewModel(viewContext: viewContext))
     }
 
+    // MARK: Gradients
     private let mostRecentPlaylistGradient = LinearGradient(
         gradient: Gradient(colors: [.purple, .blue]),
         startPoint: .topTrailing,
@@ -127,6 +128,15 @@ struct PlaylistsView: View {
         }
     }
 
+    // MARK: Functions
+    func deletePlaylist(at offsets: IndexSet) {
+        for index in offsets {
+            let playlistToDelete = playlistsViewModel.playlists[index]
+            playlistsViewModel.deletePlaylist(playlist: playlistToDelete)
+        }
+    }
+
+    // MARK: - Private Functions
     private func playlistNavigationLink(playlist: PlaylistModel) -> some View {
         NavigationLink(destination: PlaylistDetailView(playlist: playlist)) {
             playlistIcon(playlist: playlist)
@@ -149,13 +159,6 @@ struct PlaylistsView: View {
                     .foregroundStyle(.white.opacity(0.8))
             }
             .padding(30)
-        }
-    }
-
-    func deletePlaylist(at offsets: IndexSet) {
-        for index in offsets {
-            let playlistToDelete = playlistsViewModel.playlists[index]
-            playlistsViewModel.deletePlaylist(playlist: playlistToDelete)
         }
     }
 
