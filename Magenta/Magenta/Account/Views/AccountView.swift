@@ -27,7 +27,7 @@ struct AccountView: View {
         endPoint: .bottom
     )
 
-    // MARK: - Body
+    // MARK: Body
     var body: some View {
         NavigationStack {
             List {
@@ -153,7 +153,7 @@ struct AccountView: View {
     }
 }
 
-// MARK: - Previews
+// MARK: Previews
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

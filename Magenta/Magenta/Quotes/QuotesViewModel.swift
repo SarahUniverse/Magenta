@@ -11,6 +11,7 @@ import SwiftUI
 
 @Observable final class QuotesViewModel {
     var quotes: [QuotesModel] = []
+    var quotesEntity: [QuoteEntity] = []
     var favoriteQuotes: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "FavoriteQuotes") ?? [])
     var searchText: String = ""
     var selectedSubject: String?
@@ -26,48 +27,7 @@ import SwiftUI
         syncFavoritesFromCoreData()
     }
 
-    private func checkAndLoadInitialData() {
-        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
-        do {
-            let count = try viewContext.count(for: request)
-            if count == 0 && !hasLoadedInitialData {
-                loadAndSaveQuotesFromJSON()
-                hasLoadedInitialData = true
-            }
-        } catch {
-            print("Error checking Core Data: \(error)")
-            // Fallback: Load JSON if there's an error checking Core Data
-            loadAndSaveQuotesFromJSON()
-            hasLoadedInitialData = true
-        }
-    }
-
-    private func loadAndSaveQuotesFromJSON() {
-        guard let url = Bundle.main.url(forResource: "quotes", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let decodedQuotes = try? JSONDecoder().decode([QuotesModel].self, from: data) else {
-            print("Failed to load or decode quotes.json")
-            return
-        }
-
-        // Save to Core Data
-        for quote in decodedQuotes {
-            let newQuote = QuoteEntity(context: viewContext)
-            newQuote.id = quote.id
-            newQuote.quoteContent = quote.quoteContent
-            newQuote.quoteAuthor = quote.quoteAuthor
-            newQuote.quoteSubject = quote.quoteSubject
-            newQuote.favoriteQuote = quote.favoriteQuote
-        }
-
-        do {
-            try viewContext.save()
-            print("Successfully saved JSON quotes to Core Data")
-        } catch {
-            print("Failed to save quotes to Core Data: \(error)")
-        }
-    }
-
+    // MARK: Functions
     func fetchAllQuotes() {
         let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
 
@@ -145,6 +105,65 @@ import SwiftUI
             updateFavoriteInCoreData(quoteId: quoteId, isFavorite: isNowFavorite)
         }
     }
+
+    func fetchMostRecentFavoriteQuote() {
+        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "favoriteQuote == YES")
+
+        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+
+        do {
+            let fetchedQuotes = try viewContext.fetch(request)
+            quotesEntity = fetchedQuotes
+        } catch {
+            print("Failed to fetch most recent favorite quote: \(error)")
+            quotesEntity = []
+        }
+    }
+
+    // MARK: Private Functions
+    private func checkAndLoadInitialData() {
+        let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
+        do {
+            let count = try viewContext.count(for: request)
+            if count == 0 && !hasLoadedInitialData {
+                loadAndSaveQuotesFromJSON()
+                hasLoadedInitialData = true
+            }
+        } catch {
+            print("Error checking Core Data: \(error)")
+            // Fallback: Load JSON if there's an error checking Core Data
+            loadAndSaveQuotesFromJSON()
+            hasLoadedInitialData = true
+        }
+    }
+
+    private func loadAndSaveQuotesFromJSON() {
+        guard let url = Bundle.main.url(forResource: "quotes", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let decodedQuotes = try? JSONDecoder().decode([QuotesModel].self, from: data) else {
+            print("Failed to load or decode quotes.json")
+            return
+        }
+
+        // Save to Core Data
+        for quote in decodedQuotes {
+            let newQuote = QuoteEntity(context: viewContext)
+            newQuote.id = quote.id
+            newQuote.quoteContent = quote.quoteContent
+            newQuote.quoteAuthor = quote.quoteAuthor
+            newQuote.quoteSubject = quote.quoteSubject
+            newQuote.favoriteQuote = quote.favoriteQuote
+        }
+
+        do {
+            try viewContext.save()
+            print("Successfully saved JSON quotes to Core Data")
+        } catch {
+            print("Failed to save quotes to Core Data: \(error)")
+        }
+    }
+
 
     private func updateFavoriteInCoreData(quoteId: String, isFavorite: Bool) {
         let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()

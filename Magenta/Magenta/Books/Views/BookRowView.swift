@@ -19,7 +19,7 @@ struct BookRowView: View {
         }
     }
 
-    // MARK: Private Variables for View
+    // MARK: - Private Variables
     private var bookDetailsView: some View {
         VStack(alignment: .leading, spacing: 8) {
             bookTitleAndEditionView

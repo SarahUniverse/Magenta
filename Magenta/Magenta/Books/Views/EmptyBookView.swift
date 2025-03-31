@@ -40,7 +40,7 @@ struct EmptyBooksView: View {
         .background(Color.secondary.opacity(0.1))
     }
 
-    // MARK: Private Variables for View
+    // MARK: - Private Variables for View
     private var emptyStateTitle: String {
         switch status {
             case .wantToRead:

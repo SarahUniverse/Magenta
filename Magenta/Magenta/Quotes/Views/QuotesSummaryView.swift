@@ -9,15 +9,15 @@ import CoreData
 import SwiftUI
 
 struct QuotesSummaryView: View {
-    @State private var quotesSummaryViewModel: QuotesSummaryViewModel
+    @State private var quotesViewModel: QuotesViewModel
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        _quotesSummaryViewModel = State(wrappedValue: QuotesSummaryViewModel(viewContext: viewContext))
+        _quotesViewModel = State(wrappedValue: QuotesViewModel(viewContext: viewContext))
     }
 
-    // MARK: Body
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
             headerText
@@ -29,7 +29,7 @@ struct QuotesSummaryView: View {
             }
         }
         .onAppear {
-            quotesSummaryViewModel.fetchMostRecentFavoriteQuote()
+            quotesViewModel.fetchMostRecentFavoriteQuote()
         }
     }
 
@@ -48,7 +48,7 @@ struct QuotesSummaryView: View {
 
     private var quoteContent: some View {
         VStack {
-            if let quote = quotesSummaryViewModel.quotes.first {
+            if let quote = quotesViewModel.quotesEntity.first {
                 Text(quote.quoteContent ?? "No content")
                     .font(.system(.body, design: .serif))
                     .foregroundStyle(.gray)

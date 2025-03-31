@@ -115,7 +115,7 @@ struct EditPinnedView: View {
         }
     }
 
-    // MARK: Private Functions
+    // MARK: - Private Functions
     private func startSpeechRecognition() {
         do {
             try editPinnedViewModel.startSpeechRecognition { recognitionText in
@@ -133,7 +133,7 @@ struct EditPinnedView: View {
     }
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     struct PreviewWrapper: View {
         @State private var pinnedItems = ["Mood", "Meditate", "Exercise"]

@@ -182,7 +182,7 @@ struct FAQLink {
     let url: URL
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     NavigationStack {
         FAQView()

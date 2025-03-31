@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtTherapySummaryView: View {
-    // @State private var artTherapyViewModel: ArtTherapyViewModel
+    @State private var artTherapyViewModel: ArtTherapyViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -25,14 +25,14 @@ struct ArtTherapySummaryView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                         .font(.subheadline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.gray)
 
                     Button("Review") { }
                         .foregroundStyle(.blue)
                 }
             }
             .padding()
-            .background(Color.almostBlack)
+            .background(GlassBackground())
             .cornerRadius(10)
         }
     }

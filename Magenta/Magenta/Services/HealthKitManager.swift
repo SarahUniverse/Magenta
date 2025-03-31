@@ -20,7 +20,7 @@ import SwiftUI
         updateAuthorizationStatus()
     }
 
-    // MARK: Sleep related functionality
+    // MARK: - Sleep related functionality
     func requestSleepTrackingAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else {
             errorMessage = "HealthKit is not available on this device."
@@ -111,5 +111,5 @@ import SwiftUI
         }
     }
 
-    // MARK: Exercise related functionality (placeholder for future use)
+    // MARK: - Exercise related functionality (placeholder for future use)
 }

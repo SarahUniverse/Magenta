@@ -42,7 +42,7 @@ struct MainTabView: View {
 
 }
 
-// MARK: Previews
+// MARK: - Previews
 #Preview("Light Mode") {
     let previewContainer = NSPersistentContainer(name: "DataModel")
     previewContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")

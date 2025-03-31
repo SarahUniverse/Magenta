@@ -29,7 +29,7 @@ struct SignUpView: View {
         endPoint: .bottomLeading
     )
 
-    // MARK: - Computed Variables for Views
+    // MARK: - Private Variables
     private var headerView: some View {
         Text("Welcome to Magenta")
             .padding(.top, 50)
