@@ -164,7 +164,6 @@ import SwiftUI
         }
     }
 
-
     private func updateFavoriteInCoreData(quoteId: String, isFavorite: Bool) {
         let request: NSFetchRequest<QuoteEntity> = QuoteEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", quoteId as CVarArg)
