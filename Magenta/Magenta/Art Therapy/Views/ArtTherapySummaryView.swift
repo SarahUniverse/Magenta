@@ -5,10 +5,17 @@
 //  Created by Sarah Clark on 1/21/25.
 //
 
+import CoreData
 import SwiftUI
 
 struct ArtTherapySummaryView: View {
     @State private var artTherapyViewModel: ArtTherapyViewModel
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _artTherapyViewModel = State(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -40,11 +47,28 @@ struct ArtTherapySummaryView: View {
 
 // MARK: - Previews
 #Preview ("Light Mode") {
-    ArtTherapySummaryView()
+    let context = ArtTherapySummaryView.createPreviewContext()
+    ArtTherapySummaryView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    ArtTherapySummaryView()
+    let context = ArtTherapySummaryView.createPreviewContext()
+    ArtTherapySummaryView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension ArtTherapySummaryView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+
+        return container.viewContext
+    }
 }
