@@ -12,6 +12,7 @@ import Foundation
     var moods: [MoodModel] = []
     var items: [String] = []
     let viewContext: NSManagedObjectContext
+    var moodsEntity: [MoodEntity] = []
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -85,18 +86,24 @@ import Foundation
         return moods.first(where: { calendar.isDate($0.moodDate, inSameDayAs: today) })?.mood
     }
 
-    // MARK: Private Functions
-    private func fetchMoods() {
+    func fetchMoods() {
         let request: NSFetchRequest<MoodEntity> = MoodEntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "moodDate", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \MoodEntity.moodDate, ascending: true)]
+
+        // Fetch moods for the last 7 days
+        if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -6, to: Date()) {
+            request.predicate = NSPredicate(format: "moodDate >= %@", sevenDaysAgo as NSDate)
+        }
+
         do {
-            let entities = try viewContext.fetch(request)
-            moods = entities.map { MoodModel(entity: $0) }
+            moodsEntity = try viewContext.fetch(request)
         } catch {
             print("Error fetching moods: \(error)")
+            moodsEntity = []
         }
     }
 
+    // MARK: - Private Functions
     private func setupInitialData() {
         items = [
             "Excited",

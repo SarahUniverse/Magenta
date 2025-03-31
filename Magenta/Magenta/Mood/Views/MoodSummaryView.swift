@@ -10,12 +10,12 @@ import CoreData
 import SwiftUI
 
 struct MoodSummaryView: View {
-    @State private var moodSummaryViewModel: MoodSummaryViewModel
+    @State private var moodViewModel: MoodViewModel
     let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        _moodSummaryViewModel = State(wrappedValue: MoodSummaryViewModel(viewContext: viewContext))
+        _moodViewModel = State(wrappedValue: MoodViewModel(viewContext: viewContext))
     }
 
     // MARK: - Body
@@ -69,7 +69,7 @@ struct MoodSummaryView: View {
                                 .padding(.top, 10)
                         }
                         Chart {
-                            ForEach(moodSummaryViewModel.moods) { daily in
+                            ForEach(moodViewModel.moodsEntity) { daily in
                                 BarMark(
                                     x: .value("Day", daily.moodDate ?? Date(), unit: .day),
                                     y: .value("Mood", daily.moodValue)
@@ -92,7 +92,7 @@ struct MoodSummaryView: View {
             }
         }
         .onAppear {
-            moodSummaryViewModel.refreshChart()
+            moodViewModel.fetchMoods()
         }
     }
 
@@ -105,13 +105,13 @@ struct MoodSummaryView: View {
 
     // MARK: - Private variables
     private var todayMood: MoodEntity? {
-        moodSummaryViewModel.moods.last(where: {
+        moodViewModel.moodsEntity.last(where: {
             Calendar.current.isDate($0.moodDate ?? Date(), inSameDayAs: Date())
         })
     }
 
     private var lastMoodDateString: String {
-        guard let lastMood = moodSummaryViewModel.moods.last,
+        guard let lastMood = moodViewModel.moodsEntity.last,
               let moodDate = lastMood.moodDate else {
             return "No moods logged"
         }
