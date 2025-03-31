@@ -28,18 +28,14 @@ struct MeditationSummaryView: View {
     // MARK: - Body
     var body: some View {
         NavigationLink(destination: MeditationView(viewContext: viewContext)) {
-            contentView
+            VStack(alignment: .leading) {
+                titleText
+                meditationContent
+            }
         }
     }
 
     // MARK: Private Variables
-    private var contentView: some View {
-        VStack(alignment: .leading) {
-            titleText
-            meditationContent
-        }
-    }
-
     private var titleText: some View {
         Text("MEDITATION")
             .font(.caption)
@@ -104,6 +100,7 @@ struct MeditationSummaryView: View {
             Text("Currently listening to:")
                 .font(.caption)
                 .foregroundStyle(.gray)
+            Spacer()
             navigationChevron
         }
     }
@@ -123,7 +120,6 @@ struct MeditationSummaryView: View {
         Image(systemName: "chevron.right")
             .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(.blue)
-            .padding(.bottom, 70)
     }
 
     private var glassBackground: some View {
