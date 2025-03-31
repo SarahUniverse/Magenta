@@ -74,7 +74,6 @@ struct QuotesSummaryView: View {
     private var navigationChevron: some View {
         Image(systemName: "chevron.right")
             .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.gray)
             .padding(.bottom, 70)
     }
 
