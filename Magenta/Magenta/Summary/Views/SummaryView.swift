@@ -52,7 +52,7 @@ struct SummaryView: View {
                         ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
                         switch item {
                             case "Art Therapy":
-                                ArtTherapySummaryView()
+                                ArtTherapySummaryView(viewContext: summaryViewModel.viewContext)
                             case "Journal":
                                 JournalSummaryView()
                             case "Exercise":
