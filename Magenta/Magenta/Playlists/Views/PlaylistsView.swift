@@ -79,37 +79,54 @@ struct PlaylistsView: View {
         }
     }
 
-    private var mostRecentPlaylistName: String {
+    private var mostRecentPlaylistModel: PlaylistModel? {
         playlistsViewModel.playlists
             .sorted { $0.createdAt > $1.createdAt }
-            .first?.name ?? "No playlists yet"
+            .first
     }
 
     private var mostRecentPlaylist: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(mostRecentPlaylistGradient)
-                .frame(width: 350, height: 100)
-                .shadow(radius: 5, y: 3)
-            HStack(alignment: .center) {
-                VStack {
-                    Text("Most Recent:")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.8))
-                        .bold()
-                        .padding(.bottom, 5)
-                    Text(mostRecentPlaylistName)
+        Group {
+            if let playlist = mostRecentPlaylistModel {
+                NavigationLink(destination: PlaylistDetailView(playlist: playlist)) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(mostRecentPlaylistGradient)
+                            .frame(width: 350, height: 100)
+                            .shadow(radius: 5, y: 3)
+                        HStack(alignment: .center) {
+                            VStack {
+                                Text("Most Recent:")
+                                    .font(.caption)
+                                    .foregroundStyle(.white.opacity(0.8))
+                                    .bold()
+                                    .padding(.bottom, 5)
+                                Text(playlist.name)
+                                    .font(.title3)
+                                    .foregroundStyle(.white)
+                                    .bold()
+                                    .lineLimit(1)
+                            }
+                            Image(systemName: "music.quarternote.3")
+                                .font(.system(size: 40))
+                                .foregroundStyle(.white.opacity(0.2))
+                                .padding(.leading, 20)
+                        }
+                        .padding()
+                    }
+                }
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(mostRecentPlaylistGradient)
+                        .frame(width: 350, height: 100)
+                        .shadow(radius: 5, y: 3)
+                    Text("No playlists yet")
                         .font(.title3)
                         .foregroundStyle(.white)
                         .bold()
-                        .lineLimit(1)
                 }
-                Image(systemName: "music.quarternote.3")
-                    .font(.system(size: 40))
-                    .foregroundStyle(.white.opacity(0.2))
-                    .padding(.leading, 20)
             }
-            .padding()
         }
     }
 
@@ -163,7 +180,6 @@ struct PlaylistsView: View {
             .padding(30)
         }
     }
-
 }
 
 // MARK: - Previews
