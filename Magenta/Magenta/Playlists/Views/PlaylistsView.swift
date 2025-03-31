@@ -53,7 +53,7 @@ struct PlaylistsView: View {
     var body: some View {
         NavigationStack {
             playlistGrid
-                .navigationTitle("Mental Health Playlists")
+                .navigationTitle("My Playlists")
                 .background(backgroundGradient)
                 .scrollContentBackground(.hidden)
                 .toolbar {
@@ -69,7 +69,9 @@ struct PlaylistsView: View {
                 }
                 .onAppear {
                     playlistsViewModel.fetchPlaylistsFromCoreData()
+#if DEBUG
                     // playlistsViewModel.deleteAllPlaylists() // Uncomment during debugging if you want to use.
+#endif
                 }
                 .sheet(isPresented: $showingCreatePlaylist) {
                     CreatePlaylistView(playlistsViewModel: playlistsViewModel)
