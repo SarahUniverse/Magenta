@@ -25,6 +25,12 @@ struct PlaylistDetailView: View {
         endPoint: .bottom
     )
 
+    private let playButtonGradient = LinearGradient(
+        gradient: Gradient(colors: [.purple, .blue]),
+        startPoint: .topTrailing,
+        endPoint: .bottomLeading
+    )
+
     private let player = SystemMusicPlayer.shared
 
     var body: some View {
@@ -93,8 +99,8 @@ struct PlaylistDetailView: View {
             }
         }, label: {
             Image(systemName: isPlaying && currentSong?.id == song.id ? "pause.circle" : "play.circle")
-                .font(.title2)
-                .foregroundStyle(.hotPink)
+                .font(.system(size: 30))
+                .foregroundStyle(playButtonGradient)
         })
     }
 
