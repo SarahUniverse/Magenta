@@ -57,6 +57,7 @@ struct MeditationSummaryView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Currently listening to:")
                                 .font(.caption)
+                                .foregroundStyle(.gray)
                             Text(selected.meditationTitle)
                                 .font(.headline)
                                 .fontWeight(.bold)

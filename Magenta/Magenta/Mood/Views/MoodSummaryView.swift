@@ -36,7 +36,7 @@ struct MoodSummaryView: View {
                     VStack {
                         Text(todayMood != nil ? "Today: \(todayMood?.mood ?? "Unknown")" : "No mood logged today")
                             .font(.subheadline)
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(.gray)
                             .padding(.bottom, 10)
                         ZStack {
                             Circle()
@@ -60,7 +60,7 @@ struct MoodSummaryView: View {
                             Spacer()
                             Text(lastMoodDateString)
                                 .font(.subheadline)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(.gray)
                                 .padding(.bottom, 10)
                                 .padding(.top, 10)
                             Image(systemName: "chevron.right")
