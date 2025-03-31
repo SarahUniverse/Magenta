@@ -53,34 +53,34 @@ import SwiftUI
     @ViewBuilder
     func destinationView(for item: DiscoverItemModel) -> some View {
         switch item.title {
-        case "Art Therapy":
-            ArtTherapyView(viewContext: viewContext)
-        case "Books":
-            BooksView(viewContext: viewContext)
-        case "Exercise":
-            ExerciseView()
-         // TODO: Add back
-        // case "Journal":
-            // JournalView(viewContext: viewContext)
-        case "Sleep":
-            SleepView(viewContext: viewContext)
-        case "Mood Tracker":
-            MoodView(viewContext: viewContext)
-        case "Nutrition":
-            NutritionView()
-        case "Playlists":
-            PlaylistsView(viewContext: viewContext)
-        case "Quotes":
-            QuotesView(viewContext: viewContext)
-        case "Professional Help":
-            TherapistSearchView()
-        case "Meditate":
-            MeditationView(viewContext: viewContext)
-        case "Cycle":
-            CycleView()
-        default:
-            Text("View Not Found")
-        }
+            case "Art Therapy":
+                ArtTherapyView(viewContext: viewContext)
+            case "Books":
+                BooksView(viewContext: viewContext)
+            case "Exercise":
+                ExerciseView()
+             // TODO: Add back
+            // case "Journal":
+                // JournalView(viewContext: viewContext)
+            case "Sleep":
+                SleepView(viewContext: viewContext)
+            case "Mood Tracker":
+                MoodView(viewContext: viewContext)
+            case "Nutrition":
+                NutritionView()
+            case "Playlists":
+                PlaylistsView(viewContext: viewContext)
+            case "Quotes":
+                QuotesView(viewContext: viewContext)
+            case "Professional Help":
+                TherapistSearchView()
+            case "Meditate":
+                MeditationView(viewContext: viewContext)
+            case "Cycle":
+                CycleView()
+            default:
+                Text("View Not Found")
+            }
     }
 
     // MARK: - Private Functions

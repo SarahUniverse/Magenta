@@ -57,13 +57,13 @@ struct MoodChartView: View {
                         let moodValue = value.as(Int.self) ?? 0
                         let moodString: String = {
                             switch moodValue {
-                            case 0: return "Terrible"
-                            case 2: return "Bad"
-                            case 4: return "Okay"
-                            case 6: return "Good"
-                            case 8: return "Great"
-                            case 10: return "Amazing"
-                            default: return "\(moodValue)"
+                                case 0: return "Terrible"
+                                case 2: return "Bad"
+                                case 4: return "Okay"
+                                case 6: return "Good"
+                                case 8: return "Great"
+                                case 10: return "Amazing"
+                                default: return "\(moodValue)"
                             }
                         }()
                         Text(moodString)

@@ -39,21 +39,21 @@ import LocalAuthentication
 
     private func handleBiometricError(error: Error) -> String {
         switch error {
-        case LAError.authenticationFailed:
-            return "Authentication failed"
-        case LAError.userCancel:
-            return "User canceled"
-        case LAError.userFallback:
-            return "User chose to use password"
-        case LAError.biometryNotAvailable:
-            return "Face ID is not available"
-        case LAError.biometryNotEnrolled:
-            return "Face ID is not set up"
-        case LAError.biometryLockout:
-            return "Face ID is locked"
-        default:
-            return "Face ID may not be configured"
-        }
+            case LAError.authenticationFailed:
+                return "Authentication failed"
+            case LAError.userCancel:
+                return "User canceled"
+            case LAError.userFallback:
+                return "User chose to use password"
+            case LAError.biometryNotAvailable:
+                return "Face ID is not available"
+            case LAError.biometryNotEnrolled:
+                return "Face ID is not set up"
+            case LAError.biometryLockout:
+                return "Face ID is locked"
+            default:
+                return "Face ID may not be configured"
+            }
     }
 
 }

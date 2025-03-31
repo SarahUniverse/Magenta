@@ -18,13 +18,13 @@ enum BookStatus: String, CaseIterable, Identifiable, Hashable {
 
     var systemImage: String {
         switch self {
-        case .currentlyReading:
-            return "book.fill"
-        case .finishedReading:
-            return "checkmark.circle.fill"
-        case .wantToRead:
-            return "bookmark"
-        }
+            case .currentlyReading:
+                return "book.fill"
+            case .finishedReading:
+                return "checkmark.circle.fill"
+            case .wantToRead:
+                return "bookmark"
+            }
     }
 
 }

@@ -94,12 +94,12 @@ import SwiftUI
             self?.signInWithApple(request: request)
         } onCompletion: { [weak self] result in
             switch result {
-            case .success:
-                self?.isNavigating = true
-                print("Authorization successful")
-            case .failure(let error):
-                print("Authorization failed: \(error.localizedDescription)")
-            }
+                case .success:
+                    self?.isNavigating = true
+                    print("Authorization successful")
+                case .failure(let error):
+                    print("Authorization failed: \(error.localizedDescription)")
+                }
         }
     }
 

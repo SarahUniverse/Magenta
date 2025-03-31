@@ -43,15 +43,15 @@ struct EmptyBooksView: View {
     // MARK: Private Variables for View
     private var emptyStateTitle: String {
         switch status {
-        case .wantToRead:
-            return "No Books to Read Yet"
-        case .currentlyReading:
-            return "Not Currently Reading Any Books"
-        case .finishedReading:
-            return "No Finished Books"
-        case nil:
-            return "Your Bookshelf is Empty"
-        }
+            case .wantToRead:
+                return "No Books to Read Yet"
+            case .currentlyReading:
+                return "Not Currently Reading Any Books"
+            case .finishedReading:
+                return "No Finished Books"
+            case nil:
+                return "Your Bookshelf is Empty"
+            }
     }
 
     private var emptyStateDescription: String {

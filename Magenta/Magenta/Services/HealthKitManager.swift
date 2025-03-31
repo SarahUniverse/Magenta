@@ -69,20 +69,20 @@ import SwiftUI
                     let duration = sample.endDate.timeIntervalSince(sample.startDate) / 3600.0
                     let sleepState: String
                     switch HKCategoryValueSleepAnalysis(rawValue: sample.value) {
-                    case .inBed:
-                        sleepState = "In Bed"
-                    case .asleep:
-                        sleepState = "Asleep (Unspecified)"
-                    case .awake:
-                        sleepState = "Awake"
-                    case .asleepCore:
-                        sleepState = "Core Sleep"
-                    case .asleepDeep:
-                        sleepState = "Deep Sleep"
-                    case .asleepREM:
-                        sleepState = "REM Sleep"
-                    default:
-                        sleepState = "Unknown"
+                        case .inBed:
+                            sleepState = "In Bed"
+                        case .asleep:
+                            sleepState = "Asleep (Unspecified)"
+                        case .awake:
+                            sleepState = "Awake"
+                        case .asleepCore:
+                            sleepState = "Core Sleep"
+                        case .asleepDeep:
+                            sleepState = "Deep Sleep"
+                        case .asleepREM:
+                            sleepState = "REM Sleep"
+                        default:
+                            sleepState = "Unknown"
                     }
                     print("Sleep State: \(sleepState), Start: \(sample.startDate), End: \(sample.endDate), Duration: \(duration) hours")
                 }

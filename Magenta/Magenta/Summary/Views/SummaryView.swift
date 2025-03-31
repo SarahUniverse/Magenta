@@ -51,62 +51,62 @@ struct SummaryView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
                         switch item {
-                        case "Art Therapy":
-                            ArtTherapySummaryView()
-                        case "Journal":
-                            JournalSummaryView()
-                        case "Exercise":
-                            ExerciseSummaryView()
-                        case "Mood":
-                            MoodSummaryView(viewContext: summaryViewModel.viewContext)
-                        case "Sleep":
-                            SleepSummaryView(viewContext: summaryViewModel.viewContext)
-                        case "Nutrition":
-                            NutritionSummaryView()
-                        case "Books":
-                            BooksSummaryView()
-                        case "Music":
-                            PlaylistsSummaryView()
-                        case "Quotes":
-                            QuotesSummaryView(viewContext: summaryViewModel.viewContext)
-                        case "Therapy":
-                            TherapistSummaryView()
-                        case "Meditation":
-                            MeditationSummaryView(viewContext: summaryViewModel.viewContext)
-                        case "Cycle":
-                            CycleSummaryView()
-                        default:
-                            EmptyView()
-                        }
+                            case "Art Therapy":
+                                ArtTherapySummaryView()
+                            case "Journal":
+                                JournalSummaryView()
+                            case "Exercise":
+                                ExerciseSummaryView()
+                            case "Mood":
+                                MoodSummaryView(viewContext: summaryViewModel.viewContext)
+                            case "Sleep":
+                                SleepSummaryView(viewContext: summaryViewModel.viewContext)
+                            case "Nutrition":
+                                NutritionSummaryView()
+                            case "Books":
+                                BooksSummaryView()
+                            case "Music":
+                                PlaylistsSummaryView()
+                            case "Quotes":
+                                QuotesSummaryView(viewContext: summaryViewModel.viewContext)
+                            case "Therapy":
+                                TherapistSummaryView()
+                            case "Meditation":
+                                MeditationSummaryView(viewContext: summaryViewModel.viewContext)
+                            case "Cycle":
+                                CycleSummaryView()
+                            default:
+                                EmptyView()
                         }
                     }
-                    .padding()
                 }
+                .padding()
             }
-            .background(backgroundGradient)
-            .scrollContentBackground(.hidden)
-            .onChange(of: colorScheme) {
-                summaryViewModel.updateColorScheme($1)
-            }
-            .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
-                LoginView(viewContext: summaryViewModel.viewContext)
-            }
-            .sheet(isPresented: $showEditPinnedView) {
-                EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems, summaryViewModel: summaryViewModel)
-            }
-            .navigationBarTitle("Summary")
-            .navigationBarItems(
-                trailing:
-                    Button(action: {
-                        summaryViewModel.signOut()
-                    }, label: {
-                        Text("Sign Out")
-                            .padding(8)
-                            .cornerRadius(20)
-                    })
-            )
         }
+        .background(backgroundGradient)
+        .scrollContentBackground(.hidden)
+        .onChange(of: colorScheme) {
+            summaryViewModel.updateColorScheme($1)
+        }
+        .fullScreenCover(isPresented: $summaryViewModel.shouldShowLoginView) {
+            LoginView(viewContext: summaryViewModel.viewContext)
+        }
+        .sheet(isPresented: $showEditPinnedView) {
+            EditPinnedView(pinnedItems: $summaryViewModel.pinnedItems, summaryViewModel: summaryViewModel)
+        }
+        .navigationBarTitle("Summary")
+        .navigationBarItems(
+            trailing:
+                Button(action: {
+                    summaryViewModel.signOut()
+                }, label: {
+                    Text("Sign Out")
+                        .padding(8)
+                        .cornerRadius(20)
+                })
+        )
     }
+}
 
     // MARK: - Private functions
     private func iconColor() -> Color {
