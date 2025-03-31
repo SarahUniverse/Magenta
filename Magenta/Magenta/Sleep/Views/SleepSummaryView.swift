@@ -44,6 +44,7 @@ struct SleepSummaryView: View {
                 sleepIcon
                 Spacer()
                 sleepChart
+                navigationChevron
             }
         }
         .padding(20)
