@@ -20,55 +20,73 @@ struct SleepSummaryView: View {
         _sleepViewModel = State(wrappedValue: SleepViewModel(viewContext: viewContext))
     }
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("SLEEP")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
-                .padding(.leading, 5)
-                .padding(.bottom, -20)
-
-            NavigationLink(destination: SleepView(viewContext: viewContext)) {
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "moon.zzz")
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.mediumBlue, .indigo],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .font(.largeTitle)
-                    Spacer()
-                    Chart {
-                        ForEach(calculateDailySleepHours().sorted(by: { $0.key < $1.key }), id: \.key) { date, hours in
-                            BarMark(
-                                x: .value("Date", date, unit: .day),
-                                y: .value("Hours", hours)
-                            )
-                            .foregroundStyle(barGradient)
-                        }
-                    }
-                    .frame(height: 90)
-                    .chartYScale(domain: 0...10)
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 3)
-                }
-            }
-            .padding(20)
-            .background(glassBackground)
-            .cornerRadius(10)
+            titleText
+            sleepNavigationLink
         }
     }
 
+    // MARK: - Private Variables
+    private var titleText: some View {
+        Text("SLEEP")
+            .font(.caption)
+            .fontWeight(.bold)
+            .foregroundStyle(.gray)
+            .padding(.leading, 5)
+            .padding(.bottom, -20)
+    }
+
+    private var sleepNavigationLink: some View {
+        NavigationLink(destination: SleepView(viewContext: viewContext)) {
+            HStack(alignment: .top, spacing: 10) {
+                sleepIcon
+                Spacer()
+                sleepChart
+            }
+        }
+        .padding(20)
+        .background(glassBackground)
+        .cornerRadius(10)
+    }
+
+    private var sleepIcon: some View {
+        Image(systemName: "moon.zzz")
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [.mediumBlue, .indigo],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .font(.largeTitle)
+    }
+
+    private var sleepChart: some View {
+        Chart {
+            ForEach(calculateDailySleepHours().sorted(by: { $0.key < $1.key }), id: \.key) { date, hours in
+                BarMark(
+                    x: .value("Date", date, unit: .day),
+                    y: .value("Hours", hours)
+                )
+                .foregroundStyle(barGradient)
+            }
+        }
+        .frame(height: 90)
+        .chartYScale(domain: 0...10)
+        .chartXAxis(.hidden)
+        .chartYAxis(.hidden)
+        .padding(.horizontal, 5)
+        .padding(.vertical, 3)
+    }
+
+    // MARK: - Private Functions
     private func calculateDailySleepHours() -> [Date: Double] {
         var dailyHours: [Date: Double] = [:]
         let calendar = Calendar.current
 
-        for sample in sleepViewModel.sleepSamples ?? [] { // Use sleepViewModel.sleepSamples
+        for sample in sleepViewModel.sleepSamples ?? [] {
             let state = HKCategoryValueSleepAnalysis(rawValue: sample.value)
             // Only count actual sleep states (exclude inBed and awake)
             guard state == .asleepCore || state == .asleepDeep || state == .asleepREM else { continue }
@@ -82,7 +100,13 @@ struct SleepSummaryView: View {
         return dailyHours
     }
 
-    // MARK: - Private Variables
+    // MARK: - Private Variables (Existing)
+    private var navigationChevron: some View {
+        Image(systemName: "chevron.right")
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(.blue)
+    }
+
     private var glassBackground: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(.ultraThinMaterial)
