@@ -75,6 +75,7 @@ struct PlaylistsSummaryView: View {
     private var navigationChevron: some View {
         Image(systemName: "chevron.right")
             .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(.blue)
             .padding(.bottom, 70)
     }
 
