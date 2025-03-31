@@ -28,67 +28,104 @@ struct MeditationSummaryView: View {
     // MARK: - Body
     var body: some View {
         NavigationLink(destination: MeditationView(viewContext: viewContext)) {
-            VStack(alignment: .leading) {
-                Text("MEDITATION")
-                    .font(.caption)
+            contentView
+        }
+    }
+
+    // MARK: Private Variables
+    private var contentView: some View {
+        VStack(alignment: .leading) {
+            titleText
+            meditationContent
+        }
+    }
+
+    private var titleText: some View {
+        Text("MEDITATION")
+            .font(.caption)
+            .fontWeight(.bold)
+            .foregroundStyle(.gray)
+            .padding(.leading, 5)
+            .padding(.bottom, -20)
+    }
+
+    private var meditationContent: some View {
+        HStack(alignment: .top, spacing: 15) {
+            meditationIcon
+            meditationDetails
+        }
+        .padding(20)
+        .padding(.top, 15)
+        .background(glassBackground)
+    }
+
+    private var meditationIcon: some View {
+        ZStack {
+            Circle()
+                .fill(Color.indigo.opacity(0.3))
+                .frame(width: 70, height: 70)
+                .shadow(radius: 5)
+
+            Image(systemName: "figure.mind.and.body")
+                .foregroundStyle(iconGradient)
+                .font(.system(size: 48))
+                .shadow(radius: 5)
+                .scaleEffect(isAnimating ? 1.1 : 1.0)
+                .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
+                .onAppear {
+                    isAnimating = true
+                }
+        }
+    }
+
+    private var meditationDetails: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            if let selected = meditationViewModel.selectedMeditation {
+                meditationHeader
+                Text(selected.meditationTitle)
+                    .font(.headline)
                     .fontWeight(.bold)
                     .foregroundStyle(.gray)
-                    .padding(.leading, 5)
-                    .padding(.bottom, -20)
-
-                HStack(alignment: .top, spacing: 15) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.indigo.opacity(0.3))
-                            .frame(width: 70, height: 70)
-                            .shadow(radius: 5)
-
-                        Image(systemName: "figure.mind.and.body")
-                            .foregroundStyle(iconGradient)
-                            .font(.system(size: 48))
-                            .shadow(radius: 5)
-                            .scaleEffect(isAnimating ? 1.1 : 1.0)
-                            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
-                            .onAppear {
-                                isAnimating = true
-                            }
-                    }
-                    if let selected = meditationViewModel.selectedMeditation {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text("Currently listening to:")
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                            Text(selected.meditationTitle)
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.gray)
-                            HStack {
-                                Text("\(selected.meditationDuration) min")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.gray)
-                                Image(systemName: "clock")
-                                    .font(.caption)
-                                    .foregroundStyle(.gray)
-                            }
-                            Text(selected.meditationDescription)
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                                .lineLimit(2)
-                        }
-                    } else {
-                        Text("No meditation selected")
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                    }
-                }
-                .padding(20)
-                .padding(.top, 15)
-                .background(glassBackground)
+                meditationDuration
+                Text(selected.meditationDescription)
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                    .lineLimit(2)
+            } else {
+                Text("No meditation selected")
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
             }
         }
     }
 
-    // MARK: Private variables
+    private var meditationHeader: some View {
+        HStack {
+            Text("Currently listening to:")
+                .font(.caption)
+                .foregroundStyle(.gray)
+            navigationChevron
+        }
+    }
+
+    private var meditationDuration: some View {
+        HStack {
+            Text("\(meditationViewModel.selectedMeditation?.meditationDuration ?? 0) min")
+                .font(.subheadline)
+                .foregroundStyle(.gray)
+            Image(systemName: "clock")
+                .font(.caption)
+                .foregroundStyle(.gray)
+        }
+    }
+
+    private var navigationChevron: some View {
+        Image(systemName: "chevron.right")
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(.blue)
+            .padding(.bottom, 70)
+    }
+
     private var glassBackground: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(.ultraThinMaterial)
