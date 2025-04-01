@@ -67,7 +67,7 @@ import SwiftUI
             case "Mood Tracker":
                 MoodView(viewContext: viewContext)
             case "Nutrition":
-                NutritionView()
+                NutritionView(viewContext: viewContext)
             case "Playlists":
                 PlaylistsView(viewContext: viewContext)
             case "Quotes":

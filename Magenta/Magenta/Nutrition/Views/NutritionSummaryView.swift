@@ -5,9 +5,19 @@
 //  Created by Sarah Clark on 12/11/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct NutritionSummaryView: View {
+    @State private var nutritionViewModel: NutritionViewModel
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _nutritionViewModel = State(wrappedValue: NutritionViewModel(viewContext: viewContext))
+    }
+
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("NUTRITION")
@@ -29,19 +39,37 @@ struct NutritionSummaryView: View {
                 }
             }
             .padding()
-            .background(Color.almostBlack)
+            .background(GlassBackground())
             .cornerRadius(10)
         }
     }
+
 }
 
 // MARK: - Previews
 #Preview ("Light Mode") {
-    NutritionSummaryView()
+    let context = NutritionSummaryView.createPreviewContext()
+    NutritionSummaryView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    NutritionSummaryView()
+    let context = NutritionSummaryView.createPreviewContext()
+    NutritionSummaryView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension NutritionSummaryView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
+
 }
