@@ -33,6 +33,7 @@ struct PlaylistDetailView: View {
 
     private let player = SystemMusicPlayer.shared
 
+    // MARK: - BODY
     var body: some View {
         NavigationStack {
             songList
@@ -47,6 +48,7 @@ struct PlaylistDetailView: View {
         }
     }
 
+    // MARK: - Private View Variables
     private var songList: some View {
         List {
             if let songs = playlist.songs, !songs.isEmpty {
@@ -71,6 +73,13 @@ struct PlaylistDetailView: View {
             .bold()
     }
 
+    private var emptyPlaylistText: some View {
+        Text("No songs in this playlist.")
+            .foregroundStyle(.gray)
+            .italic()
+    }
+
+    // MARK: - Private Functions
     private func songRow(for song: SongModel) -> some View {
         HStack {
             songInfo(for: song)
@@ -104,13 +113,6 @@ struct PlaylistDetailView: View {
         })
     }
 
-    private var emptyPlaylistText: some View {
-        Text("No songs in this playlist.")
-            .foregroundStyle(.gray)
-            .italic()
-    }
-
-    // MARK: - Private Functions
     private func requestMusicAuthorization() async {
         let status = await MusicAuthorization.request()
             switch status {
