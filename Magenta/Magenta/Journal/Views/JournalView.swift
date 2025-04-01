@@ -17,8 +17,10 @@ struct JournalView: View {
     @State private var entryContent = ""
     @State private var journalSuggestionTitle: String?
     @State private var reflectionSuggestions: [JournalingSuggestion.Reflection] = []
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
         _journalViewModel = State(wrappedValue: JournalViewModel(viewContext: viewContext))
     }
 
@@ -31,24 +33,6 @@ struct JournalView: View {
         startPoint: .top,
         endPoint: .bottom
     )
-
-    // MARK: - Private Variables
-    private var journalEntryList: some View {
-        List {
-            ForEach(journalViewModel.journalEntries) { entry in
-                Section(header: Text(entry.journalEntryDate, style: .date)) {
-                    VStack(alignment: .leading) {
-                        Text(entry.journalEntryTitle)
-                            .font(.headline)
-                        Text(entry.journalEntryContent)
-                            .font(.body)
-                            .lineLimit(2)
-                    }
-                }
-            }
-            .onDelete(perform: deleteEntries)
-        }
-    }
 
     // MARK: - Body
     var body: some View {
@@ -100,6 +84,24 @@ struct JournalView: View {
         }
         .onAppear {
             journalViewModel.fetchJournalEntries()
+        }
+    }
+
+    // MARK: - Private Variables
+    private var journalEntryList: some View {
+        List {
+            ForEach(journalViewModel.journalEntries) { entry in
+                Section(header: Text(entry.journalEntryDate, style: .date)) {
+                    VStack(alignment: .leading) {
+                        Text(entry.journalEntryTitle)
+                            .font(.headline)
+                        Text(entry.journalEntryContent)
+                            .font(.body)
+                            .lineLimit(2)
+                    }
+                }
+            }
+            .onDelete(perform: deleteEntries)
         }
     }
 

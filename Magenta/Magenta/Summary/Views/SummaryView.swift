@@ -54,7 +54,7 @@ struct SummaryView: View {
                             case "Art Therapy":
                                 ArtTherapySummaryView(viewContext: summaryViewModel.viewContext)
                             case "Journal":
-                                JournalSummaryView()
+                                JournalSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Exercise":
                                 ExerciseSummaryView()
                             case "Mood":
