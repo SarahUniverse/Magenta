@@ -5,10 +5,17 @@
 //  Created by Sarah Clark on 8/22/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct TherapistSearchView: View {
-    @State private var therapistSearchViewModel = TherapistSearchViewModel()
+    @State private var therapistViewModel: TherapistViewModel
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _therapistViewModel = State(wrappedValue: TherapistViewModel(viewContext: viewContext))
+    }
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -41,11 +48,28 @@ struct TherapistSearchView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    TherapistSearchView()
+    let context = TherapistSearchView.createPreviewContext()
+    TherapistSearchView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    TherapistSearchView()
+    let context = TherapistSearchView.createPreviewContext()
+    TherapistSearchView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension TherapistSearchView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
+
 }

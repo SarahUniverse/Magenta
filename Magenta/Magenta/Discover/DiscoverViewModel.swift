@@ -73,7 +73,7 @@ import SwiftUI
             case "Quotes":
                 QuotesView(viewContext: viewContext)
             case "Professional Help":
-                TherapistSearchView()
+                TherapistSearchView(viewContext: viewContext)
             case "Meditate":
                 MeditationView(viewContext: viewContext)
             case "Cycle":

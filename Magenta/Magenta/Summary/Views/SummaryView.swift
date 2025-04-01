@@ -70,7 +70,7 @@ struct SummaryView: View {
                             case "Quotes":
                                 QuotesSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Therapy":
-                                TherapistSummaryView()
+                                TherapistSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Meditation":
                                 MeditationSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Cycle":

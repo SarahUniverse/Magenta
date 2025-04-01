@@ -5,11 +5,19 @@
 //  Created by Sarah Clark on 1/21/25.
 //
 
+import CoreData
 import SwiftUI
 
 struct TherapistSummaryView: View {
-    // @State private var therapistViewModel: TherapistViewModel
+    @State private var therapistViewModel: TherapistViewModel
+    private let viewContext: NSManagedObjectContext
 
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _therapistViewModel = State(wrappedValue: TherapistViewModel(viewContext: viewContext))
+    }
+
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("THERAPY")
@@ -31,7 +39,7 @@ struct TherapistSummaryView: View {
                 }
             }
             .padding()
-            .background(Color.almostBlack)
+            .background(GlassBackground())
             .cornerRadius(10)
         }
     }
@@ -39,11 +47,28 @@ struct TherapistSummaryView: View {
 
 // MARK: - Previews
 #Preview ("Light Mode") {
-    TherapistSummaryView()
+    let context = TherapistSummaryView.createPreviewContext()
+    TherapistSummaryView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    TherapistSummaryView()
+    let context = TherapistSummaryView.createPreviewContext()
+    TherapistSummaryView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension TherapistSummaryView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
+
 }
