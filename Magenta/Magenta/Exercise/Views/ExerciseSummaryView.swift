@@ -5,11 +5,19 @@
 //  Created by Sarah Clark on 12/11/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct ExerciseSummaryView: View {
-    // @State private var exerciseViewModel: ExerciseViewModel
+    @State private var exerciseViewModel: ExerciseViewModel
+    private let viewContext: NSManagedObjectContext
 
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _exerciseViewModel = State(wrappedValue: ExerciseViewModel(viewContext: viewContext))
+    }
+
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("EXERCISE")
@@ -38,7 +46,7 @@ struct ExerciseSummaryView: View {
                 }
             }
             .padding()
-            .background(Color.almostBlack)
+            .background(GlassBackground())
             .cornerRadius(10)
         }
     }
@@ -46,11 +54,28 @@ struct ExerciseSummaryView: View {
 
 // MARK: - Previews
 #Preview ("Light Mode") {
-    ExerciseSummaryView()
+    let context = ExerciseSummaryView.createPreviewContext()
+    ExerciseSummaryView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview ("Dark Mode") {
-    ExerciseSummaryView()
+    let context = ExerciseSummaryView.createPreviewContext()
+    ExerciseSummaryView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension ExerciseSummaryView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
+
 }

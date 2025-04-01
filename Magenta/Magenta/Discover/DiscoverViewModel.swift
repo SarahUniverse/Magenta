@@ -58,7 +58,7 @@ import SwiftUI
             case "Books":
                 BooksView(viewContext: viewContext)
             case "Exercise":
-                ExerciseView()
+                ExerciseView(viewContext: viewContext)
              // TODO: Add back
             // case "Journal":
                 // JournalView(viewContext: viewContext)
