@@ -25,6 +25,8 @@ struct TherapistSummaryView: View {
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundStyle(.gray)
+                    .padding(.leading, 5)
+                    .padding(.bottom, -20)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "brain.head.profile")
@@ -38,11 +40,12 @@ struct TherapistSummaryView: View {
                         Button("Review") { }
                             .foregroundStyle(.blue)
                     }
+                    Spacer()
                     NavigationChevron()
                 }
-                .padding(30)
+                .padding(25)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(GlassBackground())
-                .cornerRadius(10)
             }
         }
     }

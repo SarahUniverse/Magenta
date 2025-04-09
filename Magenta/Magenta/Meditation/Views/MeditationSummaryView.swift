@@ -27,7 +27,7 @@ struct MeditationSummaryView: View {
     // MARK: - Body
     var body: some View {
         NavigationLink(destination: MeditationView(viewContext: viewContext)) {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 titleText
                 meditationContent
             }
@@ -45,12 +45,12 @@ struct MeditationSummaryView: View {
     }
 
     private var meditationContent: some View {
-        HStack(alignment: .center, spacing: 15) {
+        HStack(alignment: .center, spacing: 10) {
             meditationIcon
             meditationDetails
         }
-        .padding(20)
-        .padding(.top, 15)
+        .padding(25)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(GlassBackground())
     }
 

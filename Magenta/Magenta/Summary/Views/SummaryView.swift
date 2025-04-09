@@ -48,7 +48,7 @@ struct SummaryView: View {
                 .padding([.leading, .trailing, .top])
 
                 ScrollView {
-                    VStack(alignment: .center, spacing: 50) {
+                    VStack(alignment: .center, spacing: 20) {
                         ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
                         switch item {
                             case "Art Therapy":

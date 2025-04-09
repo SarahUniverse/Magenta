@@ -45,12 +45,13 @@ struct SleepSummaryView: View {
                 sleepIcon
                 Spacer()
                 sleepChart
+                Spacer()
                 NavigationChevron()
             }
         }
-        .padding(20)
+        .padding(25)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(GlassBackground())
-        .cornerRadius(10)
     }
 
     private var sleepIcon: some View {

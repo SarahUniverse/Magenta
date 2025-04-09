@@ -53,12 +53,12 @@ struct PlaylistsSummaryView: View {
                     Image(systemName: "music.quarternote.3")
                         .foregroundStyle(musicalNotesGradient)
                         .font(.system(size: 50))
+                    Spacer()
                     NavigationChevron()
-                        .padding(.bottom, 70)
                 }
-                .padding()
+                .padding(25)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(GlassBackground())
-                .cornerRadius(10)
             }
         }
     }
@@ -69,7 +69,7 @@ struct PlaylistsSummaryView: View {
             .fontWeight(.bold)
             .foregroundStyle(.gray)
             .padding(.leading, 5)
-            .padding(.bottom, -5)
+            .padding(.bottom, -20)
     }
 
 }

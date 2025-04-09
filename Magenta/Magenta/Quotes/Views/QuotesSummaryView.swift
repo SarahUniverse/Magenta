@@ -23,9 +23,9 @@ struct QuotesSummaryView: View {
             headerText
             NavigationLink(destination: QuotesView(viewContext: viewContext)) {
                 mainContent
-                    .padding(20)
+                    .padding(25)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(GlassBackground())
-                    .cornerRadius(15)
             }
         }
         .onAppear {
@@ -103,7 +103,7 @@ struct QuotesSummaryView: View {
             .fontWeight(.bold)
             .foregroundStyle(.gray)
             .padding(.leading, 5)
-            .padding(.bottom, -5)
+            .padding(.bottom, -20)
     }
 
 }
