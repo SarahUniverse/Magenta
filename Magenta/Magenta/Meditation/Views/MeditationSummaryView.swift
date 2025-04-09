@@ -100,7 +100,7 @@ struct MeditationSummaryView: View {
                 .font(.caption)
                 .foregroundStyle(.gray)
             Spacer()
-            navigationChevron
+            NavigationChevron()
         }
     }
 
@@ -113,12 +113,6 @@ struct MeditationSummaryView: View {
                 .font(.caption)
                 .foregroundStyle(.gray)
         }
-    }
-
-    private var navigationChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.blue)
     }
 
 }
