@@ -23,7 +23,7 @@ struct MoodSummaryView: View {
         let weekDates = getWeekDates()
 
         NavigationLink(destination: MoodView(viewContext: viewContext)) {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("MOOD")
                     .font(.caption)
                     .fontWeight(.bold)
@@ -31,7 +31,7 @@ struct MoodSummaryView: View {
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
 
-                HStack(alignment: .center, spacing: 15) {
+                HStack(alignment: .top, spacing: 10) {
                     VStack {
                         Text(todayMood != nil ? "Today: \(todayMood?.mood ?? "Unknown")" : "No mood logged today")
                             .font(.subheadline)
@@ -85,7 +85,8 @@ struct MoodSummaryView: View {
                         .padding(.vertical, 3)
                     }
                 }
-                .padding()
+                .padding(25)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(GlassBackground())
             }
         }

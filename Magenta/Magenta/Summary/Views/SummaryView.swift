@@ -48,39 +48,51 @@ struct SummaryView: View {
                 .padding([.leading, .trailing, .top])
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .center, spacing: 50) {
                         ForEach(summaryViewModel.pinnedItems, id: \.self) { item in
                         switch item {
                             case "Art Therapy":
                                 ArtTherapySummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Journal":
                                 JournalSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Exercise":
                                 ExerciseSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Mood":
                                 MoodSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Sleep":
                                 SleepSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Nutrition":
                                 NutritionSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Books":
                                 BooksSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Music":
                                 PlaylistsSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Quotes":
                                 QuotesSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Therapy":
                                 TherapistSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Meditation":
                                 MeditationSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             case "Cycle":
                                 CycleSummaryView(viewContext: summaryViewModel.viewContext)
+                                    .frame(maxWidth: 400, maxHeight: 150)
                             default:
                                 EmptyView()
                         }
                     }
                 }
-                .padding()
+                    .padding(.horizontal, 15)
             }
         }
         .background(backgroundGradient)
