@@ -44,6 +44,7 @@ struct BooksSummaryView: View {
             .cornerRadius(10)
         }
     }
+
 }
 
 // MARK: - Previews
