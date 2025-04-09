@@ -18,29 +18,31 @@ struct CycleSummaryView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("CYCLE")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
+        NavigationLink(destination: CycleView(viewContext: viewContext)) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("CYCLE")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "calendar.badge.clock")
-                    .foregroundStyle(.pink)
-                    .font(.largeTitle)
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "calendar.badge.clock")
+                        .foregroundStyle(.pink)
+                        .font(.largeTitle)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
 
-                    Button("Review") { }
-                        .foregroundStyle(.blue)
+                        Button("Review") { }
+                            .foregroundStyle(.blue)
+                    }
                 }
+                .padding(20)
+                .background(GlassBackground())
+                .cornerRadius(10)
             }
-            .padding(20)
-            .background(GlassBackground())
-            .cornerRadius(10)
         }
     }
 
