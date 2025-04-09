@@ -45,7 +45,7 @@ struct MeditationSummaryView: View {
     }
 
     private var meditationContent: some View {
-        HStack(alignment: .top, spacing: 15) {
+        HStack(alignment: .center, spacing: 15) {
             meditationIcon
             meditationDetails
         }
