@@ -40,8 +40,9 @@ struct JournalSummaryView: View {
                         Button("Review") { }
                             .foregroundStyle(.blue)
                     }
+                    NavigationChevron()
                 }
-                .padding()
+                .padding(30)
                 .background(GlassBackground())
                 .cornerRadius(10)
             }
