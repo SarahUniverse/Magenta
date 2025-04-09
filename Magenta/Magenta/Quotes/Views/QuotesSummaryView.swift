@@ -42,7 +42,8 @@ struct QuotesSummaryView: View {
             heartIcon
                 .padding(.top, -10)
             Spacer()
-            navigationChevron
+            NavigationChevron()
+                .padding(.bottom, 70)
         }
     }
 
@@ -68,13 +69,6 @@ struct QuotesSummaryView: View {
             }
         }
         .padding(.vertical, 5)
-    }
-
-    private var navigationChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.blue)
-            .padding(.bottom, 70)
     }
 
     private var heartIcon: some View {
