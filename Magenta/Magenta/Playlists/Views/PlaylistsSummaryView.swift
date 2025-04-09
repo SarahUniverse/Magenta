@@ -53,7 +53,8 @@ struct PlaylistsSummaryView: View {
                     Image(systemName: "music.quarternote.3")
                         .foregroundStyle(musicalNotesGradient)
                         .font(.system(size: 50))
-                    navigationChevron
+                    NavigationChevron()
+                        .padding(.bottom, 70)
                 }
                 .padding()
                 .background(GlassBackground())
@@ -69,13 +70,6 @@ struct PlaylistsSummaryView: View {
             .foregroundStyle(.gray)
             .padding(.leading, 5)
             .padding(.bottom, -5)
-    }
-
-    private var navigationChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.blue)
-            .padding(.bottom, 70)
     }
 
 }
