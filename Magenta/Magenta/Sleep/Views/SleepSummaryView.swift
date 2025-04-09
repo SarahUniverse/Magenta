@@ -28,12 +28,6 @@ struct SleepSummaryView: View {
     }
 
     // MARK: - Private Variables
-    private var navigationChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.blue)
-    }
-
     private var barGradient = Gradient(colors: [.blue, .indigo])
 
     private var titleText: some View {
@@ -51,7 +45,7 @@ struct SleepSummaryView: View {
                 sleepIcon
                 Spacer()
                 sleepChart
-                navigationChevron
+                NavigationChevron()
             }
         }
         .padding(20)
