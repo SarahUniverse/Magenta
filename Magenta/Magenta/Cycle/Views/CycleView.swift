@@ -72,5 +72,5 @@ extension CycleView {
 
         return container.viewContext
     }
-}
 
+}
