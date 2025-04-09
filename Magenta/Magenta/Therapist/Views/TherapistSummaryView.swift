@@ -33,13 +33,14 @@ struct TherapistSummaryView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                             .font(.subheadline)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.gray)
 
                         Button("Review") { }
                             .foregroundStyle(.blue)
                     }
+                    NavigationChevron()
                 }
-                .padding()
+                .padding(30)
                 .background(GlassBackground())
                 .cornerRadius(10)
             }
