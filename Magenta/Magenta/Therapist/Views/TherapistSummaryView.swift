@@ -19,30 +19,33 @@ struct TherapistSummaryView: View {
 
     // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("THERAPY")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
+        NavigationLink(destination: TherapistSearchView(viewContext: viewContext)) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("THERAPY")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "brain.head.profile")
-                    .foregroundStyle(.teal)
-                    .font(.largeTitle)
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
-                        .font(.subheadline)
-                        .foregroundStyle(.white)
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "brain.head.profile")
+                        .foregroundStyle(.teal)
+                        .font(.largeTitle)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
+                            .font(.subheadline)
+                            .foregroundStyle(.white)
 
-                    Button("Review") { }
-                        .foregroundStyle(.blue)
+                        Button("Review") { }
+                            .foregroundStyle(.blue)
+                    }
                 }
+                .padding()
+                .background(GlassBackground())
+                .cornerRadius(10)
             }
-            .padding()
-            .background(GlassBackground())
-            .cornerRadius(10)
         }
     }
+
 }
 
 // MARK: - Previews
