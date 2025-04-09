@@ -64,7 +64,7 @@ struct SummaryView: View {
                             case "Nutrition":
                                 NutritionSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Books":
-                                BooksSummaryView()
+                                BooksSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Music":
                                 PlaylistsSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Quotes":

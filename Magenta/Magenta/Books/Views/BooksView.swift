@@ -17,8 +17,10 @@ struct BooksView: View {
     @State private var newBookDescription = ""
     @State private var newBookPublisher = ""
     @State private var newBookEdition = ""
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
         _booksViewModel = State(wrappedValue: BooksViewModel(viewContext: viewContext))
     }
 
@@ -82,7 +84,7 @@ struct BooksView: View {
             } else {
                 Form {
                     ForEach(filteredBooks) { book in
-                        BookRowView(book: book, booksViewModel: booksViewModel)
+                        BookRowView(book: book, viewContext: viewContext)
                     }
                     .onDelete(perform: deleteBooks)
                 }

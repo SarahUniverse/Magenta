@@ -10,26 +10,29 @@ import SwiftUI
 
 struct BookRowView: View {
     let book: BookModel
-    var booksViewModel: BooksViewModel
+    @State private var booksViewModel: BooksViewModel
+    private let viewContext: NSManagedObjectContext
+
+    init(book: BookModel, viewContext: NSManagedObjectContext) {
+        self.book = book
+        self.viewContext = viewContext
+        _booksViewModel = State(wrappedValue: BooksViewModel(viewContext: viewContext))
+    }
 
     // MARK: - Body
     var body: some View {
         Section {
-            bookDetailsView
+            VStack(alignment: .leading, spacing: 8) {
+                bookTitleAndEditionView
+                bookAuthorView
+                bookDescriptionView
+                bookStatusAndActionView
+            }
+            .padding(.vertical, 8)
         }
     }
 
     // MARK: - Private Variables
-    private var bookDetailsView: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            bookTitleAndEditionView
-            bookAuthorView
-            bookDescriptionView
-            bookStatusAndActionView
-        }
-        .padding(.vertical, 8)
-    }
-
     private var bookTitleAndEditionView: some View {
         HStack {
             Text(book.bookTitle)
@@ -94,103 +97,51 @@ struct BookRowView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+    let context = BookRowView.createPreviewContext()
+    let sampleBook = BookModel(
+        id: UUID(),
+        bookTitle: "Sample Book",
+        bookAuthor: "John Doe",
+        bookDescription: "A sample book description",
+        bookPublisher: "Sample Publisher",
+        bookEdition: "1st",
+        status: .wantToRead
+    )
 
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-
-        return container
-    }()
-
-    let viewContext = persistentContainer.viewContext
-    let booksViewModel = BooksViewModel(viewContext: viewContext)
-
-    let sampleBooks = [
-        BookModel(
-            id: UUID(),
-            bookTitle: "Sample Book",
-            bookAuthor: "John Doe",
-            bookDescription: "A sample book description",
-            bookPublisher: "Sample Publisher",
-            bookEdition: "1st",
-            status: .wantToRead
-        )
-    ]
-
-    sampleBooks.forEach { book in
-        let bookEntity = BookEntity(context: viewContext)
-        bookEntity.id = book.id
-        bookEntity.title = book.bookTitle
-        bookEntity.author = book.bookAuthor
-        bookEntity.bookDescription = book.bookDescription
-        bookEntity.bookPublisher = book.bookPublisher
-        bookEntity.bookEdition = book.bookEdition
-        bookEntity.status = book.status.rawValue
-    }
-
-    do {
-        try viewContext.save()
-    } catch {
-        print("Error saving sample books: \(error)")
-    }
-
-    return BookRowView(book: sampleBooks[0], booksViewModel: booksViewModel)
+    BookRowView(book: sampleBook, viewContext: context)
         .padding(20)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    let persistentContainer: NSPersistentContainer = {
+    let context = BookRowView.createPreviewContext()
+
+    let sampleBook = BookModel(
+        id: UUID(),
+        bookTitle: "Sample Book",
+        bookAuthor: "John Doe",
+        bookDescription: "A sample book description",
+        bookPublisher: "Sample Publisher",
+        bookEdition: "1st",
+        status: .wantToRead
+    )
+
+    BookRowView(book: sampleBook, viewContext: context)
+        .padding(20)
+        .preferredColorScheme(.dark)
+}
+
+extension BookRowView {
+    static func createPreviewContext() -> NSManagedObjectContext {
         let container = NSPersistentContainer(name: "DataModel")
         container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
             }
         }
-
-        return container
-    }()
-
-    let viewContext = persistentContainer.viewContext
-    let booksViewModel = BooksViewModel(viewContext: viewContext)
-
-    let sampleBooks = [
-        BookModel(
-            id: UUID(),
-            bookTitle: "Sample Book",
-            bookAuthor: "John Doe",
-            bookDescription: "A sample book description",
-            bookPublisher: "Sample Publisher",
-            bookEdition: "1st",
-            status: .wantToRead
-        )
-    ]
-
-    sampleBooks.forEach { book in
-        let bookEntity = BookEntity(context: viewContext)
-        bookEntity.id = book.id
-        bookEntity.title = book.bookTitle
-        bookEntity.author = book.bookAuthor
-        bookEntity.bookDescription = book.bookDescription
-        bookEntity.bookPublisher = book.bookPublisher
-        bookEntity.bookEdition = book.bookEdition
-        bookEntity.status = book.status.rawValue
+        return container.viewContext
     }
 
-    do {
-        try viewContext.save()
-    } catch {
-        print("Error saving sample books: \(error)")
-    }
-
-    return BookRowView(book: sampleBooks[0], booksViewModel: booksViewModel)
-        .padding(20)
-        .preferredColorScheme(.dark)
 }

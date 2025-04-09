@@ -9,22 +9,11 @@ import CoreData
 
 @Observable final class BooksViewModel {
     var books: [BookModel] = []
-    let viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         fetchBooks()
-    }
-
-    private func fetchBooks() {
-        let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
-
-        do {
-            let entities = try viewContext.fetch(request)
-            books = entities.map { BookModel(entity: $0)}
-        } catch {
-            print("Error fetching books: \(error.localizedDescription)")
-        }
     }
 
     func addBook(_ book: BookModel) {
@@ -77,6 +66,18 @@ import CoreData
             fetchBooks()
         } catch {
             print("Error deleting book: \(error)")
+        }
+    }
+
+    // MARK: - Private Functions
+    private func fetchBooks() {
+        let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+
+        do {
+            let entities = try viewContext.fetch(request)
+            books = entities.map { BookModel(entity: $0)}
+        } catch {
+            print("Error fetching books: \(error.localizedDescription)")
         }
     }
 
