@@ -8,5 +8,10 @@
 import CoreData
 
 @Observable final class CycleViewModel {
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
 
 }

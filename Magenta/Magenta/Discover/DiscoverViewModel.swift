@@ -77,7 +77,7 @@ import SwiftUI
             case "Meditate":
                 MeditationView(viewContext: viewContext)
             case "Cycle":
-                CycleView()
+                CycleView(viewContext: viewContext)
             default:
                 Text("View Not Found")
             }

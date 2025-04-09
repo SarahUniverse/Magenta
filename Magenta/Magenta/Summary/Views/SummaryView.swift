@@ -74,7 +74,7 @@ struct SummaryView: View {
                             case "Meditation":
                                 MeditationSummaryView(viewContext: summaryViewModel.viewContext)
                             case "Cycle":
-                                CycleSummaryView()
+                                CycleSummaryView(viewContext: summaryViewModel.viewContext)
                             default:
                                 EmptyView()
                         }

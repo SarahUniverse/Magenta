@@ -5,10 +5,17 @@
 //  Created by Sarah Clark on 8/21/24.
 //
 
+import CoreData
 import SwiftUI
 
 struct CycleView: View {
-    @State private var cycleViewModel = CycleViewModel()
+    @State private var cycleViewModel: CycleViewModel
+    private let viewContext: NSManagedObjectContext
+
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _cycleViewModel = State(wrappedValue: CycleViewModel(viewContext: viewContext))
+    }
 
     let backgroundGradient = LinearGradient(
         stops: [
@@ -41,11 +48,29 @@ struct CycleView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    CycleView()
+    let viewContext = CycleView.createPreviewContext()
+    CycleView(viewContext: viewContext)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    CycleView()
+    let viewContext = CycleView.createPreviewContext()
+    CycleView(viewContext: viewContext)
         .preferredColorScheme(.dark)
 }
+
+extension CycleView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+
+        return container.viewContext
+    }
+}
+
