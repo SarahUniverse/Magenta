@@ -38,8 +38,9 @@ struct CycleSummaryView: View {
                         Button("Review") { }
                             .foregroundStyle(.blue)
                     }
+                    NavigationChevron()
                 }
-                .padding(20)
+                .padding(30)
                 .background(GlassBackground())
                 .cornerRadius(10)
             }
