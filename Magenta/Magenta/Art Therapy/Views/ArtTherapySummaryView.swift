@@ -17,32 +17,36 @@ struct ArtTherapySummaryView: View {
         _artTherapyViewModel = State(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
+    // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("ART THERAPY")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
+        NavigationLink(destination: ArtTherapyView(viewContext: viewContext)) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("ART THERAPY")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
 
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "paintpalette")
-                    .symbolRenderingMode(.multicolor)
-                    .font(.largeTitle)
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "paintpalette")
+                        .symbolRenderingMode(.multicolor)
+                        .font(.largeTitle)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
 
-                    Button("Review") { }
-                        .foregroundStyle(.blue)
+                        Button("Review") { }
+                            .foregroundStyle(.blue)
+                    }
                 }
+                .padding()
+                .background(GlassBackground())
+                .cornerRadius(10)
             }
-            .padding()
-            .background(GlassBackground())
-            .cornerRadius(10)
         }
     }
+
 }
 
 // MARK: - Previews
