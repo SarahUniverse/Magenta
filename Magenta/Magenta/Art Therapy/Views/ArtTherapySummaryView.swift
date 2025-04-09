@@ -41,7 +41,7 @@ struct ArtTherapySummaryView: View {
                     }
                     NavigationChevron()
                 }
-                .padding(20)
+                .padding(30)
                 .background(GlassBackground())
                 .cornerRadius(10)
             }
