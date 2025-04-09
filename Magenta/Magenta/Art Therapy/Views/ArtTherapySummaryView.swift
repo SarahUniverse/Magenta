@@ -39,8 +39,9 @@ struct ArtTherapySummaryView: View {
                         Button("Review") { }
                             .foregroundStyle(.blue)
                     }
+                    NavigationChevron()
                 }
-                .padding()
+                .padding(20)
                 .background(GlassBackground())
                 .cornerRadius(10)
             }
