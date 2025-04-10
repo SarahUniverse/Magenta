@@ -14,16 +14,11 @@ struct SummaryView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var showEditPinnedView = false
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .darkPurple.opacity(0.5), location: 0),
-            Gradient.Stop(color: .darkPurple.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
+    let backgroundGradient =  LinearGradient(
+        gradient: Gradient(
+            colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.4)]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing)
 
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _summaryViewModel = State(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
