@@ -18,17 +18,6 @@ struct SignUpView: View {
         self.viewContext = viewContext
     }
 
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.lightPurple,
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
-
     // MARK: - Private Variables
     private var headerView: some View {
         Text("Welcome to Magenta")
@@ -116,7 +105,7 @@ struct SignUpView: View {
                 MainTabView(viewContext: viewContext, userModel: userEntity)
             }
         }
-        .background(backgroundGradient)
+        .background(AppGradients.backgroundGradient)
     }
 
     // MARK: - Private Functions for Views

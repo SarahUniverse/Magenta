@@ -17,17 +17,6 @@ struct LoginView: View {
         self.viewContext = viewContext
     }
 
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.lightPurple,
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
-
     // MARK: - Computed Variables for Views
     private var headerView: some View {
         Text("Welcome to Magenta")
@@ -138,7 +127,7 @@ struct LoginView: View {
             Spacer()
         }
         .padding()
-        .background(backgroundGradient)
+        .background(AppGradients.backgroundGradient)
         .scrollContentBackground(.hidden)
         .navigationBarBackButtonHidden(true)
     }

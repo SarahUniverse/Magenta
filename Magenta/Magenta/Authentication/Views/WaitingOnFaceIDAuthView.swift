@@ -9,21 +9,10 @@ import SwiftUI
 
 struct WaitingOnFaceIDAuthView: View {
 
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.lightPurple,
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
-
     // MARK: - Body
     var body: some View {
         ZStack {
-            backgroundGradient
+            AppGradients.backgroundGradient
                 .ignoresSafeArea()
             VStack {
                 Spacer()
