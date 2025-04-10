@@ -12,17 +12,6 @@ struct LandingPageView: View {
     @State private var index = 0
     let color: [Color] = [.lightPurple, .pinkPurple, .purple4, .darkBlue, .darkPurple]
 
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.lightPurple,
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
-
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.4)]),
