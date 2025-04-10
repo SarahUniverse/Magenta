@@ -16,17 +16,6 @@ struct AccountView: View {
         _accountViewModel = State(wrappedValue: AccountViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .darkPurple.opacity(0.5), location: 0),
-            Gradient.Stop(color: .darkPurple.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: Body
     var body: some View {
         NavigationStack {
@@ -123,7 +112,7 @@ struct AccountView: View {
                 }
             }
             .padding(.top, 20)
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .fullScreenCover(isPresented: $accountViewModel.shouldShowLoginView) {
                 LoginView(viewContext: accountViewModel.viewContext)

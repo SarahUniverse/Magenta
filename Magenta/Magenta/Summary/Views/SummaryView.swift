@@ -14,12 +14,6 @@ struct SummaryView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var showEditPinnedView = false
 
-    let backgroundGradient =  LinearGradient(
-        gradient: Gradient(
-            colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.4)]),
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing)
-
     init(viewContext: NSManagedObjectContext, colorScheme: ColorScheme) {
         _summaryViewModel = State(wrappedValue: SummaryViewModel(viewContext: viewContext, colorScheme: colorScheme))
     }
@@ -90,7 +84,7 @@ struct SummaryView: View {
                     .padding(.horizontal, 15)
             }
         }
-        .background(backgroundGradient)
+        .background(AppGradients.backgroundGradient)
         .scrollContentBackground(.hidden)
         .onChange(of: colorScheme) {
             summaryViewModel.updateColorScheme($1)

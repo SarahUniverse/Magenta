@@ -14,9 +14,7 @@ struct LandingPageView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.4)]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
+            AppGradients.backgroundGradient
             .ignoresSafeArea()
 
             VStack(spacing: 20) {

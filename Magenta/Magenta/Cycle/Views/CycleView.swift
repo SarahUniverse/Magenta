@@ -17,24 +17,13 @@ struct CycleView: View {
         _cycleViewModel = State(wrappedValue: CycleViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .pink, location: 0),
-            Gradient.Stop(color: .pink.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .pink.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     var body: some View {
         NavigationStack {
             List {
                 Text("Hello, World!")
             }
             .navigationTitle("Track My Cycle")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

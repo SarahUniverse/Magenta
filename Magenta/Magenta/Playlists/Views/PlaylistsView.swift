@@ -54,7 +54,7 @@ struct PlaylistsView: View {
         NavigationStack {
             playlistGrid
                 .navigationTitle("My Playlists")
-                .background(backgroundGradient)
+                .background(AppGradients.backgroundGradient)
                 .scrollContentBackground(.hidden)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

@@ -36,7 +36,7 @@ struct ArtTherapyView: View {
                 activityList
             }
             .navigationBarTitle("Art Therapy")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
                 // Add activity sheet would go here

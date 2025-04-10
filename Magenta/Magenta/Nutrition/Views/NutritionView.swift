@@ -17,17 +17,6 @@ struct NutritionView: View {
         _nutritionViewModel = State(wrappedValue: NutritionViewModel(viewContext: viewContext))
     }
 
-    private let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .green, location: 0),
-            Gradient.Stop(color: .green.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .green.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: Body
     var body: some View {
         NavigationStack {
@@ -35,7 +24,7 @@ struct NutritionView: View {
                 Text("Hello, World!")
             }
             .navigationTitle("Nutrition Matters")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

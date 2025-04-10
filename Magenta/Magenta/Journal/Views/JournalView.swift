@@ -24,16 +24,6 @@ struct JournalView: View {
         _journalViewModel = State(wrappedValue: JournalViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .blue.opacity(0.6), location: 0),
-            Gradient.Stop(color: .blue.opacity(0.3), location: 0.256),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -54,7 +44,7 @@ struct JournalView: View {
                 journalEntryList
             }
             .navigationTitle("My Thoughts")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .navigationBarItems(trailing:
                     Button(action: { showingAddEntrySheet = true

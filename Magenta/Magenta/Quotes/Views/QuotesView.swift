@@ -35,14 +35,14 @@ struct QuotesView: View {
                     .padding(.top, 15)
             }
             .navigationTitle("Quotes that Inspire")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showAddQuoteSheet = true
                     }, label: {
                         Image(systemName: "plus.circle.fill")
-                            .foregroundStyle(.blue, .yellow)
+                            .foregroundStyle(.white, .indigo)
                             .shadow(radius: 5, y: 3)
                     })
 
@@ -95,7 +95,7 @@ struct QuotesView: View {
                         .padding(.horizontal, 12)
                         .background(
                             quotesViewModel.selectedSubject == nil ?
-                            Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
+                            Color.indigo.opacity(0.6) : Color.gray.opacity(0.8)
                         )
                         .clipShape(Capsule())
                         .foregroundStyle(.black.opacity(0.6))
@@ -110,7 +110,7 @@ struct QuotesView: View {
                         .padding(.horizontal, 12)
                         .background(
                             quotesViewModel.selectedSubject == "favorites" ?
-                            Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
+                            Color.indigo.opacity(0.6) : Color.gray.opacity(0.8)
                         )
                         .clipShape(Capsule())
                         .foregroundStyle(.black.opacity(0.6))
@@ -126,7 +126,7 @@ struct QuotesView: View {
                             .padding(.horizontal, 12)
                             .background(
                                 quotesViewModel.selectedSubject == subject ?
-                                Color.yellow.opacity(0.8) : Color.gray.opacity(0.8)
+                                Color.indigo.opacity(0.6) : Color.gray.opacity(0.8)
                             )
                             .clipShape(Capsule())
                             .foregroundStyle(.black.opacity(0.6))
@@ -166,7 +166,7 @@ struct QuotesView: View {
                                 }
                             }, label: {
                                 Image(systemName: quote.favoriteQuote ? "heart.fill" : "heart")
-                                    .foregroundStyle(.yellow)
+                                    .foregroundStyle(.indigo)
                                     .rotationEffect(.degrees(quote.favoriteQuote ? 360 : 0))
                             })
                         }

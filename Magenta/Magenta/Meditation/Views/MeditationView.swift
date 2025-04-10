@@ -16,17 +16,6 @@ struct MeditationView: View {
     @State private var newMeditationDescription: String = ""
     @State private var newMeditationURL: String = ""
 
-    private let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .cyan, location: 0),
-            Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .darkBlue.opacity(0.7), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     init(viewContext: NSManagedObjectContext) {
         _meditateViewModel = State(wrappedValue: MeditationViewModel(viewContext: viewContext))
     }
@@ -38,7 +27,7 @@ struct MeditationView: View {
                 meditationSessionsList
             }
             .navigationTitle("Chill and Meditate")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 toolbarContent

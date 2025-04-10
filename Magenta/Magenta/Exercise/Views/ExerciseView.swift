@@ -17,18 +17,6 @@ struct ExerciseView: View {
         _exerciseViewModel = State(wrappedValue: ExerciseViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .yellow.opacity(0.8), location: 0),
-            Gradient.Stop(color: .orange.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .red.opacity(0.6), location: 0.2),
-            Gradient.Stop(color: .red.opacity(0.4), location: 0.3),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -36,7 +24,7 @@ struct ExerciseView: View {
                 Text("Step Count: \(exerciseViewModel.stepCount)")
             }
             .navigationTitle("Get Up and Move")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

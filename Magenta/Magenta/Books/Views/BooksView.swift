@@ -24,17 +24,6 @@ struct BooksView: View {
         _booksViewModel = State(wrappedValue: BooksViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .brown, location: 0),
-            Gradient.Stop(color: .brown.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .brown.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -45,7 +34,7 @@ struct BooksView: View {
                 booksList
             }
             .navigationTitle("Books that Help Me")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 if !booksViewModel.books.isEmpty {

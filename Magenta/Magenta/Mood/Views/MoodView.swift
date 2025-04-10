@@ -27,17 +27,6 @@ struct MoodView: View {
         _moodViewModel = State(wrappedValue: MoodViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .yellow, location: 0),
-            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .blue.opacity(0.7), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     let moodEmojis: [String: String] = [
         "Excited": "🤩",
         "Happy": "😊",
@@ -213,7 +202,7 @@ struct MoodView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundGradient
+                AppGradients.backgroundGradient
                     .ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 10) {

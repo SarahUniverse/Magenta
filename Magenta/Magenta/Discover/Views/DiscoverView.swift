@@ -17,25 +17,10 @@ struct DiscoverView: View {
     @State private var errorMessage = ""
     @Environment(\.colorScheme) private var colorScheme
 
-    let backgroundGradient = LinearGradient(
-        gradient: Gradient(colors: [
-            Color.lightPurple,
-            Color.darkPurple,
-            Color.darkBlue,
-            Color.black,
-            Color.black,
-            Color.black,
-            Color.black,
-            Color.black
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomLeading
-    )
-
     // MARK: - Private Variables
     private var mainContentView: some View {
         ZStack {
-            backgroundGradient
+            AppGradients.backgroundGradient
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
