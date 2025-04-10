@@ -21,17 +21,17 @@ struct BooksSummaryView: View {
     var body: some View {
         NavigationLink(destination: BooksView(viewContext: viewContext)) {
             VStack(alignment: .leading, spacing: 10) {
-                Text("BOOKS")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.gray)
-                    .padding(.leading, 5)
-                    .padding(.bottom, -20)
-
                 HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "books.vertical")
-                        .foregroundStyle(.brown)
-                        .font(.largeTitle)
+                    VStack(alignment: .center) {
+                        Text("books")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.white)
+                            .padding(.leading, 5)
+                        Image(systemName: "books.vertical")
+                            .foregroundStyle(AppGradients.iconGradient)
+                            .font(.largeTitle)
+                    }
 
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")

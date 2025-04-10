@@ -87,64 +87,64 @@ import SwiftUI
     private func loadDiscoverItemData() {
         items = [
             DiscoverItemModel(
-                icon: Image(systemName: "paintpalette").symbolRenderingMode(.multicolor),
+                icon: Image(systemName: "paintpalette"),
                 title: "Art Therapy",
-                iconColor: .purple
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "pencil.and.scribble"),
                 title: "Journal",
-                iconColor: .blue
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "figure.run"),
                 title: "Exercise",
-                iconColors: [.yellow, .orange, .red]
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "moon.zzz.fill").symbolRenderingMode(.palette),
                 title: "Sleep",
-                iconColors: [.mediumBlue, .indigo]
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "theatermasks.fill").symbolRenderingMode(.palette),
                 title: "Mood Tracker",
-                iconColors: [.yellow, .blue]
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "fork.knife"),
                 title: "Nutrition",
-                iconColor: .green
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "books.vertical"),
                 title: "Books",
-                iconColor: .brown
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "music.note.list"),
                 title: "Playlists",
-                iconColor: .hotPink
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "text.quote"),
                 title: "Quotes",
-                iconColors: [.gray, .yellow]
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "brain.head.profile"),
                 title: "Professional Help",
-                iconColor: .teal
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "figure.mind.and.body"),
                 title: "Meditate",
-                iconColors: [.cyan, .darkBlue]
+                iconColor: AppGradients.iconGradient
             ),
             DiscoverItemModel(
                 icon: Image(systemName: "calendar.badge.clock"),
                 title: "Cycle",
-                iconColor: .pink
+                iconColor: AppGradients.iconGradient
             )
         ]
     }

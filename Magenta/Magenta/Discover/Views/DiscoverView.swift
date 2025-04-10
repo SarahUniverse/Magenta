@@ -96,13 +96,7 @@ struct DiscoverView: View {
                 .scaledToFit()
                 .frame(width: 30, height: 30)
                 .padding(.trailing, 10)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: item.iconColors,
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .foregroundStyle(AppGradients.iconGradient)
 
             Text(item.title)
                 .foregroundStyle(discoverViewModel.colors.textColor)

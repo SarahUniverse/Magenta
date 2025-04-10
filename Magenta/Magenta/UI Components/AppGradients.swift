@@ -14,4 +14,10 @@ struct AppGradients {
         endPoint: .bottomTrailing
     )
 
+    static let iconGradient = LinearGradient(
+        gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.indigo]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
 }
