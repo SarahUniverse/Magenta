@@ -118,6 +118,7 @@ struct SummaryView: View {
                 })
         )
     }
+
 }
 
     // MARK: - Private functions

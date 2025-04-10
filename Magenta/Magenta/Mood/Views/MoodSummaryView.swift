@@ -129,22 +129,6 @@ struct MoodSummaryView: View {
 
 }
 
-// MARK: - Preview Helper
-extension MoodSummaryView {
-    static func createPreviewContext() -> NSManagedObjectContext {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load Core Data stack for preview: \(error)")
-            }
-        }
-
-        return container.viewContext
-    }
-}
-
 // MARK: - Previews
 #Preview("Light Mode") {
     let context = MoodSummaryView.createPreviewContext()
@@ -283,7 +267,22 @@ extension MoodSummaryView {
     try? context.save()
 
     return NavigationStack {
-        MoodSummaryView(viewContext: context)
+        return MoodSummaryView(viewContext: context)
     }
     .preferredColorScheme(.dark)
+}
+
+extension MoodSummaryView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+
+        return container.viewContext
+    }
 }
