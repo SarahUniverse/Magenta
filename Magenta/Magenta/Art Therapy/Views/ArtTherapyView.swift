@@ -15,20 +15,35 @@ struct ArtTherapyView: View {
         _artTherapyViewModel = State(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
-    let backgroundGradient = LinearGradient(
+    private let backgroundGradient = LinearGradient(
         stops: [
             Gradient.Stop(color: .red, location: 0),
-            Gradient.Stop(color: .orange, location: 0.057),
-            Gradient.Stop(color: .yellow, location: 0.114),
-            Gradient.Stop(color: .green, location: 0.171),
-            Gradient.Stop(color: .blue, location: 0.228),
-            Gradient.Stop(color: .indigo.opacity(0.6), location: 0.285),
-            Gradient.Stop(color: .purple.opacity(0.3), location: 0.342),
+            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.2),
+            Gradient.Stop(color: .green.opacity(0.7), location: 0.27),
+            Gradient.Stop(color: .blue.opacity(0.3), location: 0.36),
             Gradient.Stop(color: .clear, location: 0.4)
         ],
         startPoint: .top,
         endPoint: .bottom
     )
+
+    // MARK: - Body
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                ideaHeader
+                    .padding(.top, 20)
+                activityList
+            }
+            .navigationBarTitle("Art Therapy")
+            .background(backgroundGradient)
+            .scrollContentBackground(.hidden)
+            .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
+                // Add activity sheet would go here
+                Text("Add New Activity")
+            }
+        }
+    }
 
     // MARK: - Private variables
     private var ideaHeader: some View {
@@ -66,58 +81,32 @@ struct ArtTherapyView: View {
         }
     }
 
-    // MARK: - Body
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                ideaHeader
-                    .padding(.top, 20)
-                activityList
-            }
-            .navigationBarTitle("Art Therapy")
-            .background(backgroundGradient)
-            .scrollContentBackground(.hidden)
-            .sheet(isPresented: $artTherapyViewModel.showAddActivitySheet) {
-                // Add activity sheet would go here
-                Text("Add New Activity")
-            }
-        }
-    }
 }
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-
-        return container
-    }()
-
-    return ArtTherapyView(viewContext: persistentContainer.viewContext)
+    let context = ArtTherapyView.createPreviewContext()
+    ArtTherapyView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    let persistentContainer: NSPersistentContainer = {
+    let context = ArtTherapyView.createPreviewContext()
+    ArtTherapyView(viewContext: context)
+        .preferredColorScheme(.dark)
+}
+
+extension ArtTherapyView {
+    static func createPreviewContext() -> NSManagedObjectContext {
         let container = NSPersistentContainer(name: "DataModel")
         container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
 
-        container.loadPersistentStores { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
             }
         }
+        return container.viewContext
+    }
 
-        return container
-    }()
-
-    return ArtTherapyView(viewContext: persistentContainer.viewContext)
-        .preferredColorScheme(.dark)
 }
