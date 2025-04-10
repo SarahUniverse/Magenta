@@ -15,21 +15,21 @@ struct TabbedContentView: View {
             switch selectedTab {
                 case 0:
                     FeatureView(
-                        icon: "pencil.circle.fill",
-                        title: "Create",
-                        description: "Draw, paint, and design with intuitive tools."
+                        icon: "face.smiling.fill",
+                        title: "Mood Tracking",
+                        description: "Log your daily moods, view patterns with a 7-day bar chart, and understand your emotional trends."
                     )
                 case 1:
                     FeatureView(
-                        icon: "photo.circle.fill",
-                        title: "Edit",
-                        description: "Enhance your photos with powerful editing features."
+                        icon: "moon.zzz.fill",
+                        title: "Meditations",
+                        description: "Access guided meditations to reduce stress and improve sleep, with options to save favorites."
                     )
                 case 2:
                     FeatureView(
-                        icon: "square.and.arrow.up.circle.fill",
-                        title: "Share",
-                        description: "Showcase your work to a global community."
+                        icon: "book.fill",
+                        title: "Journal",
+                        description: "Write daily entries with prompts from Apple’s Journaling Suggestions, tag moods, and reflect privately."
                     )
                 default:
                     EmptyView()
