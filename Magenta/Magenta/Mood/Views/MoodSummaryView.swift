@@ -20,8 +20,6 @@ struct MoodSummaryView: View {
 
     // MARK: - Body
     var body: some View {
-        let weekDates = getWeekDates()
-
         NavigationLink(destination: MoodView(viewContext: viewContext)) {
             VStack(alignment: .leading, spacing: 10) {
                 Text("MOOD")
@@ -31,61 +29,40 @@ struct MoodSummaryView: View {
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
 
-                HStack(alignment: .top, spacing: 10) {
+                HStack {
                     VStack {
                         Text(todayMood != nil ? "Today: \(todayMood?.mood ?? "Unknown")" : "No mood logged today")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
-                            .padding(.bottom, 10)
+                            .padding(.bottom, 5)
                         ZStack {
                             Circle()
-                                .frame(width: 80, height: 80)
+                                .frame(width: 65, height: 65)
                                 .rotationEffect(.degrees(-90))
                                 .foregroundStyle(.gray.opacity(0.3))
                             Circle()
                                 .trim(from: 0, to: todayMood != nil ? CGFloat((todayMood?.moodValue ?? 0) / 10) : 0)
                                 .stroke(barGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                                .frame(width: 80, height: 80)
+                                .frame(width: 65, height: 65)
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeInOut(duration: 1.0), value: todayMood?.moodValue)
                             Text(todayMood?.moodEmoji ?? "😶")
-                                .font(.system(size: 40))
+                                .font(.system(size: 30))
                                 .animation(.easeInOut(duration: 1.0), value: todayMood?.moodEmoji)
                         }
                     }
-                    Spacer()
                     VStack {
                         HStack {
                             Spacer()
                             Text(lastMoodDateString)
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
-                                .padding(.bottom, 10)
-                                .padding(.top, 10)
                             NavigationChevron()
-                                .padding(.bottom, 10)
-                                .padding(.top, 10)
                         }
-                        Chart {
-                            ForEach(moodViewModel.moodsEntity) { daily in
-                                BarMark(
-                                    x: .value("Day", daily.moodDate ?? Date(), unit: .day),
-                                    y: .value("Mood", daily.moodValue)
-                                )
-                                .foregroundStyle(barGradient)
-                                .cornerRadius(2)
-                            }
-                        }
-                        .frame(height: 90)
-                        .chartYScale(domain: 0...10)
-                        .chartXAxis(.hidden)
-                        .chartYAxis(.hidden)
-                        .chartXScale(domain: weekDates.first!...weekDates.last!)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 3)
+                        moodChart
                     }
                 }
-                .padding(25)
+                .padding(20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(GlassBackground())
             }
@@ -103,6 +80,26 @@ struct MoodSummaryView: View {
     ])
 
     // MARK: - Private variables
+    private var moodChart: some View {
+        let weekDates = getWeekDates()
+        return Chart {
+            ForEach(moodViewModel.moodsEntity) { daily in
+                BarMark(
+                    x: .value("Day", daily.moodDate ?? Date(), unit: .day),
+                    y: .value("Mood", daily.moodValue)
+                )
+                .foregroundStyle(barGradient)
+                .cornerRadius(2)
+            }
+        }
+        .frame(height: 80)
+        .chartYScale(domain: 0...10)
+        .chartXAxis(.hidden)
+        .chartYAxis(.hidden)
+        .chartXScale(domain: weekDates.first!...weekDates.last!)
+        .padding(.trailing, 10)
+    }
+
     private var todayMood: MoodEntity? {
         moodViewModel.moodsEntity.last(where: {
             Calendar.current.isDate($0.moodDate ?? Date(), inSameDayAs: Date())

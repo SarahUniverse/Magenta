@@ -76,7 +76,7 @@ struct SleepSummaryView: View {
                 .foregroundStyle(barGradient)
             }
         }
-        .frame(height: 90)
+        .frame(height: 80)
         .chartYScale(domain: 0...10)
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
