@@ -27,7 +27,7 @@ public struct ContentView: View {
                 LandingPageView(viewContext: viewContext)
             }
 
-            if contentViewModel.isUserLoggedIn() || biometricAuthViewModel.isAuthenticated {
+            /*if contentViewModel.isUserLoggedIn() || biometricAuthViewModel.isAuthenticated {
                 MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
                     .onAppear {
                         loginViewModel.loadSavedUser()
@@ -39,7 +39,7 @@ public struct ContentView: View {
                 SignUpView(viewContext: viewContext)
             } else {
                 WaitingOnFaceIDAuthView()
-            }
+            }*/
         }
         .task {
             if contentViewModel.isUserLoggedIn() {
