@@ -1,4 +1,7 @@
-# Magenta: Mental Health Mentor
+<div align="center">
+  <img src="https://github.com/SarahUniverse/Magenta/blob/fe4e8604f30f3294b023c572d2c27db653ec03d2/Magenta/Magenta/Assets.xcassets/AppIcon.appiconset/Magenta.png" width="300" style="border: 3px solid white; border-radius: 15px; vertical-align: middle; margin-right: 20px;">
+  <h1 style="display: inline-block; vertical-align: middle;">Magenta: Mental Health Mentor</h1>
+</div>
 
 **Status**: Currently in Progress (WIP)
 
