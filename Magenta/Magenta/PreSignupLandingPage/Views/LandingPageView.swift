@@ -89,7 +89,7 @@ struct LandingPageView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 20)
                             .bold()
-                        Text(" mood tracking, guided meditations, and journaling.")
+                        Text("mood tracking, guided meditations, and journaling.")
                             .font(.subheadline)
                             .foregroundColor(.white)
                             .bold()

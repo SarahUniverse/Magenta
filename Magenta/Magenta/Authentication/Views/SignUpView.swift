@@ -18,68 +18,6 @@ struct SignUpView: View {
         self.viewContext = viewContext
     }
 
-    // MARK: - Private Variables
-    private var headerView: some View {
-        Text("Welcome to Magenta")
-            .padding(.top, 50)
-            .foregroundStyle(.white)
-            .font(.largeTitle.weight(.semibold))
-            .shadow(radius: 2)
-    }
-
-    private var formFields: some View {
-        VStack(alignment: .leading) {
-            formField(title: "Username", text: $signUpViewModel.username)
-            formField(title: "Email", text: $signUpViewModel.email)
-            secureFormField(title: "Password", text: $signUpViewModel.password)
-            secureFormField(title: "Confirm Password", text: $signUpViewModel.confirmPassword)
-        }
-        .padding(20)
-    }
-
-    private var signUpButton: some View {
-        Button {
-            if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
-                signUpViewModel.errorMessage = "User already exists. Please log in or use a different username."
-            } else {
-                signUpViewModel.signUp()
-            }
-        } label: {
-            Text("Sign Up")
-                .bold()
-                .foregroundStyle(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue)
-                .cornerRadius(10)
-        }
-        .padding(20)
-    }
-
-    private var errorMessage: some View {
-        Text(signUpViewModel.errorMessage)
-            .foregroundStyle(.red)
-            .padding()
-    }
-
-    private var successAlert: Alert {
-        Alert(
-            title: Text("Success"),
-            message: Text("Your account has been created."),
-            dismissButton: .default(Text("OK")) {
-                showMainView = true
-            }
-        )
-    }
-
-    private var mainViewDestination: some View {
-        Group {
-            if let userEntity = signUpViewModel.createdUserModel {
-                MainTabView(viewContext: viewContext, userModel: userEntity)
-            }
-        }
-    }
-
     // MARK: - Body
     var body: some View {
         VStack {
@@ -106,6 +44,73 @@ struct SignUpView: View {
             }
         }
         .background(AppGradients.backgroundGradient)
+    }
+
+    // MARK: - Private Variables
+    private var headerView: some View {
+        Text("Welcome to Magenta")
+            .padding(.top, 50)
+            .foregroundStyle(.white)
+            .font(.largeTitle.weight(.semibold))
+            .shadow(color: .pinkPurple, radius: 5)
+            .shadow(color: .pinkPurple, radius: 5)
+            .shadow(color: .darkBlue, radius: 3)
+            .shadow(color: .pinkPurple, radius: 50)
+    }
+
+    private var formFields: some View {
+        VStack(alignment: .leading) {
+            formField(title: "Username", text: $signUpViewModel.username)
+            formField(title: "Email", text: $signUpViewModel.email)
+            secureFormField(title: "Password", text: $signUpViewModel.password)
+            secureFormField(title: "Confirm Password", text: $signUpViewModel.confirmPassword)
+        }
+        .padding(20)
+    }
+
+    private var signUpButton: some View {
+        Button {
+            if signUpViewModel.doesUserExist(for: signUpViewModel.username) {
+                signUpViewModel.errorMessage = "User already exists. Please log in or use a different username."
+            } else {
+                signUpViewModel.signUp()
+            }
+        } label: {
+            Text("Sign Up")
+                .font(.headline)
+                .foregroundColor(.blue)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .clipShape(Capsule())
+                .padding(.horizontal, 5)
+                .shadow(radius: 5)
+        }
+        .padding(20)
+    }
+
+    private var errorMessage: some View {
+        Text(signUpViewModel.errorMessage)
+            .foregroundStyle(.red)
+            .padding()
+    }
+
+    private var successAlert: Alert {
+        Alert(
+            title: Text("Success"),
+            message: Text("Your account has been created."),
+            dismissButton: .default(Text("OK")) {
+                showMainView = true
+            }
+        )
+    }
+
+    private var mainViewDestination: some View {
+        Group {
+            if let userEntity = signUpViewModel.createdUserModel {
+                MainTabView(viewContext: viewContext, userModel: userEntity)
+            }
+        }
     }
 
     // MARK: - Private Functions for Views
