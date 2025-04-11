@@ -35,12 +35,12 @@ struct LandingPageView: View {
                             }
                         }
                     }
-                    .padding(.top, 30)
+                    .padding(.top, 50)
 
                 Image(systemName: "brain.head.profile")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 150, height: 150)
+                    .frame(width: 140, height: 140)
                     .foregroundColor(.white)
                     .padding()
                     .background(Circle().fill(Color.white.opacity(0.2)))
@@ -75,6 +75,8 @@ struct LandingPageView: View {
                     Text("Manage stress, anxiety, and more with tools like mood tracking, guided meditations, and journaling.")
                         .font(.body)
                         .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .truncationMode(.tail)
                         .foregroundColor(.white)
                         .padding(.horizontal, 30)
                         .bold()
@@ -92,9 +94,10 @@ struct LandingPageView: View {
                         .padding(.horizontal, 40)
                         .shadow(radius: 5)
                 })
-                .padding(.top, 20)
+                .padding(.top, 5)
 
                 TabbedContentView(selectedTab: $selectedTab)
+                    .padding(.bottom, 20)
             }
         }
     }

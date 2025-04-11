@@ -37,10 +37,10 @@ struct TabbedContentView: View {
                 .tag(index)
             }
         }
+        .padding()
         .tabViewStyle(.page)
-        .indexViewStyle(.page(backgroundDisplayMode: .never))
-        .frame(height: 150)
-        .padding(.horizontal)
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .frame(height: 310)
     }
 
 }
