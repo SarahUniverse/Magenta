@@ -35,12 +35,15 @@ struct FeatureView: View {
     }
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
-    FeatureView(icon: "sun.min", title: "blah", description: "blah")
+    FeatureView (icon: "paintpalette", title: "Art Therapy", description: "Interactive tools for creative expression to support mental health. Guided art prompts, track emotional impact of art sessions.")
         .preferredColorScheme(.light)
+        .background(AppGradients.backgroundGradient)
 }
 
 #Preview("Dark Mode") {
-    FeatureView(icon: "sun.min", title: "blah", description: "blah")
+    FeatureView (icon: "paintpalette", title: "Art Therapy", description: "Interactive tools for creative expression to support mental health. Guided art prompts, track emotional impact of art sessions.")
         .preferredColorScheme(.dark)
+        .background(AppGradients.backgroundGradient)
 }

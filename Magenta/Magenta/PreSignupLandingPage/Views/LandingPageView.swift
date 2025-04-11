@@ -95,15 +95,13 @@ struct LandingPageView: View {
                 .padding(.top, 20)
 
                 TabbedContentView(selectedTab: $selectedTab)
-                Spacer()
-                CustomTabBar(selectedTab: $selectedTab)
-                    .padding(.bottom, 20)
             }
         }
     }
 
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
     LandingPageView()
         .preferredColorScheme(.light)
