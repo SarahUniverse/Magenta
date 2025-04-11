@@ -35,9 +35,11 @@ struct CustomTabBar: View {
 #Preview("Light Mode") {
     CustomTabBar(selectedTab: .constant(1))
         .preferredColorScheme(.light)
+        .background(AppGradients.backgroundGradient)
 }
 
 #Preview("Dark Mode") {
     CustomTabBar(selectedTab: .constant(1))
         .preferredColorScheme(.dark)
+        .background(AppGradients.backgroundGradient)
 }

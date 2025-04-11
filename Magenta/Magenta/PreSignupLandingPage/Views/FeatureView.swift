@@ -35,6 +35,12 @@ struct FeatureView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     FeatureView(icon: "sun.min", title: "blah", description: "blah")
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    FeatureView(icon: "sun.min", title: "blah", description: "blah")
+        .preferredColorScheme(.dark)
 }
