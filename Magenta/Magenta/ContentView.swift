@@ -22,6 +22,11 @@ public struct ContentView: View {
 
     public var body: some View {
         Group {
+            // Show LandingPageView if user has never signed up before
+            if contentViewModel.hasUserSignedUp() == false {
+                LandingPageView(viewContext: viewContext)
+            }
+
             if contentViewModel.isUserLoggedIn() || biometricAuthViewModel.isAuthenticated {
                 MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
                     .onAppear {

@@ -134,7 +134,6 @@ extension JournalingSuggestion.Reflection: @retroactive Identifiable {
 }
 
 // MARK: - Previews
-// swiftlint:disable line_length
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")
@@ -222,5 +221,4 @@ extension JournalingSuggestion.Reflection: @retroactive Identifiable {
     return JournalView(viewContext: persistentContainer.viewContext)
         .preferredColorScheme(.dark)
 }
-// swiftlint:enable line_length
 #endif

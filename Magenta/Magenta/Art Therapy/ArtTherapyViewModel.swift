@@ -33,7 +33,6 @@ import SwiftUI
         }
     }
 
-    // swiftlint:disable line_length
     private func createInitialArtTherapyActivities() {
         let activities = [
             (
@@ -72,7 +71,6 @@ import SwiftUI
         }
 
     }
-    // swiftlint:enable line_length
 
     func createArtTherapyActivity(
         activityDescription: String,

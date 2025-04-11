@@ -42,7 +42,6 @@ import SwiftUI
             let startOfDay = calendar.startOfDay(for: dayStart)
 
             // March 13: Short sleep with interruptions
-            // swiftlint:disable line_length
             if dayOffset == -7 {
                 samples.append(HKCategorySample(type: HKCategoryType(.sleepAnalysis), value: HKCategoryValueSleepAnalysis.inBed.rawValue, start: calendar.date(byAdding: .hour, value: 23, to: startOfDay)!, end: calendar.date(byAdding: .hour, value: 24, to: startOfDay)!, device: nil, metadata: nil))
                 samples.append(HKCategorySample(type: HKCategoryType(.sleepAnalysis), value: HKCategoryValueSleepAnalysis.asleepCore.rawValue, start: calendar.date(byAdding: .hour, value: 24, to: startOfDay)!, end: calendar.date(byAdding: .hour, value: 26, to: startOfDay)!, device: nil, metadata: nil))
@@ -90,7 +89,6 @@ import SwiftUI
         }
         self.sleepSamples = samples
     }
-    // swiftlint:enable line_length
 
     func requestSleepTrackingAuthorization() {
         healthKitManager.requestSleepTrackingAuthorization()

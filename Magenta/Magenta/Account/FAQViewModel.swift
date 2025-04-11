@@ -26,7 +26,6 @@ import CoreData
         loadFAQData()
     }
 
-    // swiftlint:disable line_length
     private func loadFAQData() {
         categories = [
             FAQCategory(name: "Getting Started", questions: [
@@ -66,7 +65,6 @@ import CoreData
             ])
         ]
     }
-    // swiftlint:enable line_length
 
     func contactSupport() {
         showingSupportSheet = true

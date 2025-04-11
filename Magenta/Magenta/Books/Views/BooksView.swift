@@ -192,7 +192,6 @@ struct BooksView: View {
 }
 
 // MARK: - Previews
-// swiftlint:disable line_length
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")
@@ -330,4 +329,3 @@ struct BooksView: View {
     return BooksView(viewContext: viewContext)
         .preferredColorScheme(.dark)
 }
-// swiftlint:enable line_length

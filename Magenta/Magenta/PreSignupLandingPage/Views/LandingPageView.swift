@@ -5,13 +5,22 @@
 //  Created by Sarah Clark on 4/10/25.
 //
 
+import CoreData
 import SwiftUI
 
 struct LandingPageView: View {
     @State private var selectedTab: Int = 0
     @State private var index = 0
     let color: [Color] = [.lightPurple, .pinkPurple, .purple4, .darkBlue, .darkPurple]
+    private let viewContext: NSManagedObjectContext
+    @State private var landingPageViewModel: LandingPageViewModel
 
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        _landingPageViewModel = State(wrappedValue: LandingPageViewModel(viewContext: viewContext))
+    }
+
+    // MARK: - Body
     var body: some View {
         ZStack {
             AppGradients.backgroundGradient
@@ -82,6 +91,7 @@ struct LandingPageView: View {
                         .bold()
                 }
                 Button(action: {
+                    SignUpView(viewContext: viewContext)
                     print("Sign Up tapped!")
                 }, label: {
                     Text("Get Started")
@@ -106,11 +116,28 @@ struct LandingPageView: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    LandingPageView()
+    let context = LandingPageView.createPreviewContext()
+    LandingPageView(viewContext: context)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    LandingPageView()
+    let context = LandingPageView.createPreviewContext()
+    LandingPageView(viewContext: context)
         .preferredColorScheme(.dark)
+}
+
+extension LandingPageView {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
+
 }

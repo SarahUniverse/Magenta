@@ -8,11 +8,11 @@
 import CoreData
 import SwiftUI
 
-class ContentViewModel: ObservableObject {
-    @Published var username: String = ""
+@Observable class ContentViewModel {
+    var username: String = ""
     private let keychainManager = KeychainManager.shared
     private var viewContext: NSManagedObjectContext
-    @Published var userModel: UserModel?
+    var userModel: UserModel?
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -29,6 +29,11 @@ class ContentViewModel: ObservableObject {
             print("Error fetching users from CoreData: \(error.localizedDescription)")
             return false
         }
+    }
+
+    // TODO: Update later
+    func hasUserSignedUp() -> Bool {
+        return false
     }
 
     private func verifyUserInKeychain(userId: String) -> Bool {
