@@ -40,6 +40,8 @@ public struct ContentView: View {
         }
         .onAppear {
             loginViewModel.loadSavedUser()
+            // For debugging purposes only. Uncomment if needed.
+            // signUpViewModel.deleteAllUsers(viewContext: viewContext)
            // signUpViewModel.isUserSignedUp()
            // loginViewModel.isUserLoggedIn()
         }
