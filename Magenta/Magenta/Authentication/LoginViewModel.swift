@@ -28,6 +28,29 @@ import SwiftUI
     }
 
     // MARK: - Functions
+    func isUserLoggedIn() -> Bool {
+        if let user = userModel, user.isUserLoggedIn {
+            return true
+        }
+
+        let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isUserLoggedIn == %@", NSNumber(value: true))
+
+        do {
+            let loggedInUsers = try viewContext.fetch(fetchRequest)
+            if let loggedInUser = loggedInUsers.first {
+                self.userModel = UserModel(entity: loggedInUser)
+                self.isLoggedIn = true
+                self.username = loggedInUser.username ?? ""
+                return true
+            }
+        } catch {
+            print("Error checking logged-in user: \(error.localizedDescription)")
+        }
+
+        return false
+    }
+
     func loginUser() {
         do {
             try KeychainManager.shared.savePasswordToKeychain(password: password, for: username)
@@ -46,6 +69,10 @@ import SwiftUI
                 let storedPassword = try KeychainManager.shared.retrievePasswordFromKeychain(for: username)
 
                 if password == storedPassword {
+                    userEntity.isUserLoggedIn = true
+                    try viewContext.save()
+
+                    let userModel = UserModel(entity: userEntity)
                     self.isLoggedIn = true
                     self.error = ""
                     self.userModel = userModel
@@ -110,11 +137,14 @@ import SwiftUI
     func loadSavedUser() {
         do {
             let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "isUserLoggedIn == %@ OR isUserSignedUp == %@", NSNumber(value: true), NSNumber(value: true))
+            fetchRequest.fetchLimit = 1
 
             if let userEntity = try viewContext.fetch(fetchRequest).first {
                 let userModel = UserModel(entity: userEntity)
                 self.username = userModel.username
                 self.userModel = userModel
+                self.isLoggedIn = userModel.isUserLoggedIn
             }
         } catch {
             print("Error loading saved user: \(error.localizedDescription)")

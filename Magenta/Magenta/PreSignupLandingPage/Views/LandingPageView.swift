@@ -62,7 +62,7 @@ struct LandingPageView: View {
                         .shadow(color: color[index], radius: 200)
                         .foregroundStyle(Color.white)
                         .onAppear {
-                            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
+                            Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true ) { _ in
                                 withAnimation {
                                     index = (index + 1) % color.count
                                 }

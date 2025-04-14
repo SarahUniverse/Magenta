@@ -13,12 +13,14 @@ import SwiftUI
     private let keychainManager = KeychainManager.shared
     private var viewContext: NSManagedObjectContext
     var userModel: UserModel?
+    private var signUpViewModel: SignUpViewModel
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        self.signUpViewModel = SignUpViewModel(viewContext: viewContext)
     }
 
-    func isUserLoggedIn() -> Bool {
+    /*func isUserLoggedIn() -> Bool {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         do {
             let users = try viewContext.fetch(fetchRequest)
@@ -29,12 +31,8 @@ import SwiftUI
             print("Error fetching users from CoreData: \(error.localizedDescription)")
             return false
         }
-    }
+    }*/
 
-    // TODO: Update later
-    func hasUserSignedUp() -> Bool {
-        return false
-    }
 
     private func verifyUserInKeychain(userId: String) -> Bool {
         do {
@@ -65,7 +63,6 @@ import SwiftUI
 
 }
 
-// Extension for testing and preview support
 extension ContentViewModel {
     static func preview(viewContext: NSManagedObjectContext) -> ContentViewModel {
         let viewModel = ContentViewModel(viewContext: viewContext)

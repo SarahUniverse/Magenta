@@ -39,7 +39,7 @@ struct SignUpView: View {
             )
         }
         .fullScreenCover(isPresented: $showMainView) {
-            if let userEntity = signUpViewModel.createdUserModel {
+            if let userEntity = signUpViewModel.userModel {
                 MainTabView(viewContext: viewContext, userModel: userEntity)
             }
         }
@@ -107,7 +107,7 @@ struct SignUpView: View {
 
     private var mainViewDestination: some View {
         Group {
-            if let userEntity = signUpViewModel.createdUserModel {
+            if let userEntity = signUpViewModel.userModel {
                 MainTabView(viewContext: viewContext, userModel: userEntity)
             }
         }
