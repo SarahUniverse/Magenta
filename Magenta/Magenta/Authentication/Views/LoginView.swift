@@ -17,13 +17,36 @@ struct LoginView: View {
         self.viewContext = viewContext
     }
 
-    // MARK: - Computed Variables for Views
+    // MARK: - Body
+    var body: some View {
+        VStack {
+            headerView
+            loginFields
+            loginButton
+            errorView
+            divider
+            socialLoginButtons
+            Spacer()
+            CopyrightView()
+                .padding(.top, 100)
+        }
+        .padding()
+        .background(AppGradients.backgroundGradient)
+        .scrollContentBackground(.hidden)
+        .navigationBarBackButtonHidden(true)
+    }
+
+    // MARK: - Private Variables
     private var headerView: some View {
         Text("Welcome to Magenta")
             .padding(.top, 50)
+            .padding(.bottom, 30)
             .foregroundStyle(.white)
             .font(.largeTitle.weight(.semibold))
-            .shadow(radius: 2)
+            .shadow(color: .pinkPurple, radius: 5)
+            .shadow(color: .pinkPurple, radius: 5)
+            .shadow(color: .darkBlue, radius: 3)
+            .shadow(color: .pinkPurple, radius: 50)
     }
 
     private var loginFields: some View {
@@ -35,7 +58,8 @@ struct LoginView: View {
 
     private var usernameField: some View {
         TextField("Username", text: $loginViewModel.username)
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 10)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled(true)
@@ -43,7 +67,7 @@ struct LoginView: View {
 
     private var passwordField: some View {
         SecureField("Password", text: $loginViewModel.password)
-            .padding(20)
+            .padding(.horizontal, 20)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled(true)
@@ -57,13 +81,13 @@ struct LoginView: View {
             }
         } label: {
             Text("Login")
-                .shadow(radius: 1)
-                .bold()
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
+                .font(.headline)
+                .foregroundColor(.blue)
                 .padding()
-                .background(Color.blue)
-                .cornerRadius(10)
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .clipShape(Capsule())
+                .shadow(radius: 5)
         }
         .padding(20)
     }
@@ -108,28 +132,10 @@ struct LoginView: View {
 
     private var appleSignInButton: some View {
         loginViewModel.setupAppleSignInButton()
+            .shadow(radius: 5)
             .containerRelativeFrame(.vertical, count: 8, spacing: 60)
-            .padding(20)
-            .signInWithAppleButtonStyle(.whiteOutline)
-    }
-
-    // MARK: - Body
-    var body: some View {
-        VStack {
-            headerView
-            loginFields
-            loginButton
-            errorView
-            divider
-            socialLoginButtons
-            Spacer()
-            CopyrightView()
-            Spacer()
-        }
-        .padding()
-        .background(AppGradients.backgroundGradient)
-        .scrollContentBackground(.hidden)
-        .navigationBarBackButtonHidden(true)
+            .padding(.horizontal, 20)
+            .signInWithAppleButtonStyle(.white)
     }
 
 }

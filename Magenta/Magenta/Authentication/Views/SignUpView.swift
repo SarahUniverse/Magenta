@@ -27,7 +27,7 @@ struct SignUpView: View {
             errorMessage
             Spacer()
             CopyrightView()
-            Spacer()
+                .padding(.top, 80)
         }
         .alert(isPresented: $signUpViewModel.isSignUpSuccessful) {
             Alert(
@@ -83,7 +83,6 @@ struct SignUpView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color.white)
                 .clipShape(Capsule())
-                .padding(.horizontal, 5)
                 .shadow(radius: 5)
         }
         .padding(20)
