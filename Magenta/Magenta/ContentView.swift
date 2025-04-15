@@ -42,8 +42,6 @@ public struct ContentView: View {
             loginViewModel.loadSavedUser()
             // For debugging purposes only. Uncomment if needed.
             // signUpViewModel.deleteAllUsers(viewContext: viewContext)
-           // signUpViewModel.isUserSignedUp()
-           // loginViewModel.isUserLoggedIn()
         }
 
             /*if contentViewModel.isUserLoggedIn() || biometricAuthViewModel.isAuthenticated {
