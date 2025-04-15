@@ -38,4 +38,18 @@ struct CustomGoogleSignInButton: UIViewRepresentable {
             parent.action()
         }
     }
+
+}
+
+// MARK: - Previews
+#Preview("Light Mode") {
+    CustomGoogleSignInButton(action: {})
+        .padding(20)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    CustomGoogleSignInButton(action: {})
+        .padding(20)
+        .preferredColorScheme(.dark)
 }
