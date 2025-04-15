@@ -12,7 +12,7 @@ struct GlassBackground: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(.ultraThinMaterial)
+            .fill(.thinMaterial)
             .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
             .overlay {
                 RoundedRectangle(cornerRadius: 15)
