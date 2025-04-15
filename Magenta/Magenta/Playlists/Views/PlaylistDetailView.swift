@@ -14,17 +14,6 @@ struct PlaylistDetailView: View {
     @State private var isPlaying: Bool = false
     @State private var currentSong: SongModel?
 
-    private let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .hotPink, location: 0),
-            Gradient.Stop(color: .hotPink.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .hotPink.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     private let playButtonGradient = LinearGradient(
         gradient: Gradient(colors: [.purple, .blue]),
         startPoint: .topTrailing,
@@ -39,7 +28,7 @@ struct PlaylistDetailView: View {
             songList
         }
         .navigationTitle(playlist.name)
-        .background(backgroundGradient)
+        .background(AppGradients.backgroundGradient)
         .scrollContentBackground(.hidden)
         .onAppear {
             Task {
@@ -109,7 +98,7 @@ struct PlaylistDetailView: View {
         }, label: {
             Image(systemName: isPlaying && currentSong?.id == song.id ? "pause.circle" : "play.circle")
                 .font(.system(size: 30))
-                .foregroundStyle(playButtonGradient)
+                .foregroundStyle(.blue)
         })
     }
 

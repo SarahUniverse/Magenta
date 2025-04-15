@@ -66,7 +66,7 @@ struct SleepSummaryView: View {
                     x: .value("Date", date, unit: .day),
                     y: .value("Hours", hours)
                 )
-                .foregroundStyle(AppGradients.summaryIconGradient)
+                .foregroundStyle(AppGradients.discoverIconGradient)
             }
         }
         .frame(height: 80)

@@ -119,6 +119,7 @@ struct AccountView: View {
             }
             .alert("Delete Account", isPresented: $accountViewModel.showingDeleteAlert) {
                 Button("Cancel", role: .cancel) { }
+                    .foregroundStyle(.red)
                 Button("Delete", role: .destructive) {
                     accountViewModel.confirmDeleteAccount()
                 }

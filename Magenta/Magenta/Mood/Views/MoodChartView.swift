@@ -18,13 +18,6 @@ struct MoodChartView: View {
         _moodViewModel = State(wrappedValue: MoodViewModel(viewContext: viewContext))
     }
 
-    private let barGradient = Gradient(colors: [
-        .yellow,
-        .yellow.opacity(0.7),
-        .blue.opacity(0.7),
-        .blue.opacity(0.3)
-    ])
-
     var body: some View {
         let weekDates = getWeekDates()
 
@@ -35,7 +28,7 @@ struct MoodChartView: View {
                         x: .value("Day", daily.moodDate, unit: .day),
                         y: .value("Mood", daily.moodValue)
                     )
-                    .foregroundStyle(barGradient)
+                    .foregroundStyle(AppGradients.discoverIconGradient)
                     .symbol(by: .value("Mood", daily.moodValue))
                     .cornerRadius(4)
                 }

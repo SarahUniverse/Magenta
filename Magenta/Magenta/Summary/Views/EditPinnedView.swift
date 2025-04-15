@@ -76,7 +76,7 @@ struct EditPinnedView: View {
                     ForEach(editPinnedViewModel.filteredUnpinnedItems, id: \.self) { item in
                         HStack {
                             Image(systemName: "pin.fill")
-                                .foregroundStyle(.yellow)
+                                .foregroundStyle(.blue1)
                             Text(item)
                                 .onDrag { NSItemProvider(object: item as NSString) }
                         }

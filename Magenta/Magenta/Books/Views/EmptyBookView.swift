@@ -30,8 +30,10 @@ struct EmptyBooksView: View {
 
             Button(action: action) {
                 Label("Add Your First Book", systemImage: "plus.circle.fill")
+                    .foregroundStyle(.white, .indigo)
+                    .shadow(radius: 5, y: 3)
                     .padding()
-                    .background(Color.blue.opacity(0.1))
+                    .background(Color.indigo.opacity(0.4))
                     .cornerRadius(10)
             }
         }

@@ -157,6 +157,7 @@ struct SupportContactView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .foregroundStyle(.red)
                 }
             }
         }

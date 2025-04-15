@@ -93,7 +93,7 @@ struct BooksView: View {
             Button(action: { showingAddBookSheet = true
             }, label: {
                 Image(systemName: "plus.circle.fill")
-                    .foregroundStyle(.white, .blue)
+                    .foregroundStyle(.white, .indigo)
                     .shadow(radius: 5, y: 3)
             })
         }
@@ -134,6 +134,7 @@ struct BooksView: View {
                 Button("Cancel") {
                     showingAddBookSheet = false
                 }
+                .foregroundStyle(.red)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {

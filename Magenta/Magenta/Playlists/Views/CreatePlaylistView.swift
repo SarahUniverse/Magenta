@@ -15,17 +15,6 @@ struct CreatePlaylistView: View {
     @State private var selectedSongs: Set<SongModel> = [] // Track selected songs.
     @State private var searchText = ""
 
-    private let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .indigo, location: 0),
-            Gradient.Stop(color: .indigo.opacity(0.7), location: 0.1),
-            Gradient.Stop(color: .indigo.opacity(0.3), location: 0.2),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     private var filteredSongs: [SongModel] {
         if searchText.isEmpty {
             return playlistsViewModel.availableSongs
@@ -81,7 +70,7 @@ struct CreatePlaylistView: View {
                 }
             }
             .navigationTitle("Create Playlist")
-            .background(backgroundGradient)
+            .background(AppGradients.backgroundGradient)
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -89,7 +78,6 @@ struct CreatePlaylistView: View {
                         dismiss()
                     }
                     .foregroundStyle(.red)
-                    .shadow(radius: 5, y: 3)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Create") {
@@ -106,6 +94,7 @@ struct CreatePlaylistView: View {
 
 }
 
+// MARK: - Previews
 #Preview("Light Mode") {
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

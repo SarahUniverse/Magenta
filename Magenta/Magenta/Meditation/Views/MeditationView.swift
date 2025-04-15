@@ -122,6 +122,7 @@ struct MeditationView: View {
                 Button("Cancel") {
                     showAddMeditationSheet = false
                 }
+                .foregroundStyle(.red)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {

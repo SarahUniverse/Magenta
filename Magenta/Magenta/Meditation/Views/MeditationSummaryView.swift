@@ -51,14 +51,13 @@ struct MeditationSummaryView: View {
     private var meditationIcon: some View {
         ZStack {
             Circle()
-                .fill(Color.indigo.opacity(0.3))
+                .fill(Color.gray.opacity(0.5))
                 .frame(width: 70, height: 70)
-                .shadow(radius: 5)
 
             Image(systemName: "figure.mind.and.body")
-                .foregroundStyle(AppGradients.summaryIconGradient)
+                .foregroundStyle(AppGradients.discoverIconGradient)
                 .font(.system(size: 48))
-                .shadow(radius: 5)
+                .shadow(radius: 2, y: 1)
         }
     }
 

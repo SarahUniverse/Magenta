@@ -62,6 +62,7 @@ struct PrivacySettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .alert("Clear Data", isPresented: $viewModel.showingAlert) {
             Button("Cancel", role: .cancel) { }
+                .foregroundStyle(.red)
             Button("Clear", role: .destructive) {
                 viewModel.confirmClearData()
             }

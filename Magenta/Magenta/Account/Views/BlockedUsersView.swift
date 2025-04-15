@@ -41,6 +41,7 @@ struct BlockedUsersView: View {
         .navigationBarTitleDisplayMode(.inline)
         .alert("Unblock User", isPresented: $viewModel.showUnblockAlert) {
             Button("Cancel", role: .cancel) { }
+                .foregroundStyle(.red)
             Button("Unblock", role: .destructive) {
                 if let user = viewModel.selectedUser {
                     viewModel.unblockUser(user)

@@ -39,6 +39,7 @@ struct AddQuoteSheet: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .foregroundStyle(.red)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
