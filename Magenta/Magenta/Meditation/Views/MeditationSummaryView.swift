@@ -10,14 +10,7 @@ import SwiftUI
 
 struct MeditationSummaryView: View {
     @State private var meditationViewModel: MeditationViewModel
-    @State private var isAnimating = false
     let viewContext: NSManagedObjectContext
-
-    private let iconGradient = LinearGradient(
-        colors: [.cyan, .darkBlue],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -39,9 +32,10 @@ struct MeditationSummaryView: View {
         Text("MEDITATION")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(.gray)
+            .foregroundStyle(AppGradients.summaryTitleTextGradient)
             .padding(.leading, 5)
             .padding(.bottom, -20)
+            .shadow(radius: 2, y: 1)
     }
 
     private var meditationContent: some View {
@@ -62,14 +56,9 @@ struct MeditationSummaryView: View {
                 .shadow(radius: 5)
 
             Image(systemName: "figure.mind.and.body")
-                .foregroundStyle(iconGradient)
+                .foregroundStyle(AppGradients.summaryIconGradient)
                 .font(.system(size: 48))
                 .shadow(radius: 5)
-                .scaleEffect(isAnimating ? 1.1 : 1.0)
-                .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
-                .onAppear {
-                    isAnimating = true
-                }
         }
     }
 

@@ -24,21 +24,19 @@ struct TherapistSummaryView: View {
                 Text("THERAPY")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
+                    .shadow(radius: 5, y: 3)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "brain.head.profile")
-                        .foregroundStyle(.teal)
+                        .foregroundStyle(AppGradients.summaryIconGradient)
                         .font(.largeTitle)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
-
-                        Button("Review") { }
-                            .foregroundStyle(.blue)
                     }
                     Spacer()
                     NavigationChevron()

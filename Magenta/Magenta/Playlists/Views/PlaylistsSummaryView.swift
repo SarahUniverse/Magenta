@@ -17,12 +17,6 @@ struct PlaylistsSummaryView: View {
         _playlistsViewModel = State(wrappedValue: PlaylistsViewModel(viewContext: viewContext))
     }
 
-    private let musicalNotesGradient = LinearGradient(
-        gradient: Gradient(colors: [.purple, .blue]),
-        startPoint: .topTrailing,
-        endPoint: .bottomLeading
-    )
-
     // MARK: - Body
     var body: some View {
         NavigationLink(destination: PlaylistsView(viewContext: viewContext)) {
@@ -51,7 +45,7 @@ struct PlaylistsSummaryView: View {
                     }
                     Spacer()
                     Image(systemName: "music.quarternote.3")
-                        .foregroundStyle(musicalNotesGradient)
+                        .foregroundStyle(AppGradients.summaryIconGradient)
                         .font(.system(size: 50))
                     Spacer()
                     NavigationChevron()
@@ -67,9 +61,10 @@ struct PlaylistsSummaryView: View {
         Text("MUSIC")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(.gray)
+            .foregroundStyle(AppGradients.summaryTitleTextGradient)
             .padding(.leading, 5)
             .padding(.bottom, -20)
+            .shadow(radius: 2, y: 1)
     }
 
 }

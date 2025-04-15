@@ -96,7 +96,7 @@ struct DiscoverView: View {
                 .scaledToFit()
                 .frame(width: 30, height: 30)
                 .padding(.trailing, 10)
-                .foregroundStyle(AppGradients.iconGradient)
+                .foregroundStyle(AppGradients.discoverIconGradient)
 
             Text(item.title)
                 .foregroundStyle(discoverViewModel.colors.textColor)

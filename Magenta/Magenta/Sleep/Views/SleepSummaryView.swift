@@ -28,15 +28,14 @@ struct SleepSummaryView: View {
     }
 
     // MARK: - Private Variables
-    private var barGradient = Gradient(colors: [.blue, .indigo])
-
     private var titleText: some View {
         Text("SLEEP")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(.gray)
+            .foregroundStyle(AppGradients.summaryTitleTextGradient)
             .padding(.leading, 5)
             .padding(.bottom, -20)
+            .shadow(radius: 2, y: 1)
     }
 
     private var sleepNavigationLink: some View {
@@ -56,13 +55,7 @@ struct SleepSummaryView: View {
 
     private var sleepIcon: some View {
         Image(systemName: "moon.zzz")
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [.mediumBlue, .indigo],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .foregroundStyle(AppGradients.summaryIconGradient)
             .font(.largeTitle)
     }
 
@@ -73,7 +66,7 @@ struct SleepSummaryView: View {
                     x: .value("Date", date, unit: .day),
                     y: .value("Hours", hours)
                 )
-                .foregroundStyle(barGradient)
+                .foregroundStyle(AppGradients.summaryIconGradient)
             }
         }
         .frame(height: 80)

@@ -25,9 +25,10 @@ struct MoodSummaryView: View {
                 Text("MOOD")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
+                    .shadow(radius: 2, y: 1)
 
                 HStack {
                     VStack {
@@ -42,7 +43,7 @@ struct MoodSummaryView: View {
                                 .foregroundStyle(.gray.opacity(0.3))
                             Circle()
                                 .trim(from: 0, to: todayMood != nil ? CGFloat((todayMood?.moodValue ?? 0) / 10) : 0)
-                                .stroke(barGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                                .stroke(AppGradients.summaryIconGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
                                 .frame(width: 65, height: 65)
                                 .rotationEffect(.degrees(-90))
                                 .animation(.easeInOut(duration: 1.0), value: todayMood?.moodValue)
@@ -72,13 +73,6 @@ struct MoodSummaryView: View {
         }
     }
 
-    private let barGradient = Gradient(colors: [
-        .yellow,
-        .yellow.opacity(0.7),
-        .blue.opacity(0.7),
-        .blue.opacity(0.3)
-    ])
-
     // MARK: - Private variables
     private var moodChart: some View {
         let weekDates = getWeekDates()
@@ -88,7 +82,7 @@ struct MoodSummaryView: View {
                     x: .value("Day", daily.moodDate ?? Date(), unit: .day),
                     y: .value("Mood", daily.moodValue)
                 )
-                .foregroundStyle(barGradient)
+                .foregroundStyle(AppGradients.discoverIconGradient)
                 .cornerRadius(2)
             }
         }

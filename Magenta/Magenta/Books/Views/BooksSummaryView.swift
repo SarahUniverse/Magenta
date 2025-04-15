@@ -21,15 +21,17 @@ struct BooksSummaryView: View {
     var body: some View {
         NavigationLink(destination: BooksView(viewContext: viewContext)) {
             VStack(alignment: .leading, spacing: 10) {
+                Text("BOOKS")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
+                    .padding(.leading, 5)
+                    .padding(.bottom, -20)
+                    .shadow(radius: 2, y: 1)
                 HStack(alignment: .top, spacing: 10) {
                     VStack(alignment: .center) {
-                        Text("books")
-                            .font(.caption)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.white)
-                            .padding(.leading, 5)
                         Image(systemName: "books.vertical")
-                            .foregroundStyle(AppGradients.iconGradient)
+                            .foregroundStyle(AppGradients.summaryIconGradient)
                             .font(.largeTitle)
                     }
 
@@ -37,9 +39,6 @@ struct BooksSummaryView: View {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
-
-                        Button("Review") { }
-                            .foregroundStyle(.blue)
                     }
                     Spacer()
                     NavigationChevron()

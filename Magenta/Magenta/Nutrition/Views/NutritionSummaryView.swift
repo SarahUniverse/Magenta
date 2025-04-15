@@ -24,21 +24,19 @@ struct NutritionSummaryView: View {
                 Text("NUTRITION")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
+                    .shadow(radius: 2, y: 1)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "fork.knife")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(AppGradients.summaryIconGradient)
                         .font(.largeTitle)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
-
-                        Button("Review") { }
-                            .foregroundStyle(.blue)
                     }
                     Spacer()
                     NavigationChevron()

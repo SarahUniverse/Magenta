@@ -64,7 +64,7 @@ struct QuotesSummaryView: View {
                     .overlay(
                         Image(systemName: "sparkles")
                             .font(.caption2)
-                            .foregroundStyle(.yellow)
+                            .foregroundStyle(AppGradients.summaryIconGradient)
                     )
             }
         }
@@ -75,7 +75,7 @@ struct QuotesSummaryView: View {
         ZStack {
             grayGradientRectangle
             Image(systemName: "heart.fill")
-                .foregroundStyle(.yellow)
+                .foregroundStyle(AppGradients.summaryIconGradient)
                 .font(.system(size: 60))
                 .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
         }
@@ -101,9 +101,10 @@ struct QuotesSummaryView: View {
         Text("QUOTES")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(.gray)
+            .foregroundStyle(AppGradients.summaryTitleTextGradient)
             .padding(.leading, 5)
             .padding(.bottom, -20)
+            .shadow(radius: 2, y: 1)
     }
 
 }

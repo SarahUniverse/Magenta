@@ -14,10 +14,22 @@ struct AppGradients {
         endPoint: .bottomTrailing
     )
 
-    static let iconGradient = LinearGradient(
+    static let discoverIconGradient = LinearGradient(
         gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.indigo]),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
+    )
+
+    static let summaryIconGradient = LinearGradient(
+        gradient: Gradient(colors: [.blue1, Color.purple.opacity(0.6), Color.indigo]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    static let summaryTitleTextGradient = LinearGradient(
+        gradient: Gradient(colors: [.blue2, .blue1]),
+        startPoint: .topTrailing,
+        endPoint: .bottomLeading
     )
 
 }

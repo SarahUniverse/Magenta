@@ -24,28 +24,20 @@ struct ExerciseSummaryView: View {
                 Text("EXERCISE")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
+                    .shadow(radius: 2, y: 1)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "figure.run")
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.yellow, .orange, .red],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .foregroundStyle(AppGradients.summaryIconGradient)
                         .font(.largeTitle)
 
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Make sure the Health features on your iPhone and Apple Watch are set up the way you want them.")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
-
-                        Button("Review") { }
-                            .foregroundStyle(.blue)
                     }
                     Spacer()
                     NavigationChevron()
