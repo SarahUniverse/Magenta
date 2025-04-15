@@ -115,9 +115,9 @@ struct MoodView: View {
         Button(action: {
             // Add profile action
         }, label: {
-            Image(systemName: "person.circle")
-                .font(.title2)
-                .foregroundStyle(.white)
+            Image(systemName: "plus.circle.fill")
+                .foregroundStyle(.white, .indigo)
+                .shadow(radius: 5, y: 3)
         })
     }
 

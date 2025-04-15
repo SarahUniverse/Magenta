@@ -24,10 +24,9 @@ struct TherapistSummaryView: View {
                 Text("THERAPY")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(AppGradients.summaryTitleTextGradient)
+                    .foregroundStyle(Color(UIColor.secondaryLabel))
                     .padding(.leading, 5)
                     .padding(.bottom, -20)
-                    .shadow(radius: 5, y: 3)
 
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "brain.head.profile")

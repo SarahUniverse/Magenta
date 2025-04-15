@@ -28,7 +28,9 @@ struct ExerciseView: View {
             .scrollContentBackground(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "person.circle")
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundStyle(.white, .indigo)
+                        .shadow(radius: 5, y: 3)
                 }
             }
             .onAppear {

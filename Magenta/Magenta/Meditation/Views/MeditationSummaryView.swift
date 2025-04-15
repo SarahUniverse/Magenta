@@ -32,10 +32,9 @@ struct MeditationSummaryView: View {
         Text("MEDITATION")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(AppGradients.summaryTitleTextGradient)
+            .foregroundStyle(Color(UIColor.secondaryLabel))
             .padding(.leading, 5)
             .padding(.bottom, -20)
-            .shadow(radius: 2, y: 1)
     }
 
     private var meditationContent: some View {

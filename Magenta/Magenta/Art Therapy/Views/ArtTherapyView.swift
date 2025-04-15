@@ -15,18 +15,6 @@ struct ArtTherapyView: View {
         _artTherapyViewModel = State(wrappedValue: ArtTherapyViewModel(viewContext: viewContext))
     }
 
-    private let backgroundGradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: .red, location: 0),
-            Gradient.Stop(color: .yellow.opacity(0.7), location: 0.2),
-            Gradient.Stop(color: .green.opacity(0.7), location: 0.27),
-            Gradient.Stop(color: .blue.opacity(0.3), location: 0.36),
-            Gradient.Stop(color: .clear, location: 0.4)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: - Body
     var body: some View {
         NavigationStack {

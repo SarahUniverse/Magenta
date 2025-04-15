@@ -32,7 +32,9 @@ struct SleepView: View {
                 .scrollContentBackground(.hidden)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: "person.circle")
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.white, .indigo)
+                            .shadow(radius: 5, y: 3)
                     }
                 }
             /*} else {
@@ -40,6 +42,7 @@ struct SleepView: View {
             }*/
         }
     }
+
 }
 
 // MARK: - Previews

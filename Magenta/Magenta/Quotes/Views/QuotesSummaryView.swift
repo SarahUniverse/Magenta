@@ -101,10 +101,9 @@ struct QuotesSummaryView: View {
         Text("QUOTES")
             .font(.caption)
             .fontWeight(.bold)
-            .foregroundStyle(AppGradients.summaryTitleTextGradient)
+            .foregroundStyle(Color(UIColor.secondaryLabel))
             .padding(.leading, 5)
             .padding(.bottom, -20)
-            .shadow(radius: 2, y: 1)
     }
 
 }
