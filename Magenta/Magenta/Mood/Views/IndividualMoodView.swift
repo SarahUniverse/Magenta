@@ -19,17 +19,15 @@ struct IndividualMoodView: View {
             Text(emoji)
                 .font(.system(size: 50))
                 .padding(.top, 5)
-
             Text(mood)
                 .font(.title3)
                 .foregroundStyle(Color(white: 0.4745))
-                .bold(true)
+                .bold()
                 .padding(.bottom, 20)
 
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.blue)
-                    .shadow(color: .yellow, radius: 3)
+                    .foregroundStyle(.indigo)
                     .font(.system(size: 21))
                     .padding(.bottom, 10)
             }
@@ -46,8 +44,8 @@ struct IndividualMoodView: View {
                     isSelected ?
                     LinearGradient(
                         colors: [
-                            Color.blue.opacity(0.7),
-                            Color.blue.opacity(0.7)
+                            Color.indigo.opacity(0.7),
+                            Color.indigo.opacity(0.7)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
