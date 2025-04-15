@@ -20,20 +20,6 @@ import SwiftUI
         self.signUpViewModel = SignUpViewModel(viewContext: viewContext)
     }
 
-    /*func isUserLoggedIn() -> Bool {
-        let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            let users = try viewContext.fetch(fetchRequest)
-            return !users.isEmpty && users.contains { user in
-                return verifyUserInKeychain(userId: user.username ?? "unknown")
-            }
-        } catch {
-            print("Error fetching users from CoreData: \(error.localizedDescription)")
-            return false
-        }
-    }*/
-
-
     private func verifyUserInKeychain(userId: String) -> Bool {
         do {
             _ = try keychainManager.retrievePasswordFromKeychain(for: userId)

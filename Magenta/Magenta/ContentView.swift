@@ -31,12 +31,12 @@ public struct ContentView: View {
             } else if loginViewModel.isUserLoggedIn() == false {
                 LoginView(viewContext: viewContext)
             } else {
-            MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
-                .onAppear {
-                    loginViewModel.loadSavedUser()
-                    currentUser = loginViewModel.username
+                MainTabView(viewContext: viewContext, userModel: loginViewModel.userModel!)
+                    .onAppear {
+                        loginViewModel.loadSavedUser()
+                        currentUser = loginViewModel.username
+                    }
                 }
-            }
         }
         .onAppear {
             loginViewModel.loadSavedUser()
