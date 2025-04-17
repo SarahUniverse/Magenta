@@ -40,7 +40,7 @@ struct ArtTherapyView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 24)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(.softYellow)
                 .shadow(radius: 2)
 
             Text("Ideas for Activities:")
