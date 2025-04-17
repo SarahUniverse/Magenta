@@ -40,6 +40,7 @@
         <attribute name="dateLogged" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="foodName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="proteinIntake" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="waterIntake" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="PinnedItemEntity" representedClassName="PinnedItemEntity" syncable="YES" codeGenerationType="class">

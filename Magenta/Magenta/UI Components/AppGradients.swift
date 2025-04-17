@@ -32,4 +32,11 @@ struct AppGradients {
         endPoint: .bottomLeading
     )
 
+    // NutritionView specific gradients
+    static let waterIntakeGradient = Gradient(colors: [.white, .mediumBlue, .darkBlue])
+
+    static let calorieIntakeGradient = Gradient(colors: [.white, .orange, .red])
+
+    static let proteinIntakeGradient = Gradient(colors: [.white, .yellow, .brown])
+
 }

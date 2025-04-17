@@ -13,13 +13,15 @@ struct NutritionModel: Identifiable {
     let calories: Double
     let dateLogged: Date
     let foodName: String
+    let proteinIntake: Double
 
-    init(id: UUID = UUID(), waterIntake: Double, calories: Double, dateLogged: Date, foodName: String) {
+    init(id: UUID = UUID(), waterIntake: Double, calories: Double, dateLogged: Date, foodName: String, proteinIntake: Double) {
         self.id = id
         self.waterIntake = waterIntake
         self.calories = calories
         self.dateLogged = dateLogged
         self.foodName = foodName
+        self.proteinIntake = proteinIntake
     }
 
     init(from entity: NutritionEntity) {
@@ -28,6 +30,7 @@ struct NutritionModel: Identifiable {
         self.calories = entity.calories
         self.dateLogged = entity.dateLogged ?? Date()
         self.foodName = entity.foodName ?? ""
+        self.proteinIntake = entity.proteinIntake
     }
 
 }
