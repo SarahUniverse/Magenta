@@ -14,44 +14,17 @@ import SwiftUI
     private let healthStore = HKHealthStore()
 
     // State for meals, water intake, mood tracking, and tips
-    var meals: [NutritionEntity] = []
+    var nutritionGoals: [NutritionGoals] = []
     var waterIntake: Double = 0.0 // In ounces
-    var nutritionalTips: [String] = [
-        "Omega-3 fatty acids (found in salmon, walnuts) support brain health.",
-        "Complex carbs like whole grains stabilize mood.",
-        "Stay hydrated to improve focus and reduce fatigue.",
-        "Dark chocolate in moderation can boost serotonin levels."
-    ]
-
-    // Personalized meal suggestions based on mood and preferences
-    var mealSuggestions: [String] = []
+    var calorieIntake: Double = 0.0 // In kCal
+    var proteinIntake: Double = 0.0
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        fetchMeals()
         requestHealthKitAuthorization()
     }
 
     // MARK: - CoreData Operations
-    func fetchMeals() {
-        let request: NSFetchRequest<NutritionEntity> = NutritionEntity.fetchRequest()
-        do {
-            meals = try viewContext.fetch(request)
-        } catch {
-            print("Error fetching meals: \(error)")
-        }
-    }
-
-    func addMeal(name: String, calories: Double, date: Date) {
-        let newMeal = NutritionEntity(context: viewContext)
-        newMeal.id = UUID()
-        newMeal.foodName = name
-        newMeal.calories = calories
-        newMeal.dateLogged = date
-        saveContext()
-        fetchMeals()
-    }
-
     func addWaterIntake(ounces: Double) {
         waterIntake += ounces
         saveToHealthKit(waterIntake: ounces)
@@ -104,7 +77,5 @@ import SwiftUI
             }
         }
     }
-
-
 
 }

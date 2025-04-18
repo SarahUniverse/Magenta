@@ -42,7 +42,7 @@ struct NutritionGoalGaugeSection: View {
                 .background(GlassBackground())
                 .padding(.bottom, 10)
                 .padding(.top, -10)
-            }  else {
+            } else {
                 HStack(spacing: 40) {
                     VStack(spacing: 10) {
                         Gauge(value: currentWaterIntake, in: 0...localGoalWaterIntake) {
@@ -121,21 +121,20 @@ struct NutritionGoalGaugeSection: View {
             }
         }
         .sheet(isPresented: $showEditSheet) {
-            EditExerciseGoalsSheet(
-                exercise: $exercise,
-                showEditSheet: $showEditSheet,
-                goalWeight: $localGoalWeight,
-                goalReps: $localGoalReps,
-                goalDuration: $localGoalDuration,
-                onSave: saveGoals
+            EditNutritionGoalsSheet(showEditSheet: $showEditSheet,
+                                    goalWaterIntake: $localGoalWaterIntake,
+                                    goalCaloriesIntake: $localGoalCaloriesIntake,
+                                    goalProteinIntake: $localGoalProteinIntake,
+                                    onSave: saveGoals
+
             )
         }
         .onAppear {
             loadGoals()
             updateMaxValues()
         }
-        .onChange(of: exercise) { loadGoals() }
-        .onChange(of: exerciseGoalsData) { loadGoals() }
+        .onChange(of: nutritionGoal) { loadGoals() }
+        .onChange(of: nutritionGoalsData) { loadGoals() }
     }
 
     private var headerView: some View {
@@ -149,7 +148,7 @@ struct NutritionGoalGaugeSection: View {
                 .font(.subheadline)
             Spacer()
             Button(action: {
-                showEditSheet.toggle()
+                showEditSheet = true
             }, label: {
                 if localGoalWaterIntake <= 0 && localGoalCaloriesIntake <= 0 && localGoalProteinIntake <= 0 {
                     Text("Add Goals")
@@ -162,10 +161,10 @@ struct NutritionGoalGaugeSection: View {
         .padding(.top, 40)
     }
 
-    func loadNutritionGoals() {
+    // MARK: - Private Functions
+    private func loadGoals() {
         if let data = try? JSONDecoder().decode([String: NutritionGoals].self, from: nutritionGoalsData),
-           let exerciseName = exercise.name,
-           let goals = data[exerciseName] {
+           let goals = data[nutritionGoal.id.uuidString] {
             localGoalWaterIntake = goals.waterIntakeGoal
             localGoalCaloriesIntake = goals.caloriesIntakeGoal
             localGoalProteinIntake = goals.proteinIntakeGoal
@@ -183,18 +182,42 @@ struct NutritionGoalGaugeSection: View {
         goalProteinIntakeProgress = localGoalProteinIntake > 0 ? Int((Double(currentProteinIntake) / Double(localGoalProteinIntake)) * 100) : 0
     }
 
+    private func saveGoals() {
+        var goalsDict: [String: NutritionGoals]
+        if let existingData = try? JSONDecoder().decode([String: NutritionGoals].self, from: nutritionGoalsData) {
+            goalsDict = existingData
+        } else {
+            goalsDict = [:]
+        }
+
+        goalsDict[nutritionGoal.id.uuidString] = NutritionGoals(
+            waterIntakeGoal: localGoalWaterIntake,
+            caloriesIntakeGoal: localGoalCaloriesIntake,
+            proteinIntakeGoal: localGoalProteinIntake
+        )
+        if let data = try? JSONEncoder().encode(goalsDict) {
+            nutritionGoalsData = data
+        }
+    }
+
+    private func updateMaxValues() {
+        currentWaterIntake = nutritionGoal.waterIntake
+        currentCaloriesIntake = nutritionGoal.totalCalories
+        currentProteinIntake = nutritionGoal.proteinIntake
+        updateProgressValues()
+    }
+
 }
 
 // MARK: - Previews
 #Preview("Light Mode") {
     @Previewable @State var showEditSheet: Bool = true
-    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, calories: 1100.0, dateLogged: Date(), foodName: "", proteinIntake: 69))
+    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
     @Previewable @State var showEditSheet: Bool = true
-    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, calories: 1100.0, dateLogged: Date(), foodName: "", proteinIntake: 69))
+    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
         .preferredColorScheme(.dark)
 }
-

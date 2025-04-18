@@ -14,6 +14,7 @@ struct NutritionView: View {
     @State private var mealCalories: String = ""
     @State private var waterOunces: String = ""
     @State private var selectedMood: String = "Happy"
+    @State private var showEditSheet = false
     private let moods = ["Happy", "Calm", "Sad", "Anxious"]
     private let viewContext: NSManagedObjectContext
 
@@ -26,10 +27,17 @@ struct NutritionView: View {
     var body: some View {
         NavigationStack {
             List {
-                nutritionalTipsSection
+                NutritionGoalGaugeSection(
+                    showEditSheet: $showEditSheet,
+                    nutritionGoal: NutritionModel(
+                        waterIntake: 50,
+                        totalCalories: 1100,
+                        dateLogged: Date(),
+                        proteinIntake: 69
+                    )
+                )
                 logMealSection
                 logWaterSection
-                recentMealsSection
             }
             .navigationTitle("Nutrition")
             .background(AppGradients.backgroundGradient)
@@ -78,18 +86,6 @@ struct NutritionView: View {
             }
             .disabled(waterOunces.isEmpty)
             Text("Total Water Today: \(nutritionViewModel.waterIntake, specifier: "%.1f") oz")
-        }
-    }
-
-    private var recentMealsSection: some View {
-        Section(header: Text("Recent Meals")) {
-            ForEach(nutritionViewModel.meals) { meal in
-                HStack {
-                    Text(meal.foodName ?? "Unknown")
-                    Spacer()
-                    Text("\(meal.calories, specifier: "%.0f") kcal")
-                }
-            }
         }
     }
 
