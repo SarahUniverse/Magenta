@@ -59,7 +59,7 @@ struct NutritionGoalGaugeSection: View {
                         .gaugeStyle(.accessoryCircular)
                         .tint(AppGradients.waterIntakeGradient)
                         .scaleEffect(1.5)
-                        Text("Weight(lbs)")
+                        Text("Water(oz)")
                             .font(.callout)
                             .foregroundColor(.gray)
                             .padding(.top, 10)
@@ -68,7 +68,7 @@ struct NutritionGoalGaugeSection: View {
 
                     VStack(spacing: 10) {
                         Gauge(value: Double(currentCaloriesIntake), in: 0...Double(localGoalCaloriesIntake)) {
-                            Text("Reps")
+                            Text("Calories")
                         } currentValueLabel: {
                             Text("\(goalCaloriesIntakeProgress)%")
                                 .font(.headline)
@@ -82,7 +82,7 @@ struct NutritionGoalGaugeSection: View {
                         .gaugeStyle(.accessoryCircular)
                         .tint(AppGradients.calorieIntakeGradient)
                         .scaleEffect(1.5)
-                        Text("Reps")
+                        Text("Kcal")
                             .font(.callout)
                             .foregroundColor(.gray)
                             .padding(.top, 10)
@@ -90,7 +90,7 @@ struct NutritionGoalGaugeSection: View {
 
                     VStack(spacing: 10) {
                         Gauge(value: Double(currentProteinIntake), in: 0...Double(localGoalProteinIntake)) {
-                            Text("Duration")
+                            Text("Protein")
                         } currentValueLabel: {
                             Text("\(goalProteinIntakeProgress)%")
                                 .font(.headline)
@@ -104,7 +104,7 @@ struct NutritionGoalGaugeSection: View {
                         .gaugeStyle(.accessoryCircular)
                         .tint(AppGradients.proteinIntakeGradient)
                         .scaleEffect(1.5)
-                        Text("Duration(min)")
+                        Text("Protein(g)")
                             .font(.callout)
                             .foregroundColor(.gray)
                             .padding(.top, 10)
@@ -211,13 +211,13 @@ struct NutritionGoalGaugeSection: View {
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    @Previewable @State var showEditSheet: Bool = true
+    @Previewable @State var showEditSheet: Bool = false
     NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    @Previewable @State var showEditSheet: Bool = true
+    @Previewable @State var showEditSheet: Bool = false
     NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
         .preferredColorScheme(.dark)
 }
