@@ -13,9 +13,7 @@ struct NutritionView: View {
     @State private var mealName: String = ""
     @State private var mealCalories: String = ""
     @State private var waterOunces: String = ""
-    @State private var selectedMood: String = "Happy"
     @State private var showEditSheet = false
-    private let moods = ["Happy", "Calm", "Sad", "Anxious"]
     private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {
@@ -28,13 +26,9 @@ struct NutritionView: View {
         NavigationStack {
             List {
                 NutritionGoalGaugeSection(
+                    viewContext: viewContext,
                     showEditSheet: $showEditSheet,
-                    nutritionGoal: NutritionModel(
-                        waterIntake: 50,
-                        totalCalories: 1100,
-                        dateLogged: Date(),
-                        proteinIntake: 69
-                    )
+                    nutritionGoal: nutritionViewModel.fetchNutritionModel(for: Date())
                 )
                 logCaloriesSection
                 logWaterSection

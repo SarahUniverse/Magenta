@@ -4,15 +4,14 @@
 //
 //  Created by Sarah Clark on 4/17/25.
 //
-
 import CoreData
 import SwiftUI
 
 struct NutritionGoalGaugeSection: View {
+    @State private var nutritionViewModel: NutritionViewModel
     @Binding var showEditSheet: Bool
     let nutritionGoal: NutritionModel
-
-    @AppStorage("nutritionalGoals") private var nutritionGoalsData: Data = Data()
+    private let viewContext: NSManagedObjectContext
 
     // Current max values of each that the user has achieved.
     @State private var currentWaterIntake: Double = 0.0
@@ -28,6 +27,13 @@ struct NutritionGoalGaugeSection: View {
     @State private var localGoalWaterIntake: Double = 0.0
     @State private var localGoalCaloriesIntake: Double = 0.0
     @State private var localGoalProteinIntake: Double = 0.0
+
+    init(viewContext: NSManagedObjectContext, showEditSheet: Binding<Bool>, nutritionGoal: NutritionModel) {
+        self.viewContext = viewContext
+        _nutritionViewModel = State(wrappedValue: NutritionViewModel(viewContext: viewContext))
+        self._showEditSheet = showEditSheet
+        self.nutritionGoal = nutritionGoal
+    }
 
     var body: some View {
         VStack {
@@ -121,12 +127,12 @@ struct NutritionGoalGaugeSection: View {
             }
         }
         .sheet(isPresented: $showEditSheet) {
-            EditNutritionGoalsSheet(showEditSheet: $showEditSheet,
-                                    goalWaterIntake: $localGoalWaterIntake,
-                                    goalCaloriesIntake: $localGoalCaloriesIntake,
-                                    goalProteinIntake: $localGoalProteinIntake,
-                                    onSave: saveGoals
-
+            EditNutritionGoalsSheet(
+                showEditSheet: $showEditSheet,
+                goalWaterIntake: $localGoalWaterIntake,
+                goalCaloriesIntake: $localGoalCaloriesIntake,
+                goalProteinIntake: $localGoalProteinIntake,
+                onSave: saveGoals
             )
         }
         .onAppear {
@@ -134,7 +140,6 @@ struct NutritionGoalGaugeSection: View {
             updateMaxValues()
         }
         .onChange(of: nutritionGoal) { loadGoals() }
-        .onChange(of: nutritionGoalsData) { loadGoals() }
     }
 
     private var headerView: some View {
@@ -163,16 +168,9 @@ struct NutritionGoalGaugeSection: View {
 
     // MARK: - Private Functions
     private func loadGoals() {
-        if let data = try? JSONDecoder().decode([String: NutritionGoals].self, from: nutritionGoalsData),
-           let goals = data[nutritionGoal.id.uuidString] {
-            localGoalWaterIntake = goals.waterIntakeGoal
-            localGoalCaloriesIntake = goals.caloriesIntakeGoal
-            localGoalProteinIntake = goals.proteinIntakeGoal
-        } else {
-            localGoalWaterIntake = 0.0
-            localGoalCaloriesIntake = 0.0
-            localGoalProteinIntake = 0.0
-        }
+        localGoalWaterIntake = nutritionGoal.waterIntakeGoal
+        localGoalCaloriesIntake = nutritionGoal.caloriesIntakeGoal
+        localGoalProteinIntake = nutritionGoal.proteinIntakeGoal
         updateProgressValues()
     }
 
@@ -183,21 +181,11 @@ struct NutritionGoalGaugeSection: View {
     }
 
     private func saveGoals() {
-        var goalsDict: [String: NutritionGoals]
-        if let existingData = try? JSONDecoder().decode([String: NutritionGoals].self, from: nutritionGoalsData) {
-            goalsDict = existingData
-        } else {
-            goalsDict = [:]
-        }
-
-        goalsDict[nutritionGoal.id.uuidString] = NutritionGoals(
+        nutritionViewModel.saveGoals(
             waterIntakeGoal: localGoalWaterIntake,
             caloriesIntakeGoal: localGoalCaloriesIntake,
             proteinIntakeGoal: localGoalProteinIntake
         )
-        if let data = try? JSONEncoder().encode(goalsDict) {
-            nutritionGoalsData = data
-        }
     }
 
     private func updateMaxValues() {
@@ -206,18 +194,74 @@ struct NutritionGoalGaugeSection: View {
         currentProteinIntake = nutritionGoal.proteinIntake
         updateProgressValues()
     }
-
 }
 
 // MARK: - Previews
 #Preview("Light Mode") {
-    @Previewable @State var showEditSheet: Bool = false
-    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
-        .preferredColorScheme(.light)
+    struct PreviewWrapper: View {
+        @State var showEditSheet: Bool = false
+
+        var body: some View {
+            let context = NutritionGoalGaugeSection.createPreviewContext()
+            NutritionGoalGaugeSection(
+                viewContext: context,
+                showEditSheet: $showEditSheet,
+                nutritionGoal: NutritionModel(
+                    id: UUID(),
+                    waterIntake: 50.0,
+                    totalCalories: 1100.0,
+                    proteinIntake: 69.0,
+                    waterIntakeGoal: 64.0,
+                    caloriesIntakeGoal: 2000.0,
+                    proteinIntakeGoal: 150.0,
+                    dateLogged: Date()
+                )
+            )
+            .environment(\.managedObjectContext, context)
+            .preferredColorScheme(.light)
+        }
+    }
+
+    return PreviewWrapper()
 }
 
 #Preview("Dark Mode") {
-    @Previewable @State var showEditSheet: Bool = false
-    NutritionGoalGaugeSection(showEditSheet: $showEditSheet, nutritionGoal: NutritionModel(waterIntake: 50, totalCalories: 1100.0, dateLogged: Date(), proteinIntake: 69))
-        .preferredColorScheme(.dark)
+    struct PreviewWrapper: View {
+        @State var showEditSheet: Bool = false
+
+        var body: some View {
+            let context = NutritionGoalGaugeSection.createPreviewContext()
+            NutritionGoalGaugeSection(
+                viewContext: context,
+                showEditSheet: $showEditSheet,
+                nutritionGoal: NutritionModel(
+                    id: UUID(),
+                    waterIntake: 50.0,
+                    totalCalories: 1100.0,
+                    proteinIntake: 69.0,
+                    waterIntakeGoal: 64.0,
+                    caloriesIntakeGoal: 2000.0,
+                    proteinIntakeGoal: 150.0,
+                    dateLogged: Date()
+                )
+            )
+            .environment(\.managedObjectContext, context)
+            .preferredColorScheme(.dark)
+        }
+    }
+
+    return PreviewWrapper()
+}
+
+extension NutritionGoalGaugeSection {
+    static func createPreviewContext() -> NSManagedObjectContext {
+        let container = NSPersistentContainer(name: "DataModel")
+        container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Failed to load Core Data stack for preview: \(error)")
+            }
+        }
+        return container.viewContext
+    }
 }

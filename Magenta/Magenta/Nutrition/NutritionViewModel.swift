@@ -13,21 +13,78 @@ import SwiftUI
     private let viewContext: NSManagedObjectContext
     private let healthStore = HKHealthStore()
 
-    // State for meals, water intake, mood tracking, and tips
-    var nutritionGoals: [NutritionGoals] = []
-    var waterIntake: Double = 0.0 // In ounces
-    var calorieIntake: Double = 0.0 // In kCal
+    // State for intakes and goals
+    var waterIntake: Double = 0.0
+    var calorieIntake: Double = 0.0
     var proteinIntake: Double = 0.0
+    var nutritionGoals: [NutritionGoalEntity] = []
 
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        fetchGoals()
         requestHealthKitAuthorization()
     }
 
     // MARK: - CoreData Operations
     func addWaterIntake(ounces: Double) {
         waterIntake += ounces
+        let nutritionEntity = NutritionEntity(context: viewContext)
+        nutritionEntity.id = UUID()
+        nutritionEntity.waterIntake = waterIntake
+        nutritionEntity.totalCalories = calorieIntake
+        nutritionEntity.proteinIntake = proteinIntake
+        nutritionEntity.dateLogged = Date()
+        saveContext()
         saveToHealthKit(waterIntake: ounces)
+    }
+
+    func saveGoals(waterIntakeGoal: Double, caloriesIntakeGoal: Double, proteinIntakeGoal: Double) {
+        let goalEntity = NutritionGoalEntity(context: viewContext)
+        goalEntity.id = UUID()
+        goalEntity.waterIntakeGoal = waterIntakeGoal
+        goalEntity.caloriesIntakeGoal = caloriesIntakeGoal
+        goalEntity.proteinIntakeGoal = proteinIntakeGoal
+        goalEntity.dateLogged = Date()
+        saveContext()
+        fetchGoals()
+    }
+
+    func fetchGoals() {
+        let request: NSFetchRequest<NutritionGoalEntity> = NutritionGoalEntity.fetchRequest()
+        do {
+            nutritionGoals = try viewContext.fetch(request)
+        } catch {
+            print("Error fetching goals: \(error)")
+        }
+    }
+
+    func fetchNutritionModel(for date: Date) -> NutritionModel {
+        let nutritionRequest: NSFetchRequest<NutritionEntity> = NutritionEntity.fetchRequest()
+        nutritionRequest.predicate = NSPredicate(format: "dateLogged == %@", date as NSDate)
+        nutritionRequest.fetchLimit = 1
+
+        let goalRequest: NSFetchRequest<NutritionGoalEntity> = NutritionGoalEntity.fetchRequest()
+        goalRequest.predicate = NSPredicate(format: "dateLogged == %@", date as NSDate)
+        goalRequest.fetchLimit = 1
+
+        do {
+            let nutritionEntities = try viewContext.fetch(nutritionRequest)
+            let goalEntities = try viewContext.fetch(goalRequest)
+            let nutritionEntity = nutritionEntities.first
+            let goalEntity = goalEntities.first
+            return NutritionModel(from: nutritionEntity ?? NutritionEntity(context: viewContext), goalEntity: goalEntity)
+        } catch {
+            print("Error fetching nutrition model: \(error)")
+            return NutritionModel(
+                waterIntake: 0,
+                totalCalories: 0,
+                proteinIntake: 0,
+                waterIntakeGoal: 0,
+                caloriesIntakeGoal: 0,
+                proteinIntakeGoal: 0,
+                dateLogged: date
+            )
+        }
     }
 
     func saveContext() {
