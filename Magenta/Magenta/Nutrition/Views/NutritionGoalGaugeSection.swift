@@ -4,6 +4,7 @@
 //
 //  Created by Sarah Clark on 4/17/25.
 //
+
 import CoreData
 import SwiftUI
 
@@ -186,6 +187,8 @@ struct NutritionGoalGaugeSection: View {
             caloriesIntakeGoal: localGoalCaloriesIntake,
             proteinIntakeGoal: localGoalProteinIntake
         )
+        // Reload goals to update the view
+        loadGoals()
     }
 
     private func updateMaxValues() {

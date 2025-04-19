@@ -37,15 +37,4 @@ struct NutritionModel: Identifiable, Equatable {
         self.dateLogged = dateLogged
     }
 
-    init(from entity: NutritionEntity, goalEntity: NutritionGoalEntity?) {
-        self.id = entity.id ?? UUID()
-        self.waterIntake = entity.waterIntake
-        self.totalCalories = entity.totalCalories
-        self.proteinIntake = entity.proteinIntake
-        self.dateLogged = entity.dateLogged ?? Date()
-        self.waterIntakeGoal = goalEntity?.waterIntakeGoal ?? 0.0
-        self.caloriesIntakeGoal = goalEntity?.caloriesIntakeGoal ?? 0.0
-        self.proteinIntakeGoal = goalEntity?.proteinIntakeGoal ?? 0.0
-    }
-
 }

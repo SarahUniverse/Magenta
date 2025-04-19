@@ -47,7 +47,7 @@ struct EditNutritionGoalsSheet: View {
                 leading: Button("Cancel") {
                     showEditSheet = false
                 }
-                .foregroundStyle(.red),
+                    .foregroundStyle(.red),
                 trailing: Button("Save") {
                     onSave()
                     showEditSheet = false
