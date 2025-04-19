@@ -36,8 +36,9 @@ struct NutritionView: View {
                         proteinIntake: 69
                     )
                 )
-                logMealSection
+                logCaloriesSection
                 logWaterSection
+                logProteinSection
             }
             .navigationTitle("Nutrition")
             .background(AppGradients.backgroundGradient)
@@ -49,29 +50,12 @@ struct NutritionView: View {
     }
 
     // MARK: - Private Variables
-    private var nutritionalTipsSection: some View {
-        Section(header: Text("Nutritional Tips for Mental Well-Being")) {
-            ForEach(nutritionViewModel.nutritionalTips, id: \.self) { tip in
-                Text(tip)
-            }
-        }
+    private var logProteinSection: some View {
+        Text("logProteinSection")
     }
 
-    private var logMealSection: some View {
-        Section(header: Text("Log a Meal")) {
-            TextField("Meal Name", text: $mealName)
-            TextField("Calories", text: $mealCalories)
-                .keyboardType(.decimalPad)
-            Button("Add Meal") {
-                if let calories = Double(mealCalories), !mealName.isEmpty {
-                    nutritionViewModel.addMeal(name: mealName, calories: calories, date: Date())
-                    nutritionViewModel.saveMealToHealthKit(calories: calories)
-                    mealName = ""
-                    mealCalories = ""
-                }
-            }
-            .disabled(mealName.isEmpty || mealCalories.isEmpty)
-        }
+    private var logCaloriesSection: some View {
+        Text("logCaloriesSection")
     }
 
     private var logWaterSection: some View {

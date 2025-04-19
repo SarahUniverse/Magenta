@@ -20,23 +20,23 @@ struct EditNutritionGoalsSheet: View {
             Form {
                 Section(header: Text("Edit Goals")) {
                     HStack {
-                        Text("Weight Goal (lbs)")
+                        Text("Water Goal (oz)")
                         Spacer()
                         TextField("Water goal", value: $goalWaterIntake, formatter: decimalFormatter)
                             .multilineTextAlignment(.trailing)
                             .keyboardType(.decimalPad)
                     }
                     HStack {
-                        Text("Calorie Intake Goal")
+                        Text("Calorie Intake (Kcal)")
                         Spacer()
-                        TextField("Reps", value: $goalCaloriesIntake, formatter: integerFormatter)
+                        TextField("Calories", value: $goalCaloriesIntake, formatter: integerFormatter)
                             .multilineTextAlignment(.trailing)
                             .keyboardType(.numberPad)
                     }
                     HStack {
-                        Text("Duration Goal (min)")
+                        Text("Protein Intake (g)")
                         Spacer()
-                        TextField("Duration", value: $goalProteinIntake, formatter: integerFormatter)
+                        TextField("Protein", value: $goalProteinIntake, formatter: integerFormatter)
                             .multilineTextAlignment(.trailing)
                             .keyboardType(.numberPad)
                     }
@@ -46,7 +46,8 @@ struct EditNutritionGoalsSheet: View {
             .navigationBarItems(
                 leading: Button("Cancel") {
                     showEditSheet = false
-                },
+                }
+                .foregroundStyle(.red),
                 trailing: Button("Save") {
                     onSave()
                     showEditSheet = false
@@ -71,8 +72,50 @@ struct EditNutritionGoalsSheet: View {
 
 }
 
-/*
-#Preview {
-    EditNutritionGoalsSheet(showEditSheet: <#Binding<Bool>#>, goalWaterIntake: <#Binding<Double>#>, goalCaloriesIntake: <#Binding<Double>#>, goalProteinIntake: <#Binding<Double>#>, onSave: <#() -> Void#>)
+#Preview("Light Mode") {
+    struct PreviewWrapper: View {
+        @State private var showEditSheet = true
+        @State private var goalWaterIntake = 64.0
+        @State private var goalCaloriesIntake = 2000.0
+        @State private var goalProteinIntake = 150.0
+
+        var body: some View {
+            EditNutritionGoalsSheet(
+                showEditSheet: $showEditSheet,
+                goalWaterIntake: $goalWaterIntake,
+                goalCaloriesIntake: $goalCaloriesIntake,
+                goalProteinIntake: $goalProteinIntake,
+                onSave: {
+                    print("Goals saved")
+                }
+            )
+        }
+    }
+
+    return PreviewWrapper()
+        .preferredColorScheme(.light)
 }
-*/
+
+#Preview("Dark Mode") {
+    struct PreviewWrapper: View {
+        @State private var showEditSheet = true
+        @State private var goalWaterIntake = 64.0
+        @State private var goalCaloriesIntake = 2000.0
+        @State private var goalProteinIntake = 150.0
+
+        var body: some View {
+            EditNutritionGoalsSheet(
+                showEditSheet: $showEditSheet,
+                goalWaterIntake: $goalWaterIntake,
+                goalCaloriesIntake: $goalCaloriesIntake,
+                goalProteinIntake: $goalProteinIntake,
+                onSave: {
+                    print("Goals saved")
+                }
+            )
+        }
+    }
+
+    return PreviewWrapper()
+        .preferredColorScheme(.dark)
+}
